@@ -1,35 +1,112 @@
-using System.Text.Json.Serialization;
+// *********************************************************************************
+//	<copyright file="Program.cs" company="Personal">
+//		Copyright (c) 2025 Personal
+//	</copyright>
+// <summary>The Program Class.</summary>
+// *********************************************************************************
 
-var builder = WebApplication.CreateSlimBuilder(args);
+using Azure.Identity;
+using FitGymTool.API.Middleware;
+using Microsoft.OpenApi.Models;
+using static FitGymTool.Shared.Constants.ConfigurationConstants;
 
-builder.Services.ConfigureHttpJsonOptions(options =>
+namespace FitGymTool.API;
+
+/// <summary>
+/// The Program Class.
+/// </summary>
+public static class Program
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-});
+	/// <summary>
+	/// The main entry point for the application.
+	/// </summary>
+	/// <param name="args">The command line arguments.</param>
+	public static void Main(string[] args)
+	{
+		var builder = WebApplication.CreateBuilder(args);
+		builder.ConfigureServices();
 
-var app = builder.Build();
+		var app = builder.Build();
+		app.ConfigureApplication();
+	}
 
-var sampleTodos = new Todo[] {
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-};
+	/// <summary>
+	/// Configures the services for the application.
+	/// </summary>
+	/// <param name="builder">The web application builder.</param>
+	internal static void ConfigureServices(this WebApplicationBuilder builder)
+	{
+		builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: DevelopmentAppSettingsFile, optional: true).AddEnvironmentVariables();
+		var credentials = builder.Environment.IsDevelopment()
+			? new DefaultAzureCredential()
+			: new DefaultAzureCredential(new DefaultAzureCredentialOptions
+			{
+				ManagedIdentityClientId = builder.Configuration[ManagedIdentityClientIdConstant]
+			});
 
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? Results.Ok(todo)
-        : Results.NotFound());
+		builder.Services.AddControllers();
+		builder.Services.AddOpenApi();
+		builder.Services.AddCors(options =>
+		{
+			options.AddDefaultPolicy(policy =>
+			{
+				policy.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader();
+			});
+		});
 
-app.Run();
+		builder.Services.AddSwaggerGen(c =>
+		{
+			c.SwaggerDoc(ApiVersion, new OpenApiInfo
+			{
+				Title = ApplicationAPIName,
+				Version = ApiVersion,
+				Description = SwaggerDescription,
+				Contact = new OpenApiContact
+				{
+					Name = AuthorDetails.Name,
+					Email = AuthorDetails.Email
+				}
 
-public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
+			});
+		});
 
-[JsonSerializable(typeof(Todo[]))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
 
+		builder.ConfigureAzureAppConfiguration(credentials);
+		builder.ConfigureApiServices();
+
+		builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+		builder.Services.AddProblemDetails();
+		builder.Services.AddHttpContextAccessor();
+
+	}
+
+	/// <summary>
+	/// Configures the application middleware and endpoints.
+	/// </summary>
+	/// <param name="app">The web application.</param>
+	internal static void ConfigureApplication(this WebApplication app)
+	{
+		if (app.Environment.IsDevelopment())
+		{
+			app.MapOpenApi();
+		}
+		app.UseSwagger();
+		app.UseSwaggerUI(c =>
+		{
+			c.SwaggerEndpoint(SwaggerEndpointUrl, $"{ApplicationAPIName}.{ApiVersion}");
+			c.RoutePrefix = SwaggerUiPrefix;
+		});
+
+		app.UseExceptionHandler();
+		app.UseHttpsRedirection();
+		app.UseCors();
+
+		app.UseAuthentication();
+		app.UseAuthorization();
+		app.MapControllers();
+
+		app.Run();
+	}
 }
