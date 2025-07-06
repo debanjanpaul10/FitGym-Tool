@@ -1,0 +1,14 @@
+# Visual Studio and Visual Studio Code
+**.vscode/
+**.vs/
+
+# Debug and Bin Files
+**obj/
+**bin/
+
+# Node Modules and npm
+**node_modules/
+
+# Local Development Files
+appsettings.Development.json
+**environment.development.json
