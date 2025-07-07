@@ -3,19 +3,18 @@ export const environment = {
   apiBaseUrl: 'https://localhost:6969',
   msalConfig: {
     auth: {
-      clientId: 'ef5fa0ef-66c4-4a96-b2f6-974ee5e0ab7b',
-      authority:
-        'https://FitGymTool.ciamlogin.com/2b416779-fe70-4a4c-bbac-9a4a75588ab8',
+      clientId: 'a60b28a6-c429-47e7-bdb4-19502849f14e',
+      authority: 'https://login.microsoftonline.com/consumers/',
     },
-    scopes: ['User.Read', 'Users.Write'],
+    scopes: ['Users.Read', 'Users.Write'],
   },
   apiConfig: {
     scopes: [
-      'api://6dfe8fda-388a-4896-9bb2-2482ac4da8bf/User.Read',
-      'api://6dfe8fda-388a-4896-9bb2-2482ac4da8bf/Users.Write',
+      'api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Read',
+      'api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Write',
     ],
     uri: 'https://graph.microsoft.com/v1.0/me',
-    apiScope: ['api://6dfe8fda-388a-4896-9bb2-2482ac4da8bf/Users.Write'],
+    apiScope: ['api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Write'],
   },
   idleConfig: {
     idleTimeoutMinutes: 30,

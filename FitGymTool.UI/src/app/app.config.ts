@@ -29,7 +29,7 @@ import {
   MSALGuardConfigFactory,
   MSALInstanceFactory,
   MSALInterceptorConfigFactory,
-} from '@core/interceptors/msal.interceptor';
+} from '@core/services/msal-service';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 import { MessageService } from 'primeng/api';
 import { msalInitializer } from '@core/services/msal-initializer';

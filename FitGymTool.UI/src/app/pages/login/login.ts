@@ -6,13 +6,14 @@ import {
   MsalGuardConfiguration,
   MsalService,
 } from '@azure/msal-angular';
-import { RedirectRequest } from '@azure/msal-browser';
+import { RedirectRequest, EventType } from '@azure/msal-browser';
 import {
   LoginPageConstants,
   RouteConstants,
 } from '@shared/application.constants';
 import { ButtonModule } from 'primeng/button';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,8 @@ import { Subject } from 'rxjs';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login implements OnInit, OnDestroy {
+export class Login implements OnInit {
   public HeaderConstants = LoginPageConstants.Headings;
-
-  private readonly _destroying$ = new Subject<void>();
 
   private readonly authService = inject(MsalService);
   private readonly msalGuarConfig =
@@ -31,7 +30,17 @@ export class Login implements OnInit, OnDestroy {
   private readonly msalBroadCastService = inject(MsalBroadcastService);
   private readonly router = inject(Router);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.msalBroadCastService.msalSubject$.subscribe((event) => {
+      if (event.eventType === EventType.LOGIN_SUCCESS) {
+        this.navigateHome();
+      }
+    });
+
+    if (this.authService.instance.getAllAccounts().length > 0) {
+      this.navigateHome();
+    }
+  }
 
   public loginRedirect(): void {
     if (this.msalGuarConfig.authRequest) {
@@ -45,10 +54,5 @@ export class Login implements OnInit, OnDestroy {
 
   public navigateHome(): void {
     this.router.navigate([RouteConstants.Dashboard.Link]);
-  }
-
-  ngOnDestroy(): void {
-    this._destroying$.next(undefined);
-    this._destroying$.complete();
   }
 }
