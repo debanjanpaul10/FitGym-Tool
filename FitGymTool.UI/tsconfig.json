@@ -22,7 +22,7 @@
       "@pages/*": ["src/app/pages/*"],
       "@services/*": ["src/app/services/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@environments/*": ["src/environments/*"],
+      "@environments/*": ["src/env/*"],
       "@assets/*": ["src/assets/*"]
     }
   },

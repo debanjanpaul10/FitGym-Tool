@@ -1,1 +1,9 @@
-<p>login works!</p>
+<div class="login-background">
+  <p-button
+    [label]="HeaderConstants.LoginButtonName"
+    severity="secondary"
+    [raised]="true"
+    icon="pi pi-sign-in"
+    (onClick)="loginRedirect()"
+  />
+</div>

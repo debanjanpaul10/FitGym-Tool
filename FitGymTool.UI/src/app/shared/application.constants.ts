@@ -12,3 +12,9 @@ export class RouteConstants {
     Link: 'error',
   };
 }
+
+export class LoginPageConstants {
+  public static Headings = {
+    LoginButtonName: 'Login to FitGym Tool',
+  };
+}

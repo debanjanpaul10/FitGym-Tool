@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("assets/Fonts/CascadiaMono-VariableFont_wght.ttf");
+}
+
+html {
+  font-family: "Cascadia Mono";
+}
