@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   MSAL_GUARD_CONFIG,
@@ -7,13 +7,12 @@ import {
   MsalService,
 } from '@azure/msal-angular';
 import { RedirectRequest, EventType } from '@azure/msal-browser';
+import { ButtonModule } from 'primeng/button';
+
 import {
   LoginPageConstants,
   RouteConstants,
 } from '@shared/application.constants';
-import { ButtonModule } from 'primeng/button';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',

@@ -18,3 +18,9 @@ export class LoginPageConstants {
     LoginButtonName: 'Login to FitGym Tool',
   };
 }
+
+export class DashboardPageConstants {
+  public static Headings = {
+    LogoutButtonName: 'Logout',
+  };
+}

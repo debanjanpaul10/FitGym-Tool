@@ -1,1 +1,9 @@
-<p>dashboard works!</p>
+<div class="logout-background">
+  <p-button
+    [label]="HeaderConstants.LogoutButtonName"
+    severity="secondary"
+    [raised]="true"
+    icon="pi pi-sign-in"
+    (onClick)="logoutRedirect()"
+  />
+</div>
