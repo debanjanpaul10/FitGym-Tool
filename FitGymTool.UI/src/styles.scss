@@ -5,10 +5,6 @@
   src: url("assets/Fonts/CascadiaMono-VariableFont_wght.ttf");
 }
 
-html {
-  font-family: "Cascadia Mono";
-}
-
 :root {
   --background-color: #181a20;
   --text-color: #f1f1f1;
@@ -17,16 +13,11 @@ html {
   --accent-color: #4f8cff;
 }
 
-html, body {
+html,
+body {
   background: var(--background-color) !important;
   color: var(--text-color);
-  min-height: 100vh;
   margin: 0;
   padding: 0;
-}
-
-.container-fluid {
-  background: var(--background-color);
-  color: var(--text-color);
-  min-height: 100vh;
+  font-family: "Cascadia Mono" !important;
 }

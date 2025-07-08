@@ -1,20 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { DashboardPageConstants } from '@shared/application.constants';
-import { ButtonModule } from 'primeng/button';
-import { MsalService } from '@azure/msal-angular';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ButtonModule],
+  imports: [],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
-  public HeaderConstants = DashboardPageConstants.Headings;
-
-  private readonly authService = inject(MsalService);
-
-  public logoutRedirect(): void {
-    this.authService.logoutRedirect();
-  }
-}
+export class Dashboard {}

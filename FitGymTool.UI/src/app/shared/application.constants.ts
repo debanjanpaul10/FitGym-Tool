@@ -19,8 +19,9 @@ export class LoginPageConstants {
   };
 }
 
-export class DashboardPageConstants {
+export class DrawerConstants {
   public static Headings = {
-    LogoutButtonName: 'Logout',
+    BrandText: 'FitGym Tool',
+    LogoutButton: 'Logout',
   };
 }

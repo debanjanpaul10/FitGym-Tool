@@ -1,0 +1,23 @@
+.drawer-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.drawer-menu-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.logout-btn-bottom {
+  margin-top: auto;
+  padding-bottom: 0;
+}
+
+:host ::ng-deep .p-drawer-content {
+  height: 100%;
+  padding-bottom: 0 !important;
+}

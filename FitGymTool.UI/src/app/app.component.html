@@ -1,3 +1,6 @@
 <div class="container-fluid">
+  @if (!isLoginPage && !isRouteLoading) {
+  <app-left-navigation-component></app-left-navigation-component>
+  }
   <router-outlet></router-outlet>
 </div>
