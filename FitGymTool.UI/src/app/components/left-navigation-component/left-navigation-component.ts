@@ -30,9 +30,20 @@ export class LeftNavigationComponent implements OnInit {
   ngOnInit(): void {
     this.menuItems = [
       {
-        name: 'Add new user',
-        icon: 'pi pi-user-plus',
-        onClick: () => this.addNewUser(),
+        name: 'Member Management',
+        icon: 'pi pi-users',
+        onClick: () => this.navigateUsersDashboard(),
+      },
+
+      {
+        name: 'Fees Management',
+        icon: 'pi pi-wallet',
+        onClick: () => this.navigateFeesDashboard(),
+      },
+      {
+        name: 'Facility Management',
+        icon: 'pi pi-hammer',
+        onClick: () => this.navigateFacilityDashboard(),
       },
       {
         name: 'Logout',
@@ -54,7 +65,15 @@ export class LeftNavigationComponent implements OnInit {
     this.authService.logoutRedirect();
   }
 
-  private addNewUser(): void {
+  private navigateUsersDashboard(): void {
+    alert('Feature being worked on');
+  }
+
+  private navigateFeesDashboard(): void {
+    alert('Feature being worked on');
+  }
+
+  private navigateFacilityDashboard(): void {
     alert('Feature being worked on');
   }
 }

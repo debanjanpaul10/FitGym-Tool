@@ -2,40 +2,29 @@
   <p-drawer #drawerRef [(visible)]="isVisible" [dismissible]="false">
     <ng-template #headless>
       <div class="drawer-header-row mt-4 p-2">
-        <span>{{ DrawerConstants.Headings.BrandText }}</span>
-        <p-button
-          type="button"
-          (click)="closeCallback($event)"
-          icon="pi pi-times"
-          rounded="true"
-          outlined="true"
-        ></p-button>
+        <span>
+          <img src="../../../assets/Images/fitgym_logo.png" height="50px" width="50px" />
+          {{ DrawerConstants.Headings.BrandText }}
+        </span>
+        <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true"
+          outlined="true"></p-button>
       </div>
-      <div class="drawer-menu-flex mt-4">
+      <div class="drawer-menu-flex mt-2">
         <div>
           <ng-container *ngFor="let item of menuItems">
             <ng-container *ngIf="item.name !== 'Logout'">
-              <p-button
-                [label]="item.name"
-                [icon]="item.icon"
-                (onClick)="item.onClick()"
-                [style]="{width: '100%'}"
-                variant="outlined"
-              ></p-button>
+              <div class="mt-2">
+                <p-button [label]="item.name" [icon]="item.icon" (onClick)="item.onClick()" [style]="{width: '100%'}"
+                  variant="outlined"></p-button>
+              </div>
             </ng-container>
           </ng-container>
         </div>
         <div class="logout-btn-bottom mb-2">
           <ng-container *ngFor="let item of menuItems">
             <ng-container *ngIf="item.name === 'Logout'">
-              <p-button
-                [label]="item.name"
-                [icon]="item.icon"
-                (onClick)="item.onClick()"
-                [style]="{width: '100%'}"
-                variant="outlined"
-                severity="danger"
-              ></p-button>
+              <p-button [label]="item.name" [icon]="item.icon" (onClick)="item.onClick()" [style]="{width: '100%'}"
+                variant="outlined" severity="danger"></p-button>
             </ng-container>
           </ng-container>
         </div>
