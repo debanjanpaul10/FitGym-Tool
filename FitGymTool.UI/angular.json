@@ -28,7 +28,10 @@
               },
               "src/assets"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/tailwindcss/tailwind.css"
+            ],
             "outputMode": "static"
           },
           "configurations": {
