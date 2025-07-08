@@ -17,10 +17,10 @@ import {
 @Component({
   selector: 'app-login',
   imports: [ButtonModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './login-component.html',
+  styleUrl: './login-component.scss',
 })
-export class Login implements OnInit {
+export class LoginComponent implements OnInit {
   public HeaderConstants = LoginPageConstants.Headings;
 
   private readonly authService = inject(MsalService);
