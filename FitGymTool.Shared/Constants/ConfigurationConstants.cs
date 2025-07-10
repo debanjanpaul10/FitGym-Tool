@@ -12,69 +12,73 @@ namespace FitGymTool.Shared.Constants;
 /// </summary>
 public static class ConfigurationConstants
 {
-	#region SWAGGER CONSTANTS
-
 	/// <summary>
-	/// The API name for Swagger documentation.
+	/// The Swagger constants class contains constants related to Swagger documentation.
 	/// </summary>
-	public const string ApplicationAPIName = "FitGymTool.API";
-
-	/// <summary>
-	/// The api version for Swagger documentation.
-	/// </summary>
-	public const string ApiVersion = "v1";
-
-	/// <summary>
-	/// The swagger endpoint for the API documentation.
-	/// </summary>
-	public const string SwaggerEndpointUrl = "/swagger/v1/swagger.json";
-
-	/// <summary>
-	/// The swagger ui endpoint prefix.
-	/// </summary>
-	public const string SwaggerUiPrefix = "swaggerui";
-
-	/// <summary>
-	/// The description for the Swagger documentation.
-	/// </summary>
-	public const string SwaggerDescription = "API documentation for FitGym Tool";
-
-	/// <summary>
-	/// The Author Details class contains information about the author of the API.
-	/// </summary>
-	public static class AuthorDetails
+	public static class SwaggerConstants
 	{
 		/// <summary>
-		/// The author's name.
+		/// The api version for Swagger documentation.
 		/// </summary>
-		public static readonly string Name = "Debanjan Paul";
+		public const string ApiVersion = "v1";
 
 		/// <summary>
-		/// The author's email address.
+		/// The swagger endpoint for the API documentation.
 		/// </summary>
-		public static readonly string Email = "debanjanpaul10@gmail.com";
+		public const string SwaggerEndpointUrl = "/swagger/v1/swagger.json";
+
+		/// <summary>
+		/// The swagger ui endpoint prefix.
+		/// </summary>
+		public const string SwaggerUiPrefix = "swaggerui";
+
+		/// <summary>
+		/// The description for the Swagger documentation.
+		/// </summary>
+		public const string SwaggerDescription = "API documentation for FitGym Tool";
+
+		/// <summary>
+		/// The Author Details class contains information about the author of the API.
+		/// </summary>
+		public static class AuthorDetails
+		{
+			/// <summary>
+			/// The author's name.
+			/// </summary>
+			public static readonly string Name = "Debanjan Paul";
+
+			/// <summary>
+			/// The author's email address.
+			/// </summary>
+			public static readonly string Email = "debanjanpaul10@gmail.com";
+		}
+
+		/// <summary>
+		/// The API name for Swagger documentation.
+		/// </summary>
+		public const string ApplicationAPIName = "FitGymTool.API";
 	}
 
-	#endregion
-
-	#region AUTHENTICATION CONSTANTS
-
 	/// <summary>
-	/// The Azure AD API Client ID constant.
+	/// The Authentication constants class contains constants related to authentication settings.
 	/// </summary>
-	public const string AzureAdApiClientIdConstant = "AzureAdApiClientId";
+	public static class AuthenticationConstants
+	{
+		/// <summary>
+		/// The Azure AD API Client ID constant.
+		/// </summary>
+		public const string AzureAdApiClientIdConstant = "AzureAdApiClientId";
 
-	/// <summary>
-	/// The Azure AD API Tenant ID constant.
-	/// </summary>
-	public const string ApiTenantIdConstant = "AzureAdApiTenantId";
+		/// <summary>
+		/// The Azure AD API Tenant ID constant.
+		/// </summary>
+		public const string ApiTenantIdConstant = "AzureAdApiTenantId";
 
-	/// <summary>
-	/// The Azure AD API Issuer constant.
-	/// </summary>
-	public const string AzureAdApiIssuerConstant = "AzureAdApiIssuer";
-
-	#endregion
+		/// <summary>
+		/// The Azure AD API Issuer constant.
+		/// </summary>
+		public const string AzureAdApiIssuerConstant = "AzureAdApiIssuer";
+	}
 
 	/// <summary>
 	/// The development app settings file name.
@@ -105,4 +109,14 @@ public static class ConfigurationConstants
 	/// The user name claim constant.
 	/// </summary>
 	public const string UserNameClaimConstant = "username";
+
+	/// <summary>
+	/// The local SQL database connection string constant.
+	/// </summary>
+	public const string LocalSqlConnectionStringConstant = "LocalSqlConnectionString";
+
+	/// <summary>
+	/// The Azure SQL database connection string constant.
+	/// </summary>
+	public const string AzureSqlConnectionStringConstant = "AzureSqlConnectionString";
 }

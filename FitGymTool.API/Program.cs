@@ -58,15 +58,15 @@ public static class Program
 
 		builder.Services.AddSwaggerGen(c =>
 		{
-			c.SwaggerDoc(ApiVersion, new OpenApiInfo
+			c.SwaggerDoc(SwaggerConstants.ApiVersion, new OpenApiInfo
 			{
-				Title = ApplicationAPIName,
-				Version = ApiVersion,
-				Description = SwaggerDescription,
+				Title = SwaggerConstants.ApplicationAPIName,
+				Version = SwaggerConstants.ApiVersion,
+				Description = SwaggerConstants.SwaggerDescription,
 				Contact = new OpenApiContact
 				{
-					Name = AuthorDetails.Name,
-					Email = AuthorDetails.Email
+					Name = SwaggerConstants.AuthorDetails.Name,
+					Email = SwaggerConstants.AuthorDetails.Email
 				}
 
 			});
@@ -95,8 +95,8 @@ public static class Program
 		app.UseSwagger();
 		app.UseSwaggerUI(c =>
 		{
-			c.SwaggerEndpoint(SwaggerEndpointUrl, $"{ApplicationAPIName}.{ApiVersion}");
-			c.RoutePrefix = SwaggerUiPrefix;
+			c.SwaggerEndpoint(SwaggerConstants.SwaggerEndpointUrl, $"{SwaggerConstants.ApplicationAPIName}.{SwaggerConstants.ApiVersion}");
+			c.RoutePrefix = SwaggerConstants.SwaggerUiPrefix;
 		});
 
 		app.UseExceptionHandler();

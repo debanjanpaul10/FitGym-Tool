@@ -2,14 +2,17 @@ export class RouteConstants {
   public static Dashboard = {
     Name: 'Dashboard',
     Link: 'dashboard',
+    RouteValue: '/dashboard',
   };
   public static Login = {
     Name: 'Login',
     Link: '',
+    RouteValue: '/',
   };
   public static Error = {
     Name: 'error',
     Link: 'error',
+    RouteValue: '/errpr',
   };
 }
 

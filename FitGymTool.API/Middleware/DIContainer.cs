@@ -5,6 +5,10 @@
 // <summary>The Dependency Injection Container Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using static FitGymTool.Shared.Constants.ConfigurationConstants;
+
 namespace FitGymTool.API.Middleware;
 
 /// <summary>
@@ -12,9 +16,29 @@ namespace FitGymTool.API.Middleware;
 /// </summary>
 public static class DIContainer
 {
-	public static void ConfigureAzureSqlServer(this WebApplicationBuilder builder)
+	/// <summary>
+	/// Configures the SQL database services for the application.
+	/// </summary>
+	/// <param name="builder">The web application builder.</param>
+	public static void ConfigureSqlDatabase(this WebApplicationBuilder builder)
 	{
-
+		var sqlConnectionString = builder.Environment.IsDevelopment()
+			? builder.Configuration[LocalSqlConnectionStringConstant]
+			: builder.Configuration[AzureSqlConnectionStringConstant];
+		if (!string.IsNullOrEmpty(sqlConnectionString))
+		{
+			builder.Services.AddDbContext<SqlDbContext>(options =>
+			{
+				options.UseSqlServer(
+					connectionString: sqlConnectionString,
+					options => options.EnableRetryOnFailure(
+						maxRetryCount: 3,
+						maxRetryDelay: TimeSpan.FromSeconds(30),
+						errorNumbersToAdd: null
+					)
+				);
+			});
+		}
 	}
 
 	public static void AddBusinessManagerDependencies(this IServiceCollection services)

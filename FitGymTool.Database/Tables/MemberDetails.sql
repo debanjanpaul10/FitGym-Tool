@@ -6,6 +6,7 @@
 	[MemberPhoneNumber] NVARCHAR(MAX) NOT NULL,
 	[MemberAddress] NVARCHAR(MAX) NOT NULL,
 	[MemberDateOfBirth] DATE NOT NULL,
+	[MemberGender] NVARCHAR(10) NOT NULL,
 	[MemberJoinDate] DATE NOT NULL,
 	[MembershipStatus] NVARCHAR(50) NOT NULL,
 	[MemberGuid] UNIQUEIDENTIFIER NOT NULL DEFAULT(NEWID()),

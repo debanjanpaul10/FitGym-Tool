@@ -1,4 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   NavigationCancel,
   NavigationEnd,
@@ -8,30 +15,36 @@ import {
   RouterOutlet,
 } from '@angular/router';
 
-import { LeftNavigationComponent } from '@components/left-navigation-component/left-navigation-component';
+import { HeaderComponent } from '@components/common/header-component/header-component';
+import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation-component';
 import { RouteConstants } from '@shared/application.constants';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LeftNavigationComponent],
+  imports: [
+    RouterOutlet,
+    LeftNavigationComponent,
+    HeaderComponent,
+    CommonModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  public isLoginPage: boolean = false;
-  public isRouteLoading: boolean = false;
+  public isLoginPage: WritableSignal<boolean> = signal(false);
+  public isRouteLoading: WritableSignal<boolean> = signal(false);
 
   private router = inject(Router);
 
   constructor() {
     const path = window.location.pathname;
-    this.isLoginPage = path === RouteConstants.Login.Link;
+    this.isLoginPage.set(path === RouteConstants.Login.RouteValue);
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.isRouteLoading = true;
-        this.isLoginPage = event.url === RouteConstants.Login.Link;
+        this.isRouteLoading.set(true);
+        this.isLoginPage.set(event.url === RouteConstants.Login.RouteValue);
       }
 
       if (
@@ -39,7 +52,7 @@ export class AppComponent implements OnInit {
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        this.isRouteLoading = false;
+        this.isRouteLoading.set(false);
       }
     });
   }

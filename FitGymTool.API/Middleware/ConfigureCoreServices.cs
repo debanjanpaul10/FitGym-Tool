@@ -7,6 +7,7 @@
 
 using Azure.Identity;
 using FitGymTool.API.Controllers;
+using FitGymTool.Business.Helpers;
 using FitGymTool.Shared.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
@@ -54,11 +55,15 @@ public static class ConfigureCoreServices
 	public static void ConfigureApiServices(this WebApplicationBuilder builder)
 	{
 		builder.ConfigureAuthenticationServices();
-		builder.ConfigureAzureSqlServer();
+		builder.ConfigureSqlDatabase();
 
 		builder.Services.AddMemoryCache();
 		builder.Services.AddBusinessManagerDependencies();
 		builder.Services.AddDataManagerDependencies();
+		builder.Services.AddAutoMapper(mapperConfig =>
+		{
+			mapperConfig.AddProfile<MappingProfile>();
+		});
 	}
 
 	#region PRIVATE Methods
@@ -83,8 +88,8 @@ public static class ConfigureCoreServices
 				ValidateAudience = true,
 				RequireExpirationTime = true,
 				RequireSignedTokens = true,
-				ValidAudience = configuration[AzureAdApiClientIdConstant],
-				ValidIssuer = configuration[AzureAdApiIssuerConstant],
+				ValidAudience = configuration[AuthenticationConstants.AzureAdApiClientIdConstant],
+				ValidIssuer = configuration[AuthenticationConstants.AzureAdApiIssuerConstant],
 				SignatureValidator = (token, _) => new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(token)
 			};
 			options.Events = new JwtBearerEvents

@@ -1,6 +1,7 @@
-<div class="container-fluid">
-  @if (!isLoginPage && !isRouteLoading) {
+<div *ngIf="!isLoginPage() && !isRouteLoading()">
+  <app-header-component></app-header-component>
   <app-left-navigation-component></app-left-navigation-component>
-  }
+</div>
+<div class="container-fluid">
   <router-outlet></router-outlet>
 </div>

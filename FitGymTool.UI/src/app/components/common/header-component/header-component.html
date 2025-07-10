@@ -1,0 +1,22 @@
+<div class="card">
+  <p-menubar class="header-menubar">
+    <ng-template #start>
+      <p-button variant="text" (click)="redirectHomePage()">
+        <span>
+          <img src="../../../assets/Images/fitgym_header.png" height="50px" />
+        </span>
+      </p-button>
+    </ng-template>
+
+    <ng-template #end>
+      <div class="flex items-center gap-2">
+        <p-avatar
+          [label]="currentUserName().split(' ')[0].charAt(0)"
+          shape="circle"
+          styleClass="avatar-violet"
+          pTooltip="{{ currentUserName() }}"
+        />
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
