@@ -1,22 +1,26 @@
-<div class="card">
-  <p-menubar class="header-menubar">
-    <ng-template #start>
-      <p-button variant="text" (click)="redirectHomePage()">
-        <span>
-          <img src="../../../assets/Images/fitgym_header.png" height="50px" />
-        </span>
-      </p-button>
-    </ng-template>
-
-    <ng-template #end>
-      <div class="flex items-center gap-2">
-        <p-avatar
-          [label]="currentUserName().split(' ')[0].charAt(0)"
-          shape="circle"
-          styleClass="avatar-violet"
-          pTooltip="{{ currentUserName() }}"
-        />
-      </div>
-    </ng-template>
-  </p-menubar>
+<div class="header-bar-custom">
+  <div class="header-left">
+    <p-button
+      icon="pi pi-bars"
+      class="hamburger-btn"
+      (click)="openDrawer()"
+      variant="text"
+    ></p-button>
+  </div>
+  <div class="header-center">
+    <img
+      src="../../../assets/Images/fitgym_header.png"
+      class="header-logo"
+      height="50px"
+      (click)="redirectHomePage()"
+    />
+  </div>
+  <div class="header-right">
+    <p-avatar
+      [label]="currentUserName().split(' ')[0].charAt(0)"
+      shape="circle"
+      styleClass="avatar-violet"
+      pTooltip="{{ currentUserName() }}"
+    />
+  </div>
 </div>

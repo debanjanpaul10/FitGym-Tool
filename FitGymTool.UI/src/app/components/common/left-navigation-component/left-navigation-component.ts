@@ -11,6 +11,7 @@ import { MsalService } from '@azure/msal-angular';
 import { DrawerConstants } from '@shared/application.constants';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
+import { DrawerService } from '@services/drawer.service';
 
 @Component({
   selector: 'app-left-navigation-component',
@@ -22,10 +23,15 @@ export class LeftNavigationComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
   public DrawerConstants = DrawerConstants;
-  public isVisible: WritableSignal<boolean> = signal(false);
+  public isVisible: WritableSignal<boolean>;
   public menuItems: any;
 
   private readonly authService = inject(MsalService);
+  private readonly drawerService = inject(DrawerService);
+
+  constructor() {
+    this.isVisible = this.drawerService.isDrawerOpen;
+  }
 
   ngOnInit(): void {
     this.menuItems = [
@@ -53,12 +59,9 @@ export class LeftNavigationComponent implements OnInit {
     ];
   }
 
-  public toggleVisible(): void {
-    this.isVisible.set(!this.isVisible());
-  }
-
   public closeCallback(e: any): void {
     this.drawerRef.close(e);
+    this.drawerService.closeDrawer();
   }
 
   private logoutRedirect(): void {

@@ -6,13 +6,90 @@
 }
 
 .header-menubar {
+  position: relative;
+  min-height: 55px;
   height: 55px;
   align-items: center;
   display: flex;
   width: 100vw !important;
+  overflow: visible !important;
 }
 
 .avatar-violet {
   background-color: #c084fc !important;
   color: white !important;
+}
+
+:host ::ng-deep .hamburger-btn,
+:host ::ng-deep .hamburger-btn:hover,
+:host ::ng-deep .hamburger-btn:focus,
+:host ::ng-deep .hamburger-btn:active,
+:host ::ng-deep .hamburger-btn .p-button,
+:host ::ng-deep .hamburger-btn .p-button:hover,
+:host ::ng-deep .hamburger-btn .p-button:focus,
+:host ::ng-deep .hamburger-btn .p-button:active {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  color: inherit !important;
+  cursor: pointer !important;
+  transition: none !important;
+}
+:host ::ng-deep .hamburger-btn .p-button:before,
+:host ::ng-deep .hamburger-btn .p-button:after {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  transition: none !important;
+}
+
+.header-logo-absolute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  height: 50px;
+  max-width: 200px;
+}
+
+.header-bar-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 55px;
+  position: relative;
+  background: #18181b;
+  border-bottom: 2px solid #27272a;
+}
+
+.header-left,
+.header-right {
+  flex: 0 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo {
+  height: 50px;
+  max-width: 200px;
+  cursor: pointer;
+}
+
+.header-bar-custom,
+.header-bar-custom * {
+  color: #fff !important;
+  fill: #fff !important;
 }
