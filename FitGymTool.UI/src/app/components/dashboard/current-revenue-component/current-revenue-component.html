@@ -1,8 +1,52 @@
-<div class="current-revenue-card">
-  <p-card>
-    <ng-template #header>
-      <h1>Pending</h1>
-    </ng-template>
-    <ng-template #title>Current Revenue</ng-template>
-  </p-card>
+<div class="current-revenue-card card shadow-sm border-0 bg-dark text-light">
+  <div class="card-body">
+    <h5 class="card-title">{{ chartConstants.Header }}</h5>
+    <h6 class="card-subtitle mb-4">{{ chartConstants.SubHeader }}</h6>
+    <div
+      class="chart-container d-flex justify-content-center align-items-center"
+    >
+      <canvas #revenueChartCanvas></canvas>
+    </div>
+    <div class="mt-4">
+      <span class="me-3"
+        ><span
+          style="
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: green;
+            border-radius: 3px;
+            margin-right: 6px;
+          "
+        ></span
+        >{{ chartConstants.Labels.Paid.yAxis }}</span
+      >
+      <span class="me-3"
+        ><span
+          style="
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: red;
+            border-radius: 3px;
+            margin-right: 6px;
+          "
+        ></span
+        >{{ chartConstants.Labels.NotPaid.yAxis }}</span
+      >
+      <span
+        ><span
+          style="
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: grey;
+            border-radius: 3px;
+            margin-right: 6px;
+          "
+        ></span
+        >{{ chartConstants.Labels.SubCancelled.xAxis }}</span
+      >
+    </div>
+  </div>
 </div>

@@ -33,3 +33,25 @@ export class DrawerConstants {
     LogoutButton: 'Logout',
   };
 }
+
+export class ChartConstants {
+  public static Labels = {
+    Paid: {
+      yAxis: 'Fees paid',
+      legend: 'Fees paid',
+    },
+    NotPaid: {
+      yAxis: 'Yet to pay',
+      legend: 'Fees yet to be paid',
+    },
+    SubCancelled: {
+      yAxis: 'Cancelled',
+      xAxis: 'Subscription Cancelled This Month',
+      legend: 'Subscription fees cancelled in the current month',
+    },
+  };
+  public static AxisLabels = {};
+  public static Header = 'Current Revenue ';
+  public static SubHeader =
+    'Revenue generated from the end of the last month till today';
+}
