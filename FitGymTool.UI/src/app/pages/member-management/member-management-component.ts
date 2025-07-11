@@ -54,6 +54,8 @@ export class MemberManagementComponent implements OnInit {
       next: (response) => {
         if (response && response?.isSuccess) {
           this.allUsersData.set(response.responseData);
+        } else {
+          this.toasterService.showError(response?.responseData);
         }
       },
       error: (err) => {
