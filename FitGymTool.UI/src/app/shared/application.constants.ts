@@ -10,9 +10,14 @@ export class RouteConstants {
     RouteValue: '/',
   };
   public static Error = {
-    Name: 'error',
+    Name: 'Error',
     Link: 'error',
     RouteValue: '/errpr',
+  };
+  public static MemberManagement = {
+    Name: 'Members',
+    Link: 'members',
+    RouteValue: '/members',
   };
 }
 

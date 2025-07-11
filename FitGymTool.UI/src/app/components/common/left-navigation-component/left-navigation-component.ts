@@ -8,10 +8,11 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
-import { DrawerConstants } from '@shared/application.constants';
+import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { DrawerService } from '@services/drawer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-navigation-component',
@@ -26,8 +27,9 @@ export class LeftNavigationComponent implements OnInit {
   public isVisible: WritableSignal<boolean>;
   public menuItems: any;
 
-  private readonly authService = inject(MsalService);
-  private readonly drawerService = inject(DrawerService);
+  private readonly authService: MsalService = inject(MsalService);
+  private readonly drawerService: DrawerService = inject(DrawerService);
+  private readonly routerService: Router = inject(Router);
 
   constructor() {
     this.isVisible = this.drawerService.isDrawerOpen;
@@ -66,17 +68,21 @@ export class LeftNavigationComponent implements OnInit {
 
   private logoutRedirect(): void {
     this.authService.logoutRedirect();
+    this.drawerService.closeDrawer();
   }
 
   private navigateUsersDashboard(): void {
-    alert('Feature being worked on');
+    this.routerService.navigate([RouteConstants.MemberManagement.Link]);
+    this.drawerService.closeDrawer();
   }
 
   private navigateFeesDashboard(): void {
     alert('Feature being worked on');
+    this.drawerService.closeDrawer();
   }
 
   private navigateFacilityDashboard(): void {
     alert('Feature being worked on');
+    this.drawerService.closeDrawer();
   }
 }

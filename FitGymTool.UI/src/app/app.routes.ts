@@ -19,4 +19,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/error/error-component').then((c) => c.ErrorComponent),
   },
+  {
+    path: RouteConstants.MemberManagement.Link,
+    loadComponent: () =>
+      import('./pages/member-management/member-management-component').then(
+        (c) => c.MemberManagementComponent
+      ),
+  },
 ];

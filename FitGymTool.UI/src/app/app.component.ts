@@ -17,6 +17,8 @@ import {
 
 import { HeaderComponent } from '@components/common/header-component/header-component';
 import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation-component';
+import { LoaderComponent } from '@components/common/loader-component/loader-component';
+import { LoaderService } from '@services/loader.service';
 import { RouteConstants } from '@shared/application.constants';
 
 @Component({
@@ -27,6 +29,7 @@ import { RouteConstants } from '@shared/application.constants';
     LeftNavigationComponent,
     HeaderComponent,
     CommonModule,
+    LoaderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -35,7 +38,8 @@ export class AppComponent implements OnInit {
   public isLoginPage: WritableSignal<boolean> = signal(false);
   public isRouteLoading: WritableSignal<boolean> = signal(false);
 
-  private router = inject(Router);
+  private router: Router = inject(Router);
+  private loaderService: LoaderService = inject(LoaderService);
 
   constructor() {
     const path = window.location.pathname;
@@ -57,5 +61,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loaderService.loadingOn();
+  }
 }

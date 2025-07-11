@@ -11,9 +11,10 @@ import { MsalService } from '@azure/msal-angular';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccountInfo } from '@azure/msal-browser';
-import { DrawerService } from '@services/drawer.service';
 
-import { DrawerConstants } from '@shared/application.constants';
+import { DrawerService } from '@services/drawer.service';
+import { DrawerConstants, RouteConstants } from '@shared/application.constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-component',
@@ -27,7 +28,8 @@ export class HeaderComponent implements OnInit {
   public currentUserName: WritableSignal<string> = signal('');
 
   private readonly msalService: MsalService = inject(MsalService);
-  private readonly drawerService = inject(DrawerService);
+  private readonly drawerService: DrawerService = inject(DrawerService);
+  private readonly routerService: Router = inject(Router);
 
   ngOnInit(): void {
     this.currentUserProfile = this.msalService.instance.getActiveAccount();
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public redirectHomePage(): void {
-    alert('home');
+    this.routerService.navigate([RouteConstants.Dashboard.Link]);
   }
 
   public openDrawer(): void {

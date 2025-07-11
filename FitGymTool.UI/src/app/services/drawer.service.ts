@@ -4,15 +4,15 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 export class DrawerService {
   public isDrawerOpen: WritableSignal<boolean> = signal(false);
 
-  openDrawer() {
+  public openDrawer(): void {
     this.isDrawerOpen.set(true);
   }
 
-  closeDrawer() {
+  public closeDrawer(): void {
     this.isDrawerOpen.set(false);
   }
 
-  toggleDrawer() {
+  public toggleDrawer(): void {
     this.isDrawerOpen.set(!this.isDrawerOpen());
   }
-} 
+}

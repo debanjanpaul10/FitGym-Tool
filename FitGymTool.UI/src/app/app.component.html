@@ -1,7 +1,10 @@
-<div *ngIf="!isLoginPage() && !isRouteLoading()">
-  <app-header-component></app-header-component>
-  <app-left-navigation-component></app-left-navigation-component>
-</div>
-<div class="container-fluid">
-  <router-outlet></router-outlet>
+<div>
+  <app-loader-component [detectRouteTransitions]="true"></app-loader-component>
+  <div *ngIf="!isLoginPage() && !isRouteLoading()">
+    <app-header-component></app-header-component>
+    <app-left-navigation-component></app-left-navigation-component>
+  </div>
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
 </div>
