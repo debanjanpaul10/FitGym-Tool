@@ -85,7 +85,7 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, "N/A"));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 
 			var members = await this._membersDataService.GetAllMembersAsync();
 			var memberDTOs = this._mapper.Map<List<MemberDetailsDTO>>(members);
@@ -100,7 +100,7 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, "N/A"));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 		}
 	}
 
