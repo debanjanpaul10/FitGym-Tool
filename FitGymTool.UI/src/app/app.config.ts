@@ -29,10 +29,10 @@ import {
   MSALGuardConfigFactory,
   MSALInstanceFactory,
   MSALInterceptorConfigFactory,
-} from '@core/services/msal-service';
+} from '@core/helpers/msal-service';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
 import { MessageService } from 'primeng/api';
-import { msalInitializer } from '@core/services/msal-initializer';
+import { msalInitializer } from '@core/helpers/msal-initializer';
 
 export const appConfig: ApplicationConfig = {
   providers: [

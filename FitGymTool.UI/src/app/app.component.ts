@@ -20,6 +20,7 @@ import { LeftNavigationComponent } from '@components/common/left-navigation-comp
 import { LoaderComponent } from '@components/common/loader-component/loader-component';
 import { LoaderService } from '@services/loader.service';
 import { RouteConstants } from '@shared/application.constants';
+import { ToasterComponent } from '@components/common/toaster-component/toaster-component';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ import { RouteConstants } from '@shared/application.constants';
     HeaderComponent,
     CommonModule,
     LoaderComponent,
+    ToasterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
