@@ -1,0 +1,52 @@
+﻿// *********************************************************************************
+//	<copyright file="IUnitOfWork.cs" company="Personal">
+//		Copyright (c) 2025 Personal
+//	</copyright>
+// <summary>The Unit of Work Interface.</summary>
+// *********************************************************************************
+
+namespace FitGymTool.DataAccess.Contracts;
+
+/// <summary>
+/// The Unit of Work Interface.
+/// </summary>
+/// <seealso cref="IDisposable"/>"/>
+public interface IUnitOfWork : IDisposable
+{
+	/// <summary>
+	/// This method returns a repository for the specified entity type.
+	/// </summary>
+	/// <typeparam name="TEntity">The entity type.</typeparam>
+	/// <returns>The generic entity type.</returns>
+	IRepository<TEntity> Repository<TEntity>() where TEntity : class;
+
+	/// <summary>
+	/// This property provides access to the Members Data Service.
+	/// </summary>
+	IMembersDataService MembersDataService { get; }
+
+	/// <summary>
+	/// This method saves all changes made in this context to the database asynchronously.
+	/// </summary>
+	/// <returns>The save changes count.</returns>
+	Task<int> SaveChangesAsync();
+
+	/// <summary>
+	/// This method begins a new transaction asynchronously.
+	/// </summary>
+	/// <returns>A task to wait on.</returns>
+	Task BeginTransactionAsync();
+
+	/// <summary>
+	/// Commits all changes made in this context to the database asynchronously.
+	/// </summary>
+	/// <returns>A task to wait on.</returns>
+	Task CommitAsync();
+
+	/// <summary>
+	/// Rollbacks all changes made in this context to the database asynchronously.
+	/// </summary>
+	/// <returns>A task to wait on.</returns>
+	Task RollbackAsync();
+
+}

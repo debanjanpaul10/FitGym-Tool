@@ -5,7 +5,11 @@
 // <summary>The Dependency Injection Container Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Business.Contracts;
+using FitGymTool.Business.Services;
 using FitGymTool.DataAccess;
+using FitGymTool.DataAccess.Contracts;
+using FitGymTool.DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 using static FitGymTool.Shared.Constants.ConfigurationConstants;
 
@@ -41,12 +45,22 @@ public static class DIContainer
 		}
 	}
 
+	/// <summary>
+	/// Adds the business manager dependencies to the service collection.
+	/// </summary>
+	/// <param name="services">The service collection.</param>
 	public static void AddBusinessManagerDependencies(this IServiceCollection services)
 	{
-
+		services.AddScoped<IMembersService, MembersService>();
 	}
 
+	/// <summary>
+	/// Adds the data manager dependencies to the service collection.
+	/// </summary>
+	/// <param name="services">The service collection.</param>
 	public static void AddDataManagerDependencies(this IServiceCollection services)
 	{
+		services.AddScoped<IUnitOfWork, UnitOfWork>()
+			.AddScoped<IMembersDataService, MembersDataService>();
 	}
 }

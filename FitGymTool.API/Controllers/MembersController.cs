@@ -2,7 +2,7 @@
 //	<copyright file="MembersController.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Base Controller Class.</summary>
+// <summary>The Members Controller Class.</summary>
 // *********************************************************************************
 
 using FitGymTool.Business.Contracts;
@@ -14,6 +14,13 @@ using System.Globalization;
 
 namespace FitGymTool.API.Controllers;
 
+/// <summary>
+/// The Members Controller Class.
+/// </summary>
+/// <param name="membersService">The members service.</param>
+/// <param name="httpContextAccessor">The http context accessor.</param>
+/// <param name="logger">The logger service.</param>
+/// <seealso cref="BaseController"/>
 [ApiController]
 [Route(RouteConstants.MembersApiRoutes.BaseRoute_RoutePrefix)]
 public class MembersController(IMembersService membersService, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)

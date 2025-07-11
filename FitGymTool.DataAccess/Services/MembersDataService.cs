@@ -1,15 +1,14 @@
 ﻿// *********************************************************************************
-//	<copyright file="IMembersDataService.cs" company="Personal">
+//	<copyright file="MembersDataService.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Members Data Service Interface.</summary>
+// <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
 using FitGymTool.DataAccess.Contracts;
 using FitGymTool.DataAccess.Entity;
 using FitGymTool.Shared.Constants;
 using Microsoft.Extensions.Logging;
-using System.Data.Entity;
 using System.Globalization;
 
 namespace FitGymTool.DataAccess.Services;
@@ -17,18 +16,18 @@ namespace FitGymTool.DataAccess.Services;
 /// <summary>
 /// The Members Data Service Class.
 /// </summary>
-/// <param name="dbContext">The SQL database context.</param>
+/// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="IMembersDataService"/>
-public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataService> logger) : IMembersDataService
+public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataService> logger) : IMembersDataService
 {
 	/// <summary>
-	/// The SQL database context.
+	/// The unit of work for database operations.
 	/// </summary>
-	private readonly SqlDbContext _dbContext = dbContext;
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 	/// <summary>
-	/// The logger service.
+	/// The logger for logging operations.
 	/// </summary>
 	private readonly ILogger<MembersDataService> _logger = logger;
 
@@ -44,8 +43,8 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var existingMember = await this._dbContext.MemberDetails
-				.AnyAsync(member => member.MemberId == memberDetails.MemberId && member.MemberGuid == memberDetails.MemberGuid && member.IsActive);
+			var existingMember = (await this._unitOfWork.Repository<MemberDetails>()
+				.FindAsync(member => member.MemberId == memberDetails.MemberId && member.MemberGuid == memberDetails.MemberGuid && member.IsActive)).Any();
 			if (existingMember)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberAlreadyExistsMessageConstant);
@@ -54,8 +53,8 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 				throw ex;
 			}
 
-			await this._dbContext.MemberDetails.AddAsync(memberDetails);
-			await this._dbContext.SaveChangesAsync();
+			await this._unitOfWork.Repository<MemberDetails>().AddAsync(memberDetails);
+			await this._unitOfWork.SaveChangesAsync();
 
 			return true;
 		}
@@ -81,9 +80,9 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, "N/A"));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 
-			var members = await this._dbContext.MemberDetails.Where(m => m.IsActive).ToListAsync();
+			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(m => m.IsActive);
 			return members;
 		}
 		catch (Exception ex)
@@ -95,7 +94,7 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, "N/A"));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 		}
 	}
 
@@ -111,7 +110,7 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, memberId));
 
-			var member = await this._dbContext.MemberDetails.FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
+			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
 			return member;
 		}
 		catch (Exception ex)
@@ -139,7 +138,7 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var existingMember = await this._dbContext.MemberDetails.FirstOrDefaultAsync(m => m.MemberId == memberDetails.MemberId && m.IsActive);
+			var existingMember = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberDetails.MemberId && m.IsActive);
 			if (existingMember == null)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
@@ -148,8 +147,9 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 				throw ex;
 			}
 
-			this._dbContext.Entry(existingMember).CurrentValues.SetValues(memberDetails);
-			await this._dbContext.SaveChangesAsync();
+			// Update the entity
+			this._unitOfWork.Repository<MemberDetails>().Update(memberDetails);
+			await this._unitOfWork.SaveChangesAsync();
 
 			return true;
 		}
@@ -178,7 +178,7 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 
-			var member = await this._dbContext.MemberDetails.FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
+			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
 			if (member == null)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
@@ -188,7 +188,8 @@ public class MembersDataService(SqlDbContext dbContext, ILogger<MembersDataServi
 			}
 
 			member.IsActive = false;
-			await this._dbContext.SaveChangesAsync();
+			this._unitOfWork.Repository<MemberDetails>().Update(member);
+			await this._unitOfWork.SaveChangesAsync();
 
 			return true;
 		}

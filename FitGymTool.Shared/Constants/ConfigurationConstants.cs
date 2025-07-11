@@ -115,8 +115,6 @@ public static class ConfigurationConstants
 	/// </summary>
 	public const string FitGymAPIAppConfigKeyConstant = "FitGym.API";
 
-
-
 	/// <summary>
 	/// The local SQL database connection string constant.
 	/// </summary>

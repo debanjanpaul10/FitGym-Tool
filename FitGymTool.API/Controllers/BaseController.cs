@@ -44,7 +44,7 @@ public abstract class BaseController : ControllerBase
 			}
 			else
 			{
-				this.UserFullName = "NA";
+				this.UserFullName = FitGymToolConstants.NotApplicableStringConstant;
 			}
 
 			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
@@ -54,7 +54,7 @@ public abstract class BaseController : ControllerBase
 			}
 			else
 			{
-				this.UserEmail = "NA";
+				this.UserEmail = FitGymToolConstants.NotApplicableStringConstant;
 			}
 		}
 	}
