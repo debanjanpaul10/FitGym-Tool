@@ -38,7 +38,7 @@ public class SqlDbContext : DbContext
 	/// <summary>
 	/// The Member Details DbSet.
 	/// </summary>
-	public DbSet<MemberDetails> MemberDetails { get; set; };
+	public DbSet<MemberDetails> MemberDetails { get; set; }
 
 	/// <summary>
 	/// The Fees Status DbSet.
@@ -88,5 +88,6 @@ public class SqlDbContext : DbContext
 	/// </remarks>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		modelBuilder.Entity<MemberDetails>().HasKey(m => m.MemberId);
 	}
 }

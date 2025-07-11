@@ -60,7 +60,7 @@ public static class DIContainer
 	/// <param name="services">The service collection.</param>
 	public static void AddDataManagerDependencies(this IServiceCollection services)
 	{
-		services.AddScoped<IUnitOfWork, UnitOfWork>()
-			.AddScoped<IMembersDataService, MembersDataService>();
+		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		services.AddScoped<IMembersDataService, MembersDataService>();
 	}
 }

@@ -7,6 +7,7 @@
 
 using FitGymTool.DataAccess.Contracts;
 using Microsoft.EntityFrameworkCore.Storage;
+using FitGymTool.DataAccess.Repositories;
 
 namespace FitGymTool.DataAccess.Services;
 
@@ -14,17 +15,20 @@ namespace FitGymTool.DataAccess.Services;
 /// The Unit of Work Class.
 /// </summary>
 /// <seealso cref="IUnitOfWork"/>
+/// <remarks>
+/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+/// </remarks>
+/// <param name="dbContext">The sql db context.</param>
 public class UnitOfWork : IUnitOfWork
 {
 	/// <summary>
 	/// The SQL DB Context.
 	/// </summary>
 	private readonly SqlDbContext _dbContext;
-
 	/// <summary>
 	/// The repositories dictionary to hold repositories for different entity types.
 	/// </summary>
-	private readonly Dictionary<Type, object> _repositories;
+	private readonly Dictionary<Type, object> _repositories = new();
 
 	/// <summary>
 	/// The transaction for the unit of work.
@@ -32,20 +36,12 @@ public class UnitOfWork : IUnitOfWork
 	private IDbContextTransaction _transaction;
 
 	/// <summary>
-	/// The members data service.
-	/// </summary>
-	public IMembersDataService MembersDataService { get; private set; }
-
-	/// <summary>
 	/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
 	/// </summary>
 	/// <param name="dbContext">The sql db context.</param>
-	/// <param name="MembersDataService">The members data service.</param>
-	public UnitOfWork(SqlDbContext dbContext, IMembersDataService MembersDataService)
+	public UnitOfWork(SqlDbContext dbContext)
 	{
-		this._dbContext = dbContext;
-		this.MembersDataService = MembersDataService;
-		this._repositories = [];
+		_dbContext = dbContext;
 	}
 
 	/// <summary>
@@ -55,7 +51,13 @@ public class UnitOfWork : IUnitOfWork
 	/// <returns>The generic entity type.</returns>
 	public IRepository<TEntity> Repository<TEntity>() where TEntity : class
 	{
-		return (IRepository<TEntity>)this._repositories[typeof(TEntity)];
+		var type = typeof(TEntity);
+		if (!_repositories.TryGetValue(type, out var repository))
+		{
+			repository = new GenericRepository<TEntity>(_dbContext);
+			_repositories[type] = repository;
+		}
+		return (IRepository<TEntity>)repository;
 	}
 
 	/// <summary>
@@ -108,5 +110,6 @@ public class UnitOfWork : IUnitOfWork
 	{
 		this._dbContext.Dispose();
 		this._transaction?.Dispose();
+		GC.SuppressFinalize(this);
 	}
 }

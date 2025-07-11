@@ -31,5 +31,8 @@ public class MappingProfile : Profile
 			.ForMember(destination => destination.MemberGuid, option => option.Ignore())
 			.ForMember(destination => destination.IsActive, option => option.Ignore())
 			.ForMember(destination => destination.MemberId, option => option.Ignore());
+
+		CreateMap<MemberDetails, MemberDetailsDTO>();
+		CreateMap<MemberDetailsDTO, MemberDetails>();
 	}
 }

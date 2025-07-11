@@ -21,11 +21,6 @@ public interface IUnitOfWork : IDisposable
 	IRepository<TEntity> Repository<TEntity>() where TEntity : class;
 
 	/// <summary>
-	/// This property provides access to the Members Data Service.
-	/// </summary>
-	IMembersDataService MembersDataService { get; }
-
-	/// <summary>
 	/// This method saves all changes made in this context to the database asynchronously.
 	/// </summary>
 	/// <returns>The save changes count.</returns>

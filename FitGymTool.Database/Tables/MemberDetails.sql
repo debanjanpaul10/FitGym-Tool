@@ -14,10 +14,10 @@
 )
 GO;
 
-CREATE NONCLUSTERED INDEX IX_MemberDetails_MemberEmail ON [dbo].[MemberDetails] ([MemberEmail])
+CREATE NONCLUSTERED INDEX IX_MemberDetails_MemberId ON [dbo].[MemberDetails] ([MemberId])
 GO;
 
-CREATE NONCLUSTERED INDEX IX_MemberDetails_MemberPhoneNumber ON [dbo].[MemberDetails] ([MemberPhoneNumber])
+CREATE NONCLUSTERED INDEX IX_MemberDetails_IsActive ON [dbo].[MemberDetails] ([IsActive])
 GO;
 
 CREATE NONCLUSTERED INDEX IX_MemberDetails_MemberGuid ON [dbo].[MemberDetails] ([MemberGuid])
