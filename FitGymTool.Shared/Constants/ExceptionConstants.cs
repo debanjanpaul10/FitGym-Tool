@@ -44,6 +44,16 @@ public static class ExceptionConstants
 	public const string ConfigurationValueIsEmptyMessageConstant = "The configuration key is empty!";
 
 	/// <summary>
+	/// Something went wrong message constant.
+	/// </summary>
+	public const string SomethingWentWrongMessageConstant = "Something went wrong. Please try again later.";
+
+	/// <summary>
+	/// he Unauthorized Access Message Constant.
+	/// </summary>
+	public const string UnauthorizedAccessMessageConstant = "Unauthorized access. Please log in to continue.";
+
+	/// <summary>
 	/// The Validation Error Messages Class.
 	/// </summary>
 	public static class ValidationErrorMessages
@@ -62,7 +72,12 @@ public static class ExceptionConstants
 		/// The member not found message constant.
 		/// </summary>
 		public const string MemberNotFoundMessageConstant = "Member with the specified ID was not found.";
-	}
 
+		/// <summary>
+		/// The member details are invalid message constant.
+		/// </summary>
+		public const string MemberCouldNotBeAddedMessageConstant = "Member could not be added. Please check the details and try again.";
+
+	}
 
 }

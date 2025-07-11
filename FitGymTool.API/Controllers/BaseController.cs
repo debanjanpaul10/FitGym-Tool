@@ -20,7 +20,15 @@ namespace FitGymTool.API.Controllers;
 [Authorize]
 public abstract class BaseController : ControllerBase
 {
-	protected string UserName = string.Empty;
+	/// <summary>
+	/// The Current User Name.
+	/// </summary>
+	protected string UserFullName = string.Empty;
+
+	/// <summary>
+	/// The Current User Email.
+	/// </summary>
+	protected string UserEmail = string.Empty;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="BaseController"/> class.
@@ -29,14 +37,24 @@ public abstract class BaseController : ControllerBase
 	{
 		if (httpContextAccessor.HttpContext is not null && httpContextAccessor.HttpContext?.User is not null)
 		{
-			var userName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.UserNameClaimConstant))?.Value;
-			if (!string.IsNullOrEmpty(userName))
+			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
+			if (!string.IsNullOrEmpty(userFullName))
 			{
-				this.UserName = userName;
+				this.UserFullName = userFullName;
 			}
 			else
 			{
-				this.UserName = "NA";
+				this.UserFullName = "NA";
+			}
+
+			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
+			if (!string.IsNullOrEmpty(userEmail))
+			{
+				this.UserEmail = userEmail;
+			}
+			else
+			{
+				this.UserEmail = "NA";
 			}
 		}
 	}
@@ -46,7 +64,7 @@ public abstract class BaseController : ControllerBase
 	/// </summary>
 	/// <param name="responseData">The response data.</param>
 	/// <returns>The response DTO.</returns>
-	protected ResponseDTO PrepareSuccessResponse(object responseData)
+	protected ResponseDTO HandleSuccessRequestResponse(object responseData)
 	{
 		return new ResponseDTO()
 		{
@@ -73,12 +91,26 @@ public abstract class BaseController : ControllerBase
 	}
 
 	/// <summary>
+	/// Handles the unauthorized request response.
+	/// </summary>
+	/// <returns>The response DTO.</returns>
+	protected ResponseDTO HandleUnAuthorizedRequestResponse()
+	{
+		return new ResponseDTO()
+		{
+			IsSuccess = false,
+			ResponseData = ExceptionConstants.UnauthorizedAccessMessageConstant,
+			StatusCode = StatusCodes.Status401Unauthorized,
+		};
+	}
+
+	/// <summary>
 	/// Handles the user authentication response.
 	/// </summary>
 	/// <returns>The boolean for authentication.</returns>
 	protected bool IsAuthorized()
 	{
-		if (!string.IsNullOrEmpty(this.UserName))
+		if (!string.IsNullOrEmpty(this.UserFullName) && !string.IsNullOrEmpty(this.UserEmail))
 		{
 			return true;
 		}

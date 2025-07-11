@@ -78,6 +78,16 @@ public static class ConfigurationConstants
 		/// The Azure AD API Issuer constant.
 		/// </summary>
 		public const string AzureAdApiIssuerConstant = "AzureAdApiIssuer";
+
+		/// <summary>
+		/// The user full name claim constant.
+		/// </summary>
+		public const string UserFullNameClaimConstant = "name";
+
+		/// <summary>
+		/// The user email claim constant.
+		/// </summary>
+		public const string UserEmailClaimConstant = "preferred_username";
 	}
 
 	/// <summary>
@@ -105,10 +115,7 @@ public static class ConfigurationConstants
 	/// </summary>
 	public const string FitGymAPIAppConfigKeyConstant = "FitGym.API";
 
-	/// <summary>
-	/// The user name claim constant.
-	/// </summary>
-	public const string UserNameClaimConstant = "username";
+
 
 	/// <summary>
 	/// The local SQL database connection string constant.
