@@ -44,7 +44,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
 			var existingMember = (await this._unitOfWork.Repository<MemberDetails>()
-				.FindAsync(member => member.MemberId == memberDetails.MemberId && member.MemberGuid == memberDetails.MemberGuid && member.IsActive)).Any();
+				.FindAsync(predicate: member => member.MemberId == memberDetails.MemberId && member.MemberGuid == memberDetails.MemberGuid && member.IsActive)).Any();
 			if (existingMember)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberAlreadyExistsMessageConstant);
@@ -82,7 +82,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 
-			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(m => m.IsActive, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
+			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(filter: m => m.IsActive, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
 			return members;
 		}
 		catch (Exception ex)
@@ -110,7 +110,8 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._unitOfWork.Repository<MemberDetails>().GetAsync(m => m.MemberEmail == memberEmail && m.IsActive, true, nameof(MemberDetails.MembershipStatusMapping));
+			var member = await this._unitOfWork.Repository<MemberDetails>().GetAsync(
+				filter: m => m.MemberEmail == memberEmail && m.IsActive, tracked: true, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
 			return member;
 		}
 		catch (Exception ex)
@@ -138,8 +139,8 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var existingMember = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberDetails.MemberId && m.IsActive);
-			if (existingMember == null)
+			var existingMember = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberDetails.MemberId && m.IsActive);
+			if (existingMember is null)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
@@ -178,8 +179,8 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 
-			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
-			if (member == null)
+			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberId && m.IsActive);
+			if (member is null)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
