@@ -3,7 +3,7 @@ export class ApiRoutes {
     BaseRoute: 'api/Members/',
     AddMember_ApiRoute: 'AddMember/',
     GetAllMembers_ApiRoute: 'GetAllMembers',
-    GetMemberById_ApiRoute: 'GetMemberById/',
+    GetMemberByEmailId_ApiRoute: 'GetMemberByEmailId',
     UpdateMember_ApiRoute: 'UpdateMember',
     DeleteMember_ApiRoute: 'DeleteMember',
   };

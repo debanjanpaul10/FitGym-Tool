@@ -21,7 +21,7 @@
               </div>
               <div class="count-value">{{ activeCount }}</div>
             </div>
-            <div class="count-item">
+            <div class="count-item mb-3">
               <div class="count-label d-flex align-items-center">
                 <span class="color-indicator termination"></span>
                 <span class="label-text"
@@ -29,6 +29,15 @@
                 >
               </div>
               <div class="count-value">{{ terminationCount }}</div>
+            </div>
+            <div class="count-item">
+              <div class="count-label d-flex align-items-center">
+                <span class="color-indicator expired"></span>
+                <span class="label-text"
+                  >{{ chartConstants.Labels.Expired.yAxis }}</span
+                >
+              </div>
+              <div class="count-value">{{ expiredCount }}</div>
             </div>
           </div>
         </div>

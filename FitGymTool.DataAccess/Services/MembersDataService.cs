@@ -99,30 +99,30 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 	}
 
 	/// <summary>
-	/// Gets a single member's details by MemberId asynchronously.
+	/// Gets a single member's details by Member's Email ID asynchronously.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="memberEmail">The member's Email ID.</param>
 	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
-	public async Task<MemberDetails?> GetMemberByIdAsync(int memberId)
+	public async Task<MemberDetails?> GetMemberByEmailIdAsync(string memberEmail)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberId == memberId && m.IsActive);
+			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberEmail == memberEmail && m.IsActive);
 			return member;
 		}
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 		}
 	}
 

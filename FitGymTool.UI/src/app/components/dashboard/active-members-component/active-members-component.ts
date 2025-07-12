@@ -45,8 +45,9 @@ export class ActiveMembersComponent
   activeUsersChartCanvas!: ElementRef<HTMLCanvasElement>;
 
   public chartConstants = ChartConstants.ActiveUsersChartConstants;
-  public activeCount: number = 50;
-  public terminationCount: number = 2;
+  public activeCount: number = 0;
+  public terminationCount: number = 0;
+  public expiredCount: number = 0;
   public memberDetails: WritableSignal<MemberDetailsDto[] | []> = signal([]);
   public isLoading: WritableSignal<boolean> = signal(true);
 
@@ -97,6 +98,7 @@ export class ActiveMembersComponent
     const customLabels = [
       this.chartConstants.Labels.Active.yAxis,
       this.chartConstants.Labels.OnTermination.yAxis,
+      this.chartConstants.Labels.Expired.yAxis,
     ];
 
     if (
@@ -111,12 +113,17 @@ export class ActiveMembersComponent
             labels: [
               this.chartConstants.Labels.Active.legend,
               this.chartConstants.Labels.OnTermination.legend,
+              this.chartConstants.Labels.Expired.legend,
             ],
             datasets: [
               {
                 label: this.chartConstants.SubHeader,
-                data: [this.activeCount, this.terminationCount],
-                backgroundColor: ['#7CFC98', '#FF7C7C'],
+                data: [
+                  this.activeCount,
+                  this.terminationCount,
+                  this.expiredCount,
+                ],
+                backgroundColor: ['#7CFC98', '#FFD27C', '#FF7C7C'],
               },
             ],
           },
@@ -156,6 +163,41 @@ export class ActiveMembersComponent
   }
 
   /**
+   * Updates the chart data based on the membershipStatus values from the API response.
+   * membershipStatus: 1 = Active, 2 = On Termination, 3 = Expired
+   */
+  private updateChartDataFromMembers(members: MemberDetailsDto[]): void {
+    let active = 0;
+    let onTermination = 0;
+    let expired = 0;
+    for (const member of members) {
+      switch (member.membershipStatus) {
+        case 1:
+          active++;
+          break;
+        case 2:
+          onTermination++;
+          break;
+        case 3:
+          expired++;
+          break;
+      }
+    }
+    this.activeCount = active;
+    this.terminationCount = onTermination;
+    this.expiredCount = expired;
+    // If the chart is already initialized, update it
+    if (this.activeUsersChart) {
+      this.activeUsersChart.data.datasets[0].data = [
+        this.activeCount,
+        this.terminationCount,
+        this.expiredCount,
+      ];
+      this.activeUsersChart.update();
+    }
+  }
+
+  /**
    * Fetches all member data from the API and updates the component state accordingly.
    *
    * This method initiates an asynchronous API call to retrieve all gym member information
@@ -172,6 +214,7 @@ export class ActiveMembersComponent
       next: (response: ResponseDto) => {
         if (response && response?.isSuccess) {
           this.memberDetails.set(response.responseData);
+          this.updateChartDataFromMembers(response.responseData);
         } else {
           this.toasterService.showError(response?.responseData);
         }

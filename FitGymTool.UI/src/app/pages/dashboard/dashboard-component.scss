@@ -2,3 +2,12 @@
   margin: 20px !important;
   padding: 20px !important;
 }
+
+.name-card {
+  padding: 0.625rem !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(11.5px) !important;
+  -webkit-backdrop-filter: blur(11.5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
+}

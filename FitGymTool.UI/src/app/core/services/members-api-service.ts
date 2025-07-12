@@ -20,4 +20,11 @@ export class MembersApiService {
     const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.GetAllMembers_ApiRoute}`;
     return this.httpClient.get<ResponseDto>(apiUrl);
   }
+
+  public GetMemberByEmailIdAsync(
+    emailAddress: string
+  ): Observable<ResponseDto> {
+    const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.GetMemberByEmailId_ApiRoute}`;
+    return this.httpClient.post<ResponseDto>(apiUrl, emailAddress);
+  }
 }

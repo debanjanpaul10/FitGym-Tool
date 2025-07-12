@@ -58,12 +58,16 @@ export class ChartConstants {
   public static ActiveUsersChartConstants = {
     Labels: {
       Active: {
-        yAxis: 'Active members',
+        yAxis: 'Active memberships',
         legend: 'Active',
       },
       OnTermination: {
-        yAxis: 'To be terminated members',
+        yAxis: 'On termination memberships',
         legend: 'On Termination',
+      },
+      Expired: {
+        yAxis: 'Expired memberships',
+        legend: 'Expired',
       },
     },
     Header: 'Active Members',

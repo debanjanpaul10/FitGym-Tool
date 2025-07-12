@@ -105,23 +105,23 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 	}
 
 	/// <summary>
-	/// Gets a single member's details by MemberId asynchronously.
+	/// Gets a single member's details by Member's Email ID asynchronously.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="memberEmail">The member's Email ID.</param>
 	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
-	public async Task<MemberDetailsDTO> GetMemberByIdAsync(int memberId)
+	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._membersDataService.GetMemberByIdAsync(memberId);
+			var member = await this._membersDataService.GetMemberByEmailIdAsync(memberEmail);
 			if (member is null)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, ex.Message));
+					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
 			var memberDTO = this._mapper.Map<MemberDetailsDTO>(member);
@@ -130,13 +130,13 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByIdAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 		}
 	}
 

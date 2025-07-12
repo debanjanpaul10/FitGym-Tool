@@ -67,6 +67,10 @@
   &.termination {
     background: #ff7c7c;
   }
+
+  &.expired {
+    background: #ffd27c;
+  }
 }
 
 .label-text {

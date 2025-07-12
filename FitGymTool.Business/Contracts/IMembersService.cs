@@ -30,11 +30,11 @@ public interface IMembersService
 	Task<List<MemberDetailsDTO>> GetAllMembersAsync();
 
 	/// <summary>
-	/// Gets a single member's details by MemberId asynchronously.
+	/// Gets a single member's details by Member's Email ID. asynchronously.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="memberEmail">The member's Email ID.</param>
 	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
-	Task<MemberDetailsDTO> GetMemberByIdAsync(int memberId);
+	Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail);
 
 	/// <summary>
 	/// Updates an existing member's details asynchronously.

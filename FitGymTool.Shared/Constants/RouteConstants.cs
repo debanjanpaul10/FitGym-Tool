@@ -34,9 +34,9 @@ public static class RouteConstants
 		public const string GetAllMembers_ApiRoute = "GetAllMembers";
 
 		/// <summary>
-		/// The route for getting a single member's details by MemberId.
+		/// The route for getting a single member's details by Member's Email ID.
 		/// </summary>
-		public const string GetMemberById_ApiRoute = "GetMemberById/{memberId}";
+		public const string GetMemberByEmailId_ApiRoute = "GetMemberByEmailId";
 
 		/// <summary>
 		/// The route for updating an existing member's details.
