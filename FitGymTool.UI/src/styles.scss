@@ -15,7 +15,8 @@
 }
 
 .app-background {
-  background: var(--background-color) url('assets/Images/background.png') no-repeat center center fixed !important;
+  background: var(--background-color) url("assets/Images/background.png")
+    no-repeat center center fixed !important;
   background-size: cover !important;
   min-height: 100vh;
 }
