@@ -22,6 +22,7 @@ import { LoaderComponent } from '@components/common/loader-component/loader-comp
 import { LoaderService } from '@services/loader.service';
 import { RouteConstants } from '@shared/application.constants';
 import { ToasterComponent } from '@components/common/toaster-component/toaster-component';
+import { FooterComponent } from '@components/common/footer-component/footer-component';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ import { ToasterComponent } from '@components/common/toaster-component/toaster-c
     CommonModule,
     LoaderComponent,
     ToasterComponent,
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
