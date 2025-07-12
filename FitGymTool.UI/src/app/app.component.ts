@@ -14,6 +14,7 @@ import {
   Router,
   RouterOutlet,
 } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 import { HeaderComponent } from '@components/common/header-component/header-component';
 import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation-component';
@@ -44,8 +45,13 @@ export class AppComponent implements OnInit {
   private loaderService: LoaderService = inject(LoaderService);
 
   constructor() {
-    const path = window.location.pathname;
-    this.isLoginPage.set(path === RouteConstants.Login.RouteValue);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isLoginPage.set(
+          event.urlAfterRedirects === RouteConstants.Login.RouteValue
+        );
+      });
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
