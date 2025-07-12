@@ -74,3 +74,18 @@ export class ChartConstants {
     SubHeader: 'Current status of the Gym Members',
   };
 }
+
+export class MemberManagementConstants {
+  public static MembersDashboardConstant = {
+    AddMember: {
+      Name: 'Add a new member',
+      ImageSrc: '../../../assets/Images/add-user.jpg',
+      Alt: 'Add member image',
+    },
+    TerminateMember: {
+      Name: 'Terminate an existing member',
+      ImageSrc: '../../../assets/Images/terminate-user.jpg',
+      Alt: 'Terminate a member image',
+    },
+  };
+}

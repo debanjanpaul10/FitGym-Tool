@@ -14,6 +14,7 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster-service';
 import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberManagementConstants } from '@shared/application.constants';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -27,6 +28,9 @@ import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
   styleUrl: './member-management-component.scss',
 })
 export class MemberManagementComponent implements OnInit {
+  public MemberDashboardConstants =
+    MemberManagementConstants.MembersDashboardConstant;
+
   public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
   public isUsersDataLoading: WritableSignal<boolean> = signal(true);
 
@@ -44,6 +48,10 @@ export class MemberManagementComponent implements OnInit {
 
   public handleAddNewUser(): void {
     alert('Feature being actively worked on');
+  }
+
+  public handleTerminateUser(): void {
+    alert('Feature will be worked on soon!');
   }
 
   // #region PRIVATE Methods

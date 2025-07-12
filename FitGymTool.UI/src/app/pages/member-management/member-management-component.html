@@ -1,25 +1,65 @@
 <div class="card-containers">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <div
-        ngClass="add-members-card card shadow-m border-0 bg-dark text-light"
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
         (click)="handleAddNewUser()"
       >
         <img
           class="card-img-top"
-          src="../../../assets/Images/add-user.jpg"
+          [src]="MemberDashboardConstants.AddMember.ImageSrc"
+          [alt]="MemberDashboardConstants.AddMember.Alt"
+          height="auto"
+          width="auto"
+          ks
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            {{MemberDashboardConstants.AddMember.Name}}
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
+        (click)="handleTerminateUser()"
+      >
+        <img
+          class="card-img-top"
+          [src]="MemberDashboardConstants.TerminateMember.ImageSrc"
+          [alt]="MemberDashboardConstants.TerminateMember.Alt"
+          height="auto"
+          width="auto"
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            {{MemberDashboardConstants.TerminateMember.Name}}
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
+        (click)="handleTerminateUser()"
+      >
+        <img
+          class="card-img-top"
+          src="../../../assets/Images/terminate-user.jpg"
           alt="Add User Image"
           height="auto"
           width="auto"
         />
         <div class="card-body">
-          <h1 class="card-title">Add a new user</h1>
+          <h4 class="card-title">Terminate an existing user</h4>
         </div>
       </div>
     </div>
-    <div class="col-sm-3"></div>
-    <div class="col-sm-3"></div>
   </div>
+
   <div class="row">
     <div class="col-sm-12">
       <div *ngIf="isUsersDataLoading()">

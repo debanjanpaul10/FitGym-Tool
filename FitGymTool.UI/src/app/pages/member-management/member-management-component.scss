@@ -8,11 +8,12 @@
   border: 1px solid rgba(255, 255, 255, 0.41) !important;
 }
 
-.add-members-card {
+.member-management-card {
   transition: all 0.3s ease;
   cursor: pointer;
   width: 350px;
   margin: 20px auto;
+  height: 400px !important;
 
   &:hover {
     transform: scale(1.05);
