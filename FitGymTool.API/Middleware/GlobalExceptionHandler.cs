@@ -37,8 +37,10 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
 	/// </returns>
 	public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
 	{
-		var problemDetails = new ProblemDetails();
-		problemDetails.Instance = httpContext.Request.Path;
+		var problemDetails = new ProblemDetails
+		{
+			Instance = httpContext.Request.Path
+		};
 		if (exception is FitGymToolExceptions ex)
 		{
 			httpContext.Response.StatusCode = ex.StatusCode;
