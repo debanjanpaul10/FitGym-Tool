@@ -17,16 +17,16 @@ BEGIN
 END
 GO;
 
-IF NOT EXISTS (SELECT TOP 1 1 FROM dbo.MembershipStatusMapping WHERE IsActive=1 AND StatusName='OnTermination')
+IF NOT EXISTS (SELECT TOP 1 1 FROM dbo.MembershipStatusMapping WHERE IsActive=1 AND StatusName='On Termination')
 BEGIN
 	INSERT INTO dbo.MembershipStatusMapping (StatusName, StatusId, IsActive, DateCreated)
-	VALUES ('OnTermination', 2, 1, GETUTCDATE())
+	VALUES ('On Termination', 2, 1, GETUTCDATE())
 END
 GO;
 
-IF NOT EXISTS (SELECT TOP 1 1 FROM dbo.MembershipStatusMapping WHERE IsActive=1 AND StatusName='Deactivated')
+IF NOT EXISTS (SELECT TOP 1 1 FROM dbo.MembershipStatusMapping WHERE IsActive=1 AND StatusName='Expired')
 BEGIN
 	INSERT INTO dbo.MembershipStatusMapping (StatusName, StatusId, IsActive, DateCreated)
-	VALUES ('Deactivated', 3, 1, GETUTCDATE())
+	VALUES ('Expired', 3, 1, GETUTCDATE())
 END
 GO;

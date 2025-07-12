@@ -26,4 +26,8 @@ export const routes: Routes = [
         (c) => c.MemberManagementComponent
       ),
   },
+  {
+    path: '**',
+    redirectTo: RouteConstants.Error.Link,
+  },
 ];

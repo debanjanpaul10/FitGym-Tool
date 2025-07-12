@@ -172,13 +172,13 @@ export class ActiveMembersComponent
     let expired = 0;
     for (const member of members) {
       switch (member.membershipStatus) {
-        case 'Active':
+        case this.chartConstants.Labels.Active.legend:
           active++;
           break;
-        case 'OnTermination':
+        case this.chartConstants.Labels.OnTermination.legend:
           onTermination++;
           break;
-        case 'Deactivated':
+        case this.chartConstants.Labels.Expired.legend:
           expired++;
           break;
       }
@@ -186,7 +186,7 @@ export class ActiveMembersComponent
     this.activeCount = active;
     this.terminationCount = onTermination;
     this.expiredCount = expired;
-    // If the chart is already initialized, update it
+    // If the chart is already initialized, update ksit
     if (this.activeUsersChart) {
       this.activeUsersChart.data.datasets[0].data = [
         this.activeCount,

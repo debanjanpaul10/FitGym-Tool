@@ -12,7 +12,7 @@ export class RouteConstants {
   public static Error = {
     Name: 'Error',
     Link: 'error',
-    RouteValue: '/errpr',
+    RouteValue: '/error',
   };
   public static MemberManagement = {
     Name: 'Members',
