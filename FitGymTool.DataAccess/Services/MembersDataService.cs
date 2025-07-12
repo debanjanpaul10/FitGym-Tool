@@ -82,7 +82,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 
-			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(m => m.IsActive);
+			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(m => m.IsActive, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
 			return members;
 		}
 		catch (Exception ex)
@@ -110,7 +110,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(m => m.MemberEmail == memberEmail && m.IsActive);
+			var member = await this._unitOfWork.Repository<MemberDetails>().GetAsync(m => m.MemberEmail == memberEmail && m.IsActive, true, nameof(MemberDetails.MembershipStatusMapping));
 			return member;
 		}
 		catch (Exception ex)

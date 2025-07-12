@@ -15,7 +15,7 @@ export class MemberDetailsDto {
 
   public memberJoinDate: Date;
 
-  public membershipStatus: number;
+  public membershipStatus: string;
 
   public memberGuid: string;
 
@@ -28,7 +28,7 @@ export class MemberDetailsDto {
     MemberDateOfBirth: Date = new Date(),
     MemberGender: string = '',
     MemberJoinDate: Date = new Date(),
-    MembershipStatus: number = 0,
+    MembershipStatus: string = '',
     MemberGuid: string = ''
   ) {
     this.memberId = MemberId;

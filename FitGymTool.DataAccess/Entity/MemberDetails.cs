@@ -82,4 +82,9 @@ public class MemberDetails
 	/// The date modified.
 	/// </value>
 	public DateTime DateModified { get; set; }
+
+	/// <summary>
+	/// Navigation property for MembershipStatusMapping.
+	/// </summary>
+	public MembershipStatusMapping? MembershipStatusMapping { get; set; }
 }

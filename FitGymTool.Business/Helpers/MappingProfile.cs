@@ -32,7 +32,7 @@ public class MappingProfile : Profile
 			.ForMember(destination => destination.IsActive, option => option.Ignore())
 			.ForMember(destination => destination.MemberId, option => option.Ignore());
 
-		CreateMap<MemberDetails, MemberDetailsDTO>();
-		CreateMap<MemberDetailsDTO, MemberDetails>();
+		CreateMap<MemberDetails, MemberDetailsDTO>()
+			.ForMember(dest => dest.MembershipStatus, opt => opt.MapFrom(src => src.MembershipStatusMapping != null ? src.MembershipStatusMapping.StatusName : string.Empty));
 	}
 }

@@ -172,13 +172,13 @@ export class ActiveMembersComponent
     let expired = 0;
     for (const member of members) {
       switch (member.membershipStatus) {
-        case 1:
+        case 'Active':
           active++;
           break;
-        case 2:
+        case 'OnTermination':
           onTermination++;
           break;
-        case 3:
+        case 'Deactivated':
           expired++;
           break;
       }

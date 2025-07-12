@@ -53,9 +53,9 @@ public class MemberDetailsDTO
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status.
+	/// Gets or sets the Membership Status Name.
 	/// </summary>
-	public int MembershipStatus { get; set; }
+	public string MembershipStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Member GUID.

@@ -46,6 +46,11 @@ public class SqlDbContext : DbContext
 	public DbSet<FeesStatus> FeesStatus { get; set; }
 
 	/// <summary>
+	/// The Membership Status Mapping DbSet.
+	/// </summary>
+	public DbSet<MembershipStatusMapping> MembershipStatusMapping { get; set; }
+
+	/// <summary>
 	/// Override this method to configure the database (and other options) to be used for this context.
 	/// This method is called for each instance of the context that is created.
 	/// The base implementation does nothing.
@@ -89,5 +94,11 @@ public class SqlDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<MemberDetails>().HasKey(m => m.MemberId);
+		modelBuilder.Entity<MembershipStatusMapping>().HasKey(ms => ms.StatusId);
+		modelBuilder.Entity<MemberDetails>()
+			.HasOne(m => m.MembershipStatusMapping)
+			.WithMany()
+			.HasForeignKey(m => m.MembershipStatus)
+			.HasPrincipalKey(ms => ms.StatusId);
 	}
 }
