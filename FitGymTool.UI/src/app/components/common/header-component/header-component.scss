@@ -20,31 +20,6 @@
   color: white !important;
 }
 
-:host ::ng-deep .hamburger-btn,
-:host ::ng-deep .hamburger-btn:hover,
-:host ::ng-deep .hamburger-btn:focus,
-:host ::ng-deep .hamburger-btn:active,
-:host ::ng-deep .hamburger-btn .p-button,
-:host ::ng-deep .hamburger-btn .p-button:hover,
-:host ::ng-deep .hamburger-btn .p-button:focus,
-:host ::ng-deep .hamburger-btn .p-button:active {
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  color: inherit !important;
-  cursor: pointer !important;
-  transition: none !important;
-}
-:host ::ng-deep .hamburger-btn .p-button:before,
-:host ::ng-deep .hamburger-btn .p-button:after {
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  transition: none !important;
-}
-
 .header-logo-absolute {
   position: absolute;
   left: 50%;
