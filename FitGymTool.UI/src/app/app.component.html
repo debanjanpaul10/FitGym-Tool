@@ -5,6 +5,8 @@
     <app-toaster-component></app-toaster-component>
     <app-left-navigation-component></app-left-navigation-component>
   </div>
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
   <app-footer-component *ngIf="!isLoginPage()"></app-footer-component>
-  <router-outlet></router-outlet>
 </div>

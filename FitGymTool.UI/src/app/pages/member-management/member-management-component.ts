@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -5,11 +6,14 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
+import { SkeletonModule } from 'primeng/skeleton';
 
+import { MembersListComponent } from '@components/member-management/members-list-component/members-list-component';
 import { MembersApiService } from '@core/services/members-api-service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { LoaderService } from '@services/loader.service';
 import { ToasterService } from '@services/toaster-service';
+import { ButtonModule } from 'primeng/button';
+import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -18,16 +22,16 @@ import { ToasterService } from '@services/toaster-service';
  */
 @Component({
   selector: 'app-member-management',
-  imports: [],
+  imports: [CommonModule, MembersListComponent, SkeletonModule, ButtonModule],
   templateUrl: './member-management-component.html',
   styleUrl: './member-management-component.scss',
 })
 export class MemberManagementComponent implements OnInit {
-  private allUsersData: WritableSignal<any> = signal(null);
+  public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
+  public isUsersDataLoading: WritableSignal<boolean> = signal(true);
 
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
-  private readonly loaderService: LoaderService = inject(LoaderService);
   private readonly toasterService: ToasterService = inject(ToasterService);
 
   /**
@@ -38,6 +42,10 @@ export class MemberManagementComponent implements OnInit {
     this.getAllMembersData();
   }
 
+  public handleAddNewUser(): void {
+    alert('Feature being actively worked on');
+  }
+
   // #region PRIVATE Methods
 
   /**
@@ -46,11 +54,9 @@ export class MemberManagementComponent implements OnInit {
    * On success, updates the allUsersData signal with the retrieved data.
    * On error, hides the loading indicator and displays an error message using the toaster service.
    * Hides the loading indicator when the request completes.
-   *
-   * @private
    */
   private getAllMembersData(): void {
-    this.loaderService.loadingOn();
+    this.isUsersDataLoading.set(true);
 
     this.membersApiService.GetAllMembersAsync().subscribe({
       next: (response: ResponseDto) => {
@@ -61,12 +67,12 @@ export class MemberManagementComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        this.loaderService.loadingOff();
+        this.isUsersDataLoading.set(false);
         console.error(err);
         this.toasterService.showError(err?.message);
       },
       complete: () => {
-        this.loaderService.loadingOff();
+        this.isUsersDataLoading.set(false);
       },
     });
   }

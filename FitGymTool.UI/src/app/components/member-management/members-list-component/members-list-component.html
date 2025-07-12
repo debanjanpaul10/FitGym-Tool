@@ -1,0 +1,29 @@
+<div class="members-data-table">
+  <p-table
+    [columns]="columnHeaders"
+    [value]="membersData!"
+    [scrollable]="true"
+    ngClass="members-table"
+    scrollHeight="400px"
+    showGridlines
+    stripedRows
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.header }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-container
+            *ngIf="col.field === 'memberDateOfBirth' || col.field === 'memberJoinDate'; else normalCell"
+          >
+            {{ rowData[col.field] | date: 'd MMM yyyy' }}
+          </ng-container>
+          <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -66,6 +66,11 @@ export class LeftNavigationComponent implements OnInit {
     this.drawerService.closeDrawer();
   }
 
+  public homePageRedirect(): void {
+    this.routerService.navigate([RouteConstants.Dashboard.Link]);
+    this.drawerService.closeDrawer();
+  }
+
   private logoutRedirect(): void {
     this.authService.logoutRedirect();
     this.drawerService.closeDrawer();

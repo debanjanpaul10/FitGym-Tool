@@ -14,17 +14,23 @@
   --accent-color: #4f8cff;
 }
 
-.app-background {
-  background: var(--background-color) url("assets/Images/background.png")
-    no-repeat center center fixed !important;
-  background-size: cover !important;
-  min-height: 100vh;
-}
-
 html,
-body {
+body,
+app-root,
+.app-background {
   color: var(--text-color);
   margin: 0;
   padding: 0;
   font-family: "Cascadia Mono" !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+.app-background {
+  background: var(--background-color) url("assets/Images/background.png")
+    no-repeat center center fixed !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  min-height: 100vh !important;
 }
