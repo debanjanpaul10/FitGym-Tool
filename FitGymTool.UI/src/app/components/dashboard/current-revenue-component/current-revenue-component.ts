@@ -1,5 +1,10 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { CardModule } from 'primeng/card';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+} from '@angular/core';
 import Chart from 'chart.js/auto';
 
 import { ChartConstants } from '@shared/application.constants';
@@ -11,20 +16,20 @@ import { ChartConstants } from '@shared/application.constants';
  */
 @Component({
   selector: 'app-current-revenue-component',
-  imports: [CardModule],
+  imports: [],
   templateUrl: './current-revenue-component.html',
   styleUrl: './current-revenue-component.scss',
 })
-export class CurrentRevenueComponent implements AfterViewInit {
+export class CurrentRevenueComponent implements AfterViewInit, OnDestroy {
   /** Reference to the chart canvas element in the template. */
   @ViewChild('revenueChartCanvas', { static: false })
   revenueChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  /** Holds the Chart.js instance for the revenue chart. */
-  public revenueChart: any;
-
   /** Provides access to chart-related constants for labels and subheader. */
-  public chartConstants = ChartConstants;
+  public chartConstants = ChartConstants.RevenueChartConstants;
+
+  /** Holds the Chart.js instance for the revenue chart. */
+  private revenueChart: Chart | null = null;
 
   /**
    * Lifecycle hook that is called after Angular has fully initialized the component's view.
@@ -38,7 +43,7 @@ export class CurrentRevenueComponent implements AfterViewInit {
    * Creates and configures the Chart.js horizontal bar chart for revenue data.
    * Uses application constants for labels and colors, and customizes the chart's appearance to match the app theme.
    */
-  public createChart(): void {
+  private createChart(): void {
     if (this.revenueChartCanvas) {
       const customLabels = [
         this.chartConstants.Labels.Paid.legend,
@@ -80,7 +85,7 @@ export class CurrentRevenueComponent implements AfterViewInit {
                  * @param context Chart.js tooltip context
                  * @returns {string} The formatted tooltip label
                  */
-                label: function (context: any) {
+                label: function (context: any): string {
                   const labelIndex = context.dataIndex;
                   const value = context.parsed.x || context.parsed.y;
                   return `${customLabels[labelIndex]}: ${value}`;
@@ -121,5 +126,9 @@ export class CurrentRevenueComponent implements AfterViewInit {
         },
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.revenueChart?.destroy();
   }
 }

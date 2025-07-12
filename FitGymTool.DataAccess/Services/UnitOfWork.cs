@@ -1,8 +1,8 @@
 ﻿// *********************************************************************************
-//	<copyright file="IUnitOfWork.cs" company="Personal">
+//	<copyright file="UnitOfWork.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Unit of Work Interface.</summary>
+// <summary>The Unit of Work Class.</summary>
 // *********************************************************************************
 
 using FitGymTool.DataAccess.Contracts;
@@ -14,35 +14,25 @@ namespace FitGymTool.DataAccess.Services;
 /// <summary>
 /// The Unit of Work Class.
 /// </summary>
-/// <seealso cref="IUnitOfWork"/>
-/// <remarks>
-/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
-/// </remarks>
 /// <param name="dbContext">The sql db context.</param>
-public class UnitOfWork : IUnitOfWork
+/// <seealso cref="IUnitOfWork"/>
+public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 {
 	/// <summary>
 	/// The SQL DB Context.
 	/// </summary>
-	private readonly SqlDbContext _dbContext;
+	private readonly SqlDbContext _dbContext = dbContext;
 	/// <summary>
 	/// The repositories dictionary to hold repositories for different entity types.
 	/// </summary>
-	private readonly Dictionary<Type, object> _repositories = new();
+	private readonly Dictionary<Type, object> _repositories = [];
 
 	/// <summary>
 	/// The transaction for the unit of work.
 	/// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 	private IDbContextTransaction _transaction;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
-	/// </summary>
-	/// <param name="dbContext">The sql db context.</param>
-	public UnitOfWork(SqlDbContext dbContext)
-	{
-		_dbContext = dbContext;
-	}
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
 	/// <summary>
 	/// This method returns a repository for the specified entity type.
@@ -52,11 +42,12 @@ public class UnitOfWork : IUnitOfWork
 	public IRepository<TEntity> Repository<TEntity>() where TEntity : class
 	{
 		var type = typeof(TEntity);
-		if (!_repositories.TryGetValue(type, out var repository))
+		if (!this._repositories.TryGetValue(type, out var repository))
 		{
 			repository = new GenericRepository<TEntity>(_dbContext);
-			_repositories[type] = repository;
+			this._repositories[type] = repository;
 		}
+
 		return (IRepository<TEntity>)repository;
 	}
 

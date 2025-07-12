@@ -1,4 +1,4 @@
-<div class="current-revenue-card card shadow-sm border-0 bg-dark text-light">
+<div class="current-revenue-card card shadow-m border-0 bg-dark text-light">
   <div class="card-body">
     <h1 class="card-title">{{ chartConstants.Header }}</h1>
     <h6 class="card-subtitle mb-4">{{ chartConstants.SubHeader }}</h6>
@@ -8,39 +8,39 @@
       <canvas #revenueChartCanvas></canvas>
     </div>
     <div class="mt-4">
-      <span class="me-3"
-        ><span
+      <span class="me-3">
+        <span
           style="
             display: inline-block;
             width: 16px;
             height: 16px;
-            background: green;
+            background: #7cfc98;
             border-radius: 3px;
             margin-right: 6px;
           "
         ></span
         >{{ chartConstants.Labels.Paid.yAxis }}</span
       >
-      <span class="me-3"
-        ><span
+      <span class="me-3">
+        <span
           style="
             display: inline-block;
             width: 16px;
             height: 16px;
-            background: red;
+            background: #ff7c7c;
             border-radius: 3px;
             margin-right: 6px;
           "
         ></span
         >{{ chartConstants.Labels.NotPaid.yAxis }}</span
       >
-      <span
-        ><span
+      <span>
+        <span
           style="
             display: inline-block;
             width: 16px;
             height: 16px;
-            background: grey;
+            background: #d3d3d3;
             border-radius: 3px;
             margin-right: 6px;
           "

@@ -1,8 +1,31 @@
-<div class="active-members-card">
-  <p-card>
-    <ng-template #header>
-      <h1>Pending</h1>
-    </ng-template>
-    <ng-template #title>Active Members</ng-template>
-  </p-card>
+<div class="active-members-card card shadow-m border-0 bg-dark text-light">
+  <div class="card-body">
+    <h1 class="card-title">{{ chartConstants.Header }}</h1>
+    <h6 class="card-subtitle mb-4">{{ chartConstants.SubHeader }}</h6>
+    <div
+      class="chart-container d-flex justify-content-center align-items-center"
+    >
+      <div class="chart-wrapper d-flex align-items-center">
+        <canvas #activeUsersChartCanvas></canvas>
+        <div class="counts-display ms-4">
+          <div class="count-item mb-3">
+            <div class="count-label d-flex align-items-center">
+              <span class="color-indicator active"></span>
+              <span class="label-text">{{ chartConstants.Labels.Active.yAxis }}</span>
+            </div>
+            <div class="count-value">{{ activeCount }}</div>
+          </div>
+          <div class="count-item">
+            <div class="count-label d-flex align-items-center">
+              <span class="color-indicator termination"></span>
+              <span class="label-text">{{ chartConstants.Labels.OnTermination.yAxis }}</span>
+            </div>
+            <div class="count-value">{{ terminationCount }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
 </div>

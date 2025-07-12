@@ -35,23 +35,38 @@ export class DrawerConstants {
 }
 
 export class ChartConstants {
-  public static Labels = {
-    Paid: {
-      yAxis: 'Fees paid',
-      legend: 'Fees paid',
+  public static RevenueChartConstants = {
+    Labels: {
+      Paid: {
+        yAxis: 'Fees paid',
+        legend: 'Fees paid',
+      },
+      NotPaid: {
+        yAxis: 'Yet to pay',
+        legend: 'Fees yet to be paid',
+      },
+      SubCancelled: {
+        yAxis: 'Cancelled',
+        xAxis: 'Subscription Cancelled This Month',
+        legend: 'Subscription fees cancelled in the current month',
+      },
     },
-    NotPaid: {
-      yAxis: 'Yet to pay',
-      legend: 'Fees yet to be paid',
-    },
-    SubCancelled: {
-      yAxis: 'Cancelled',
-      xAxis: 'Subscription Cancelled This Month',
-      legend: 'Subscription fees cancelled in the current month',
-    },
+    Header: 'Current Revenue',
+    SubHeader: 'Revenue generated from the end of the last month till today',
   };
-  public static AxisLabels = {};
-  public static Header = 'Current Revenue ';
-  public static SubHeader =
-    'Revenue generated from the end of the last month till today';
+
+  public static ActiveUsersChartConstants = {
+    Labels: {
+      Active: {
+        yAxis: 'Active members',
+        legend: 'Active',
+      },
+      OnTermination: {
+        yAxis: 'To be terminated members',
+        legend: 'On Termination',
+      },
+    },
+    Header: 'Active Members',
+    SubHeader: 'Current status of the Gym Members',
+  };
 }

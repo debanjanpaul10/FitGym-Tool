@@ -55,7 +55,7 @@ public class MemberDetails
 	/// <summary>
 	/// Gets or sets the Membership Status.
 	/// </summary>
-	public string MembershipStatus { get; set; } = string.Empty;
+	public int MembershipStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member GUID.
@@ -66,4 +66,20 @@ public class MemberDetails
 	/// Gets or sets a value indicating whether this member is active.
 	/// </summary>
 	public bool IsActive { get; set; }
+
+	/// <summary>
+	/// Gets or sets the date created.
+	/// </summary>
+	/// <value>
+	/// The date created.
+	/// </value>
+	public DateTime DateCreated { get; set; }
+
+	/// <summary>
+	/// Gets or sets the date modified.
+	/// </summary>
+	/// <value>
+	/// The date modified.
+	/// </value>
+	public DateTime DateModified { get; set; }
 }
