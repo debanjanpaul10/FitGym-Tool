@@ -1,13 +1,23 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
+  inject,
   OnDestroy,
+  OnInit,
+  signal,
   ViewChild,
+  WritableSignal,
+  AfterViewChecked,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConstants } from '@shared/application.constants';
 import Chart from 'chart.js/auto';
+import { SkeletonModule } from 'primeng/skeleton';
+
+import { ChartConstants } from '@shared/application.constants';
+import { MembersApiService } from '@core/services/members-api-service';
+import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { ResponseDto } from '@models/DTO/response-dto.model';
+import { ToasterService } from '@services/toaster-service';
 
 /**
  * Component responsible for displaying active members statistics in a doughnut chart format.
@@ -24,54 +34,42 @@ import Chart from 'chart.js/auto';
  */
 @Component({
   selector: 'app-active-members-component',
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonModule],
   templateUrl: './active-members-component.html',
   styleUrl: './active-members-component.scss',
 })
-export class ActiveMembersComponent implements AfterViewInit, OnDestroy {
-  /**
-   * Reference to the canvas element where the chart will be rendered.
-   * Used to get the native HTML canvas element for Chart.js initialization.
-   */
+export class ActiveMembersComponent
+  implements OnDestroy, OnInit, AfterViewChecked
+{
   @ViewChild('activeUsersChartCanvas', { static: false })
   activeUsersChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  /**
-   * Chart configuration constants imported from the shared constants file.
-   * Contains chart-specific settings and labels.
-   */
   public chartConstants = ChartConstants.ActiveUsersChartConstants;
-
-  /**
-   * Count of active members displayed next to the chart.
-   */
   public activeCount: number = 50;
-
-  /**
-   * Count of members on termination displayed next to the chart.
-   */
   public terminationCount: number = 2;
+  public memberDetails: WritableSignal<MemberDetailsDto[] | []> = signal([]);
+  public isLoading: WritableSignal<boolean> = signal(true);
 
-  /**
-   * Instance of the Chart.js chart object.
-   * Holds the reference to the created chart for proper cleanup and management.
-   */
   private activeUsersChart: Chart | null = null;
+  private chartInitialized = false;
 
-  /**
-   * Lifecycle hook that is called after the component's view has been initialized.
-   *
-   * This method is called after Angular has fully initialized the component's view,
-   * including all child views and the view query results. It's the ideal place to
-   * initialize the chart since the canvas element is now available in the DOM.
-   *
-   * @implements AfterViewInit
-   */
-  ngAfterViewInit(): void {
-    // Use setTimeout to ensure the canvas is fully rendered
-    setTimeout(() => {
+  private membersApiService: MembersApiService = inject(MembersApiService);
+  private toasterService: ToasterService = inject(ToasterService);
+
+  ngOnInit(): void {
+    this.getAllMembersData();
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.chartInitialized && this.activeUsersChartCanvas?.nativeElement) {
       this.createChart();
-    }, 0);
+      this.chartInitialized = true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.activeUsersChart?.destroy();
+    this.chartInitialized = false;
   }
 
   /**
@@ -88,8 +86,6 @@ export class ActiveMembersComponent implements AfterViewInit, OnDestroy {
    * - Colors: Green (#7CFC98) for active, Red (#FF7C7C) for termination
    * - Tooltips: Custom callback to display member counts with descriptive labels
    * - Font: Cascadia Mono for consistent typography
-   *
-   * @private
    */
   private createChart(): void {
     // Destroy existing chart if it exists
@@ -160,15 +156,34 @@ export class ActiveMembersComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Lifecycle hook that is called when the component is about to be destroyed.
+   * Fetches all member data from the API and updates the component state accordingly.
    *
-   * This method ensures proper cleanup of the Chart.js instance to prevent memory leaks.
-   * It calls the destroy() method on the chart instance, which removes event listeners,
-   * clears the canvas, and frees up memory resources associated with the chart.
+   * This method initiates an asynchronous API call to retrieve all gym member information
+   * and manages the loading state throughout the request lifecycle. It handles both
+   * successful responses and error scenarios, updating the component's member details
+   * signal and displaying appropriate user feedback via toaster notifications.
    *
-   * @implements OnDestroy
+   * @returns {void} This method does not return a value
    */
-  ngOnDestroy(): void {
-    this.activeUsersChart?.destroy();
+  private getAllMembersData(): void {
+    this.isLoading.set(true);
+
+    this.membersApiService.GetAllMembersAsync().subscribe({
+      next: (response: ResponseDto) => {
+        if (response && response?.isSuccess) {
+          this.memberDetails.set(response.responseData);
+        } else {
+          this.toasterService.showError(response?.responseData);
+        }
+      },
+      error: (error: any) => {
+        this.isLoading.set(false);
+        console.error(error);
+        this.toasterService.showError(error?.message);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+      },
+    });
   }
 }

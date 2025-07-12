@@ -1,9 +1,9 @@
 import {
   Component,
-  AfterViewInit,
   ViewChild,
   ElementRef,
   OnDestroy,
+  AfterViewChecked,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
 
@@ -20,23 +20,25 @@ import { ChartConstants } from '@shared/application.constants';
   templateUrl: './current-revenue-component.html',
   styleUrl: './current-revenue-component.scss',
 })
-export class CurrentRevenueComponent implements AfterViewInit, OnDestroy {
-  /** Reference to the chart canvas element in the template. */
+export class CurrentRevenueComponent implements AfterViewChecked, OnDestroy {
   @ViewChild('revenueChartCanvas', { static: false })
   revenueChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  /** Provides access to chart-related constants for labels and subheader. */
   public chartConstants = ChartConstants.RevenueChartConstants;
 
-  /** Holds the Chart.js instance for the revenue chart. */
   private revenueChart: Chart | null = null;
+  private chartInitialized: boolean = false;
 
-  /**
-   * Lifecycle hook that is called after Angular has fully initialized the component's view.
-   * Initializes the revenue chart.
-   */
-  ngAfterViewInit(): void {
-    this.createChart();
+  ngAfterViewChecked(): void {
+    if (!this.chartInitialized && this.revenueChartCanvas?.nativeElement) {
+      this.createChart();
+      this.chartInitialized = true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.revenueChart?.destroy();
+    this.chartInitialized = false;
   }
 
   /**
@@ -126,9 +128,5 @@ export class CurrentRevenueComponent implements AfterViewInit, OnDestroy {
         },
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.revenueChart?.destroy();
   }
 }

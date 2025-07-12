@@ -1,12 +1,15 @@
 .active-members-card {
-  padding: 10px !important;
-  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.25),
-    0 1.5px 4px 0 rgba(0, 0, 0, 0.15);
+  padding: 0.625rem !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(11.5px) !important;
+  -webkit-backdrop-filter: blur(11.5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
 }
 
 .chart-container {
   width: 100%;
-  height: 400px;
+  height: 25rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -18,8 +21,8 @@
   width: 60% !important;
   height: 100% !important;
   max-width: 60%;
-  min-width: 300px;
-  max-height: 350px;
+  min-width: 18.75rem;
+  max-height: 21.875rem;
   display: block;
   flex-shrink: 0;
 }
@@ -28,17 +31,17 @@
   width: 100%;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 1.875rem;
   height: 100%;
 }
 
 .counts-display {
-  min-width: 150px;
-  max-width: 200px;
-  padding: 20px;
+  min-width: 9.375rem;
+  max-width: 12.5rem;
+  padding: 1.25rem;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
 }
 
@@ -47,34 +50,39 @@
 }
 
 .count-label {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .color-indicator {
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  margin-right: 8px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.1875rem;
+  margin-right: 0.5rem;
   display: inline-block;
 
   &.active {
-    background: #7CFC98;
+    background: #7cfc98;
   }
 
   &.termination {
-    background: #FF7C7C;
+    background: #ff7c7c;
   }
 }
 
 .label-text {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #f1f1f1;
-  font-family: 'Cascadia Mono', monospace;
+  font-family: "Cascadia Mono", monospace;
 }
 
 .count-value {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #ffffff;
-  font-family: 'Cascadia Mono', monospace;
+  font-family: "Cascadia Mono", monospace;
+}
+
+.members-skeleton {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
 }

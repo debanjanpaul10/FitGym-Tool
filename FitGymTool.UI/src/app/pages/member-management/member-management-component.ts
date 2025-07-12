@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 import { MembersApiService } from '@core/services/members-api-service';
+import { ResponseDto } from '@models/DTO/response-dto.model';
 import { LoaderService } from '@services/loader.service';
 import { ToasterService } from '@services/toaster-service';
 
@@ -22,12 +23,12 @@ import { ToasterService } from '@services/toaster-service';
   styleUrl: './member-management-component.scss',
 })
 export class MemberManagementComponent implements OnInit {
+  private allUsersData: WritableSignal<any> = signal(null);
+
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
   private readonly loaderService: LoaderService = inject(LoaderService);
   private readonly toasterService: ToasterService = inject(ToasterService);
-
-  private allUsersData: WritableSignal<any> = signal(null);
 
   /**
    * Angular lifecycle hook that is called after component initialization.
@@ -52,14 +53,14 @@ export class MemberManagementComponent implements OnInit {
     this.loaderService.loadingOn();
 
     this.membersApiService.GetAllMembersAsync().subscribe({
-      next: (response) => {
+      next: (response: ResponseDto) => {
         if (response && response?.isSuccess) {
           this.allUsersData.set(response.responseData);
         } else {
           this.toasterService.showError(response?.responseData);
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         this.loaderService.loadingOff();
         console.error(err);
         this.toasterService.showError(err?.message);

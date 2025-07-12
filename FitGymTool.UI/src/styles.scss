@@ -22,3 +22,13 @@ body {
   padding: 0;
   font-family: "Cascadia Mono" !important;
 }
+
+// Global styles for drawer transparency
+.p-drawer {
+  background: transparent;
+  opacity: 0.95;
+}
+
+.p-button {
+  opacity: 1 !important;
+}

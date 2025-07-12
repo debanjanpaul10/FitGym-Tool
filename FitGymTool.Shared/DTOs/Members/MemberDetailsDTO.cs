@@ -55,7 +55,7 @@ public class MemberDetailsDTO
 	/// <summary>
 	/// Gets or sets the Membership Status.
 	/// </summary>
-	public string MembershipStatus { get; set; } = string.Empty;
+	public int MembershipStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member GUID.
