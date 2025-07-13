@@ -68,14 +68,19 @@
     <Build Include="Tables\FeesPaymentHistory.sql" />
     <Build Include="Tables\FeesPaymentStatusMapping.sql" />
     <Build Include="Tables\FeesDurationMapping.sql" />
+    <Build Include="Tables\FeesStructure.sql" />
+    <Build Include="Stored Procedures\GetCurrentFeesPaymentStatus.sql" />
+    <Build Include="Stored Procedures\GetPaymentHistoryDataForMembers.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesDurationMapping.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_FeesStructure.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Helpers\Cleanup-data.sql" />
     <None Include="Helpers\Mockdata-insert.sql" />
+    <None Include="Helpers\insert_fees.sql" />
   </ItemGroup>
 </Project>
