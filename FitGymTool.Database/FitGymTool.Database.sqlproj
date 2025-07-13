@@ -60,6 +60,7 @@
     <Folder Include="PostDeploymentScripts" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Helpers" />
+    <Folder Include="Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
@@ -69,8 +70,8 @@
     <Build Include="Tables\FeesPaymentStatusMapping.sql" />
     <Build Include="Tables\FeesDurationMapping.sql" />
     <Build Include="Tables\FeesStructure.sql" />
-    <Build Include="Stored Procedures\GetCurrentFeesPaymentStatus.sql" />
-    <Build Include="Stored Procedures\GetPaymentHistoryDataForMembers.sql" />
+    <Build Include="Functions\FN_GetPaymentHistoryDataForMembers.sql" />
+    <Build Include="Functions\FN_GetCurrentFeesPaymentStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
