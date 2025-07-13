@@ -12,7 +12,9 @@
 	[MemberGuid] UNIQUEIDENTIFIER NOT NULL DEFAULT(NEWID()),
 	[IsActive] BIT NOT NULL DEFAULT(1),
 	[DateCreated] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
 	CONSTRAINT FK_MemberDetails_MembershipStatus FOREIGN KEY ([MembershipStatus]) REFERENCES [dbo].[MembershipStatusMapping]([StatusId])
 )
 GO;

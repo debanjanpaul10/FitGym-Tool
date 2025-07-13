@@ -5,6 +5,8 @@
 // <summary>The Fees Status Entity Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.DataAccess.Entity.Mapping;
+
 namespace FitGymTool.DataAccess.Entity;
 
 /// <summary>
@@ -48,9 +50,65 @@ public class FeesStatus
 	public bool IsActive { get; set; }
 
 	/// <summary>
+	/// Gets or sets from date.
+	/// </summary>
+	/// <value>
+	/// From date.
+	/// </value>
+	public DateTime FromDate { get; set; }
+
+	/// <summary>
+	/// Converts to date.
+	/// </summary>
+	/// <value>
+	/// To date.
+	/// </value>
+	public DateTime ToDate { get; set; }
+
+	/// <summary>
 	/// Gets or sets the Payment Status.
 	/// </summary>
 	public int PaymentStatus { get; set; }
+
+	/// <summary>
+	/// Gets or sets the fees duration identifier.
+	/// </summary>
+	/// <value>
+	/// The fees duration identifier.
+	/// </value>
+	public int FeesDurationId { get; set; }
+
+	/// <summary>
+	/// Gets or sets the date created.
+	/// </summary>
+	/// <value>
+	/// The date created.
+	/// </value>
+	public DateTime DateCreated { get; set; }
+
+	/// <summary>
+	/// Gets or sets the created by.
+	/// </summary>
+	/// <value>
+	/// The created by.
+	/// </value>
+	public string CreatedBy { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the date modified.
+	/// </summary>
+	/// <value>
+	/// The date modified.
+	/// </value>
+	public DateTime DateModified { get; set; }
+
+	/// <summary>
+	/// Gets or sets the modified by.
+	/// </summary>
+	/// <value>
+	/// The modified by.
+	/// </value>
+	public string ModifiedBy { get; set; } = string.Empty;
 
 	#region NAVIGATION FIELDS
 
@@ -69,6 +127,14 @@ public class FeesStatus
 	/// The fees payment status mapping.
 	/// </value>
 	public FeesPaymentStatusMapping FeesPaymentStatusMapping { get; set; } = new FeesPaymentStatusMapping();
+
+	/// <summary>
+	/// Gets or sets the fees duration mapping.
+	/// </summary>
+	/// <value>
+	/// The fees duration mapping.
+	/// </value>
+	public FeesDurationMapping FeesDurationMapping { get; set; } = new FeesDurationMapping();
 
 	#endregion
 }

@@ -5,6 +5,8 @@
 // <summary>The Member Details Entity Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.DataAccess.Entity.Mapping;
+
 namespace FitGymTool.DataAccess.Entity;
 
 /// <summary>
@@ -76,6 +78,14 @@ public class MemberDetails
 	public DateTime DateCreated { get; set; }
 
 	/// <summary>
+	/// Gets or sets the created by.
+	/// </summary>
+	/// <value>
+	/// The created by.
+	/// </value>
+	public string CreatedBy { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Gets or sets the date modified.
 	/// </summary>
 	/// <value>
@@ -84,7 +94,22 @@ public class MemberDetails
 	public DateTime DateModified { get; set; }
 
 	/// <summary>
-	/// Navigation property for MembershipStatusMapping.
+	/// Gets or sets the modified by.
 	/// </summary>
-	public MembershipStatusMapping? MembershipStatusMapping { get; set; }
+	/// <value>
+	/// The modified by.
+	/// </value>
+	public string ModifiedBy { get; set; } = string.Empty;
+
+	#region Navigation Fields
+
+	/// <summary>
+	/// Gets or sets the membership status mapping.
+	/// </summary>
+	/// <value>
+	/// The membership status mapping.
+	/// </value>
+	public MembershipStatusMapping MembershipStatusMapping { get; set; } = new MembershipStatusMapping();
+
+	#endregion
 }

@@ -5,7 +5,7 @@
 // <summary>The Fees Payment Status Mapping Entity Model.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.DataAccess.Entity;
+namespace FitGymTool.DataAccess.Entity.Mapping;
 
 /// <summary>
 /// The Fees Payment Status Mapping Entity Model.
@@ -51,4 +51,20 @@ public class FeesPaymentStatusMapping
 	/// The created by.
 	/// </value>
 	public string CreatedBy { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the date modified.
+	/// </summary>
+	/// <value>
+	/// The date modified.
+	/// </value>
+	public DateTime DateModified { get; set; }
+
+	/// <summary>
+	/// Gets or sets the modified by.
+	/// </summary>
+	/// <value>
+	/// The modified by.
+	/// </value>
+	public string ModifiedBy { get; set; } = string.Empty;
 }

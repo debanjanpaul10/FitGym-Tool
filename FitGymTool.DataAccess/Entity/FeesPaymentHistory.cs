@@ -5,6 +5,7 @@
 // <summary>The Fees Payment History Entity Model.</summary>
 // *********************************************************************************
 
+using FitGymTool.DataAccess.Entity.Mapping;
 
 namespace FitGymTool.DataAccess.Entity;
 
@@ -62,6 +63,22 @@ public class FeesPaymentHistory
 	public bool IsActive { get; set; }
 
 	/// <summary>
+	/// Gets or sets from date.
+	/// </summary>
+	/// <value>
+	/// From date.
+	/// </value>
+	public DateTime FromDate { get; set; }
+
+	/// <summary>
+	/// Converts to date.
+	/// </summary>
+	/// <value>
+	/// To date.
+	/// </value>
+	public DateTime ToDate { get; set; }
+
+	/// <summary>
 	/// Gets or sets the date created.
 	/// </summary>
 	/// <value>
@@ -92,4 +109,32 @@ public class FeesPaymentHistory
 	/// The modified by.
 	/// </value>
 	public string ModifiedBy { get; set; } = string.Empty;
+
+	#region Navigation Fields
+
+	/// <summary>
+	/// Gets or sets the member details.
+	/// </summary>
+	/// <value>
+	/// The member details.
+	/// </value>
+	public MemberDetails MemberDetails { get; set; } = new MemberDetails();
+
+	/// <summary>
+	/// Gets or sets the fees payment status mapping.
+	/// </summary>
+	/// <value>
+	/// The fees payment status mapping.
+	/// </value>
+	public FeesPaymentStatusMapping FeesPaymentStatusMapping { get; set; } = new FeesPaymentStatusMapping();
+
+	/// <summary>
+	/// Gets or sets the fees duration mapping.
+	/// </summary>
+	/// <value>
+	/// The fees duration mapping.
+	/// </value>
+	public FeesDurationMapping FeesDurationMapping { get; set; } = new FeesDurationMapping();
+
+	#endregion
 }

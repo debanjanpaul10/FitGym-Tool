@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.DataAccess.Entity;
+using FitGymTool.DataAccess.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitGymTool.DataAccess;
@@ -59,6 +60,8 @@ public class SqlDbContext : DbContext
 	/// </value>
 	public DbSet<FeesPaymentHistory> FeesPaymentHistory { get; set; }
 
+	#region Mapping Entities
+
 	/// <summary>
 	/// Gets or sets the membership status mapping.
 	/// </summary>
@@ -74,6 +77,16 @@ public class SqlDbContext : DbContext
 	/// The fees payment status mapping.
 	/// </value>
 	public DbSet<FeesPaymentStatusMapping> FeesPaymentStatusMapping { get; set; }
+
+	/// <summary>
+	/// Gets or sets the fees duration mapping.
+	/// </summary>
+	/// <value>
+	/// The fees duration mapping.
+	/// </value>
+	public DbSet<FeesDurationMapping> FeesDurationMapping { get; set; }
+
+	#endregion
 
 	/// <summary>
 	/// Override this method to configure the database (and other options) to be used for this context.

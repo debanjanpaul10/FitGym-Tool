@@ -5,7 +5,7 @@
 // <summary>The Membership Status Mapping Entity Class.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.DataAccess.Entity;
+namespace FitGymTool.DataAccess.Entity.Mapping;
 
 /// <summary>
 /// The Membership Status Mapping Entity Class.

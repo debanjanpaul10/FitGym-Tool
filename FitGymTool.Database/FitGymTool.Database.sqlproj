@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="PostDeploymentScripts" />
     <Folder Include="Stored Procedures" />
+    <Folder Include="Helpers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
@@ -66,9 +67,14 @@
     <Build Include="Tables\MembershipStatusMapping.sql" />
     <Build Include="Tables\FeesPaymentHistory.sql" />
     <Build Include="Tables\FeesPaymentStatusMapping.sql" />
+    <Build Include="Tables\FeesDurationMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_FeesDurationMapping.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Helpers\Cleanup-data.sql" />
   </ItemGroup>
 </Project>
