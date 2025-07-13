@@ -1,4 +1,9 @@
-﻿CREATE FUNCTION [dbo].[fn_GetCurrentFeesPaymentStatus]()
+﻿/*
+    Author: Debanjan Paul
+    Purpose: Returns the current fees payment status for all active members.
+    DateCreated: 13-July-2025
+*/
+CREATE FUNCTION [dbo].[fn_GetCurrentFeesPaymentStatus]()
 RETURNS TABLE
 AS
 RETURN

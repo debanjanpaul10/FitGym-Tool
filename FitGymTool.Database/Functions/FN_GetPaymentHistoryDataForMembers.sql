@@ -1,4 +1,10 @@
-﻿CREATE FUNCTION [dbo].[fn_GetPaymentHistoryDataForMembers]()
+﻿/*
+    Author: Debanjan Paul
+    Purpose: Returns the payment history data for all the members.
+    DateCreated: 13-July-2025
+*/
+
+CREATE FUNCTION [dbo].[fn_GetPaymentHistoryDataForMembers]()
 RETURNS TABLE
 AS
 RETURN
