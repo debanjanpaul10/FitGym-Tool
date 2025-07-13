@@ -60,6 +60,14 @@ public class SqlDbContext : DbContext
 	/// </value>
 	public DbSet<FeesPaymentHistory> FeesPaymentHistory { get; set; }
 
+	/// <summary>
+	/// Gets or sets the fees structure.
+	/// </summary>
+	/// <value>
+	/// The fees structure.
+	/// </value>
+	public DbSet<FeesStructure> FeesStructure { get; set; }
+
 	#region Mapping Entities
 
 	/// <summary>
