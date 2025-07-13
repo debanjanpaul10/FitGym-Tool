@@ -1,29 +1,73 @@
-<div class="members-data-table">
-  <p-table
-    [columns]="columnHeaders"
-    [value]="membersData!"
-    [scrollable]="true"
-    ngClass="members-table"
-    scrollHeight="400px"
-    showGridlines
-    stripedRows
-  >
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns">{{ col.header }}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
-        <td *ngFor="let col of columns">
-          <ng-container
-            *ngIf="col.field === 'memberDateOfBirth' || col.field === 'memberJoinDate'; else normalCell"
-          >
-            {{ rowData[col.field] | date: 'd MMM yyyy' }}
-          </ng-container>
-          <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+<div class="members-list-card card shadow-m border-0 bg-dark">
+  <div class="members-data-table">
+    <div
+      class="filter-row"
+      style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: center"
+    >
+      <p-datepicker
+        [(ngModel)]="selectedJoinDate"
+        dateFormat="dd M yy"
+        placeholder="Select join date"
+        showIcon="true"
+        (onSelect)="onJoinDateChange($event, dt2)"
+      ></p-datepicker>
+      <p-select
+        [options]="membershipStatusOptions"
+        [(ngModel)]="selectedMembershipStatus"
+        placeholder="Select membership status"
+        optionLabel="label"
+        optionValue="value"
+        (onChange)="onMembershipStatusChange($event, dt2)"
+      ></p-select>
+      <p-button
+        type="button"
+        icon="pi pi-times"
+        [rounded]="true"
+        [raised]="true"
+        variant="outlined"
+        severity="danger"
+        (click)="clearFilters(dt2)"
+      ></p-button>
+    </div>
+    <p-table
+      #dt2
+      [value]="membersData!"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [columns]="columnHeaders"
+      ngClass="members-table"
+      showGridlines
+      stripedRows
+      [globalFilterFields]="['joinDate', 'membershipStatus']"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.header }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <ng-container
+              *ngIf="col.field === 'memberDateOfBirth' || col.field === 'memberJoinDate'; else normalCell"
+            >
+              {{ rowData[col.field] | date: 'd MMM yyyy' }}
+            </ng-container>
+            <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columnHeaders.length" class="text-center py-4">
+            <div class="empty-state">
+              <i class="pi pi-search" style="font-size: 2rem; color: #6c757d;"></i>
+              <p class="mt-2 mb-0">No results found</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
