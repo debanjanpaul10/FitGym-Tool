@@ -76,5 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Helpers\Cleanup-data.sql" />
+    <None Include="Helpers\Mockdata-insert.sql" />
   </ItemGroup>
 </Project>
