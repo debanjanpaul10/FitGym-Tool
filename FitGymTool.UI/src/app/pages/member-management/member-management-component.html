@@ -71,7 +71,7 @@
       </div>
       <div *ngIf="!isUsersDataLoading()">
         <app-members-list-component
-          [membersData]="allUsersData()"
+          [membersData]="allUsersData()!"
         ></app-members-list-component>
       </div>
     </div>

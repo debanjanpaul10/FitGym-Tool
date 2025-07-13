@@ -7,4 +7,8 @@ export class ApiRoutes {
     UpdateMember_ApiRoute: 'UpdateMember',
     DeleteMember_ApiRoute: 'DeleteMember',
   };
+  public static CommonApi = {
+    BaseRoute: 'api/Common/',
+    GetMappingsMasterData_ApiRoute: 'GetMappingsMasterData',
+  };
 }

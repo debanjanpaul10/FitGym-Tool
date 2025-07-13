@@ -10,11 +10,10 @@ import { ApiRoutes } from '@shared/routes.constants';
   providedIn: 'root',
 })
 export class MembersApiService {
-  public membersApiRoutes = ApiRoutes.MembersApi;
+  private membersApiRoutes = ApiRoutes.MembersApi;
+  private apiBaseUrl: string = `${environment.apiBaseUrl}/${this.membersApiRoutes.BaseRoute}`;
 
   private readonly httpClient: HttpClient = inject(HttpClient);
-
-  private apiBaseUrl: string = `${environment.apiBaseUrl}/${this.membersApiRoutes.BaseRoute}`;
 
   public GetAllMembersAsync(): Observable<ResponseDto> {
     const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.GetAllMembers_ApiRoute}`;

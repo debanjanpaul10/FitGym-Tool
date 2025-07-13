@@ -140,11 +140,11 @@ public class SqlDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<MemberDetails>().HasKey(m => m.MemberId);
-		modelBuilder.Entity<MembershipStatusMapping>().HasKey(ms => ms.StatusId);
+		modelBuilder.Entity<MembershipStatusMapping>().HasKey(ms => ms.Id);
 		modelBuilder.Entity<MemberDetails>()
 			.HasOne(m => m.MembershipStatusMapping)
 			.WithMany()
-			.HasForeignKey(m => m.MembershipStatus)
-			.HasPrincipalKey(ms => ms.StatusId);
+			.HasForeignKey(m => m.MembershipStatusId)
+			.HasPrincipalKey(ms => ms.Id);
 	}
 }
