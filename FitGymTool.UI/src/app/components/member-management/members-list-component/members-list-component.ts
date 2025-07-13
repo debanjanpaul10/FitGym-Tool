@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Component, inject, Input, ViewChild } from '@angular/core';
+import { Table, TableModule } from 'primeng/table';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { FilterService } from 'primeng/api';
+import { FilterService, SortEvent } from 'primeng/api';
 
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { Column } from '@models/interfaces/column.interface';
 
 /**
  * Component responsible for displaying and filtering a list of gym members.
- * Provides date-based and membership status filtering capabilities with a responsive table interface.
+ * Provides sorting and filtering  capabilities ith a responsive table interface.
  */
 @Component({
   selector: 'app-members-list-component',
@@ -28,7 +28,9 @@ import { Column } from '@models/interfaces/column.interface';
   styleUrl: './members-list-component.scss',
 })
 export class MembersListComponent {
-  @Input() public membersData: MemberDetailsDto[] | null = null;
+  @Input() public membersData!: MemberDetailsDto[];
+  @ViewChild('dt') dt!: Table;
+
   public columnHeaders!: Column[];
   public membershipStatusOptions = [
     { label: 'Active', value: 'Active' },
@@ -37,6 +39,10 @@ export class MembersListComponent {
   ];
   public selectedJoinDate: Date | null = null;
   public selectedMembershipStatus: string | null = null;
+  public sortedMembersData!: MemberDetailsDto[];
+
+  private isSorted: boolean | null = null;
+  private currentSortField: string = 'memberId';
 
   private readonly filterService: FilterService = inject(FilterService);
 
@@ -66,6 +72,11 @@ export class MembersListComponent {
         return valueDate === filterDate;
       }
     );
+    // Default sort by memberId ascending
+    this.sortedMembersData = [...this.membersData].sort(
+      (a, b) => a.memberId - b.memberId
+    );
+    this.currentSortField = 'memberId';
   }
 
   /**
@@ -109,6 +120,18 @@ export class MembersListComponent {
   }
 
   /**
+   * Handles custom sort cycling for the table: ascending -> descending -> reset (default order).
+   * Updates the sort state and triggers sorting or reset as needed.
+   * @param event - The sort event from the PrimeNG table containing field and order information
+   */
+  public customSort(event: SortEvent) {
+    const sortField = event.field ?? 'memberId';
+    this.handleSorting(sortField);
+  }
+
+  // #region PRIVATE METHODS
+
+  /**
    * Converts a Date object to a standardized yyyy-MM-dd string format.
    * Ensures consistent date formatting for comparison operations in filters.
    * @param date - The Date object to format
@@ -120,4 +143,70 @@ export class MembersListComponent {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+
+  /**
+   * Sorts the table data in place based on the provided sort event's field and order.
+   * Handles nulls, strings, and numbers for robust sorting.
+   * @param event - The sort event containing the field to sort by and the sort order
+   */
+  private sortTableData(event: any): void {
+    const field: string = event.field ?? 'memberId';
+    this.sortedMembersData.sort((data1: any, data2: any) => {
+      let value1 = data1[field];
+      let value2 = data2[field];
+      let result = null;
+      if (value1 == null && value2 != null) result = -1;
+      else if (value1 != null && value2 == null) result = 1;
+      else if (value1 == null && value2 == null) result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+      return event.order * result;
+    });
+  }
+
+  /**
+   * Handles the sorting logic for the members table based on the provided field.
+   * Cycles through ascending, descending, and reset (default memberId sort) states for the selected column.
+   * If a new column is selected, sorting starts in ascending order for that column.
+   * If the same column is clicked repeatedly, toggles between ascending, descending, and reset states.
+   * On reset, the table is sorted by memberId in ascending order.
+   *
+   * @param sortField - The field name of the column to sort by.
+   */
+  private handleSorting(sortField: string): void {
+    if (sortField !== this.currentSortField) {
+      this.currentSortField = sortField;
+      this.isSorted = true;
+      this.sortTableData({
+        field: sortField,
+        order: 1,
+        data: this.sortedMembersData,
+      });
+    } else if (this.isSorted == null || this.isSorted === undefined) {
+      this.isSorted = true;
+      this.sortTableData({
+        field: sortField,
+        order: 1,
+        data: this.sortedMembersData,
+      });
+    } else if (this.isSorted == true) {
+      this.isSorted = false;
+      this.sortTableData({
+        field: sortField,
+        order: -1,
+        data: this.sortedMembersData,
+      });
+    } else if (this.isSorted == false) {
+      this.isSorted = null;
+      // Reset to default sort (memberId asc)
+      this.currentSortField = 'memberId';
+      this.sortedMembersData = [...this.membersData].sort(
+        (a, b) => a.memberId - b.memberId
+      );
+      this.dt.reset();
+    }
+  }
+
+  // #endregion
 }
