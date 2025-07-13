@@ -8,14 +8,14 @@
 	[MemberDateOfBirth] DATE NOT NULL,
 	[MemberGender] NVARCHAR(10) NOT NULL,
 	[MemberJoinDate] DATE NOT NULL,
-	[MembershipStatus] INT NOT NULL,
+	[MembershipStatusId] INT NOT NULL,
 	[MemberGuid] UNIQUEIDENTIFIER NOT NULL DEFAULT(NEWID()),
 	[IsActive] BIT NOT NULL DEFAULT(1),
 	[DateCreated] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
-	CONSTRAINT FK_MemberDetails_MembershipStatus FOREIGN KEY ([MembershipStatus]) REFERENCES [dbo].[MembershipStatusMapping]([StatusId])
+	CONSTRAINT FK_MemberDetails_MembershipStatusId FOREIGN KEY ([MembershipStatusId]) REFERENCES [dbo].[MembershipStatusMapping]([Id])
 )
 GO;
 

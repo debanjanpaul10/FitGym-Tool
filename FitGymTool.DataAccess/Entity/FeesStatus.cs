@@ -66,9 +66,9 @@ public class FeesStatus
 	public DateTime ToDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Payment Status.
+	/// Gets or sets the Payment Status ID.
 	/// </summary>
-	public int PaymentStatus { get; set; }
+	public int PaymentStatusId { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees duration identifier.

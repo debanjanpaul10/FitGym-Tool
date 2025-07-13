@@ -52,6 +52,7 @@ public static class DIContainer
 	public static void AddBusinessManagerDependencies(this IServiceCollection services)
 	{
 		services.AddScoped<IMembersService, MembersService>();
+		services.AddScoped<IFitGymCommonService, FitGymCommonService>();
 	}
 
 	/// <summary>
@@ -62,5 +63,7 @@ public static class DIContainer
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		services.AddScoped<IMembersDataService, MembersDataService>();
+		services.AddScoped<IMemberFeesDataService, MemberFeesDataService>();
+		services.AddScoped<IFitGymCommonDataService, FitGymCommonDataService>();
 	}
 }

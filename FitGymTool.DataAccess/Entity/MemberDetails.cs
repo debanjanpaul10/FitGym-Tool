@@ -55,9 +55,9 @@ public class MemberDetails
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status.
+	/// Gets or sets the Membership Status ID.
 	/// </summary>
-	public int MembershipStatus { get; set; }
+	public int MembershipStatusId { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member GUID.

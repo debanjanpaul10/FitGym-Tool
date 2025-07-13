@@ -80,8 +80,8 @@
     <None Include="PostDeploymentScripts\Script.INSERT_FeesStructure.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Helpers\Cleanup-data.sql" />
-    <None Include="Helpers\Mockdata-insert.sql" />
-    <None Include="Helpers\insert_fees.sql" />
+    <None Include="Helpers\CleanupAll.sql" />
+    <None Include="Helpers\MockUsersData.sql" />
+    <None Include="Helpers\MockFeesData.sql" />
   </ItemGroup>
 </Project>

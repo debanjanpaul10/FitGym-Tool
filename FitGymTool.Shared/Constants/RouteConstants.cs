@@ -48,4 +48,20 @@ public static class RouteConstants
 		/// </summary>
 		public const string DeleteMember_ApiRoute = "DeleteMember/{memberId}";
 	}
+
+	/// <summary>
+	/// The Common API Routes class.
+	/// </summary>
+	public static class FitGymCommonApiRoutes
+	{
+		/// <summary>
+		/// The base route route prefix
+		/// </summary>
+		public const string BaseRoute_RoutePrefix = "api/Common";
+
+		/// <summary>
+		/// The get mappings master data API route
+		/// </summary>
+		public const string GetMappingsMasterData_ApiRoute = "GetMappingsMasterData";
+	}
 }

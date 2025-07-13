@@ -47,12 +47,12 @@ public class FeesPaymentHistory
 	public decimal Amount { get; set; }
 
 	/// <summary>
-	/// Gets or sets the payment status.
+	/// Gets or sets the payment status ID.
 	/// </summary>
 	/// <value>
 	/// The payment status.
 	/// </value>
-	public int PaymentStatus { get; set; }
+	public int PaymentStatusId { get; set; }
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this instance is active.

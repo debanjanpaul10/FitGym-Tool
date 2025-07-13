@@ -62,7 +62,7 @@ public static class ConfigureCoreServices
 		builder.Services.AddDataManagerDependencies();
 		builder.Services.AddAutoMapper(mapperConfig =>
 		{
-			mapperConfig.AddProfile<MappingProfile>();
+			mapperConfig.AddProfile<AutoMapperProfile>();
 		});
 	}
 

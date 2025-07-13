@@ -9,23 +9,17 @@
 	[IsActive] BIT NOT NULL DEFAULT(1),
 	[FromDate] DATETIME NOT NULL,
 	[ToDate] DATETIME NOT NULL,
-	[PaymentStatus] INT NOT NULL DEFAULT(1),
+	[PaymentStatusId] INT NOT NULL,
 	[FeesDurationId] INT NOT NULL,
 	[DateCreated] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
 	CONSTRAINT [FK_FeesStatus_MemberDetails] FOREIGN KEY ([MemberId]) REFERENCES [dbo].[MemberDetails]([MemberId]),
-	CONSTRAINT [FK_FeesStatus_FeesPaymentStatusMapping] FOREIGN KEY ([PaymentStatus]) REFERENCES [dbo].[FeesPaymentStatusMapping]([Id]),
+	CONSTRAINT [FK_FeesStatus_FeesPaymentStatusMapping] FOREIGN KEY ([PaymentStatusId]) REFERENCES [dbo].[FeesPaymentStatusMapping]([Id]),
 	CONSTRAINT [FK_FeesStatus_FeesDurationMapping] FOREIGN KEY ([FeesDurationId]) REFERENCES [dbo].[FeesDurationMapping]([Id])
 )
 GO;
 
-CREATE NONCLUSTERED INDEX IX_FeesStatus_MemberGuid ON [dbo].[FeesStatus] ([MemberGuid])
-GO;
-
-CREATE NONCLUSTERED INDEX IX_FeesStatus_MemberId ON [dbo].[FeesStatus] ([MemberId])
-GO;
-
-CREATE NONCLUSTERED INDEX IX_FeesStatus_PaymentStatus ON [dbo].[FeesStatus] ([PaymentStatus])
+CREATE NONCLUSTERED INDEX IX_FeesStatus_MemberGuid_MemberId_PaymentStatus_IsActive ON [dbo].[FeesStatus] ([MemberGuid], [MemberId], [PaymentStatusId], [IsActive])
 GO;
