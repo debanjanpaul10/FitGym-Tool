@@ -36,19 +36,44 @@ public class SqlDbContext : DbContext
 	}
 
 	/// <summary>
-	/// The Member Details DbSet.
+	/// Gets or sets the member details.
 	/// </summary>
+	/// <value>
+	/// The member details.
+	/// </value>
 	public DbSet<MemberDetails> MemberDetails { get; set; }
 
 	/// <summary>
-	/// The Fees Status DbSet.
+	/// Gets or sets the fees status.
 	/// </summary>
+	/// <value>
+	/// The fees status.
+	/// </value>
 	public DbSet<FeesStatus> FeesStatus { get; set; }
 
 	/// <summary>
-	/// The Membership Status Mapping DbSet.
+	/// Gets or sets the fees payment history.
 	/// </summary>
+	/// <value>
+	/// The fees payment history.
+	/// </value>
+	public DbSet<FeesPaymentHistory> FeesPaymentHistory { get; set; }
+
+	/// <summary>
+	/// Gets or sets the membership status mapping.
+	/// </summary>
+	/// <value>
+	/// The membership status mapping.
+	/// </value>
 	public DbSet<MembershipStatusMapping> MembershipStatusMapping { get; set; }
+
+	/// <summary>
+	/// Gets or sets the fees payment status mapping.
+	/// </summary>
+	/// <value>
+	/// The fees payment status mapping.
+	/// </value>
+	public DbSet<FeesPaymentStatusMapping> FeesPaymentStatusMapping { get; set; }
 
 	/// <summary>
 	/// Override this method to configure the database (and other options) to be used for this context.

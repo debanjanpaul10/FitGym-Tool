@@ -64,8 +64,11 @@
     <Build Include="Tables\MemberDetails.sql" />
     <Build Include="Tables\FeesStatus.sql" />
     <Build Include="Tables\MembershipStatusMapping.sql" />
+    <Build Include="Tables\FeesPaymentHistory.sql" />
+    <Build Include="Tables\FeesPaymentStatusMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
   </ItemGroup>
 </Project>

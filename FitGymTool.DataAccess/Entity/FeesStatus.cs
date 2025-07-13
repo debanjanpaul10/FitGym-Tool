@@ -30,7 +30,7 @@ public class FeesStatus
 	/// <summary>
 	/// Gets or sets the Fees Amount.
 	/// </summary>
-	public decimal FeesAmount { get; set; }
+	public decimal? FeesAmountDue { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Fees Due Date.
@@ -40,7 +40,7 @@ public class FeesStatus
 	/// <summary>
 	/// Gets or sets the Last Payment Date.
 	/// </summary>
-	public DateTime LastPaymentDate { get; set; }
+	public DateTime? LastPaymentDate { get; set; }
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this entry is active.
@@ -52,4 +52,23 @@ public class FeesStatus
 	/// </summary>
 	public int PaymentStatus { get; set; }
 
+	#region NAVIGATION FIELDS
+
+	/// <summary>
+	/// Gets or sets the member.
+	/// </summary>
+	/// <value>
+	/// The member.
+	/// </value>
+	public MemberDetails Member { get; set; } = new MemberDetails();
+
+	/// <summary>
+	/// Gets or sets the fees payment status mapping.
+	/// </summary>
+	/// <value>
+	/// The fees payment status mapping.
+	/// </value>
+	public FeesPaymentStatusMapping FeesPaymentStatusMapping { get; set; } = new FeesPaymentStatusMapping();
+
+	#endregion
 }

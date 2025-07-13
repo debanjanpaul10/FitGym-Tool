@@ -8,9 +8,10 @@
 	[LastPaymentDate] DATE NULL,
 	[IsActive] BIT NOT NULL DEFAULT(1),
 	[PaymentStatus] INT NOT NULL DEFAULT(1),
-	CONSTRAINT [FK_FeesStatus_MemberDetails] FOREIGN KEY ([MemberId]) REFERENCES [dbo].[MemberDetails]([MemberId])
+	CONSTRAINT [FK_FeesStatus_MemberDetails] FOREIGN KEY ([MemberId]) REFERENCES [dbo].[MemberDetails]([MemberId]),
+	CONSTRAINT [FK_FeesStatus_FeesPaymentStatusMapping] FOREIGN KEY ([PaymentStatus]) REFERENCES [dbo].[FeesPaymentStatusMapping]([Id])
 )
-GO
+GO;
 
 CREATE NONCLUSTERED INDEX IX_FeesStatus_MemberGuid ON [dbo].[FeesStatus] ([MemberGuid])
 GO;
