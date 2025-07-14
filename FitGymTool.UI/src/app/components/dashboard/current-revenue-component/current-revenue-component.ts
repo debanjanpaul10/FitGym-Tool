@@ -58,6 +58,10 @@ export class CurrentRevenueComponent
     inject(MemberFeesApiService);
   private readonly toasterService: ToasterService = inject(ToasterService);
 
+  /**
+   * Angular lifecycle hook that is called after component initialization.
+   * Initiates fetching of current revenue data and subscribes to mapping master data updates.
+   */
   ngOnInit(): void {
     this.getCurrentRevenueData();
 
@@ -75,6 +79,10 @@ export class CurrentRevenueComponent
       );
   }
 
+  /**
+   * Angular lifecycle hook that is called after the view has been checked.
+   * Ensures the chart is initialized once the canvas is available.
+   */
   ngAfterViewChecked(): void {
     if (!this.chartInitialized && this.revenueChartCanvas?.nativeElement) {
       this.createOrUpdateChart();
@@ -82,6 +90,10 @@ export class CurrentRevenueComponent
     }
   }
 
+  /**
+   * Angular lifecycle hook that is called when the component is destroyed.
+   * Cleans up the chart and unsubscribes from subscriptions.
+   */
   ngOnDestroy(): void {
     this.revenueChart?.destroy();
     this.chartInitialized = false;
@@ -91,9 +103,9 @@ export class CurrentRevenueComponent
   }
 
   /**
-   * Gets the legend colours.
+   * Gets the legend colour for a given index.
    * @param index The index number of the labels array.
-   * @returns The colour value.
+   * @returns The colour value as a string.
    */
   public getLegendColor(index: number): string {
     const colors = [...this.colors];
@@ -104,7 +116,7 @@ export class CurrentRevenueComponent
 
   /**
    * Creates or updates the Chart.js horizontal bar chart for revenue data.
-   * Uses API response for labels and dummy data for now.
+   * Uses the processed API response for labels and data.
    */
   private createOrUpdateChart(): void {
     if (!this.revenueChartCanvas) {
@@ -191,6 +203,10 @@ export class CurrentRevenueComponent
     }
   }
 
+  /**
+   * Fetches the current month's revenue and fees data from the API and updates the chart.
+   * Handles loading state and error notifications.
+   */
   private getCurrentRevenueData(): void {
     this.isLoading.set(true);
 
@@ -216,9 +232,13 @@ export class CurrentRevenueComponent
       });
   }
 
+  /**
+   * Processes the API data to group and sum the amount by feesStatus.
+   * Ensures the data order matches the chart labels.
+   * @returns An array of numbers representing the summed amounts for each feesStatus.
+   */
   private getChartDataFromApi(): number[] {
     const dataMap: { [status: string]: number } = {};
-    // Get the raw data array from the signal
     const dataArray = this.currentFeesAndRevenueData() || [];
     dataArray.forEach((item) => {
       const status = item.feesStatus;
@@ -228,7 +248,6 @@ export class CurrentRevenueComponent
       }
       dataMap[status] += amount;
     });
-    // Ensure the data is in the same order as chartLabels (which comes from feesPaymentStatusMapping)
     return this.chartLabels.map((label) => dataMap[label] || 0);
   }
   // #endregion
