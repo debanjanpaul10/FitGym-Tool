@@ -1,4 +1,4 @@
-# FitGym Tool - Comprehensive Application Description
+# FitGym Tool
 
 ## Overview
 
