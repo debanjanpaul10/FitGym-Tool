@@ -23,7 +23,7 @@ namespace FitGymTool.API.Controllers;
 /// <param name="memberFeesService">The member fees service.</param>
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
-[Route(RouteConstants.MembersApiRoutes.BaseRoute_RoutePrefix)]
+[Route(RouteConstants.MemberFeesApiRoutes.BaseRoute_RoutePrefix)]
 public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMemberFeesService memberFeesService, ILogger<MemberFeesController> logger) : BaseController(httpContextAccessor)
 {
 	/// <summary>

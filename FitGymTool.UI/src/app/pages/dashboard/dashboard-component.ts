@@ -15,6 +15,7 @@ import { LoaderService } from '@services/loader.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster-service';
 import { CommonService } from '@services/common-service';
+import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,9 @@ import { CommonService } from '@services/common-service';
   styleUrl: './dashboard-component.scss',
 })
 export class DashboardComponent implements OnInit {
-  public mappingsMasterData: WritableSignal<any> = signal(null);
+  public mappingsMasterData: WritableSignal<MasterMappingDataDto> = signal(
+    new MasterMappingDataDto()
+  );
 
   private readonly commonApiService: CommonApiService =
     inject(CommonApiService);

@@ -152,5 +152,7 @@ public class SqlDbContext : DbContext
 			.WithMany()
 			.HasForeignKey(m => m.MembershipStatusId)
 			.HasPrincipalKey(ms => ms.Id);
+
+		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatus>().HasNoKey();
 	}
 }

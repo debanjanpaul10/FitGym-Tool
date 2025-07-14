@@ -1,16 +1,20 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
-  private mappingMasterData: WritableSignal<any> = signal(null);
+  private mappingMasterDataSubject$ = new BehaviorSubject<MasterMappingDataDto>(
+    new MasterMappingDataDto()
+  );
 
-  public get MappingMasterData() {
-    return this.mappingMasterData();
+  public get MappingMasterData(): Observable<MasterMappingDataDto> {
+    return this.mappingMasterDataSubject$.asObservable();
   }
 
-  public set MappingMasterData(data: any) {
-    this.mappingMasterData.set(data);
+  public set MappingMasterData(data: MasterMappingDataDto) {
+    this.mappingMasterDataSubject$.next(data);
   }
 }

@@ -11,4 +11,9 @@ export class ApiRoutes {
     BaseRoute: 'api/Common/',
     GetMappingsMasterData_ApiRoute: 'GetMappingsMasterData',
   };
+  public static MemberFeesApi = {
+    BaseRoute: 'api/MemberFees/',
+    GetCurrentMonthFeesAndRevenueStatus_ApiRoute:
+      'GetCurrentMonthFeesAndRevenueStatus',
+  };
 }

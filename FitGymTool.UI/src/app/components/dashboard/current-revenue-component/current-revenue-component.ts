@@ -4,10 +4,23 @@ import {
   ElementRef,
   OnDestroy,
   AfterViewChecked,
+  inject,
+  OnInit,
+  WritableSignal,
+  signal,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { CommonModule } from '@angular/common';
 
 import { ChartConstants } from '@shared/application.constants';
+import { CommonService } from '@services/common-service';
+import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { FeesPaymentStatusMappingDto } from '@models/DTO/Mapping/fees-payment-status-mapping-dto.model';
+import { MemberFeesApiService } from '@core/services/member-fees-api-service';
+import { ToasterService } from '@services/toaster-service';
+import { ResponseDto } from '@models/DTO/response-dto.model';
+import { CurrentMonthFeesAndRevenueStatus } from '@models/DTO/current-month-fees-revenue-status.model';
+import { SkeletonModule } from 'primeng/skeleton';
 
 /**
  * CurrentRevenueComponent displays a horizontal bar chart representing the current revenue status.
@@ -16,22 +29,55 @@ import { ChartConstants } from '@shared/application.constants';
  */
 @Component({
   selector: 'app-current-revenue-component',
-  imports: [],
+  imports: [CommonModule, SkeletonModule],
   templateUrl: './current-revenue-component.html',
   styleUrl: './current-revenue-component.scss',
 })
-export class CurrentRevenueComponent implements AfterViewChecked, OnDestroy {
+export class CurrentRevenueComponent
+  implements AfterViewChecked, OnDestroy, OnInit
+{
   @ViewChild('revenueChartCanvas', { static: false })
   revenueChartCanvas!: ElementRef<HTMLCanvasElement>;
 
   public chartConstants = ChartConstants.RevenueChartConstants;
+  public feesPaymentStatusMapping: FeesPaymentStatusMappingDto[] = [];
+  public chartLabels: string[] = [];
+  public isLoading: WritableSignal<boolean> = signal(true);
+  public currentFeesAndRevenueData: WritableSignal<
+    CurrentMonthFeesAndRevenueStatus[]
+  > = signal([]);
 
   private revenueChart: Chart | null = null;
   private chartInitialized: boolean = false;
+  private mappingMasterDataSubscription: any;
+  private colors = ['#7CFC98', '#FFD700', '#FF7C7C', '#D3D3D3'];
+  private labelsForTooltip: string[] = [];
+
+  private readonly commonService: CommonService = inject(CommonService);
+  private readonly memberFeesApiService: MemberFeesApiService =
+    inject(MemberFeesApiService);
+  private readonly toasterService: ToasterService = inject(ToasterService);
+
+  ngOnInit(): void {
+    this.getCurrentRevenueData();
+
+    this.mappingMasterDataSubscription =
+      this.commonService.MappingMasterData.subscribe(
+        (data: MasterMappingDataDto | null) => {
+          if (data && data?.feesPaymentStatusMapping) {
+            this.feesPaymentStatusMapping = data?.feesPaymentStatusMapping;
+            this.chartLabels = this.feesPaymentStatusMapping.map(
+              (item) => item.statusName
+            );
+            this.createOrUpdateChart();
+          }
+        }
+      );
+  }
 
   ngAfterViewChecked(): void {
     if (!this.chartInitialized && this.revenueChartCanvas?.nativeElement) {
-      this.createChart();
+      this.createOrUpdateChart();
       this.chartInitialized = true;
     }
   }
@@ -39,32 +85,49 @@ export class CurrentRevenueComponent implements AfterViewChecked, OnDestroy {
   ngOnDestroy(): void {
     this.revenueChart?.destroy();
     this.chartInitialized = false;
+    if (this.mappingMasterDataSubscription) {
+      this.mappingMasterDataSubscription.unsubscribe();
+    }
   }
 
   /**
-   * Creates and configures the Chart.js horizontal bar chart for revenue data.
-   * Uses application constants for labels and colors, and customizes the chart's appearance to match the app theme.
+   * Gets the legend colours.
+   * @param index The index number of the labels array.
+   * @returns The colour value.
    */
-  private createChart(): void {
-    if (this.revenueChartCanvas) {
-      const customLabels = [
-        this.chartConstants.Labels.Paid.legend,
-        this.chartConstants.Labels.NotPaid.legend,
-        this.chartConstants.Labels.SubCancelled.legend,
-      ];
+  public getLegendColor(index: number): string {
+    const colors = [...this.colors];
+    return colors[index % colors.length];
+  }
+
+  // #region PRIVATE METHODS
+
+  /**
+   * Creates or updates the Chart.js horizontal bar chart for revenue data.
+   * Uses API response for labels and dummy data for now.
+   */
+  private createOrUpdateChart(): void {
+    if (!this.revenueChartCanvas) {
+      return;
+    }
+    const labels = this.chartLabels;
+    this.labelsForTooltip = [...labels];
+    const data = this.getChartDataFromApi();
+    if (this.revenueChart) {
+      this.revenueChart.destroy();
+      this.revenueChart = null;
+      this.createOrUpdateChart();
+      return;
+    } else {
+      const labelsForTooltip = this.labelsForTooltip;
       this.revenueChart = new Chart(this.revenueChartCanvas.nativeElement, {
         type: 'bar',
         data: {
-          labels: [
-            this.chartConstants.Labels.Paid.yAxis,
-            this.chartConstants.Labels.NotPaid.yAxis,
-            this.chartConstants.Labels.SubCancelled.yAxis,
-          ],
+          labels: labels,
           datasets: [
             {
-              label: this.chartConstants.SubHeader,
-              data: [25000, 20000, 1200],
-              backgroundColor: ['#7CFC98', '#FF7C7C', '#D3D3D3'],
+              data: data,
+              backgroundColor: this.colors,
             },
           ],
         },
@@ -82,15 +145,13 @@ export class CurrentRevenueComponent implements AfterViewChecked, OnDestroy {
             },
             tooltip: {
               callbacks: {
-                /**
-                 * Customizes the tooltip label for each bar to show a descriptive label and value.
-                 * @param context Chart.js tooltip context
-                 * @returns {string} The formatted tooltip label
-                 */
-                label: function (context: any): string {
+                title: () => [],
+                label: (context: any): string => {
                   const labelIndex = context.dataIndex;
-                  const value = context.parsed.x || context.parsed.y;
-                  return `${customLabels[labelIndex]}: ${value}`;
+                  const label =
+                    labelsForTooltip[labelIndex] ?? `Label ${labelIndex + 1}`;
+                  const value = context.parsed?.x ?? context.raw ?? '';
+                  return `${label}: ${value}`;
                 },
               },
               titleFont: {
@@ -129,4 +190,46 @@ export class CurrentRevenueComponent implements AfterViewChecked, OnDestroy {
       });
     }
   }
+
+  private getCurrentRevenueData(): void {
+    this.isLoading.set(true);
+
+    this.memberFeesApiService
+      .GetCurrentMonthFeesAndRevenueStatusAsync()
+      .subscribe({
+        next: (response: ResponseDto) => {
+          if (response && response?.isSuccess) {
+            this.currentFeesAndRevenueData.set(response.responseData);
+            this.createOrUpdateChart();
+          } else {
+            this.toasterService.showError(response?.responseData);
+          }
+        },
+        error: (error: Error) => {
+          this.isLoading.set(false);
+          console.error(error);
+          this.toasterService.showError(error?.message);
+        },
+        complete: () => {
+          this.isLoading.set(false);
+        },
+      });
+  }
+
+  private getChartDataFromApi(): number[] {
+    const dataMap: { [status: string]: number } = {};
+    // Get the raw data array from the signal
+    const dataArray = this.currentFeesAndRevenueData() || [];
+    dataArray.forEach((item) => {
+      const status = item.feesStatus;
+      const amount = item.amount || 0;
+      if (!dataMap[status]) {
+        dataMap[status] = 0;
+      }
+      dataMap[status] += amount;
+    });
+    // Ensure the data is in the same order as chartLabels (which comes from feesPaymentStatusMapping)
+    return this.chartLabels.map((label) => dataMap[label] || 0);
+  }
+  // #endregion
 }
