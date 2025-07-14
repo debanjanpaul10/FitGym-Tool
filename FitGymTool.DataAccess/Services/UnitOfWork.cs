@@ -8,6 +8,8 @@
 using FitGymTool.DataAccess.Contracts;
 using Microsoft.EntityFrameworkCore.Storage;
 using FitGymTool.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
+using FitGymTool.Shared.Models;
 
 namespace FitGymTool.DataAccess.Services;
 
@@ -102,5 +104,22 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 		this._dbContext.Dispose();
 		this._transaction?.Dispose();
 		GC.SuppressFinalize(this);
+	}
+
+	/// <summary>
+	/// Executes the SQL query asynchronous.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="sql">The SQL.</param>
+	/// <param name="parameters">The parameters.</param>
+	/// <returns>The SQL query response.</returns>
+	public async Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new()
+	{
+		if (typeof(T) == typeof(CurrentMonthFeesAndRevenueStatus))
+		{
+			return (await _dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql).ToListAsync()) as List<T> ?? new List<T>();
+		}
+
+		throw new NotSupportedException($"Raw SQL query for type {typeof(T).Name} is not supported.");
 	}
 }

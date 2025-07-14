@@ -44,4 +44,12 @@ public interface IUnitOfWork : IDisposable
 	/// <returns>A task to wait on.</returns>
 	Task RollbackAsync();
 
+	/// <summary>
+	/// Executes the SQL query asynchronous.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="sql">The SQL.</param>
+	/// <param name="parameters">The parameters.</param>
+	/// <returns>The SQL query response.</returns>
+	Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new();
 }

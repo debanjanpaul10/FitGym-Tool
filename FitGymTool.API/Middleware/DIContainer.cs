@@ -53,6 +53,7 @@ public static class DIContainer
 	{
 		services.AddScoped<IMembersService, MembersService>();
 		services.AddScoped<IFitGymCommonService, FitGymCommonService>();
+		services.AddScoped<IMemberFeesService, MemberFeesService>();
 	}
 
 	/// <summary>
@@ -63,7 +64,7 @@ public static class DIContainer
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		services.AddScoped<IMembersDataService, MembersDataService>();
-		services.AddScoped<IMemberFeesDataService, MemberFeesDataService>();
 		services.AddScoped<IFitGymCommonDataService, FitGymCommonDataService>();
+		services.AddScoped<IMemberFeesDataService, MemberFeesDataService>(); 
 	}
 }

@@ -7,6 +7,7 @@
 
 using FitGymTool.DataAccess.Entity;
 using FitGymTool.DataAccess.Entity.Mapping;
+using FitGymTool.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitGymTool.DataAccess;
@@ -67,6 +68,11 @@ public class SqlDbContext : DbContext
 	/// The fees structure.
 	/// </value>
 	public DbSet<FeesStructure> FeesStructure { get; set; }
+
+	/// <summary>
+	/// Gets or sets the current month fees and revenue status (for raw SQL queries).
+	/// </summary>
+	public DbSet<CurrentMonthFeesAndRevenueStatus> CurrentMonthFeesAndRevenueStatus { get; set; }
 
 	#region Mapping Entities
 

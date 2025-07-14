@@ -4,7 +4,7 @@
     DateCreated: 13-July-2025
 */
 
-CREATE FUNCTION [dbo].[fn_GetPaymentHistoryDataForMembers]()
+CREATE FUNCTION [dbo].[FN_GetPaymentHistoryDataForMembers]()
 RETURNS TABLE
 AS
 RETURN

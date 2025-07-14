@@ -71,7 +71,8 @@
     <Build Include="Tables\FeesDurationMapping.sql" />
     <Build Include="Tables\FeesStructure.sql" />
     <Build Include="Functions\FN_GetPaymentHistoryDataForMembers.sql" />
-    <Build Include="Functions\FN_GetCurrentFeesPaymentStatus.sql" />
+    <Build Include="Functions\FN_GetCurrentMembersFeesStatus.sql" />
+    <Build Include="Functions\FN_GetCurrentFeesAndRevenueStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

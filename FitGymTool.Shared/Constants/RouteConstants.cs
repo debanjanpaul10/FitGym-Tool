@@ -64,4 +64,20 @@ public static class RouteConstants
 		/// </summary>
 		public const string GetMappingsMasterData_ApiRoute = "GetMappingsMasterData";
 	}
+
+	/// <summary>
+	/// The Member Fees API Routes class.
+	/// </summary>
+	public static class MemberFeesApiRoutes
+	{
+		/// <summary>
+		/// The base route route prefix
+		/// </summary>
+		public const string BaseRoute_RoutePrefix = "api/MemberFees";
+
+		/// <summary>
+		/// The get current month fees and revenue status API route
+		/// </summary>
+		public const string GetCurrentMonthFeesAndRevenueStatus_ApiRoute = "GetCurrentMonthFeesAndRevenueStatus";
+	}
 }
