@@ -7,7 +7,7 @@
 	[DateCreated] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
-	[ModifiedBy] NVARCHAR(MAX) NOT NULL
+	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
 	CONSTRAINT FK_FeesStructure_FeesDurationMapping FOREIGN KEY ([FeesDurationId]) REFERENCES [dbo].[FeesDurationMapping]([Id])
 )
 GO;
