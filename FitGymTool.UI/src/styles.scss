@@ -26,11 +26,23 @@ app-root,
   height: auto !important;
 }
 
+html,
+body,
+app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Cascadia Mono" !important;
+  overflow-x: hidden !important;
+}
+
 .app-background {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh !important;
   background: var(--background-color) url("assets/Images/background.png")
     no-repeat center center fixed !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
-  min-height: 100vh !important;
 }

@@ -37,9 +37,14 @@
   justify-content: space-between;
   width: 100vw;
   height: 55px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
   background: #18181b;
   border-bottom: 2px solid #27272a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .header-left,
@@ -68,3 +73,5 @@
   color: #fff !important;
   fill: #fff !important;
 }
+
+// NOTE: Ensure main content has padding-top: 55px to avoid being hidden under the fixed header.
