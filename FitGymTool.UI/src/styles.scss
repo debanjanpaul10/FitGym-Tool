@@ -1,0 +1,48 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "primeicons/primeicons.css";
+
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("assets/Fonts/CascadiaMono-VariableFont_wght.ttf");
+}
+
+:root {
+  --background-color: #181a20;
+  --text-color: #f1f1f1;
+  --primary-color: #242731;
+  --secondary-color: #323544;
+  --accent-color: #4f8cff;
+}
+
+html,
+body,
+app-root,
+.app-background {
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  font-family: "Cascadia Mono" !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+html,
+body,
+app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Cascadia Mono" !important;
+  overflow-x: hidden !important;
+}
+
+.app-background {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh !important;
+  background: var(--background-color) url("assets/Images/background.png")
+    no-repeat center center fixed !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}

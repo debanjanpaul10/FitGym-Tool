@@ -1,0 +1,120 @@
+﻿// *********************************************************************************
+//	<copyright file="BaseController.cs" company="Personal">
+//		Copyright (c) 2025 Personal
+//	</copyright>
+// <summary>The Base Controller Class.</summary>
+// *********************************************************************************
+
+using FitGymTool.Shared.Constants;
+using FitGymTool.Shared.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FitGymTool.API.Controllers;
+
+/// <summary>
+/// The Base Controller Class.
+/// </summary>
+/// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
+/// <param name="configuration">The Configuration.</param>
+[Authorize]
+public abstract class BaseController : ControllerBase
+{
+	/// <summary>
+	/// The Current User Name.
+	/// </summary>
+	protected string UserFullName = string.Empty;
+
+	/// <summary>
+	/// The Current User Email.
+	/// </summary>
+	protected string UserEmail = string.Empty;
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BaseController"/> class.
+	/// </summary>
+	protected BaseController(IHttpContextAccessor httpContextAccessor)
+	{
+		if (httpContextAccessor.HttpContext is not null && httpContextAccessor.HttpContext?.User is not null)
+		{
+			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
+			if (!string.IsNullOrEmpty(userFullName))
+			{
+				this.UserFullName = userFullName;
+			}
+			else
+			{
+				this.UserFullName = FitGymToolConstants.NotApplicableStringConstant;
+			}
+
+			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
+			if (!string.IsNullOrEmpty(userEmail))
+			{
+				this.UserEmail = userEmail;
+			}
+			else
+			{
+				this.UserEmail = FitGymToolConstants.NotApplicableStringConstant;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Prepares the success response.
+	/// </summary>
+	/// <param name="responseData">The response data.</param>
+	/// <returns>The response DTO.</returns>
+	protected ResponseDTO HandleSuccessRequestResponse(object responseData)
+	{
+		return new ResponseDTO()
+		{
+			IsSuccess = true,
+			ResponseData = responseData,
+			StatusCode = StatusCodes.Status200OK,
+		};
+	}
+
+	/// <summary>
+	/// Handles the bad request response.
+	/// </summary>
+	/// <param name="statusCode">The status code.</param>
+	/// <param name="message">The message.</param>
+	/// <returns>The response DTO.</returns>
+	protected ResponseDTO HandleBadRequestResponse(int statusCode, string message)
+	{
+		return new ResponseDTO()
+		{
+			IsSuccess = false,
+			ResponseData = message,
+			StatusCode = statusCode,
+		};
+	}
+
+	/// <summary>
+	/// Handles the unauthorized request response.
+	/// </summary>
+	/// <returns>The response DTO.</returns>
+	protected ResponseDTO HandleUnAuthorizedRequestResponse()
+	{
+		return new ResponseDTO()
+		{
+			IsSuccess = false,
+			ResponseData = ExceptionConstants.UnauthorizedAccessMessageConstant,
+			StatusCode = StatusCodes.Status401Unauthorized,
+		};
+	}
+
+	/// <summary>
+	/// Handles the user authentication response.
+	/// </summary>
+	/// <returns>The boolean for authentication.</returns>
+	protected bool IsAuthorized()
+	{
+		if (!string.IsNullOrEmpty(this.UserFullName) && !string.IsNullOrEmpty(this.UserEmail))
+		{
+			return true;
+		}
+
+		return false;
+	}
+}
