@@ -9,7 +9,7 @@ import {
 import { SkeletonModule } from 'primeng/skeleton';
 
 import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
-import { MembersApiService } from '@core/services/members-api.service';
+import { MembersApiService } from '@services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster.service';
 import { ButtonModule } from 'primeng/button';

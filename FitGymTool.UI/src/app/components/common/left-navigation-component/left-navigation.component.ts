@@ -11,7 +11,7 @@ import { MsalService } from '@azure/msal-angular';
 import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
-import { DrawerService } from '@services/drawer.service';
+import { DrawerService } from '@core/services/drawer.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -13,10 +13,10 @@ import Chart from 'chart.js/auto';
 import { CommonModule } from '@angular/common';
 
 import { ChartConstants } from '@shared/application.constants';
-import { CommonService } from '@services/common.service';
+import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { FeesPaymentStatusMappingDto } from '@models/DTO/Mapping/fees-payment-status-mapping-dto.model';
-import { MemberFeesApiService } from '@core/services/member-fees-api.service';
+import { MemberFeesApiService } from '@services/member-fees-api.service';
 import { ToasterService } from '@services/toaster.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { CurrentMonthFeesAndRevenueStatus } from '@models/DTO/current-month-fees-revenue-status.model';

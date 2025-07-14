@@ -12,7 +12,7 @@ import {
 import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
-import { LoaderService } from '@services/loader.service';
+import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-loader-component',

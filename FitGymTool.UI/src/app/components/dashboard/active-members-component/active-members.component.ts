@@ -14,7 +14,7 @@ import Chart from 'chart.js/auto';
 import { SkeletonModule } from 'primeng/skeleton';
 
 import { ChartConstants } from '@shared/application.constants';
-import { MembersApiService } from '@core/services/members-api.service';
+import { MembersApiService } from '@services/members-api.service';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster.service';

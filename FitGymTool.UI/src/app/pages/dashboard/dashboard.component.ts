@@ -10,11 +10,11 @@ import { CardModule } from 'primeng/card';
 
 import { ActiveMembersComponent } from '@components/dashboard/active-members-component/active-members.component';
 import { CurrentRevenueComponent } from '@components/dashboard/current-revenue-component/current-revenue.component';
-import { CommonApiService } from '@core/services/common-api.service';
-import { LoaderService } from '@services/loader.service';
+import { CommonApiService } from '@services/common-api.service';
+import { LoaderService } from '@core/services/loader.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster.service';
-import { CommonService } from '@services/common.service';
+import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 @Component({

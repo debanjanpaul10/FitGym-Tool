@@ -12,7 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccountInfo } from '@azure/msal-browser';
 
-import { DrawerService } from '@services/drawer.service';
+import { DrawerService } from '@core/services/drawer.service';
 import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { Router } from '@angular/router';
 
