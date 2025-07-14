@@ -19,6 +19,16 @@ export class RouteConstants {
     Link: 'members',
     RouteValue: '/members',
   };
+  public static FeesManagement = {
+    Name: 'Fees',
+    Link: 'fees',
+    RouteValue: '/fees',
+  };
+  public static FacilityManagement = {
+    Name: 'Facility',
+    Link: 'facility',
+    RouteValue: '/facility',
+  };
 }
 
 export class LoginPageConstants {

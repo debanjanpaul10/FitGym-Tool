@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
+import { AddMemberDto } from '@models/DTO/add-member-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +26,14 @@ export class MembersApiService {
   ): Observable<ResponseDto> {
     const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.GetMemberByEmailId_ApiRoute}`;
     return this.httpClient.post<ResponseDto>(apiUrl, emailAddress);
+  }
+
+  public AddNewMemberAsync_FromAdmin(
+    newMemberData: AddMemberDto
+  ): Observable<ResponseDto> {
+    const apiUrl: string = `${this.apiBaseUrl}${
+      this.membersApiRoutes.AddMember_ApiRoute
+    }${true}`;
+    return this.httpClient.post<ResponseDto>(apiUrl, newMemberData);
   }
 }

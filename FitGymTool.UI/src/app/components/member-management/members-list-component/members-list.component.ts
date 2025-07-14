@@ -24,8 +24,8 @@ import { Column } from '@models/interfaces/column.interface';
     ButtonModule,
     FormsModule,
   ],
-  templateUrl: './members-list-component.html',
-  styleUrl: './members-list-component.scss',
+  templateUrl: './members-list.component.html',
+  styleUrl: './members-list.component.scss',
 })
 export class MembersListComponent {
   @Input() public membersData!: MemberDetailsDto[];

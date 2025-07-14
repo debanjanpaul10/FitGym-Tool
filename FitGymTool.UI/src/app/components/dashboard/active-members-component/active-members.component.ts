@@ -14,10 +14,10 @@ import Chart from 'chart.js/auto';
 import { SkeletonModule } from 'primeng/skeleton';
 
 import { ChartConstants } from '@shared/application.constants';
-import { MembersApiService } from '@core/services/members-api-service';
+import { MembersApiService } from '@core/services/members-api.service';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster-service';
+import { ToasterService } from '@services/toaster.service';
 
 /**
  * Component responsible for displaying active members statistics in a doughnut chart format.
@@ -35,8 +35,8 @@ import { ToasterService } from '@services/toaster-service';
 @Component({
   selector: 'app-active-members-component',
   imports: [CommonModule, SkeletonModule],
-  templateUrl: './active-members-component.html',
-  styleUrl: './active-members-component.scss',
+  templateUrl: './active-members.component.html',
+  styleUrl: './active-members.component.scss',
 })
 export class ActiveMembersComponent
   implements OnDestroy, OnInit, AfterViewChecked

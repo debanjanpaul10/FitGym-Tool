@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 
-import { MembersListComponent } from '@components/member-management/members-list-component/members-list-component';
-import { MembersApiService } from '@core/services/members-api-service';
+import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
+import { MembersApiService } from '@core/services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster-service';
+import { ToasterService } from '@services/toaster.service';
 import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
@@ -24,8 +24,8 @@ import { MemberManagementConstants } from '@shared/application.constants';
 @Component({
   selector: 'app-member-management',
   imports: [CommonModule, MembersListComponent, SkeletonModule, ButtonModule],
-  templateUrl: './member-management-component.html',
-  styleUrl: './member-management-component.scss',
+  templateUrl: './member-management.component.html',
+  styleUrl: './member-management.component.scss',
 })
 export class MemberManagementComponent implements OnInit {
   public MemberDashboardConstants =

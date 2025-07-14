@@ -19,8 +19,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header-component',
   imports: [AvatarModule, CommonModule, ButtonModule, TooltipModule],
-  templateUrl: './header-component.html',
-  styleUrl: './header-component.scss',
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   public BrandText = DrawerConstants.Headings.BrandText;

@@ -1,15 +1,5 @@
-import {
-  Component,
-  inject,
-  Input,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-import { LoaderService } from '@services/loader.service';
-import { CommonModule } from '@angular/common';
 import {
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
@@ -20,12 +10,15 @@ import {
   NavigationError,
 } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
+import { LoaderService } from '@services/loader.service';
 
 @Component({
   selector: 'app-loader-component',
   imports: [ProgressSpinnerModule, CommonModule],
-  templateUrl: './loader-component.html',
-  styleUrl: './loader-component.scss',
+  templateUrl: './loader.component.html',
+  styleUrl: './loader.component.scss',
 })
 export class LoaderComponent implements OnInit {
   @Input() detectRouteTransitions: boolean = false;

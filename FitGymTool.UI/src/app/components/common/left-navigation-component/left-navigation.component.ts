@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-left-navigation-component',
   imports: [DrawerModule, ButtonModule, CommonModule],
-  templateUrl: './left-navigation-component.html',
-  styleUrl: './left-navigation-component.scss',
+  templateUrl: './left-navigation.component.html',
+  styleUrl: './left-navigation.component.scss',
 })
 export class LeftNavigationComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;

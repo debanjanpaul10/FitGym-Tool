@@ -8,13 +8,13 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
-import { ActiveMembersComponent } from '@components/dashboard/active-members-component/active-members-component';
-import { CurrentRevenueComponent } from '@components/dashboard/current-revenue-component/current-revenue-component';
-import { CommonApiService } from '@core/services/common-api-service';
+import { ActiveMembersComponent } from '@components/dashboard/active-members-component/active-members.component';
+import { CurrentRevenueComponent } from '@components/dashboard/current-revenue-component/current-revenue.component';
+import { CommonApiService } from '@core/services/common-api.service';
 import { LoaderService } from '@services/loader.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster-service';
-import { CommonService } from '@services/common-service';
+import { ToasterService } from '@services/toaster.service';
+import { CommonService } from '@services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 @Component({
@@ -25,8 +25,8 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
     CurrentRevenueComponent,
     ActiveMembersComponent,
   ],
-  templateUrl: './dashboard-component.html',
-  styleUrl: './dashboard-component.scss',
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   public mappingsMasterData: WritableSignal<MasterMappingDataDto> = signal(
