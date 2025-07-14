@@ -24,7 +24,7 @@ export class LeftNavigationComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
   public DrawerConstants = DrawerConstants;
-  public isVisible: WritableSignal<boolean>;
+  public isVisible: WritableSignal<boolean> = signal(false);
   public menuItems: any;
 
   private readonly authService: MsalService = inject(MsalService);
@@ -82,12 +82,12 @@ export class LeftNavigationComponent implements OnInit {
   }
 
   private navigateFeesDashboard(): void {
-    alert('Feature being worked on');
+    this.routerService.navigate([RouteConstants.FeesManagement.Link]);
     this.drawerService.closeDrawer();
   }
 
   private navigateFacilityDashboard(): void {
-    alert('Feature being worked on');
+    this.routerService.navigate([RouteConstants.FacilityManagement.Link]);
     this.drawerService.closeDrawer();
   }
 }
