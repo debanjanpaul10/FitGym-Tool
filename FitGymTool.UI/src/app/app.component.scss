@@ -1,0 +1,10 @@
+// Ensure router outlet content has proper spacing
+router-outlet + * {
+  padding-bottom: 80px;
+}
+
+.container-fluid {
+  padding-top: 55px;
+  flex: 1 0 auto;
+  // Remove padding-bottom if present
+}

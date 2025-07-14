@@ -1,0 +1,77 @@
+.card {
+  border: none !important;
+  width: 100vw;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.header-menubar {
+  position: relative;
+  min-height: 55px;
+  height: 55px;
+  align-items: center;
+  display: flex;
+  width: 100vw !important;
+  overflow: visible !important;
+}
+
+.avatar-violet {
+  background-color: #c084fc !important;
+  color: white !important;
+}
+
+.header-logo-absolute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  height: 50px;
+  max-width: 200px;
+}
+
+.header-bar-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  background: #18181b;
+  border-bottom: 2px solid #27272a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.header-left,
+.header-right {
+  flex: 0 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo {
+  height: 50px;
+  max-width: 200px;
+  cursor: pointer;
+}
+
+.header-bar-custom,
+.header-bar-custom * {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+// NOTE: Ensure main content has padding-top: 55px to avoid being hidden under the fixed header.
