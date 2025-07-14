@@ -44,7 +44,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataServi
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
 			var existingMember = (await this._unitOfWork.Repository<MemberDetails>()
-				.FindAsync(predicate: member => member.MemberId == memberDetails.MemberId && member.MemberGuid == memberDetails.MemberGuid && member.IsActive)).Any();
+			    .FindAsync(predicate: member => member.MemberEmail == memberDetails.MemberEmail && member.IsActive)).Any();
 			if (existingMember)
 			{
 				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberAlreadyExistsMessageConstant);
