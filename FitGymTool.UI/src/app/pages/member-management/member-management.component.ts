@@ -15,6 +15,8 @@ import { ToasterService } from '@services/toaster.service';
 import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
+import { DialogPopupService } from '@core/services/dialog-popup.service';
+import { AddUserComponent } from '@components/member-management/add-user-component/add-user.component';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -23,13 +25,19 @@ import { MemberManagementConstants } from '@shared/application.constants';
  */
 @Component({
   selector: 'app-member-management',
-  imports: [CommonModule, MembersListComponent, SkeletonModule, ButtonModule],
+  imports: [
+    CommonModule,
+    MembersListComponent,
+    SkeletonModule,
+    ButtonModule,
+    AddUserComponent,
+  ],
   templateUrl: './member-management.component.html',
   styleUrl: './member-management.component.scss',
 })
 export class MemberManagementComponent implements OnInit {
   public MemberDashboardConstants =
-    MemberManagementConstants.MembersDashboardConstant;
+    MemberManagementConstants.MembersDashboardConstants;
 
   public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
   public isUsersDataLoading: WritableSignal<boolean> = signal(true);
@@ -37,6 +45,8 @@ export class MemberManagementComponent implements OnInit {
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
   private readonly toasterService: ToasterService = inject(ToasterService);
+  private readonly dialogPopupService: DialogPopupService =
+    inject(DialogPopupService);
 
   /**
    * Angular lifecycle hook that is called after component initialization.
@@ -47,7 +57,7 @@ export class MemberManagementComponent implements OnInit {
   }
 
   public handleAddNewUser(): void {
-    alert('Feature being actively worked on');
+    this.dialogPopupService.openAddMemberDialog();
   }
 
   public handleTerminateUser(): void {

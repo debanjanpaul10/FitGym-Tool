@@ -46,3 +46,43 @@ app-root {
   background-position: center center !important;
   background-repeat: no-repeat !important;
 }
+
+// Fix for PrimeNG dialog causing white space/horizontal scroll
+.p-dialog-mask {
+  overflow: hidden !important;
+}
+
+// Prevent body from getting padding-right when dialog opens
+body.p-overflow-hidden {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+// Ensure dialog doesn't exceed viewport
+.p-dialog {
+  max-width: calc(100vw - 2rem) !important;
+  max-height: calc(100vh - 2rem) !important;
+}
+
+// Fix for any container causing overflow
+.container-fluid {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+// Additional fix for horizontal scrollbar prevention
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden !important;
+  width: 100% !important;
+}
+
+body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  position: relative !important;
+}
