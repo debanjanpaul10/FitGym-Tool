@@ -16,6 +16,8 @@ namespace FitGymTool.API.Adapters.Handlers;
 /// <summary>
 /// The Members Handler Adapter Class.
 /// </summary>
+/// <param name="mapper">The mapper.</param>
+/// <param name="membersService">The Members service.</param>
 /// <seealso cref="FitGymTool.API.Adapters.Contracts.IMembersHandler" />
 public class MembersHandler(IMembersService membersService, IMapper mapper) : IMembersHandler
 {
@@ -41,7 +43,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = this._mapper.Map<MemberDetailsDomain>(memberDetails);
+		var domainRequest = this._mapper.Map<AddMemberDomain>(memberDetails);
 		return await this._membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
@@ -83,7 +85,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
 	{
-		var domainRequest = this._mapper.Map<MemberDetailsDomain>(memberDetails);
+		var domainRequest = this._mapper.Map<UpdateMemberDomain>(memberDetails);
 		return await this._membersService.UpdateMemberAsync(domainRequest);
 	}
 }

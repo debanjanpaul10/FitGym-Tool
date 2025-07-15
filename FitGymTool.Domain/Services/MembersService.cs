@@ -5,7 +5,6 @@
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
 
-using AutoMapper;
 using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models.Members;
@@ -19,20 +18,14 @@ namespace FitGymTool.Domain.Services;
 /// The Members Service Class.
 /// </summary>
 /// <param name="logger">The logger.</param>
-/// <param name="mapper">The auto mapper.</param>
 /// <param name="membersDataService">The Members Data Service.</param>
 /// <seealso cref="IMembersService"/>
-public class MembersService(IMembersDataManager membersDataService, IMapper mapper, ILogger<MembersService> logger) : IMembersService
+public class MembersService(IMembersDataManager membersDataService, ILogger<MembersService> logger) : IMembersService
 {
 	/// <summary>
 	/// The members data service.
 	/// </summary>
 	private readonly IMembersDataManager _membersDataService = membersDataService;
-
-	/// <summary>
-	/// The auto mapper.
-	/// </summary>
-	private readonly IMapper _mapper = mapper;
 
 	/// <summary>
 	/// The logger for the Members Service.
@@ -46,7 +39,7 @@ public class MembersService(IMembersDataManager membersDataService, IMapper mapp
 	/// <param name="userEmail">The user email.</param>
 	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(MemberDetailsDomain memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(AddMemberDomain memberDetails, string userEmail, bool isFromAdmin)
 	{
 		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
@@ -57,15 +50,13 @@ public class MembersService(IMembersDataManager membersDataService, IMapper mapp
 			// Set the effective email for the member
 			memberDetails.MemberEmail = effectiveEmail!;
 			memberDetails.MemberGuid = Guid.NewGuid();
+			memberDetails.IsActive = true;
+			memberDetails.CreatedBy = effectiveEmail!;
+			memberDetails.DateCreated = DateTime.UtcNow;
+			memberDetails.ModifiedBy = effectiveEmail!;
+			memberDetails.DateModified = DateTime.UtcNow;
 
-			var addNewMemberData = this._mapper.Map<AddMemberDomain>(memberDetails);
-			addNewMemberData.IsActive = true;
-			addNewMemberData.CreatedBy = effectiveEmail!;
-			addNewMemberData.DateCreated = DateTime.UtcNow;
-			addNewMemberData.ModifiedBy = effectiveEmail!;
-			addNewMemberData.DateModified = DateTime.UtcNow;
-
-			var result = await this._membersDataService.AddNewMemberAsync(addNewMemberData);
+			var result = await this._membersDataService.AddNewMemberAsync(memberDetails);
 			return result;
 		}
 		catch (Exception ex)
@@ -93,8 +84,7 @@ public class MembersService(IMembersDataManager membersDataService, IMapper mapp
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
 			var members = await this._membersDataService.GetAllMembersAsync();
-			var memberDomains = this._mapper.Map<List<MemberDetailsDomain>>(members);
-			return memberDomains;
+			return members;
 		}
 		catch (Exception ex)
 		{
@@ -129,8 +119,8 @@ public class MembersService(IMembersDataManager membersDataService, IMapper mapp
 					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
-			var memberDomain = this._mapper.Map<MemberDetailsDomain>(member);
-			return memberDomain;
+
+			return member;
 		}
 		catch (Exception ex)
 		{
@@ -150,15 +140,14 @@ public class MembersService(IMembersDataManager membersDataService, IMapper mapp
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(MemberDetailsDomain memberDetails)
+	public async Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var updateEntity = this._mapper.Map<UpdateMemberDomain>(memberDetails);
-			var result = await this._membersDataService.UpdateMemberAsync(updateEntity);
+			var result = await this._membersDataService.UpdateMemberAsync(memberDetails);
 			return result;
 		}
 		catch (Exception ex)

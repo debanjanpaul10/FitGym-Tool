@@ -22,6 +22,7 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// </summary>
 /// <param name="logger">The logger service.</param>
 /// <param name="unitOfWork">The unit of work.</param>
+/// <param name="mapper">The auto mapper.</param>
 /// <seealso cref="IFitGymCommonManager" />
 public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CommonDataManager> logger) : IFitGymCommonManager
 {
@@ -44,7 +45,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 	/// Gets the mappings master data asynchronous.
 	/// </summary>
 	/// <returns>A tupple containing the mapping master data.</returns>
-	public async Task<(List<FeesDurationMappingDomain>, List<FeesPaymentStatusMappingDomain>, List<MembershipStatusMappingDomain>)> GetMappingsMasterDataAsync()
+	public async Task<MappingMasterDataDomain> GetMappingsMasterDataAsync()
 	{
 		try
 		{
@@ -55,11 +56,17 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 			var feesPaymentStatusMapping = await _unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(filter: x => x.IsActive);
 			var membershipStatusMapping = await _unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
 
-			var feesDurationMappingDomain = _mapper.Map<List<FeesDurationMappingDomain>>(feesDurationMapping);
-			var feesPaymentMappingDomain = _mapper.Map<List<FeesPaymentStatusMappingDomain>>(feesPaymentStatusMapping);
-			var membershipStatusMappingDomain = _mapper.Map<List<MembershipStatusMappingDomain>>(membershipStatusMapping);
+			var feesDurationMappingDomain = this._mapper.Map<IEnumerable<FeesDurationMappingDomain>>(feesDurationMapping);
+			var feesPaymentMappingDomain = this._mapper.Map<IEnumerable<FeesPaymentStatusMappingDomain>>(feesPaymentStatusMapping);
+			var membershipStatusMappingDomain = this._mapper.Map<IEnumerable<MembershipStatusMappingDomain>>(membershipStatusMapping);
 
-			return (feesDurationMappingDomain, feesPaymentMappingDomain, membershipStatusMappingDomain);
+			return new MappingMasterDataDomain()
+			{
+				FeesDurationMapping = feesDurationMappingDomain,
+				FeesPaymentStatusMapping = feesPaymentMappingDomain,
+				MembershipStatusMapping = membershipStatusMappingDomain
+			};
+
 
 		}
 		catch (Exception ex)

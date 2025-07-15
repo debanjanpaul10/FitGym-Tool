@@ -41,21 +41,21 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
+			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
-			var result = await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatusDomain>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
+			var result = await this._unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatusDomain>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
 			return result;
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
+			this._logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
+			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}

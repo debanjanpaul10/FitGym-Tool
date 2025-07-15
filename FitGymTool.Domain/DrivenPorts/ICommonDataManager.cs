@@ -17,6 +17,6 @@ public interface IFitGymCommonManager
 	/// <summary>
 	/// Gets the mappings master data asynchronous.
 	/// </summary>
-	/// <returns>A tupple containing the mapping master data.</returns>
-	Task<(List<FeesDurationMappingDomain>, List<FeesPaymentStatusMappingDomain>, List<MembershipStatusMappingDomain>)> GetMappingsMasterDataAsync();
+	/// <returns>The mapping master data domain.</returns>
+	Task<MappingMasterDataDomain> GetMappingsMasterDataAsync();
 }

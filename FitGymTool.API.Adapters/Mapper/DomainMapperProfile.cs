@@ -33,8 +33,8 @@ public class DomainMapperProfile: Profile
 		CreateMap<CurrentMonthFeesAndRevenueStatusDomain, CurrentMonthFeesAndRevenueStatusDto>();
 		
 		// Members mapping configurations
-		CreateMap<AddMemberDTO, MemberDetailsDomain>();
-		CreateMap<UpdateMemberDTO, MemberDetailsDomain>();
+		CreateMap<AddMemberDTO, AddMemberDomain>();
+		CreateMap<UpdateMemberDTO, UpdateMemberDomain>();
 		CreateMap<MemberDetailsDomain, MemberDetailsDTO>()
 			.ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatus));
 	}

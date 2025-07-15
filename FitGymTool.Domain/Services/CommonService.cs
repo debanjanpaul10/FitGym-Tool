@@ -5,7 +5,6 @@
 // <summary>The Fit Gym Common Data Service Class.</summary>
 // *********************************************************************************
 
-using AutoMapper;
 using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models.MappingDomain;
@@ -22,17 +21,13 @@ namespace FitGymTool.Domain.Services;
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="DrivingPorts.ICommonService" />
-public class CommonService(IFitGymCommonManager fitGymDataService, IMapper mapper, ILogger<CommonService> logger) : ICommonService
+public class CommonService(IFitGymCommonManager fitGymDataService, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
 	/// The figym common manager.
 	/// </summary>
 	private readonly IFitGymCommonManager _commonManager = fitGymDataService;
 
-	/// <summary>
-	/// The mapper.
-	/// </summary>
-	private readonly IMapper _mapper = mapper;
 
 	/// <summary>
 	/// The logger.
@@ -51,18 +46,7 @@ public class CommonService(IFitGymCommonManager fitGymDataService, IMapper mappe
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			var (feesDurationMapping, feesPaymentStatusMapping, membershipStatusMapping) = await this._commonManager.GetMappingsMasterDataAsync();
-
-			var feesDurationData = this._mapper.Map<List<FeesDurationMappingDomain>>(feesDurationMapping);
-			var feesPaymentStatus = this._mapper.Map<List<FeesPaymentStatusMappingDomain>>(feesPaymentStatusMapping);
-			var membershipStatus = this._mapper.Map<List<MembershipStatusMappingDomain>>(membershipStatusMapping);
-
-			return new MappingMasterDataDomain()
-			{
-				FeesDurationMapping = feesDurationData,
-				FeesPaymentStatusMapping = feesPaymentStatus,
-				MembershipStatusMapping	= membershipStatus
-			};
+			return await this._commonManager.GetMappingsMasterDataAsync();
 		}
 		catch (Exception ex)
 		{

@@ -44,10 +44,10 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	public IRepository<TEntity> Repository<TEntity>() where TEntity : class
 	{
 		var type = typeof(TEntity);
-		if (!_repositories.TryGetValue(type, out var repository))
+		if (!this._repositories.TryGetValue(type, out var repository))
 		{
-			repository = new GenericRepository<TEntity>(_dbContext);
-			_repositories[type] = repository;
+			repository = new GenericRepository<TEntity>(this._dbContext);
+			this._repositories[type] = repository;
 		}
 
 		return (IRepository<TEntity>)repository;
@@ -59,7 +59,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>A task to wait on.</returns>
 	public async Task BeginTransactionAsync()
 	{
-		_transaction = await _dbContext.Database.BeginTransactionAsync();
+		this._transaction = await this._dbContext.Database.BeginTransactionAsync();
 	}
 
 	/// <summary>
@@ -68,10 +68,10 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>A task to wait on.</returns>
 	public async Task CommitAsync()
 	{
-		await _dbContext.SaveChangesAsync();
+		await this._dbContext.SaveChangesAsync();
 		if (_transaction is not null)
 		{
-			await _transaction.CommitAsync();
+			await this._transaction.CommitAsync();
 		}
 	}
 
@@ -81,9 +81,9 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>A task to wait on.</returns>
 	public async Task RollbackAsync()
 	{
-		if (_transaction is not null)
+		if (this._transaction is not null)
 		{
-			await _transaction.RollbackAsync();
+			await this._transaction.RollbackAsync();
 		}
 	}
 
@@ -93,7 +93,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>The save changes count.</returns>
 	public async Task<int> SaveChangesAsync()
 	{
-		return await _dbContext.SaveChangesAsync();
+		return await this._dbContext.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -101,8 +101,8 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// </summary>
 	public void Dispose()
 	{
-		_dbContext.Dispose();
-		_transaction?.Dispose();
+		this._dbContext.Dispose();
+		this._transaction?.Dispose();
 		GC.SuppressFinalize(this);
 	}
 
@@ -117,7 +117,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	{
 		if (typeof(T) == typeof(CurrentMonthFeesAndRevenueStatusDomain))
 		{
-			return await _dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql).ToListAsync() as List<T> ?? new List<T>();
+			return await this._dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql).ToListAsync() as List<T> ?? [];
 		}
 
 		throw new NotSupportedException($"Raw SQL query for type {typeof(T).Name} is not supported.");

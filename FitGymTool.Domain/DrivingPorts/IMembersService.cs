@@ -21,7 +21,7 @@ public interface IMembersService
 	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <param name="userEmail">The user email.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> AddNewMemberAsync(MemberDetailsDomain memberDetails, string userEmail, bool isFromAdmin);
+	Task<bool> AddNewMemberAsync(AddMemberDomain memberDetails, string userEmail, bool isFromAdmin);
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.
@@ -41,7 +41,7 @@ public interface IMembersService
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> UpdateMemberAsync(MemberDetailsDomain memberDetails);
+	Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails);
 
 	/// <summary>
 	/// Deletes a member by MemberId asynchronously.
