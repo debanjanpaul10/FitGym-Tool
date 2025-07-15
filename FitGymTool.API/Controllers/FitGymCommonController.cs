@@ -5,25 +5,26 @@
 // <summary>The Fit Gym Common Controller Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Contracts;
+using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Shared.Constants;
-using FitGymTool.Shared.DTOs;
-using FitGymTool.Shared.DTOs.MappingData;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.Controllers;
 
 /// <summary>
 /// The Fit Gym Common Controller Class.
 /// </summary>
-/// <param name="fitGymCommonService">The fit gym common service.</param>
+/// <param name="fitGymCommonHandler">The fit gym common service.</param>
 /// <param name="httpContextAccessor">The http context accessor.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.FitGymCommonApiRoutes.BaseRoute_RoutePrefix)]
-public class FitGymCommonController(IFitGymCommonService fitGymCommonService, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
+public class FitGymCommonController(IFitGymCommonHandler fitGymCommonHandler, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.
@@ -38,10 +39,10 @@ public class FitGymCommonController(IFitGymCommonService fitGymCommonService, IL
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await fitGymCommonService.GetMappingsMasterDataAsync();
+				var result = await fitGymCommonHandler.GetMappingsMasterDataAsync();
 				if (result is not null)
 				{
 					return this.HandleSuccessRequestResponse(result);
@@ -54,12 +55,12 @@ public class FitGymCommonController(IFitGymCommonService fitGymCommonService, IL
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 }

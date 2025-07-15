@@ -1,16 +1,16 @@
 ﻿// *********************************************************************************
-//	<copyright file="IMembersDataService.cs" company="Personal">
+//	<copyright file="IMembersHandler.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Members Service Interface.</summary>
+// <summary>The Members Handler Adapter Interface.</summary>
 // *********************************************************************************
 
-using FitGymTool.Shared.DTOs.Members;
+using FitGymTool.API.Adapters.Models.Response.Members;
 
 namespace FitGymTool.API.Adapters.Contracts;
 
 /// <summary>
-/// The Members Service Interface.
+/// The Members Handler Adapter Interface.
 /// </summary>
 public interface IMembersHandler
 {

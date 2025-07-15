@@ -9,7 +9,7 @@ using Azure.Identity;
 using FitGymTool.API.IOC;
 using FitGymTool.API.Middleware;
 using Microsoft.OpenApi.Models;
-using static FitGymTool.Shared.Constants.ConfigurationConstants;
+using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API;
 
@@ -37,12 +37,12 @@ public static class Program
 	/// <param name="builder">The web application builder.</param>
 	internal static void ConfigureServices(this WebApplicationBuilder builder)
 	{
-		builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: DevelopmentAppSettingsFile, optional: true).AddEnvironmentVariables();
+		builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: ConfigurationConstants.DevelopmentAppSettingsFile, optional: true).AddEnvironmentVariables();
 		var credentials = builder.Environment.IsDevelopment()
 			? new DefaultAzureCredential()
 			: new DefaultAzureCredential(new DefaultAzureCredentialOptions
 			{
-				ManagedIdentityClientId = builder.Configuration[ManagedIdentityClientIdConstant]
+				ManagedIdentityClientId = builder.Configuration[ConfigurationConstants.ManagedIdentityClientIdConstant]
 			});
 
 		builder.Services.AddControllers();

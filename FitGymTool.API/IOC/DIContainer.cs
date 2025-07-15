@@ -8,13 +8,11 @@
 using Azure.Identity;
 using FitGymTool.API.Adapters.IOC;
 using FitGymTool.API.Controllers;
-using FitGymTool.Domain.Helpers;
 using FitGymTool.Infrastructure.DB.IOC;
-using FitGymTool.Shared.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using System.Security.Claims;
-using static FitGymTool.Shared.Constants.ConfigurationConstants;
+using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.IOC;
 
@@ -32,11 +30,7 @@ public static class DIContainer
 		builder.ConfigureAuthenticationServices();
 		builder.Services.AddMemoryCache();
 
-		builder.Services.AddAPIHandlers().AddDataDependencies();
-		builder.Services.AddAutoMapper(mapperConfig =>
-		{
-			mapperConfig.AddProfile<AutoMapperProfile>();
-		});
+		builder.Services.AddAPIHandlers().AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment());
 	}
 
 	/// <summary>
@@ -48,7 +42,7 @@ public static class DIContainer
 	public static void ConfigureAzureAppConfiguration(this WebApplicationBuilder builder, DefaultAzureCredential credentials)
 	{
 		var configuration = builder.Configuration;
-		var appConfigurationEndpoint = configuration[AppConfigurationEndpointKeyConstant];
+		var appConfigurationEndpoint = configuration[ConfigurationConstants.AppConfigurationEndpointKeyConstant];
 		if (string.IsNullOrEmpty(appConfigurationEndpoint))
 		{
 			throw new InvalidOperationException(ExceptionConstants.ConfigurationValueIsEmptyMessageConstant);
@@ -57,8 +51,8 @@ public static class DIContainer
 		configuration.AddAzureAppConfiguration(options =>
 		{
 			options.Connect(new Uri(appConfigurationEndpoint), credentials)
-				.Select(KeyFilter.Any).Select(KeyFilter.Any, BaseConfigurationAppConfigKeyConstant)
-				.Select(KeyFilter.Any, FitGymAPIAppConfigKeyConstant)
+				.Select(KeyFilter.Any).Select(KeyFilter.Any, ConfigurationConstants.BaseConfigurationAppConfigKeyConstant)
+				.Select(KeyFilter.Any, ConfigurationConstants.FitGymAPIAppConfigKeyConstant)
 				.ConfigureKeyVault((options) =>
 				{
 					options.SetCredential(credentials);

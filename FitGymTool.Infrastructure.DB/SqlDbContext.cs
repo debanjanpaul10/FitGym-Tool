@@ -5,6 +5,7 @@
 // <summary>The SQL DB Context Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.Models;
 using FitGymTool.Infrastructure.DB.Entity;
 using FitGymTool.Infrastructure.DB.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
@@ -71,7 +72,7 @@ public class SqlDbContext : DbContext
 	/// <summary>
 	/// Gets or sets the current month fees and revenue status (for raw SQL queries).
 	/// </summary>
-	public DbSet<CurrentMonthFeesAndRevenueStatus> CurrentMonthFeesAndRevenueStatus { get; set; }
+	public DbSet<CurrentMonthFeesAndRevenueStatusDomain> CurrentMonthFeesAndRevenueStatus { get; set; }
 
 	#region Mapping Entities
 
@@ -152,6 +153,6 @@ public class SqlDbContext : DbContext
 			.HasForeignKey(m => m.MembershipStatusId)
 			.HasPrincipalKey(ms => ms.Id);
 
-		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatus>().HasNoKey();
+		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatusDomain>().HasNoKey();
 	}
 }

@@ -7,9 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Constants\**" />
+    <Compile Remove="DTOs\**" />
     <Compile Remove="Enums\**" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="Constants\**" />
+    <EmbeddedResource Remove="DTOs\**" />
     <EmbeddedResource Remove="Enums\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Constants\**" />
+    <None Remove="DTOs\**" />
     <None Remove="Enums\**" />
+    <None Remove="Helpers\**" />
   </ItemGroup>
 
   <ItemGroup>

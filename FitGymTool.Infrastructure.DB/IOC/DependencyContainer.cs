@@ -1,5 +1,6 @@
-﻿using FitGymTool.Infrastructure.DB.Contracts;
-using FitGymTool.Infrastructure.DB.Services;
+﻿using FitGymTool.Domain.DrivenPorts;
+using FitGymTool.Infrastructure.DB.Contracts;
+using FitGymTool.Infrastructure.DB.DataManager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,9 @@ using static FitGymTool.Infrastructure.DB.Helpers.Constants.DatabaseConstants;
 
 namespace FitGymTool.Infrastructure.DB.IOC;
 
+/// <summary>
+/// The Dependency Container Class.
+/// </summary>
 public static class DependencyContainer
 {
 	/// <summary>
@@ -19,6 +23,14 @@ public static class DependencyContainer
 		return services;
 	}
 
+	/// <summary>
+	/// Configures the SQL database.
+	/// </summary>
+	/// <param name="services">The services.</param>
+	/// <param name="configuration">The configuration.</param>
+	/// <param name="isDevelopmentMode">if set to <c>true</c> [is development mode].</param>
+	/// <returns>The service collection.</returns>
+	/// <exception cref="System.ArgumentNullException">sqlConnectionString</exception>
 	private static IServiceCollection ConfigureSqlDatabase(this IServiceCollection services, IConfiguration configuration, bool isDevelopmentMode)
 	{
 		var sqlConnectionString = isDevelopmentMode
@@ -43,12 +55,17 @@ public static class DependencyContainer
 		return services;
 	}
 
+	/// <summary>
+	/// Adds the data managers.
+	/// </summary>
+	/// <param name="services">The services.</param>
+	/// <returns></returns>
 	private static IServiceCollection AddDataManagers(this IServiceCollection services)
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>()
-			.AddScoped<IMembersDataService, MembersDataService>()
-			.AddScoped<IFitGymCommonDataService, FitGymCommonDataService>()
-			.AddScoped<IMemberFeesDataService, MemberFeesDataService>();
+			.AddScoped<IMembersManager, MembersDataService>()
+			.AddScoped<IFitGymCommonManager, FitGymCommonDataService>()
+			.AddScoped<IMemberFeesManager, MemberFeesDataService>();
 
 		return services;
 	}

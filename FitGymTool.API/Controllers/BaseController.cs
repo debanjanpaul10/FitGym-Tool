@@ -5,10 +5,10 @@
 // <summary>The Base Controller Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Shared.Constants;
-using FitGymTool.Shared.DTOs;
+using FitGymTool.API.Adapters.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using FitGymTool.API.Helpers;
 
 namespace FitGymTool.API.Controllers;
 
@@ -37,24 +37,24 @@ public abstract class BaseController : ControllerBase
 	{
 		if (httpContextAccessor.HttpContext is not null && httpContextAccessor.HttpContext?.User is not null)
 		{
-			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
+			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userFullName))
 			{
 				this.UserFullName = userFullName;
 			}
 			else
 			{
-				this.UserFullName = FitGymToolConstants.NotApplicableStringConstant;
+				this.UserFullName = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 
-			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(ConfigurationConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
+			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userEmail))
 			{
 				this.UserEmail = userEmail;
 			}
 			else
 			{
-				this.UserEmail = FitGymToolConstants.NotApplicableStringConstant;
+				this.UserEmail = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public abstract class BaseController : ControllerBase
 		return new ResponseDTO()
 		{
 			IsSuccess = false,
-			ResponseData = ExceptionConstants.UnauthorizedAccessMessageConstant,
+			ResponseData = APIConstants.ExceptionConstants.UnauthorizedAccessMessageConstant,
 			StatusCode = StatusCodes.Status401Unauthorized,
 		};
 	}
