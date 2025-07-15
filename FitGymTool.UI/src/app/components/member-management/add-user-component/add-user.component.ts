@@ -25,6 +25,10 @@ import { MemberManagementConstants } from '@shared/application.constants';
 import { CommonService } from '@core/services/common.service';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { CommonApiService } from '@services/common-api.service';
+import { ResponseDto } from '@models/DTO/response-dto.model';
+import { LoaderService } from '@core/services/loader.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-add-user-component',
@@ -53,6 +57,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
     inject(DialogPopupService);
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
   private readonly commonService: CommonService = inject(CommonService);
+  private readonly commonApiService: CommonApiService =
+    inject(CommonApiService);
+  private readonly loaderService: LoaderService = inject(LoaderService);
+  private readonly toasterService: ToasterService = inject(ToasterService);
 
   constructor() {
     this.visible = this.dialogPopupService.isAddMemberDialogOpen;
@@ -63,8 +71,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.mappingMasterDataSubscription =
       this.commonService.MappingMasterData.subscribe(
         (data: MasterMappingDataDto | null) => {
-          if (data && data?.membershipStatusMapping) {
+          if (
+            data &&
+            data?.membershipStatusMapping &&
+            Object.values(data?.membershipStatusMapping).length > 0
+          ) {
             this.membershipStatusOptions = data?.membershipStatusMapping;
+          } else {
+            this.getMasterMappingsData();
           }
         }
       );
@@ -116,6 +130,26 @@ export class AddUserComponent implements OnInit, OnDestroy {
       memberGender: ['', [Validators.required]],
       memberJoinDate: [new Date(), [Validators.required]],
       membershipStatus: ['', [Validators.required]],
+    });
+  }
+
+  private getMasterMappingsData(): void {
+    this.loaderService.loadingOn();
+    this.commonApiService.GetMappingsMasterDataAsync().subscribe({
+      next: (response: ResponseDto) => {
+        if (response && response.isSuccess) {
+          this.membershipStatusOptions =
+            response.responseData?.membershipStatusMapping;
+        }
+      },
+      error: (err: Error) => {
+        this.loaderService.loadingOff();
+        console.error(err);
+        this.toasterService.showError(err.message);
+      },
+      complete: () => {
+        this.loaderService.loadingOff();
+      },
     });
   }
 }
