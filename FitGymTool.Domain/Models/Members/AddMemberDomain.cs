@@ -2,22 +2,17 @@
 //	<copyright file="AddMemberDomain.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Add Member Domain Class.</summary>
+// <summary>Add Member Domain Class.</summary>
 // *********************************************************************************
 
 namespace FitGymTool.Domain.Models.Members;
 
 /// <summary>
-/// The Add Member Domain Class.
+/// Add Member Domain Class.
 /// </summary>
 /// <seealso cref="FitGymTool.Domain.Models.BaseDomain" />
 public class AddMemberDomain : BaseDomain
 {
-	/// <summary>
-	/// Gets or sets the Member ID.
-	/// </summary>
-	public int MemberId { get; set; }
-
 	/// <summary>
 	/// Gets or sets the Member Name.
 	/// </summary>

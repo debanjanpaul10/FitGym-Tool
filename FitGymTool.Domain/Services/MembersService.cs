@@ -8,11 +8,10 @@
 using AutoMapper;
 using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
-using FitGymTool.Infrastructure.DB.Entity;
-using FitGymTool.Shared.Constants;
-using FitGymTool.Shared.DTOs.Members;
+using FitGymTool.Domain.Models.Members;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.Domain.Services;
 
@@ -44,21 +43,27 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 	/// Adds a new member to the database asynchronously.
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
-	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <param name="userEmail">The user email.</param>
+	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(MemberDetailsDomain memberDetails, string userEmail, bool isFromAdmin)
 	{
 		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
 
-			var addNewMemberData = this._mapper.Map<MemberDetails>(memberDetails);
-			addNewMemberData.MemberGuid = Guid.NewGuid();
+			// Set the effective email for the member
+			memberDetails.MemberEmail = effectiveEmail!;
+			memberDetails.MemberGuid = Guid.NewGuid();
+
+			var addNewMemberData = this._mapper.Map<AddMemberDomain>(memberDetails);
 			addNewMemberData.IsActive = true;
-			addNewMemberData.MemberEmail = effectiveEmail!;
+			addNewMemberData.CreatedBy = effectiveEmail!;
+			addNewMemberData.DateCreated = DateTime.UtcNow;
+			addNewMemberData.ModifiedBy = effectiveEmail!;
+			addNewMemberData.DateModified = DateTime.UtcNow;
 
 			var result = await this._membersDataService.AddNewMemberAsync(addNewMemberData);
 			return result;
@@ -66,41 +71,41 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
 		}
 	}
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.
 	/// </summary>
-	/// <returns>A list of MemberDetailsDTO.</returns>
-	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
+	/// <returns>A list of MemberDetailsDomain.</returns>
+	public async Task<List<MemberDetailsDomain>> GetAllMembersAsync()
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
 			var members = await this._membersDataService.GetAllMembersAsync();
-			var memberDTOs = this._mapper.Map<List<MemberDetailsDTO>>(members);
-			return memberDTOs;
+			var memberDomains = this._mapper.Map<List<MemberDetailsDomain>>(members);
+			return memberDomains;
 		}
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}
 
@@ -108,35 +113,35 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 	/// Gets a single member's details by Member's Email ID asynchronously.
 	/// </summary>
 	/// <param name="memberEmail">The member's Email ID.</param>
-	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
-	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
+	/// <returns>The MemberDetailsDomain object if found; otherwise, null.</returns>
+	public async Task<MemberDetailsDomain> GetMemberByEmailIdAsync(string memberEmail)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
 			var member = await this._membersDataService.GetMemberByEmailIdAsync(memberEmail);
 			if (member is null)
 			{
-				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
+				var ex = new InvalidOperationException(ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
+					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
-			var memberDTO = this._mapper.Map<MemberDetailsDTO>(member);
-			return memberDTO;
+			var memberDomain = this._mapper.Map<MemberDetailsDomain>(member);
+			return memberDomain;
 		}
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 		}
 	}
 
@@ -145,27 +150,27 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
+	public async Task<bool> UpdateMemberAsync(MemberDetailsDomain memberDetails)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var updateEntity = this._mapper.Map<MemberDetails>(memberDetails);
+			var updateEntity = this._mapper.Map<UpdateMemberDomain>(memberDetails);
 			var result = await this._membersDataService.UpdateMemberAsync(updateEntity);
 			return result;
 		}
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
 
@@ -179,7 +184,7 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 
 			var result = await this._membersDataService.DeleteMemberAsync(memberId);
 			return result;
@@ -187,13 +192,13 @@ public class MembersService(IMembersManager membersDataService, IMapper mapper, 
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 		}
 	}
 }

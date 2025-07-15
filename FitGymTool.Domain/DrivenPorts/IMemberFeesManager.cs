@@ -7,7 +7,7 @@
 
 using FitGymTool.Domain.Models;
 
-namespace FitGymTool.Infrastructure.DB.Contracts;
+namespace FitGymTool.Domain.DrivenPorts;
 
 /// <summary>
 /// The Member Fees Data Service Interface.

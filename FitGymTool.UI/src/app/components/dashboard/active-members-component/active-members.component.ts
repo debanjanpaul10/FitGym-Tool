@@ -220,7 +220,6 @@ export class ActiveMembersComponent
         }
       },
       error: (error: any) => {
-        this.isLoading.set(false);
         console.error(error);
         this.toasterService.showError(error?.message);
       },

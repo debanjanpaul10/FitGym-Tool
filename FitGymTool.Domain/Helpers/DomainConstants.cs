@@ -44,4 +44,31 @@ public static class DomainConstants
 		/// </summary>
 		public const string NotApplicableStringConstant = "NA";
 	}
+
+	/// <summary>
+	/// The Validation Error Messages Class.
+	/// </summary>
+	public static class ValidationErrorMessages
+	{
+		/// <summary>
+		/// The member details cannot be null message constant.
+		/// </summary>
+		public const string MemberDetailsCannotBeNull = "Member details cannot be null.";
+
+		/// <summary>
+		/// The member already exists message constant.
+		/// </summary>
+		public const string MemberAlreadyExistsMessageConstant = "Member with the same ID and GUID already exists.";
+
+		/// <summary>
+		/// The member not found message constant.
+		/// </summary>
+		public const string MemberNotFoundMessageConstant = "Member with the specified ID was not found.";
+
+		/// <summary>
+		/// The member details are invalid message constant.
+		/// </summary>
+		public const string MemberCouldNotBeAddedMessageConstant = "Member could not be added. Please check the details and try again.";
+
+	}
 }

@@ -5,6 +5,7 @@
 // <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.Models;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.Helpers.Constants;

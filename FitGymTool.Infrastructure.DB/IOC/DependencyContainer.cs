@@ -1,6 +1,14 @@
-﻿using FitGymTool.Domain.DrivenPorts;
+﻿// *********************************************************************************
+//	<copyright file="DependencyContainer.cs" company="Personal">
+//		Copyright (c) 2025 Personal
+//	</copyright>
+// <summary>The DI Container Class.</summary>
+// *********************************************************************************
+
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.DataManager;
+using FitGymTool.Infrastructure.DB.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,7 +73,11 @@ public static class DependencyContainer
 		services.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddScoped<IMembersManager, MembersDataService>()
 			.AddScoped<IFitGymCommonManager, FitGymCommonDataService>()
-			.AddScoped<IMemberFeesManager, MemberFeesDataService>();
+			.AddScoped<IMemberFeesManager, MemberFeesDataService>()
+			.AddAutoMapper(mapperConfig =>
+			{
+				mapperConfig.AddProfile<DataMapperProfile>();
+			});
 
 		return services;
 	}

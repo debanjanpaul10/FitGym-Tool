@@ -29,9 +29,13 @@ public class DomainMapperProfile: Profile
 		CreateMap<MappingMasterDataDomain, MappingMasterDataDto>();
 		CreateMap<FeesPaymentStatusMappingDomain, FeesPaymentStatusMappingDto>();
 		CreateMap<MembershipStatusMappingDomain, MembershipStatusMappingDto>();
+		CreateMap<FeesDurationMappingDomain, FeesDurationMappingDto>();
 		CreateMap<CurrentMonthFeesAndRevenueStatusDomain, CurrentMonthFeesAndRevenueStatusDto>();
-
-		CreateMap<AddMemberDTO, AddMemberDomain>();
-		CreateMap<UpdateMemberDTO, UpdateMemberDomain>();
+		
+		// Members mapping configurations
+		CreateMap<AddMemberDTO, MemberDetailsDomain>();
+		CreateMap<UpdateMemberDTO, MemberDetailsDomain>();
+		CreateMap<MemberDetailsDomain, MemberDetailsDTO>()
+			.ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatus));
 	}
 }

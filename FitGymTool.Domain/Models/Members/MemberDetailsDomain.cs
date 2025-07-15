@@ -5,18 +5,23 @@
 // <summary>The Member Details Domain Class.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.Domain.Models;
+namespace FitGymTool.Domain.Models.Members;
 
 /// <summary>
 /// The Member Details Domain Class.
 /// </summary>
-/// <seealso cref="FitGymTool.Domain.Models.BaseDomain" />
+/// <seealso cref="BaseDomain" />
 public class MemberDetailsDomain : BaseDomain
 {
 	/// <summary>
 	/// Gets or sets the Member ID.
 	/// </summary>
 	public int MemberId { get; set; }
+
+	/// <summary>
+	/// Gets or sets the Member GUID.
+	/// </summary>
+	public Guid MemberGuid { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member Name.
@@ -54,12 +59,7 @@ public class MemberDetailsDomain : BaseDomain
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status ID.
+	/// Gets or sets the Membership Status.
 	/// </summary>
-	public int MembershipStatusId { get; set; }
-
-	/// <summary>
-	/// Gets or sets the Member GUID.
-	/// </summary>
-	public Guid MemberGuid { get; set; }
+	public string MembershipStatus { get; set; } = string.Empty;
 }

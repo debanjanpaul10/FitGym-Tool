@@ -222,7 +222,6 @@ export class CurrentRevenueComponent
           }
         },
         error: (error: Error) => {
-          this.isLoading.set(false);
           console.error(error);
           this.toasterService.showError(error?.message);
         },

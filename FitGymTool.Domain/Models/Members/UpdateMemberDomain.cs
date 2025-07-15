@@ -2,20 +2,23 @@
 //	<copyright file="UpdateMemberDomain.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Update Member Domain Data Object.</summary>
+// <summary>The Member Details Entity Class.</summary>
 // *********************************************************************************
 
 namespace FitGymTool.Domain.Models.Members;
 
 /// <summary>
-/// The Update Member Domain Data Object.
+/// Update Member Domain Class.
 /// </summary>
 /// <seealso cref="FitGymTool.Domain.Models.BaseDomain" />
 public class UpdateMemberDomain : BaseDomain
 {
 	/// <summary>
-	/// Gets or sets the Member ID.
+	/// Gets or sets the member identifier.
 	/// </summary>
+	/// <value>
+	/// The member identifier.
+	/// </value>
 	public int MemberId { get; set; }
 
 	/// <summary>
@@ -62,4 +65,5 @@ public class UpdateMemberDomain : BaseDomain
 	/// Gets or sets the Member GUID.
 	/// </summary>
 	public Guid MemberGuid { get; set; }
+	
 }

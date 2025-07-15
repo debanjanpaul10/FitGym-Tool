@@ -24,6 +24,7 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj" />
+	<ProjectReference Include="..\FitGymTool.Domain\FitGymTool.Domain.csproj" />
 	<ProjectReference Include="..\FitGymTool.Infrastructure.DB\FitGymTool.Infrastructure.DB.csproj" />
   </ItemGroup>
 

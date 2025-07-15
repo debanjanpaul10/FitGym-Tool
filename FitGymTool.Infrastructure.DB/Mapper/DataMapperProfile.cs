@@ -7,6 +7,8 @@
 
 using AutoMapper;
 using FitGymTool.Domain.Models.MappingDomain;
+using FitGymTool.Domain.Models.Members;
+using FitGymTool.Infrastructure.DB.Entity;
 using FitGymTool.Infrastructure.DB.Entity.Mapping;
 
 namespace FitGymTool.Infrastructure.DB.Mapper;
@@ -25,5 +27,13 @@ public class DataMapperProfile: Profile
 		CreateMap<FeesPaymentStatusMapping, FeesPaymentStatusMappingDomain>();
 		CreateMap<MembershipStatusMapping, MembershipStatusMappingDomain>();
 		CreateMap<FeesDurationMapping, FeesDurationMappingDomain>();
+		
+		// Members mapping configurations
+		CreateMap<MemberDetails, MemberDetailsDomain>()
+			.ForMember(destination => destination.MembershipStatus,
+				option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
+		CreateMap<MemberDetailsDomain, MemberDetails>();
+		CreateMap<MemberDetails, AddMemberDomain>();
+		CreateMap<MemberDetails, UpdateMemberDomain>();
 	}
 }

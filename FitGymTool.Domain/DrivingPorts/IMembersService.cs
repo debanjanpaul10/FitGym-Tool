@@ -5,7 +5,7 @@
 // <summary>The Members Service Interface.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
+using FitGymTool.Domain.Models.Members;
 
 namespace FitGymTool.Domain.DrivingPorts;
 

@@ -5,9 +5,9 @@
 // <summary>The Member Fees Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models;
-using FitGymTool.Infrastructure.DB.Contracts;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;

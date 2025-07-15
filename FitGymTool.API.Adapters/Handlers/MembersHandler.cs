@@ -9,6 +9,7 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response.Members;
 using FitGymTool.Domain.DrivingPorts;
+using FitGymTool.Domain.Models.Members;
 
 namespace FitGymTool.API.Adapters.Handlers;
 
@@ -38,28 +39,51 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// The boolean result for success/failure.
 	/// </returns>
 	/// <exception cref="System.NotImplementedException"></exception>
-	public Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		throw new NotImplementedException();
+		var domainRequest = this._mapper.Map<MemberDetailsDomain>(memberDetails);
+		return await this._membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
-	public Task<bool> DeleteMemberAsync(int memberId)
+	/// <summary>
+	/// Deletes a member by MemberId asynchronously.
+	/// </summary>
+	/// <param name="memberId">The member's ID.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	public async Task<bool> DeleteMemberAsync(int memberId)
 	{
-		throw new NotImplementedException();
+		return await this._membersService.DeleteMemberAsync(memberId);
 	}
 
-	public Task<List<MemberDetailsDTO>> GetAllMembersAsync()
+	/// <summary>
+	/// Gets all members from the database asynchronously.
+	/// </summary>
+	/// <returns>A list of MemberDetailsDTO.</returns>
+	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
 	{
-		throw new NotImplementedException();
+		var domainMembers = await this._membersService.GetAllMembersAsync();
+		return this._mapper.Map<List<MemberDetailsDTO>>(domainMembers);
 	}
 
-	public Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
+	/// <summary>
+	/// Gets a single member's details by Member's Email ID asynchronously.
+	/// </summary>
+	/// <param name="memberEmail">The member's Email ID.</param>
+	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
+	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
 	{
-		throw new NotImplementedException();
+		var domainMember = await this._membersService.GetMemberByEmailIdAsync(memberEmail);
+		return this._mapper.Map<MemberDetailsDTO>(domainMember);
 	}
 
-	public Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
+	/// <summary>
+	/// Updates an existing member's details asynchronously.
+	/// </summary>
+	/// <param name="memberDetails">The updated member details.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
 	{
-		throw new NotImplementedException();
+		var domainRequest = this._mapper.Map<MemberDetailsDomain>(memberDetails);
+		return await this._membersService.UpdateMemberAsync(domainRequest);
 	}
 }

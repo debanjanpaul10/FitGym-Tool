@@ -12,6 +12,7 @@ using FitGymTool.Infrastructure.DB.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using System.Security.Claims;
+using FitGymTool.Domain.IOC;
 using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.IOC;
@@ -30,7 +31,9 @@ public static class DIContainer
 		builder.ConfigureAuthenticationServices();
 		builder.Services.AddMemoryCache();
 
-		builder.Services.AddAPIHandlers().AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment());
+		builder.Services.AddAPIHandlers()
+			.AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment())
+			.AddDomainServices();
 	}
 
 	/// <summary>
