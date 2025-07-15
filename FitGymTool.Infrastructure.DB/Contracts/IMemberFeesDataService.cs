@@ -1,18 +1,18 @@
 ﻿// *********************************************************************************
-//	<copyright file="IMemberFeesService.cs" company="Personal">
+//	<copyright file="IMemberFeesDataService.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Member Fees Service Interface.</summary>
+// <summary>The Members Data Service Interface.</summary>
 // *********************************************************************************
 
 using FitGymTool.Shared.Models;
 
-namespace FitGymTool.Domain.Contracts;
+namespace FitGymTool.Infrastructure.DB.Contracts;
 
 /// <summary>
-/// The Member Fees Service Interface.
+/// The Member Fees Data Service Interface.
 /// </summary>
-public interface IMemberFeesService
+public interface IMemberFeesDataService
 {
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.

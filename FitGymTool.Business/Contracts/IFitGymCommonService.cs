@@ -7,7 +7,7 @@
 
 using FitGymTool.Shared.DTOs.MappingData;
 
-namespace FitGymTool.Business.Contracts;
+namespace FitGymTool.Domain.Contracts;
 
 /// <summary>
 /// The Fit Gym Common Data Service Interface.

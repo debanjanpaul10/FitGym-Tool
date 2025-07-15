@@ -5,7 +5,7 @@
 // <summary>The Members Controller Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Business.Contracts;
+using FitGymTool.Domain.Contracts;
 using FitGymTool.Shared.Constants;
 using FitGymTool.Shared.DTOs;
 using FitGymTool.Shared.DTOs.Members;
@@ -23,7 +23,7 @@ namespace FitGymTool.API.Controllers;
 /// <seealso cref="BaseController"/>
 [ApiController]
 [Route(RouteConstants.MembersApiRoutes.BaseRoute_RoutePrefix)]
-public class MembersController(IMembersService membersService, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)
+public class MembersController(IMembersHandler membersService, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.

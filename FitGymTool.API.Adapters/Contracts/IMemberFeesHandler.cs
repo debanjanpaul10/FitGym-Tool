@@ -7,12 +7,12 @@
 
 using FitGymTool.Shared.Models;
 
-namespace FitGymTool.Domain.Contracts;
+namespace FitGymTool.API.Adapters.Contracts;
 
 /// <summary>
 /// The Member Fees Service Interface.
 /// </summary>
-public interface IMemberFeesService
+public interface IMemberFeesHandler
 {
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.

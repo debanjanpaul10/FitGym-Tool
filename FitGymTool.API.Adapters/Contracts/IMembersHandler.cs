@@ -7,12 +7,12 @@
 
 using FitGymTool.Shared.DTOs.Members;
 
-namespace FitGymTool.Domain.Contracts;
+namespace FitGymTool.API.Adapters.Contracts;
 
 /// <summary>
 /// The Members Service Interface.
 /// </summary>
-public interface IMembersService
+public interface IMembersHandler
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.

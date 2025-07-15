@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using Azure.Identity;
+using FitGymTool.API.IOC;
 using FitGymTool.API.Middleware;
 using Microsoft.OpenApi.Models;
 using static FitGymTool.Shared.Constants.ConfigurationConstants;

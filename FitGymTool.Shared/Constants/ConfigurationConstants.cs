@@ -114,14 +114,4 @@ public static class ConfigurationConstants
 	/// The FitGym API app config key constant.
 	/// </summary>
 	public const string FitGymAPIAppConfigKeyConstant = "FitGym.API";
-
-	/// <summary>
-	/// The local SQL database connection string constant.
-	/// </summary>
-	public const string LocalSqlConnectionStringConstant = "LocalSqlConnectionString";
-
-	/// <summary>
-	/// The Azure SQL database connection string constant.
-	/// </summary>
-	public const string AzureSqlConnectionStringConstant = "AzureSqlConnectionString";
 }

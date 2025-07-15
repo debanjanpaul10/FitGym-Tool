@@ -5,7 +5,7 @@
 // <summary>The Fit Gym Common Controller Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Business.Contracts;
+using FitGymTool.Domain.Contracts;
 using FitGymTool.Shared.Constants;
 using FitGymTool.Shared.DTOs;
 using FitGymTool.Shared.DTOs.MappingData;

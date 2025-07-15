@@ -1,36 +1,36 @@
 ﻿// *********************************************************************************
-//	<copyright file="MemberFeesService.cs" company="Personal">
+//	<copyright file="IMemberFeesDataService.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Member Fees Service Class.</summary>
+// <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Contracts;
 using FitGymTool.Infrastructure.DB.Contracts;
+using FitGymTool.Infrastructure.DB.Helpers.Constants;
 using FitGymTool.Shared.Constants;
 using FitGymTool.Shared.Models;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
-namespace FitGymTool.Domain.Services;
+namespace FitGymTool.Infrastructure.DB.Services;
 
 /// <summary>
-/// The Member Fees Service Class.
+/// The Members Data Service Class.
 /// </summary>
+/// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
-/// <param name="memberFeesDataService">The member fees data service.</param>
-/// <seealso cref="FitGymTool.Domain.Contracts.IMemberFeesService" />
-public class MemberFeesService(IMemberFeesDataService memberFeesDataService, ILogger<MemberFeesService> logger) : IMemberFeesService
+/// <seealso cref="FitGymTool.Infrastructure.DB.Contracts.IMemberFeesDataService" />
+public class MemberFeesDataService(IUnitOfWork unitOfWork, ILogger<MemberFeesDataService> logger) : IMemberFeesDataService
 {
 	/// <summary>
-	/// The member fees data service.
+	/// The unit of work
 	/// </summary>
-	private readonly IMemberFeesDataService _memberFeesDataService = memberFeesDataService;
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 	/// <summary>
-	/// The logger/
+	/// The logger
 	/// </summary>
-	private readonly ILogger<MemberFeesService> _logger = logger;
+	private readonly ILogger<MemberFeesDataService> _logger = logger;
 
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
@@ -42,8 +42,9 @@ public class MemberFeesService(IMemberFeesDataService memberFeesDataService, ILo
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
-			
-			return await this._memberFeesDataService.GetCurrentMonthFeesAndRevenueStatusAsync();
+
+			var result = await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
+			return result;
 		}
 		catch (Exception ex)
 		{

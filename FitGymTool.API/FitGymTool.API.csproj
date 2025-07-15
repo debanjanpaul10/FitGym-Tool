@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\FitGymTool.Business\FitGymTool.Business.csproj" />
+	<ProjectReference Include="..\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj" />
 	<ProjectReference Include="..\FitGymTool.Shared\FitGymTool.Shared.csproj" />
   </ItemGroup>
 

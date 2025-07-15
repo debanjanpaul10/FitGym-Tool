@@ -6,12 +6,12 @@
 // *********************************************************************************
 
 using AutoMapper;
-using FitGymTool.DataAccess.Entity;
-using FitGymTool.DataAccess.Entity.Mapping;
+using FitGymTool.Infrastructure.DB.Entity;
+using FitGymTool.Infrastructure.DB.Entity.Mapping;
 using FitGymTool.Shared.DTOs.MappingData;
 using FitGymTool.Shared.DTOs.Members;
 
-namespace FitGymTool.Business.Helpers;
+namespace FitGymTool.Domain.Helpers;
 
 /// <summary>
 /// The Auto Mapper Profile.

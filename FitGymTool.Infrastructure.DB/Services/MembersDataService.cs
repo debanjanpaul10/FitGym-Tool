@@ -1,67 +1,62 @@
 ﻿// *********************************************************************************
-//	<copyright file="MembersService.cs" company="Personal">
+//	<copyright file="MembersDataService.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Members Service Class.</summary>
+// <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
-using AutoMapper;
-using FitGymTool.Domain.Contracts;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.Entity;
 using FitGymTool.Shared.Constants;
-using FitGymTool.Shared.DTOs.Members;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
-namespace FitGymTool.Domain.Services;
+namespace FitGymTool.Infrastructure.DB.Services;
 
 /// <summary>
-/// The Members Service Class.
+/// The Members Data Service Class.
 /// </summary>
+/// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
-/// <param name="mapper">The auto mapper.</param>
-/// <param name="membersDataService">The Members Data Service.</param>
-/// <seealso cref="IMembersService"/>
-public class MembersService(IMembersDataService membersDataService, IMapper mapper, ILogger<MembersService> logger) : IMembersService
+/// <seealso cref="IMembersDataService"/>
+public class MembersDataService(IUnitOfWork unitOfWork, ILogger<MembersDataService> logger) : IMembersDataService
 {
 	/// <summary>
-	/// The members data service.
+	/// The unit of work for database operations.
 	/// </summary>
-	private readonly IMembersDataService _membersDataService = membersDataService;
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 	/// <summary>
-	/// The auto mapper.
+	/// The logger for logging operations.
 	/// </summary>
-	private readonly IMapper _mapper = mapper;
-
-	/// <summary>
-	/// The logger for the Members Service.
-	/// </summary>
-	private readonly ILogger<MembersService> _logger = logger;
+	private readonly ILogger<MembersDataService> _logger = logger;
 
 	/// <summary>
 	/// Adds a new member to the database asynchronously.
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
-	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
-	/// <param name="userEmail">The user email.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(MemberDetails memberDetails)
 	{
-		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var addNewMemberData = this._mapper.Map<MemberDetails>(memberDetails);
-			addNewMemberData.MemberGuid = Guid.NewGuid();
-			addNewMemberData.IsActive = true;
-			addNewMemberData.MemberEmail = effectiveEmail!;
+			var existingMember = (await this._unitOfWork.Repository<MemberDetails>()
+			    .FindAsync(predicate: member => member.MemberEmail == memberDetails.MemberEmail && member.IsActive)).Any();
+			if (existingMember)
+			{
+				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberAlreadyExistsMessageConstant);
+				this._logger.LogError(ex, string.Format(
+					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
+				throw ex;
+			}
 
-			var result = await this._membersDataService.AddNewMemberAsync(addNewMemberData);
-			return result;
+			await this._unitOfWork.Repository<MemberDetails>().AddAsync(memberDetails);
+			await this._unitOfWork.SaveChangesAsync();
+
+			return true;
 		}
 		catch (Exception ex)
 		{
@@ -72,24 +67,23 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.
 	/// </summary>
-	/// <returns>A list of MemberDetailsDTO.</returns>
-	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
+	/// <returns>A list of MemberDetails.</returns>
+	public async Task<List<MemberDetails>> GetAllMembersAsync()
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, FitGymToolConstants.NotApplicableStringConstant));
 
-			var members = await this._membersDataService.GetAllMembersAsync();
-			var memberDTOs = this._mapper.Map<List<MemberDetailsDTO>>(members);
-			return memberDTOs;
+			var members = await this._unitOfWork.Repository<MemberDetails>().GetAllAsync(filter: m => m.IsActive, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
+			return members;
 		}
 		catch (Exception ex)
 		{
@@ -108,24 +102,17 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 	/// Gets a single member's details by Member's Email ID asynchronously.
 	/// </summary>
 	/// <param name="memberEmail">The member's Email ID.</param>
-	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
-	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
+	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
+	public async Task<MemberDetails?> GetMemberByEmailIdAsync(string memberEmail)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._membersDataService.GetMemberByEmailIdAsync(memberEmail);
-			if (member is null)
-			{
-				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
-				this._logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
-				throw ex;
-			}
-			var memberDTO = this._mapper.Map<MemberDetailsDTO>(member);
-			return memberDTO;
+			var member = await this._unitOfWork.Repository<MemberDetails>().GetAsync(
+				filter: m => m.MemberEmail == memberEmail && m.IsActive, tracked: true, includeProperties: nameof(MemberDetails.MembershipStatusMapping));
+			return member;
 		}
 		catch (Exception ex)
 		{
@@ -145,16 +132,27 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
+	public async Task<bool> UpdateMemberAsync(MemberDetails memberDetails)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var updateEntity = this._mapper.Map<MemberDetails>(memberDetails);
-			var result = await this._membersDataService.UpdateMemberAsync(updateEntity);
-			return result;
+			var existingMember = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberDetails.MemberId && m.IsActive);
+			if (existingMember is null)
+			{
+				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
+				this._logger.LogError(ex, string.Format(
+					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+				throw ex;
+			}
+
+			// Update the entity
+			this._unitOfWork.Repository<MemberDetails>().Update(memberDetails);
+			await this._unitOfWork.SaveChangesAsync();
+
+			return true;
 		}
 		catch (Exception ex)
 		{
@@ -165,7 +163,7 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberId));
+				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
 
@@ -181,8 +179,20 @@ public class MembersService(IMembersDataService membersDataService, IMapper mapp
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 
-			var result = await this._membersDataService.DeleteMemberAsync(memberId);
-			return result;
+			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberId && m.IsActive);
+			if (member is null)
+			{
+				var ex = new InvalidOperationException(ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
+				this._logger.LogError(ex, string.Format(
+					CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+				throw ex;
+			}
+
+			member.IsActive = false;
+			this._unitOfWork.Repository<MemberDetails>().Update(member);
+			await this._unitOfWork.SaveChangesAsync();
+
+			return true;
 		}
 		catch (Exception ex)
 		{

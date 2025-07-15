@@ -6,14 +6,14 @@
 // *********************************************************************************
 
 using AutoMapper;
-using FitGymTool.Business.Contracts;
-using FitGymTool.DataAccess.Contracts;
+using FitGymTool.Domain.Contracts;
+using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Shared.Constants;
 using FitGymTool.Shared.DTOs.MappingData;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
-namespace FitGymTool.Business.Services;
+namespace FitGymTool.Domain.Services;
 
 /// <summary>
 /// The Fit Gym Common Data Service Class.
@@ -21,7 +21,7 @@ namespace FitGymTool.Business.Services;
 /// <param name="fitGymDataService">The Fit Gym Data Service.</param>
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
-/// <seealso cref="FitGymTool.Business.Contracts.IFitGymCommonService" />
+/// <seealso cref="FitGymTool.Domain.Contracts.IFitGymCommonService" />
 public class FitGymCommonService(IFitGymCommonDataService fitGymDataService, IMapper mapper, ILogger<FitGymCommonService> logger) : IFitGymCommonService
 {
 	/// <summary>

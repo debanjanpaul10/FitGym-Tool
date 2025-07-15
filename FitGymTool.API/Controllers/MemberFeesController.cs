@@ -6,7 +6,7 @@
 // *********************************************************************************
 
 
-using FitGymTool.Business.Contracts;
+using FitGymTool.Domain.Contracts;
 using FitGymTool.Shared.Constants;
 using FitGymTool.Shared.DTOs;
 using FitGymTool.Shared.Models;
@@ -24,7 +24,7 @@ namespace FitGymTool.API.Controllers;
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.MemberFeesApiRoutes.BaseRoute_RoutePrefix)]
-public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMemberFeesService memberFeesService, ILogger<MemberFeesController> logger) : BaseController(httpContextAccessor)
+public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMemberFeesHandler memberFeesService, ILogger<MemberFeesController> logger) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.

@@ -13,11 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Shared", "FitGymTool.Shared\FitGymTool.Shared.csproj", "{4FEC1344-DFD1-47AC-8191-DD729FFF6340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Business", "FitGymTool.Business\FitGymTool.Business.csproj", "{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.DataAccess", "FitGymTool.DataAccess\FitGymTool.DataAccess.csproj", "{EECF53C3-6ECC-4A78-9C7C-055DF09139BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Domain", "FitGymTool.Business\FitGymTool.Domain.csproj", "{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FitGymTool.Database", "FitGymTool.Database\FitGymTool.Database.sqlproj", "{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FBF56CC3-7AE6-AD2D-3F14-7F97FD322CD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.API.Adapters", "FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj", "{A0493B77-A80C-4F1D-8111-D861C1E8A2F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Infrastructure.DB", "FitGymTool.Infrastructure.DB\FitGymTool.Infrastructure.DB.csproj", "{BBE93BDD-06E0-0104-E211-A8378648A5FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,19 +43,29 @@ Global
 		{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EECF53C3-6ECC-4A78-9C7C-055DF09139BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EECF53C3-6ECC-4A78-9C7C-055DF09139BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EECF53C3-6ECC-4A78-9C7C-055DF09139BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EECF53C3-6ECC-4A78-9C7C-055DF09139BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{718B5D5B-5E76-4F4C-A259-69BEADBC58ED}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A0493B77-A80C-4F1D-8111-D861C1E8A2F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0493B77-A80C-4F1D-8111-D861C1E8A2F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0493B77-A80C-4F1D-8111-D861C1E8A2F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0493B77-A80C-4F1D-8111-D861C1E8A2F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE93BDD-06E0-0104-E211-A8378648A5FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE93BDD-06E0-0104-E211-A8378648A5FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE93BDD-06E0-0104-E211-A8378648A5FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE93BDD-06E0-0104-E211-A8378648A5FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4FEC1344-DFD1-47AC-8191-DD729FFF6340} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
+		{8BCBBEDB-B5F2-4F31-8FF7-9F9CED923F6C} = {FBF56CC3-7AE6-AD2D-3F14-7F97FD322CD6}
+		{A0493B77-A80C-4F1D-8111-D861C1E8A2F6} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
+		{BBE93BDD-06E0-0104-E211-A8378648A5FD} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F10EEE12-6C17-41C8-8EAB-C08DB01E502F}
