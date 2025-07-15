@@ -18,6 +18,7 @@ import { MembersApiService } from '@services/members-api.service';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@services/toaster.service';
+import { CommonService } from '@core/services/common.service';
 
 /**
  * Component responsible for displaying active members statistics in a doughnut chart format.
@@ -54,8 +55,10 @@ export class ActiveMembersComponent
   private activeUsersChart: Chart | null = null;
   private chartInitialized = false;
 
-  private membersApiService: MembersApiService = inject(MembersApiService);
-  private toasterService: ToasterService = inject(ToasterService);
+  private readonly membersApiService: MembersApiService =
+    inject(MembersApiService);
+  private readonly toasterService: ToasterService = inject(ToasterService);
+  private readonly commonService: CommonService = inject(CommonService);
 
   ngOnInit(): void {
     this.getAllMembersData();
@@ -214,6 +217,7 @@ export class ActiveMembersComponent
       next: (response: ResponseDto) => {
         if (response && response?.isSuccess) {
           this.memberDetails.set(response.responseData);
+          this.commonService.MemberDetailsData = response.responseData;
           this.updateChartDataFromMembers(response.responseData);
         } else {
           this.toasterService.showError(response?.responseData);

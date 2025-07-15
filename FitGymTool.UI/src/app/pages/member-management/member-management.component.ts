@@ -17,6 +17,7 @@ import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { AddUserComponent } from '@components/member-management/add-user-component/add-user.component';
+import { CommonService } from '@core/services/common.service';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -40,20 +41,29 @@ export class MemberManagementComponent implements OnInit {
     MemberManagementConstants.MembersDashboardConstants;
 
   public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
-  public isUsersDataLoading: WritableSignal<boolean> = signal(true);
+  public isUsersDataLoading: WritableSignal<boolean> = signal(false);
 
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
   private readonly toasterService: ToasterService = inject(ToasterService);
   private readonly dialogPopupService: DialogPopupService =
     inject(DialogPopupService);
+  private readonly commonService: CommonService = inject(CommonService);
 
   /**
    * Angular lifecycle hook that is called after component initialization.
    * Initiates the process to fetch all member data from the API.
    */
   ngOnInit(): void {
-    this.getAllMembersData();
+    this.commonService.MemberDetailsData.subscribe(
+      (data: MemberDetailsDto[] | null) => {
+        if (data && Object.values(data).length > 0) {
+          this.allUsersData.set(data);
+        } else {
+          this.getAllMembersData();
+        }
+      }
+    );
   }
 
   public handleAddNewUser(): void {
