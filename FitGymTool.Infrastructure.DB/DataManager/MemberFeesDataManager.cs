@@ -21,7 +21,7 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="IMemberFeesManager" />
-public class MemberFeesDataService(IUnitOfWork unitOfWork, ILogger<MemberFeesDataService> logger) : IMemberFeesManager
+public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDataManager> logger) : IMemberFeesManager
 {
 	/// <summary>
 	/// The unit of work
@@ -31,7 +31,7 @@ public class MemberFeesDataService(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	/// <summary>
 	/// The logger
 	/// </summary>
-	private readonly ILogger<MemberFeesDataService> _logger = logger;
+	private readonly ILogger<MemberFeesDataManager> _logger = logger;
 
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.

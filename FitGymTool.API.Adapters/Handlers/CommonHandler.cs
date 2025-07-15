@@ -17,13 +17,13 @@ namespace FitGymTool.API.Adapters.Handlers;
 /// </summary>
 /// <param name="fitGymCommonService">The FitGym Common Service.</param>
 /// <param name="mapper">The Automapper.</param>
-/// <seealso cref="FitGymTool.API.Adapters.Contracts.IFitGymCommonHandler" />
-public class FitGymCommonHandler(IFitGymCommonService fitGymCommonService, IMapper mapper) : IFitGymCommonHandler
+/// <seealso cref="FitGymTool.API.Adapters.Contracts.ICommonHandler" />
+public class CommonHandler(ICommonService fitGymCommonService, IMapper mapper) : ICommonHandler
 {
 	/// <summary>
 	/// The common service
 	/// </summary>
-	private readonly IFitGymCommonService _commonService = fitGymCommonService;
+	private readonly ICommonService _commonService = fitGymCommonService;
 
 	/// <summary>
 	/// The mapper

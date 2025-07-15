@@ -22,8 +22,8 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
 /// <param name="mapper">The mapper.</param>
-/// <seealso cref="IMembersManager"/>
-public class MembersDataService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<MembersDataService> logger) : IMembersManager
+/// <seealso cref="IMembersDataManager"/>
+public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<MembersDataManager> logger) : IMembersDataManager
 {
 	/// <summary>
 	/// The unit of work for database operations.
@@ -33,7 +33,7 @@ public class MembersDataService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 	/// <summary>
 	/// The logger for logging operations.
 	/// </summary>
-	private readonly ILogger<MembersDataService> _logger = logger;
+	private readonly ILogger<MembersDataManager> _logger = logger;
 
 	/// <summary>
 	/// The mapper

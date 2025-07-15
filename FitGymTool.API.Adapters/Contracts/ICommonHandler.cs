@@ -12,7 +12,7 @@ namespace FitGymTool.API.Adapters.Contracts;
 /// <summary>
 /// The Fit Gym Common Handler Adapter Interface.
 /// </summary>
-public interface IFitGymCommonHandler
+public interface ICommonHandler
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

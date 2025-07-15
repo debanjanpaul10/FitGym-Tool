@@ -21,8 +21,8 @@ namespace FitGymTool.Domain.Services;
 /// <param name="fitGymDataService">The Fit Gym common manager Service.</param>
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
-/// <seealso cref="DrivingPorts.IFitGymCommonService" />
-public class FitGymCommonService(IFitGymCommonManager fitGymDataService, IMapper mapper, ILogger<FitGymCommonService> logger) : IFitGymCommonService
+/// <seealso cref="DrivingPorts.ICommonService" />
+public class CommonService(IFitGymCommonManager fitGymDataService, IMapper mapper, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
 	/// The figym common manager.
@@ -37,7 +37,7 @@ public class FitGymCommonService(IFitGymCommonManager fitGymDataService, IMapper
 	/// <summary>
 	/// The logger.
 	/// </summary>
-	private readonly ILogger<FitGymCommonService> _logger = logger;
+	private readonly ILogger<CommonService> _logger = logger;
 
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

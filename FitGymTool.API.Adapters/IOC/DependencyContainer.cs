@@ -24,7 +24,7 @@ public static class DependencyContainer
 	/// <returns>The service collection.</returns>
 	public static IServiceCollection AddAPIHandlers(this IServiceCollection services)
 	{
-		services.AddScoped<IFitGymCommonHandler, FitGymCommonHandler>()
+		services.AddScoped<ICommonHandler, CommonHandler>()
 			.AddScoped<IMemberFeesHandler, MemberFeesHandler>()
 			.AddScoped<IMembersHandler, MembersHandler>()
 			.AddAutoMapper(mapperConfig =>

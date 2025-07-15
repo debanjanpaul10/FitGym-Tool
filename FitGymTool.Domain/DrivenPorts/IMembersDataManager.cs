@@ -12,7 +12,7 @@ namespace FitGymTool.Domain.DrivenPorts;
 /// <summary>
 /// The Members Data Service Interface.
 /// </summary>
-public interface IMembersManager
+public interface IMembersDataManager
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.

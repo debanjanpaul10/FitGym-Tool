@@ -22,12 +22,12 @@ namespace FitGymTool.Domain.Services;
 /// <param name="mapper">The auto mapper.</param>
 /// <param name="membersDataService">The Members Data Service.</param>
 /// <seealso cref="IMembersService"/>
-public class MembersService(IMembersManager membersDataService, IMapper mapper, ILogger<MembersService> logger) : IMembersService
+public class MembersService(IMembersDataManager membersDataService, IMapper mapper, ILogger<MembersService> logger) : IMembersService
 {
 	/// <summary>
 	/// The members data service.
 	/// </summary>
-	private readonly IMembersManager _membersDataService = membersDataService;
+	private readonly IMembersDataManager _membersDataService = membersDataService;
 
 	/// <summary>
 	/// The auto mapper.

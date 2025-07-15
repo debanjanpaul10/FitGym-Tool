@@ -12,7 +12,7 @@ namespace FitGymTool.Domain.DrivingPorts;
 /// <summary>
 /// The Fit Gym Common Data Service Interface.
 /// </summary>
-public interface IFitGymCommonService
+public interface ICommonService
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

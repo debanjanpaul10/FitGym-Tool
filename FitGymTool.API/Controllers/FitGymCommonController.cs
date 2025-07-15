@@ -24,7 +24,7 @@ namespace FitGymTool.API.Controllers;
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.FitGymCommonApiRoutes.BaseRoute_RoutePrefix)]
-public class FitGymCommonController(IFitGymCommonHandler fitGymCommonHandler, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
+public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

@@ -5,7 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "CA2254:Template should be a static expression", Justification = "<Pending>", Scope = "member", Target = "~M:FitGymTool.Domain.Services.FitGymCommonService.GetMappingsMasterDataAsync~System.Threading.Tasks.Task{FitGymTool.Domain.Models.MappingDomain.MappingMasterDataDomain}")]
+[assembly: SuppressMessage("Usage", "CA2254:Template should be a static expression", Justification = "<Pending>", Scope = "member", Target = "~M:FitGymTool.Domain.Services.CommonService.GetMappingsMasterDataAsync~System.Threading.Tasks.Task{FitGymTool.Domain.Models.MappingDomain.MappingMasterDataDomain}")]
 [assembly: SuppressMessage("Usage", "CA2254:Template should be a static expression", Justification = "<Pending>", Scope = "member", Target = "~M:FitGymTool.Domain.Services.MemberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync~System.Threading.Tasks.Task{System.Collections.Generic.IEnumerable{FitGymTool.Domain.Models.CurrentMonthFeesAndRevenueStatusDomain}}")]
 [assembly: SuppressMessage("Usage", "CA2254:Template should be a static expression", Justification = "<Pending>", Scope = "member", Target = "~M:FitGymTool.Domain.Services.MembersService.AddNewMemberAsync(FitGymTool.Domain.Models.Members.MemberDetailsDomain,System.String,System.Boolean)~System.Threading.Tasks.Task{System.Boolean}")]
 [assembly: SuppressMessage("Usage", "CA2254:Template should be a static expression", Justification = "<Pending>", Scope = "member", Target = "~M:FitGymTool.Domain.Services.MembersService.GetAllMembersAsync~System.Threading.Tasks.Task{System.Collections.Generic.List{FitGymTool.Domain.Models.Members.MemberDetailsDomain}}")]

@@ -23,7 +23,7 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// <param name="logger">The logger service.</param>
 /// <param name="unitOfWork">The unit of work.</param>
 /// <seealso cref="IFitGymCommonManager" />
-public class FitGymCommonDataService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<FitGymCommonDataService> logger) : IFitGymCommonManager
+public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CommonDataManager> logger) : IFitGymCommonManager
 {
 	/// <summary>
 	/// The unit of work
@@ -38,7 +38,7 @@ public class FitGymCommonDataService(IUnitOfWork unitOfWork, IMapper mapper, ILo
 	/// <summary>
 	/// The logger service.
 	/// </summary>
-	private readonly ILogger<FitGymCommonDataService> _logger = logger;
+	private readonly ILogger<CommonDataManager> _logger = logger;
 
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

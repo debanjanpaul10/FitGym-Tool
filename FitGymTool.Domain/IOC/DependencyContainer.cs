@@ -23,7 +23,7 @@ public static class DependencyContainer
 	/// <returns>The service collection data.</returns>
 	public static IServiceCollection AddDomainServices(this IServiceCollection services)
 	{
-		services.AddScoped<IFitGymCommonService, FitGymCommonService>()
+		services.AddScoped<ICommonService, CommonService>()
 			.AddScoped<IMemberFeesService, MemberFeesService>()
 			.AddScoped<IMembersService, MembersService>();
 
