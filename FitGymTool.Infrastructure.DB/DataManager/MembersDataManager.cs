@@ -173,8 +173,10 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 				throw ex;
 			}
 
-			// Update the entity
-			var memberDetailsData = this._mapper.Map<MemberDetails>(memberDetails);
+			// Update the entity for only updated values
+			var memberDetailsData = this._mapper.Map(memberDetails, existingMember);
+			existingMember.DateModified = DateTime.UtcNow;
+
 			this._unitOfWork.Repository<MemberDetails>().Update(memberDetailsData);
 			await this._unitOfWork.SaveChangesAsync();
 
