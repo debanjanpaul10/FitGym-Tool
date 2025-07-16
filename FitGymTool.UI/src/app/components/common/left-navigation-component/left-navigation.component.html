@@ -29,9 +29,23 @@
                     [label]="item.name"
                     [icon]="item.icon"
                     (onClick)="item.onClick()"
-                    [style]="{width: '100%'}"
-                    variant="outlined"
-                  ></p-button>
+                    [style]="{ width: '100%' }"
+                    [variant]="'outlined'"
+                    [severity]="
+                      item.name === 'Report a bug' ? 'warn' : undefined
+                    "
+                    [ngClass]="
+                      item.name === 'Report a bug' ? 'bug-report-btn' : ''
+                    "
+                  >
+                    <ng-container *ngIf="item.name === 'Report a bug'">
+                      <ng-template pTemplate="icon">
+                        <i
+                          class="pi pi-exclamation-triangle bug-report-icon"
+                        ></i>
+                      </ng-template>
+                    </ng-container>
+                  </p-button>
                 </div>
               </ng-container>
             </ng-container>
@@ -43,7 +57,7 @@
                   [label]="item.name"
                   [icon]="item.icon"
                   (onClick)="item.onClick()"
-                  [style]="{width: '100%'}"
+                  [style]="{ width: '100%' }"
                   variant="outlined"
                   severity="danger"
                 ></p-button>

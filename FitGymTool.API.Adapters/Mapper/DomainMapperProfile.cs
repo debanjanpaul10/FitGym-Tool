@@ -32,6 +32,9 @@ public class DomainMapperProfile: Profile
 		CreateMap<MembershipStatusMappingDomain, MembershipStatusMappingDto>();
 		CreateMap<FeesDurationMappingDomain, FeesDurationMappingDto>();
 		CreateMap<CurrentMonthFeesAndRevenueStatusDomain, CurrentMonthFeesAndRevenueStatusDto>();
+		CreateMap<BugSeverityMappingDomain, BugSeverityMappingDto>()
+			.ForMember(destination => destination.Id, option => option.MapFrom(source => source.Id))
+			.ForMember(destination => destination.SeverityName, option => option.MapFrom(source => source.SeverityName));
 
 		// Members mapping configurations
 		CreateMap<AddMemberDTO, AddMemberDomain>()
@@ -42,6 +45,8 @@ public class DomainMapperProfile: Profile
 		CreateMap<AddBugReportDTO, BugReportDataDomain>()
 			.ForMember(destination => destination.Id, options => options.Ignore())
 			.ForMember(destination => destination.BugSeverityId, options => options.Ignore())
-			.ForMember(destination => destination.BugStatusId, options => options.Ignore());
+			.ForMember(destination => destination.BugStatusId, options => options.Ignore())
+			.ForMember(destination => destination.Title, option => option.MapFrom(source => source.BugTitle))
+			.ForMember(destination => destination.Description, option => option.MapFrom(source => source.BugDescription));
 	}
 }

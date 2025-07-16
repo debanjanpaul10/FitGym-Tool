@@ -35,6 +35,9 @@ export class ToasterSuccessMessages {
   public static MemberManagement = {
     AddMemberSuccess: 'Member Added Successfully',
   };
+  public static Common = {
+    BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
+  };
 }
 
 export class LoginPageConstants {
@@ -122,5 +125,11 @@ export class MemberManagementConstants {
       { label: 'Pending', value: 'Pending' },
     ],
     Header: 'Add a new member',
+  };
+}
+
+export class CommonApplicationConstants {
+  public static BugReportConstants = {
+    Header: 'File a bug report',
   };
 }

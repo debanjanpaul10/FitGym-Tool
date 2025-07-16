@@ -10,6 +10,7 @@ export class ApiRoutes {
   public static CommonApi = {
     BaseRoute: 'api/Common/',
     GetMappingsMasterData_ApiRoute: 'GetMappingsMasterData',
+    AddBugReport_ApiRoute: 'AddBugReport',
   };
   public static MemberFeesApi = {
     BaseRoute: 'api/MemberFees/',

@@ -57,16 +57,19 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 			var feesDurationMapping = await this._unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(filter: x => x.IsActive);
 			var feesPaymentStatusMapping = await this._unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(filter: x => x.IsActive);
 			var membershipStatusMapping = await this._unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
+			var bugSeverityMapping = await this._unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(filter: x => x.IsActive);
 
 			var feesDurationMappingDomain = this._mapper.Map<IEnumerable<FeesDurationMappingDomain>>(feesDurationMapping);
 			var feesPaymentMappingDomain = this._mapper.Map<IEnumerable<FeesPaymentStatusMappingDomain>>(feesPaymentStatusMapping);
 			var membershipStatusMappingDomain = this._mapper.Map<IEnumerable<MembershipStatusMappingDomain>>(membershipStatusMapping);
+			var bugSeverityMappingDomain = this._mapper.Map<IEnumerable<BugSeverityMappingDomain>>(bugSeverityMapping);
 
 			return new MappingMasterDataDomain()
 			{
 				FeesDurationMapping = feesDurationMappingDomain,
 				FeesPaymentStatusMapping = feesPaymentMappingDomain,
-				MembershipStatusMapping = membershipStatusMappingDomain
+				MembershipStatusMapping = membershipStatusMappingDomain,
+				BugSeverityMapping = bugSeverityMappingDomain,
 			};
 
 
@@ -95,10 +98,11 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 		{
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
-			var bugSeverityEntity = (await this._unitOfWork.Repository<BugSeverityMapping>().FirstOrDefaultAsync(sev => sev.SeverityName == "Medium" && sev.IsActive));
-			var bugStatusEntity = (await this._unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == "Not Started" && status.IsActive));
+			var bugSeverityEntity = (await this._unitOfWork.Repository<BugSeverityMapping>().FirstOrDefaultAsync(sev => sev.SeverityName == DatabaseConstants.MediumConstant && sev.IsActive));
+			var bugStatusEntity = (await this._unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive));
 
 			var bugReportData = this._mapper.Map<BugReportData>(bugReportDataDomain);
+			//TODO: overwriting as of now, later needs to be checked by AI or something.
 			bugReportData.BugSeverityId = bugSeverityEntity?.Id ?? 0;
 			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
 

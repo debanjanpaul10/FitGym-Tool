@@ -29,13 +29,15 @@ import {
 } from '@shared/application.constants';
 import { CommonService } from '@core/services/common.service';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
-import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { CommonApiService } from '@services/common-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { LoaderService } from '@core/services/loader.service';
 import { ToasterService } from '@services/toaster.service';
 import { MembersApiService } from '@services/members-api.service';
 
+/**
+ * Component for adding a new gym member. Handles form creation, validation, membership status mapping, and submission logic.
+ */
 @Component({
   selector: 'app-add-user-component',
   imports: [
@@ -79,20 +81,15 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.mappingMasterDataSubscription =
-      this.commonService.MappingMasterData.subscribe(
-        (data: MasterMappingDataDto | null) => {
-          if (
-            data &&
-            data?.membershipStatusMapping &&
-            Object.values(data?.membershipStatusMapping).length > 0
-          ) {
-            this.membershipStatusOptions = data?.membershipStatusMapping;
-          } else {
-            this.getMasterMappingsData();
-          }
-        }
-      );
+    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
+      'membershipStatusMapping',
+      (options) => {
+        this.membershipStatusOptions = options as MembershipStatusMappingDto[];
+      },
+      () => {
+        this.getMasterMappingsData();
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -101,6 +98,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Handles the add member form submission, sends data to the API, and manages loader and toast notifications.
+   */
   protected submitNewUserForm(): void {
     this.loaderService.loadingOn();
     if (this.memberForm.valid) {
@@ -139,6 +139,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Resets the add member form and closes the dialog.
+   */
   protected onCancel(): void {
     this.memberForm.reset();
     this.memberForm.patchValue({
@@ -147,6 +150,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.visible.set(false);
   }
 
+  /**
+   * Creates and returns the add member form group with validation rules.
+   * @returns {FormGroup} The initialized add member form group.
+   */
   private createForm(): FormGroup {
     return this.formBuilder.group({
       memberName: ['', [Validators.required, Validators.minLength(2)]],
@@ -163,6 +170,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Fetches the master mappings data for membership status from the API.
+   */
   private getMasterMappingsData(): void {
     this.loaderService.loadingOn();
     this.commonApiService.GetMappingsMasterDataAsync().subscribe({

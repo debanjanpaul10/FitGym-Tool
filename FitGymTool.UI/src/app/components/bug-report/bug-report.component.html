@@ -1,0 +1,75 @@
+<p-dialog
+  [header]="bugReportConstants.Header"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '60rem' }"
+  [blockScroll]="true"
+>
+  <form [formGroup]="bugReportForm" (ngSubmit)="submitBugReportForm()">
+    <!-- Bug Title -->
+    <div class="form-row">
+      <p-iftalabel>
+        <input
+          pInputText
+          id="bugTitle"
+          formControlName="bugTitle"
+          placeholder="Enter the bug title"
+          class="form-input"
+        />
+        <label for="bugTitle" class="field-label">Title</label>
+      </p-iftalabel>
+    </div>
+
+    <!-- Bug Description -->
+    <div class="form-row">
+      <p-iftalabel>
+        <textarea
+          pInputTextarea
+          id="bugDescription"
+          formControlName="bugDescription"
+          placeholder="Enter the bug description"
+          class="form-input"
+          rows="4"
+        ></textarea>
+        <label for="bugDescription" class="field-label">Description</label>
+      </p-iftalabel>
+    </div>
+
+    <!-- Bug Severity -->
+    <div class="form-row">
+      <p-iftalabel>
+        <p-select
+          id="bugSeverity"
+          formControlName="bugSeverity"
+          [options]="bugSeverityMappingOptions"
+          optionLabel="severityName"
+          optionValue="id"
+          placeholder="Select the bug severity"
+          appendTo="body"
+          dropdownPosition="top"
+          class="form-input bug-severity-dropdown"
+          panelClass="bug-severity-panel"
+          [disabled]="true"
+        ></p-select>
+        <label for="bugSeverity" class="field-label">Severity</label>
+      </p-iftalabel>
+    </div>
+
+    <div class="form-actions">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        type="button"
+        (click)="resetAndCloseForm()"
+      >
+      </p-button>
+
+      <p-button
+        label="Submit bug report"
+        type="submit"
+        [disabled]="bugReportForm.invalid"
+      >
+      </p-button>
+    </div>
+  </form>
+</p-dialog>
