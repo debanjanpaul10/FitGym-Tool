@@ -19,6 +19,22 @@ export class RouteConstants {
     Link: 'members',
     RouteValue: '/members',
   };
+  public static FeesManagement = {
+    Name: 'Fees',
+    Link: 'fees',
+    RouteValue: '/fees',
+  };
+  public static FacilityManagement = {
+    Name: 'Facility',
+    Link: 'facility',
+    RouteValue: '/facility',
+  };
+}
+
+export class ToasterSuccessMessages {
+  public static MemberManagement = {
+    AddMemberSuccess: 'Member Added Successfully',
+  };
 }
 
 export class LoginPageConstants {
@@ -76,7 +92,7 @@ export class ChartConstants {
 }
 
 export class MemberManagementConstants {
-  public static MembersDashboardConstant = {
+  public static MembersDashboardConstants = {
     AddMember: {
       Name: 'Add a new member',
       ImageSrc: '../../../assets/Images/add-user.jpg',
@@ -87,5 +103,24 @@ export class MemberManagementConstants {
       ImageSrc: '../../../assets/Images/terminate-user.jpg',
       Alt: 'Terminate a member image',
     },
+    UpdateMember: {
+      Name: 'Update an existing member',
+      ImageSrc: '../../../assets/Images/edit-user.jpg',
+      Alt: 'Update member image',
+    },
+  };
+  public static AddNewMemberConstants = {
+    genderOptions: [
+      { label: 'Male', value: 'Male' },
+      { label: 'Female', value: 'Female' },
+      { label: 'Other', value: 'Other' },
+    ],
+    membershipStatusOptions: [
+      { label: 'Active', value: 'Active' },
+      { label: 'Inactive', value: 'Inactive' },
+      { label: 'Suspended', value: 'Suspended' },
+      { label: 'Pending', value: 'Pending' },
+    ],
+    Header: 'Add a new member',
   };
 }

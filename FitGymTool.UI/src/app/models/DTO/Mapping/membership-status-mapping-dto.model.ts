@@ -1,3 +1,4 @@
 export class MembershipStatusMappingDto {
-  constructor() {}
+  public id: number = 0;
+  public statusName: string = '';
 }

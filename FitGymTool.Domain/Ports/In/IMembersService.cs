@@ -1,0 +1,52 @@
+﻿// *********************************************************************************
+//	<copyright file="IMembersDataService.cs" company="Personal">
+//		Copyright (c) 2025 Personal
+//	</copyright>
+// <summary>The Members Service Interface.</summary>
+// *********************************************************************************
+
+using FitGymTool.Domain.Models.Members;
+
+namespace FitGymTool.Domain.Ports.In;
+
+/// <summary>
+/// The Members Service Interface.
+/// </summary>
+public interface IMembersService
+{
+	/// <summary>
+	/// Adds a new member to the database asynchronously.
+	/// </summary>
+	/// <param name="memberDetails">The member details data.</param>
+	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
+	/// <param name="userEmail">The user email.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	Task<bool> AddNewMemberAsync(AddMemberDomain memberDetails, string userEmail, bool isFromAdmin);
+
+	/// <summary>
+	/// Gets all members from the database asynchronously.
+	/// </summary>
+	/// <returns>A list of MemberDetails.</returns>
+	Task<List<MemberDetailsDomain>> GetAllMembersAsync();
+
+	/// <summary>
+	/// Gets a single member's details by Member's Email ID. asynchronously.
+	/// </summary>
+	/// <param name="memberEmail">The member's Email ID.</param>
+	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
+	Task<MemberDetailsDomain> GetMemberByEmailIdAsync(string memberEmail);
+
+	/// <summary>
+	/// Updates an existing member's details asynchronously.
+	/// </summary>
+	/// <param name="memberDetails">The updated member details.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails);
+
+	/// <summary>
+	/// Deletes a member by MemberId asynchronously.
+	/// </summary>
+	/// <param name="memberId">The member's ID.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	Task<bool> DeleteMemberAsync(int memberId);
+}

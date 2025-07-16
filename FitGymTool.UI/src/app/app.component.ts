@@ -16,13 +16,13 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-import { HeaderComponent } from '@components/common/header-component/header-component';
-import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation-component';
-import { LoaderComponent } from '@components/common/loader-component/loader-component';
-import { LoaderService } from '@services/loader.service';
+import { HeaderComponent } from '@components/common/header-component/header.component';
+import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation.component';
+import { LoaderComponent } from '@components/common/loader-component/loader.component';
+import { LoaderService } from '@core/services/loader.service';
 import { RouteConstants } from '@shared/application.constants';
-import { ToasterComponent } from '@components/common/toaster-component/toaster-component';
-import { FooterComponent } from '@components/common/footer-component/footer-component';
+import { ToasterComponent } from '@components/common/toaster-component/toaster.component';
+import { FooterComponent } from '@components/common/footer-component/footer.component';
 
 @Component({
   selector: 'app-root',

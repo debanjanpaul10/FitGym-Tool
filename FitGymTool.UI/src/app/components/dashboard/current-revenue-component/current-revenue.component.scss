@@ -1,0 +1,33 @@
+.current-revenue-card {
+  padding: 0.625rem !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(11.5px) !important;
+  -webkit-backdrop-filter: blur(11.5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
+}
+
+.chart-container {
+  width: 100%;
+  min-height: 20rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+  min-width: 18.75rem;
+  max-height: 21.875rem;
+  display: block;
+  flex-shrink: 0;
+}
+
+.revenue-skeleton {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
+}
