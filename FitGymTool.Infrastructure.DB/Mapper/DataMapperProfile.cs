@@ -31,9 +31,16 @@ public class DataMapperProfile: Profile
 		// Members mapping configurations
 		CreateMap<MemberDetails, MemberDetailsDomain>()
 			.ForMember(destination => destination.MembershipStatus,
-				option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
-		CreateMap<MemberDetailsDomain, MemberDetails>();
-		CreateMap<MemberDetails, AddMemberDomain>();
-		CreateMap<MemberDetails, UpdateMemberDomain>();
+				option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty))
+			.ReverseMap();
+
+		CreateMap<AddMemberDomain, MemberDetails>()
+			.ForMember(destination => destination.MembershipStatusId,
+				option => option.MapFrom(source => 0));
+		
+		CreateMap<MemberDetails, UpdateMemberDomain>()
+			.ForMember(destination => destination.MembershipStatusId,
+				option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.Id : 0))
+			.ReverseMap();
 	}
 }

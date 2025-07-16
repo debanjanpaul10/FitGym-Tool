@@ -21,7 +21,10 @@ import { TextareaModule } from 'primeng/textarea';
 
 import { AddMemberDto } from '@models/DTO/add-member-dto.model';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
-import { MemberManagementConstants } from '@shared/application.constants';
+import {
+  MemberManagementConstants,
+  ToasterSuccessMessages,
+} from '@shared/application.constants';
 import { CommonService } from '@core/services/common.service';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
@@ -29,6 +32,7 @@ import { CommonApiService } from '@services/common-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { LoaderService } from '@core/services/loader.service';
 import { ToasterService } from '@services/toaster.service';
+import { MembersApiService } from '@services/members-api.service';
 
 @Component({
   selector: 'app-add-user-component',
@@ -45,11 +49,12 @@ import { ToasterService } from '@services/toaster.service';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit, OnDestroy {
-  public visible: WritableSignal<boolean> = signal(false);
-  public memberForm: FormGroup;
-  public addMemberConstants = MemberManagementConstants.AddNewMemberConstants;
-  public genderOptions = this.addMemberConstants.genderOptions;
-  public membershipStatusOptions: MembershipStatusMappingDto[] = [];
+  protected visible: WritableSignal<boolean> = signal(false);
+  protected memberForm: FormGroup;
+  protected addMemberConstants =
+    MemberManagementConstants.AddNewMemberConstants;
+  protected genderOptions = this.addMemberConstants.genderOptions;
+  protected membershipStatusOptions: MembershipStatusMappingDto[] = [];
 
   private mappingMasterDataSubscription: any;
 
@@ -61,6 +66,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     inject(CommonApiService);
   private readonly loaderService: LoaderService = inject(LoaderService);
   private readonly toasterService: ToasterService = inject(ToasterService);
+  private readonly membersApiService: MembersApiService =
+    inject(MembersApiService);
 
   constructor() {
     this.visible = this.dialogPopupService.isAddMemberDialogOpen;
@@ -90,7 +97,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onSubmit(): void {
+  protected submitNewUserForm(): void {
+    this.loaderService.loadingOn();
     if (this.memberForm.valid) {
       const memberData: AddMemberDto = {
         memberName: this.memberForm.value.memberName,
@@ -103,9 +111,26 @@ export class AddUserComponent implements OnInit, OnDestroy {
         membershipStatus: this.memberForm.value.membershipStatus,
       };
 
-      console.log('Member data to submit:', memberData);
-
-      this.onCancel();
+      this.membersApiService.AddNewMemberAsync_FromAdmin(memberData).subscribe({
+        next: (response: ResponseDto) => {
+          if (response.isSuccess && response.responseData) {
+            this.toasterService.showSuccess(
+              ToasterSuccessMessages.MemberManagement.AddMemberSuccess
+            );
+            this.onCancel();
+          } else {
+            this.toasterService.showError(response.responseData);
+          }
+        },
+        error: (err: Error) => {
+          this.loaderService.loadingOff();
+          console.error(err.message);
+          this.toasterService.showError(err.message);
+        },
+        complete: () => {
+          this.loaderService.loadingOff();
+        },
+      });
     }
   }
 

@@ -47,6 +47,12 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
 
+			// Domain-side validation for DateTime fields
+			if (memberDetails.MemberDateOfBirth == DateTime.MinValue || memberDetails.MemberJoinDate == DateTime.MinValue)
+			{
+				throw new InvalidOperationException("Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.");
+			}
+
 			// Set the effective email for the member
 			memberDetails.MemberEmail = effectiveEmail!;
 			memberDetails.MemberGuid = Guid.NewGuid();
@@ -55,6 +61,9 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			memberDetails.DateCreated = DateTime.UtcNow;
 			memberDetails.ModifiedBy = effectiveEmail!;
 			memberDetails.DateModified = DateTime.UtcNow;
+
+			// Ensure all DateTime fields are set to valid values in the domain model
+			memberDetails.EnsureValidDates();
 
 			var result = await this._membersDataService.AddNewMemberAsync(memberDetails);
 			return result;

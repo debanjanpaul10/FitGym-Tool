@@ -18,7 +18,7 @@ public class BaseDomain
 	/// <value>
 	///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
 	/// </value>
-	public bool IsActive { get; set; }
+	public bool IsActive { get; set; } = true;
 
 	/// <summary>
 	/// Gets or sets the date created.
@@ -26,7 +26,7 @@ public class BaseDomain
 	/// <value>
 	/// The date created.
 	/// </value>
-	public DateTime DateCreated { get; set; }
+	public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the created by.
@@ -42,7 +42,7 @@ public class BaseDomain
 	/// <value>
 	/// The date modified.
 	/// </value>
-	public DateTime DateModified { get; set; }
+	public DateTime DateModified { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the modified by.

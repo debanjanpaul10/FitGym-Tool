@@ -10,6 +10,7 @@ using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.Entity;
+using FitGymTool.Infrastructure.DB.Entity.Mapping;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
@@ -49,6 +50,10 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 	{
 		try
 		{
+			// Ensure all DateTime fields are valid before mapping
+			memberDetails.EnsureValidDates();
+
+			// Log all DateTime fields for debugging
 			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
@@ -62,7 +67,13 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 				throw ex;
 			}
 
+			// Lookup MembershipStatusMapping by status name
+			var statusEntity = (await this._unitOfWork.Repository<MembershipStatusMapping>()
+				.FindAsync(ms => ms.StatusName == memberDetails.MembershipStatus && ms.IsActive)).FirstOrDefault();
+
 			var memberDetailsData = this._mapper.Map<MemberDetails>(memberDetails);
+			memberDetailsData.MembershipStatusId = statusEntity?.Id ?? 0;
+
 			await this._unitOfWork.Repository<MemberDetails>().AddAsync(memberDetailsData);
 			await this._unitOfWork.SaveChangesAsync();
 

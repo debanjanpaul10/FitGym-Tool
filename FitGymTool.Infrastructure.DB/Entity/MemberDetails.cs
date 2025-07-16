@@ -42,7 +42,7 @@ public class MemberDetails
 	/// <summary>
 	/// Gets or sets the Member Date of Birth.
 	/// </summary>
-	public DateTime MemberDateOfBirth { get; set; }
+	public DateTime MemberDateOfBirth { get; set; } = DateTime.Now;
 
 	/// <summary>
 	/// Gets or sets the Member Gender.
@@ -52,7 +52,7 @@ public class MemberDetails
 	/// <summary>
 	/// Gets or sets the Member Join Date.
 	/// </summary>
-	public DateTime MemberJoinDate { get; set; }
+	public DateTime MemberJoinDate { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the Membership Status ID.
@@ -62,12 +62,12 @@ public class MemberDetails
 	/// <summary>
 	/// Gets or sets the Member GUID.
 	/// </summary>
-	public Guid MemberGuid { get; set; }
+	public Guid MemberGuid { get; set; } = Guid.Empty;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this member is active.
 	/// </summary>
-	public bool IsActive { get; set; }
+	public bool IsActive { get; set; } = true;
 
 	/// <summary>
 	/// Gets or sets the date created.
@@ -75,7 +75,7 @@ public class MemberDetails
 	/// <value>
 	/// The date created.
 	/// </value>
-	public DateTime DateCreated { get; set; }
+	public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the created by.
@@ -91,7 +91,7 @@ public class MemberDetails
 	/// <value>
 	/// The date modified.
 	/// </value>
-	public DateTime DateModified { get; set; }
+	public DateTime DateModified { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the modified by.
@@ -109,7 +109,7 @@ public class MemberDetails
 	/// <value>
 	/// The membership status mapping.
 	/// </value>
-	public MembershipStatusMapping MembershipStatusMapping { get; set; } = new MembershipStatusMapping();
+	public MembershipStatusMapping? MembershipStatusMapping { get; set; }
 
 	#endregion
 }

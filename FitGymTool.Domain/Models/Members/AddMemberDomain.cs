@@ -36,7 +36,7 @@ public class AddMemberDomain : BaseDomain
 	/// <summary>
 	/// Gets or sets the Member Date of Birth.
 	/// </summary>
-	public DateTime MemberDateOfBirth { get; set; }
+	public DateTime MemberDateOfBirth { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// Gets or sets the Member Gender.
@@ -46,15 +46,38 @@ public class AddMemberDomain : BaseDomain
 	/// <summary>
 	/// Gets or sets the Member Join Date.
 	/// </summary>
-	public DateTime MemberJoinDate { get; set; }
+	public DateTime MemberJoinDate { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
-	/// Gets or sets the Membership Status ID.
+	/// Gets or sets the Membership Status.
 	/// </summary>
-	public int MembershipStatusId { get; set; }
+	public string MembershipStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Member GUID.
 	/// </summary>
-	public Guid MemberGuid { get; set; }
+	public Guid MemberGuid { get; set; } = new Guid();
+
+	/// <summary>
+	/// Ensures all DateTime fields are set to valid values.
+	/// </summary>
+	public void EnsureValidDates()
+	{
+		if (MemberDateOfBirth == DateTime.MinValue)
+		{
+			MemberDateOfBirth = DateTime.UtcNow;
+		}
+		if (MemberJoinDate == DateTime.MinValue)
+		{
+			MemberJoinDate = DateTime.UtcNow;
+		}
+		if (DateCreated == DateTime.MinValue)
+		{
+			DateCreated = DateTime.UtcNow;
+		}
+		if (DateModified == DateTime.MinValue)
+		{
+			DateModified = DateTime.UtcNow;
+		}
+	}
 }

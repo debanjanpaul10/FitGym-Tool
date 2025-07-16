@@ -31,6 +31,12 @@ export class RouteConstants {
   };
 }
 
+export class ToasterSuccessMessages {
+  public static MemberManagement = {
+    AddMemberSuccess: 'Member Added Successfully',
+  };
+}
+
 export class LoginPageConstants {
   public static Headings = {
     LoginButtonName: 'Login to FitGym Tool',
