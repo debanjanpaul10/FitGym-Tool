@@ -1,0 +1,87 @@
+<div class="card-containers">
+  <div class="row">
+    <div class="col-sm-4">
+      <div
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
+        (click)="handleAddNewMember()"
+      >
+        <img
+          class="card-img-top"
+          [src]="MemberDashboardConstants.AddMember.ImageSrc"
+          [alt]="MemberDashboardConstants.AddMember.Alt"
+          height="auto"
+          width="auto"
+          ks
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            {{ MemberDashboardConstants.AddMember.Name }}
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
+        (click)="handleTerminateMember()"
+      >
+        <img
+          class="card-img-top"
+          [src]="MemberDashboardConstants.TerminateMember.ImageSrc"
+          [alt]="MemberDashboardConstants.TerminateMember.Alt"
+          height="auto"
+          width="auto"
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            {{ MemberDashboardConstants.TerminateMember.Name }}
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div
+        ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
+        (click)="handleEditMember()"
+      >
+        <img
+          class="card-img-top"
+          [src]="MemberDashboardConstants.UpdateMember.ImageSrc"
+          [alt]="MemberDashboardConstants.UpdateMember.Alt"
+          height="auto"
+          width="auto"
+        />
+        <div class="card-body">
+          <h4 class="card-title">
+            {{ MemberDashboardConstants.UpdateMember.Name }}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="isUsersDataLoading()">
+        <p-skeleton
+          height="34.0625rem"
+          width="100%"
+          ngClass="usersdata-skeleton"
+        ></p-skeleton>
+      </div>
+      <div *ngIf="!isUsersDataLoading()">
+        <app-members-list-component
+          [membersData]="allUsersData()!"
+        ></app-members-list-component>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <app-add-user-component
+      (memberAdded)="onMemberAdded()"
+    ></app-add-user-component>
+  </div>
+</div>

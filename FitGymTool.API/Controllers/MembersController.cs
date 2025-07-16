@@ -5,25 +5,26 @@
 // <summary>The Members Controller Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Business.Contracts;
-using FitGymTool.Shared.Constants;
-using FitGymTool.Shared.DTOs;
-using FitGymTool.Shared.DTOs.Members;
+using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.Members;
+using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.Controllers;
 
 /// <summary>
 /// The Members Controller Class.
 /// </summary>
-/// <param name="membersService">The members service.</param>
+/// <param name="membersHandler">The members service.</param>
 /// <param name="httpContextAccessor">The http context accessor.</param>
 /// <param name="logger">The logger service.</param>
 /// <seealso cref="BaseController"/>
 [ApiController]
 [Route(RouteConstants.MembersApiRoutes.BaseRoute_RoutePrefix)]
-public class MembersController(IMembersService membersService, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)
+public class MembersController(IMembersHandler membersHandler, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.
@@ -36,32 +37,32 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> AddNewMemberAsync([FromBody]AddMemberDTO memberDetails, [FromRoute]bool isFromAdmin = false)
+	public async Task<ResponseDTO> AddNewMemberAsync([FromBody] AddMemberDTO memberDetails, [FromRoute] bool isFromAdmin = false)
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersService.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
+				var result = await membersHandler.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
 				if (result)
 				{
 					return this.HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
+				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
 			}
 
 			return this.HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 
@@ -78,10 +79,10 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersService.GetAllMembersAsync();
+				var result = await membersHandler.GetAllMembersAsync();
 				if (result is not null)
 				{
 					return this.HandleSuccessRequestResponse(result);
@@ -94,12 +95,12 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 
@@ -113,33 +114,33 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> GetMemberByEmailIdAsync([FromBody]string memberEmailId)
+	public async Task<ResponseDTO> GetMemberByEmailIdAsync([FromBody] string memberEmailId)
 	{
 		try
 		{
 			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersService.GetMemberByEmailIdAsync(memberEmailId);
+				var result = await membersHandler.GetMemberByEmailIdAsync(memberEmailId);
 				if (result is not null)
 				{
 					return this.HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
+				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
 			}
 
 			return this.HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 
@@ -153,14 +154,14 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> UpdateMemberAsync([FromBody]UpdateMemberDTO memberDetails)
+	public async Task<ResponseDTO> UpdateMemberAsync([FromBody] UpdateMemberDTO memberDetails)
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersService.UpdateMemberAsync(memberDetails);
+				var result = await membersHandler.UpdateMemberAsync(memberDetails);
 				if (result)
 				{
 					return this.HandleSuccessRequestResponse(result);
@@ -173,12 +174,12 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 
@@ -192,32 +193,32 @@ public class MembersController(IMembersService membersService, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> DeleteMemberAsync([FromRoute]int memberId)
+	public async Task<ResponseDTO> DeleteMemberAsync([FromRoute] int memberId)
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersService.DeleteMemberAsync(memberId);
+				var result = await membersHandler.DeleteMemberAsync(memberId);
 				if (result)
 				{
 					return this.HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.ValidationErrorMessages.MemberNotFoundMessageConstant);
+				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
 			}
 
 			return this.HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, ExceptionConstants.LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 }

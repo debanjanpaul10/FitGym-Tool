@@ -1,0 +1,47 @@
+<div *ngIf="isLoading()">
+  <p-skeleton height="34.0625rem" width="100%" ngClass="members-skeleton" />
+</div>
+<div *ngIf="!isLoading()">
+  <div class="active-members-card card shadow-m border-0 bg-dark text-light">
+    <div class="card-body">
+      <h1 class="card-title">{{ chartConstants.Header }}</h1>
+      <h6 class="card-subtitle mb-4">{{ chartConstants.SubHeader }}</h6>
+      <div
+        class="chart-container d-flex justify-content-center align-items-center"
+      >
+        <div class="chart-wrapper d-flex align-items-center">
+          <canvas #activeUsersChartCanvas></canvas>
+          <div class="counts-display ms-4">
+            <div class="count-item mb-3">
+              <div class="count-label d-flex align-items-center">
+                <span class="color-indicator active"></span>
+                <span class="label-text"
+                  >{{ chartConstants.Labels.Active.yAxis }}</span
+                >
+              </div>
+              <div class="count-value">{{ activeCount }}</div>
+            </div>
+            <div class="count-item mb-3">
+              <div class="count-label d-flex align-items-center">
+                <span class="color-indicator termination"></span>
+                <span class="label-text"
+                  >{{ chartConstants.Labels.OnTermination.yAxis }}</span
+                >
+              </div>
+              <div class="count-value">{{ terminationCount }}</div>
+            </div>
+            <div class="count-item">
+              <div class="count-label d-flex align-items-center">
+                <span class="color-indicator expired"></span>
+                <span class="label-text"
+                  >{{ chartConstants.Labels.Expired.yAxis }}</span
+                >
+              </div>
+              <div class="count-value">{{ expiredCount }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

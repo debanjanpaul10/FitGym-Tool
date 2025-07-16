@@ -1,0 +1,28 @@
+.form-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  margin-top: 20px;
+}
+
+.form-input {
+  width: 100%;
+}
+
+::ng-deep .p-dropdown-panel {
+  bottom: 100% !important;
+  top: auto !important;
+}
+
+.p-select-overlay {
+  transform: translateY(-100%) !important;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--secondary-color);
+}

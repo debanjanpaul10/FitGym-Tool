@@ -5,7 +5,7 @@
 // <summary>The Global Exception Handler.</summary>
 // *********************************************************************************
 
-using FitGymTool.Shared.Helpers;
+using FitGymTool.Domain.Helpers;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 

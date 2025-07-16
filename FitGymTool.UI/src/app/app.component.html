@@ -1,9 +1,16 @@
 <div [ngClass]="{ 'app-background': !isLoginPage() }">
   <app-loader-component [detectRouteTransitions]="true"></app-loader-component>
-  <app-header-component *ngIf="!isLoginPage() && !isRouteLoading()"></app-header-component>
+  <app-header-component
+    *ngIf="!isLoginPage() && !isRouteLoading()"
+  ></app-header-component>
   <div class="container-fluid">
-    <app-toaster-component *ngIf="!isLoginPage() && !isRouteLoading()"></app-toaster-component>
-    <app-left-navigation-component *ngIf="!isLoginPage() && !isRouteLoading()"></app-left-navigation-component>
+    <app-toaster-component
+      *ngIf="!isLoginPage() && !isRouteLoading()"
+    ></app-toaster-component>
+    <app-left-navigation-component
+      *ngIf="!isLoginPage() && !isRouteLoading()"
+    ></app-left-navigation-component>
+    <app-bug-report></app-bug-report>
     <router-outlet></router-outlet>
   </div>
   <app-footer-component *ngIf="!isLoginPage()"></app-footer-component>

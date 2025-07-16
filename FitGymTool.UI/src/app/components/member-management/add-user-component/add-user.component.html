@@ -1,0 +1,141 @@
+<p-dialog
+  [header]="addMemberConstants.Header"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  [blockScroll]="true"
+>
+  <form [formGroup]="memberForm" (ngSubmit)="submitNewUserForm()">
+    <div class="form-grid">
+      <!-- Member Name -->
+      <div class="form-field">
+        <label for="memberName" class="field-label">Name</label>
+        <input
+          pInputText
+          id="memberName"
+          formControlName="memberName"
+          placeholder="Enter member name"
+          class="form-input"
+        />
+      </div>
+
+      <!-- Member Email -->
+      <div class="form-field">
+        <label for="memberEmail" class="field-label">Email</label>
+        <input
+          pInputText
+          id="memberEmail"
+          formControlName="memberEmail"
+          placeholder="Enter email address"
+          class="form-input"
+        />
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-field">
+        <label for="memberPhoneNumber" class="field-label">Phone Number</label>
+        <input
+          pInputText
+          id="memberPhoneNumber"
+          formControlName="memberPhoneNumber"
+          placeholder="Enter phone number"
+          class="form-input"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="form-field">
+        <label for="memberAddress" class="field-label">Address</label>
+        <textarea
+          pInputTextarea
+          id="memberAddress"
+          formControlName="memberAddress"
+          placeholder="Enter address"
+          class="form-input"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-field">
+        <label for="memberDateOfBirth" class="field-label">Date of Birth</label>
+        <p-datepicker
+          id="memberDateOfBirth"
+          formControlName="memberDateOfBirth"
+          [showIcon]="true"
+          iconDisplay="input"
+          dateFormat="dd/mm/yy"
+          placeholder="Select date of birth"
+          class="form-input"
+          [inline]="false"
+          [showOnFocus]="false"
+        ></p-datepicker>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-field">
+        <label for="memberGender" class="field-label">Gender</label>
+        <p-select
+          id="memberGender"
+          formControlName="memberGender"
+          [options]="genderOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select gender"
+          appendTo="body"
+          class="form-input"
+        ></p-select>
+      </div>
+
+      <!-- Join Date -->
+      <div class="form-field">
+        <label for="memberJoinDate" class="field-label">Join Date</label>
+        <p-datepicker
+          id="memberJoinDate"
+          formControlName="memberJoinDate"
+          [showIcon]="true"
+          iconDisplay="input"
+          dateFormat="dd/mm/yy"
+          placeholder="Select join date"
+          class="form-input"
+          [inline]="false"
+          [showOnFocus]="false"
+        ></p-datepicker>
+      </div>
+
+      <!-- Membership Status -->
+      <div class="form-field">
+        <label for="membershipStatus" class="field-label"
+          >Membership Status</label
+        >
+        <div class="membership-dropdown-wrapper">
+          <p-select
+            id="membershipStatus"
+            formControlName="membershipStatus"
+            [options]="membershipStatusOptions"
+            optionLabel="statusName"
+            optionValue="statusName"
+            placeholder="Membership Status"
+            class="form-input membership-status-dropdown"
+            panelClass="membership-status-panel"
+            [showClear]="false"
+          ></p-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <p-button
+        label="Cancel"
+        severity="secondary"
+        type="button"
+        (click)="onCancel()"
+      />
+      <p-button
+        label="Add Member"
+        type="submit"
+        [disabled]="memberForm.invalid"
+      />
+    </div>
+  </form>
+</p-dialog>
