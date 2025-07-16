@@ -7,6 +7,7 @@
 
 using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
+using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
@@ -21,18 +22,51 @@ namespace FitGymTool.Domain.Services;
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="DrivingPorts.ICommonService" />
-public class CommonService(IFitGymCommonManager fitGymDataService, ILogger<CommonService> logger) : ICommonService
+public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
 	/// The figym common manager.
 	/// </summary>
-	private readonly IFitGymCommonManager _commonManager = fitGymDataService;
-
+	private readonly ICommonDataManager _commonManager = fitGymDataService;
 
 	/// <summary>
 	/// The logger.
 	/// </summary>
 	private readonly ILogger<CommonService> _logger = logger;
+
+	/// <summary>
+	/// Adds the new bug report data asynchronous.
+	/// </summary>
+	/// <param name="bugReportDataDomain">The bug report data domain.</param>
+	/// <returns>
+	/// The boolean for success/failure
+	/// </returns>
+	public async Task<bool> AddNewBugReportDataAsync(BugReportDataDomain bugReportDataDomain)
+	{
+		try
+		{
+			this._logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
+			
+			bugReportDataDomain.IsActive = true;
+			bugReportDataDomain.DateCreated = DateTime.UtcNow;
+			bugReportDataDomain.DateModified = DateTime.UtcNow;
+			bugReportDataDomain.ModifiedBy = bugReportDataDomain.CreatedBy;
+
+			return await this._commonManager.AddNewBugReportDataAsync(bugReportDataDomain);
+		}
+		catch (Exception ex)
+		{
+			this._logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			this._logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
+		}
+	}
 
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

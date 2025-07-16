@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using AutoMapper;
+using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Infrastructure.DB.Entity;
@@ -24,9 +25,12 @@ public class DataMapperProfile: Profile
 	/// </summary>
 	public DataMapperProfile()
 	{
-		CreateMap<FeesPaymentStatusMapping, FeesPaymentStatusMappingDomain>();
-		CreateMap<MembershipStatusMapping, MembershipStatusMappingDomain>();
-		CreateMap<FeesDurationMapping, FeesDurationMappingDomain>();
+		// Lookup mapping data
+		CreateMap<FeesPaymentStatusMapping, FeesPaymentStatusMappingDomain>().ReverseMap();
+		CreateMap<MembershipStatusMapping, MembershipStatusMappingDomain>().ReverseMap();
+		CreateMap<FeesDurationMapping, FeesDurationMappingDomain>().ReverseMap();
+		CreateMap<BugItemStatusMapping, BugItemStatusMappingDomain>().ReverseMap();
+		CreateMap<BugSeverityMapping, BugSeverityMappingDomain>().ReverseMap();
 		
 		// Members mapping configurations
 		CreateMap<MemberDetails, MemberDetailsDomain>()
@@ -37,10 +41,12 @@ public class DataMapperProfile: Profile
 		CreateMap<AddMemberDomain, MemberDetails>()
 			.ForMember(destination => destination.MembershipStatusId,
 				option => option.MapFrom(source => 0));
-		
-		CreateMap<MemberDetails, UpdateMemberDomain>()
+
+		CreateMap<UpdateMemberDomain, MemberDetails>()
 			.ForMember(destination => destination.MembershipStatusId,
-				option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.Id : 0))
-			.ReverseMap();
+				option => option.MapFrom(source => 0));
+
+		CreateMap<BugReportData, BugReportDataDomain>().ReverseMap()
+			.ForMember(dest => dest.Id, option => option.Ignore());
 	}
 }

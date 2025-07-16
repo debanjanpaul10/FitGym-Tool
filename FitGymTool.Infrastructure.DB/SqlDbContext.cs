@@ -74,6 +74,14 @@ public class SqlDbContext : DbContext
 	/// </summary>
 	public DbSet<CurrentMonthFeesAndRevenueStatusDomain> CurrentMonthFeesAndRevenueStatus { get; set; }
 
+	/// <summary>
+	/// Gets or sets the bug report data.
+	/// </summary>
+	/// <value>
+	/// The bug report data.
+	/// </value>
+	public DbSet<BugReportData> BugReportData { get; set; }
+
 	#region Mapping Entities
 
 	/// <summary>
@@ -99,6 +107,22 @@ public class SqlDbContext : DbContext
 	/// The fees duration mapping.
 	/// </value>
 	public DbSet<FeesDurationMapping> FeesDurationMapping { get; set; }
+
+	/// <summary>
+	/// Gets or sets the bug item status mapping.
+	/// </summary>
+	/// <value>
+	/// The bug item status mapping.
+	/// </value>
+	public DbSet<BugItemStatusMapping> BugItemStatusMapping { get; set; }
+
+	/// <summary>
+	/// Gets or sets the bug severity mapping.
+	/// </summary>
+	/// <value>
+	/// The bug severity mapping.
+	/// </value>
+	public DbSet<BugSeverityMapping> BugSeverityMapping { get; set; }
 
 	#endregion
 

@@ -5,8 +5,7 @@
 // <summary>The Route Constants class contains constants for API route paths.</summary>
 // *********************************************************************************
 
-
-namespace FitGymTool.Shared.Constants;
+namespace FitGymTool.API.Helpers;
 
 /// <summary>
 /// The Route Constants class contains constants for API route paths.
@@ -63,6 +62,11 @@ public static class RouteConstants
 		/// The get mappings master data API route
 		/// </summary>
 		public const string GetMappingsMasterData_ApiRoute = "GetMappingsMasterData";
+
+		/// <summary>
+		/// The add bug report API route
+		/// </summary>
+		public const string AddBugReport_ApiRoute = "AddBugReport";
 	}
 
 	/// <summary>

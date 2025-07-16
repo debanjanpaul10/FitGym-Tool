@@ -72,8 +72,8 @@ public static class DependencyContainer
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddScoped<IMembersDataManager, MembersDataManager>()
-			.AddScoped<IFitGymCommonManager, CommonDataManager>()
-			.AddScoped<IMemberFeesManager, MemberFeesDataManager>()
+			.AddScoped<ICommonDataManager, CommonDataManager>()
+			.AddScoped<IMemberFeesDataManager, MemberFeesDataManager>()
 			.AddAutoMapper(mapperConfig =>
 			{
 				mapperConfig.AddProfile<DataMapperProfile>();

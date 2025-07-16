@@ -12,7 +12,8 @@ namespace FitGymTool.Infrastructure.DB.Entity;
 /// <summary>
 /// The Member Details Entity Class.
 /// </summary>
-public class MemberDetails
+/// <seealso cref="BaseEntity"/>
+public class MemberDetails : BaseEntity
 {
 	/// <summary>
 	/// Gets or sets the Member ID.
@@ -63,43 +64,6 @@ public class MemberDetails
 	/// Gets or sets the Member GUID.
 	/// </summary>
 	public Guid MemberGuid { get; set; } = Guid.Empty;
-
-	/// <summary>
-	/// Gets or sets a value indicating whether this member is active.
-	/// </summary>
-	public bool IsActive { get; set; } = true;
-
-	/// <summary>
-	/// Gets or sets the date created.
-	/// </summary>
-	/// <value>
-	/// The date created.
-	/// </value>
-	public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-
-	/// <summary>
-	/// Gets or sets the created by.
-	/// </summary>
-	/// <value>
-	/// The created by.
-	/// </value>
-	public string CreatedBy { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the date modified.
-	/// </summary>
-	/// <value>
-	/// The date modified.
-	/// </value>
-	public DateTime DateModified { get; set; } = DateTime.UtcNow;
-
-	/// <summary>
-	/// Gets or sets the modified by.
-	/// </summary>
-	/// <value>
-	/// The modified by.
-	/// </value>
-	public string ModifiedBy { get; set; } = string.Empty;
 
 	#region Navigation Fields
 

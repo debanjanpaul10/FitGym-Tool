@@ -20,12 +20,12 @@ namespace FitGymTool.Domain.Services;
 /// <param name="logger">The logger.</param>
 /// <param name="memberFeesDataService">The member fees data service.</param>
 /// <seealso cref="DrivingPorts.IMemberFeesService" />
-public class MemberFeesService(IMemberFeesManager memberFeesDataService, ILogger<MemberFeesService> logger) : IMemberFeesService
+public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILogger<MemberFeesService> logger) : IMemberFeesService
 {
 	/// <summary>
 	/// The member fees data service.
 	/// </summary>
-	private readonly IMemberFeesManager _memberFeesDataService = memberFeesDataService;
+	private readonly IMemberFeesDataManager _memberFeesDataService = memberFeesDataService;
 
 	/// <summary>
 	/// The logger/

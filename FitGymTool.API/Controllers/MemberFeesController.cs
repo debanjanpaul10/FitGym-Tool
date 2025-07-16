@@ -8,8 +8,8 @@
 
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Helpers;
 using FitGymTool.Domain.Models;
-using FitGymTool.Shared.Constants;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;

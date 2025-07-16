@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Request\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FitGymTool.Domain\FitGymTool.Domain.csproj" />
   </ItemGroup>
 

@@ -73,12 +73,17 @@
     <Build Include="Functions\FN_GetPaymentHistoryDataForMembers.sql" />
     <Build Include="Functions\FN_GetCurrentMembersFeesStatus.sql" />
     <Build Include="Functions\FN_GetCurrentFeesAndRevenueStatus.sql" />
+    <Build Include="Tables\BugReportData.sql" />
+    <Build Include="Tables\BugItemStatusMapping.sql" />
+    <Build Include="Tables\BugSeverityMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesDurationMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesStructure.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_BugItemStatusMapping.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_BugSeverityMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Helpers\CleanupAll.sql" />

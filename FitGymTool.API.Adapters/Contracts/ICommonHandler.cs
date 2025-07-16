@@ -5,7 +5,9 @@
 // <summary>The Fit Gym Common Handler Adapter Interface.</summary>
 // *********************************************************************************
 
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
+using FitGymTool.Domain.Models;
 
 namespace FitGymTool.API.Adapters.Contracts;
 
@@ -21,4 +23,11 @@ public interface ICommonHandler
 	/// The mapping master data dto.
 	/// </returns>
 	Task<MappingMasterDataDto> GetMappingsMasterDataAsync();
+
+	/// <summary>
+	/// Adds the new bug report data asynchronous.
+	/// </summary>
+	/// <param name="bugReportDataDTO">The bug report data domain.</param>
+	/// <returns>The boolean for success/failure</returns>
+	Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO);
 }

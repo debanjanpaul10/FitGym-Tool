@@ -12,7 +12,8 @@ namespace FitGymTool.Infrastructure.DB.Entity;
 /// <summary>
 /// The Fees Status Entity Class.
 /// </summary>
-public class FeesStatus
+/// <seealso cref="BaseEntity"/>
+public class FeesStatus : BaseEntity
 {
 	/// <summary>
 	/// Gets or sets the Fees Status ID.
@@ -45,11 +46,6 @@ public class FeesStatus
 	public DateTime? LastPaymentDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets a value indicating whether this entry is active.
-	/// </summary>
-	public bool IsActive { get; set; }
-
-	/// <summary>
 	/// Gets or sets from date.
 	/// </summary>
 	/// <value>
@@ -77,38 +73,6 @@ public class FeesStatus
 	/// The fees duration identifier.
 	/// </value>
 	public int FeesDurationId { get; set; }
-
-	/// <summary>
-	/// Gets or sets the date created.
-	/// </summary>
-	/// <value>
-	/// The date created.
-	/// </value>
-	public DateTime DateCreated { get; set; }
-
-	/// <summary>
-	/// Gets or sets the created by.
-	/// </summary>
-	/// <value>
-	/// The created by.
-	/// </value>
-	public string CreatedBy { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the date modified.
-	/// </summary>
-	/// <value>
-	/// The date modified.
-	/// </value>
-	public DateTime DateModified { get; set; }
-
-	/// <summary>
-	/// Gets or sets the modified by.
-	/// </summary>
-	/// <value>
-	/// The modified by.
-	/// </value>
-	public string ModifiedBy { get; set; } = string.Empty;
 
 	#region NAVIGATION FIELDS
 

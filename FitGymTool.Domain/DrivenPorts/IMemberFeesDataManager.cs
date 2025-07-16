@@ -12,7 +12,7 @@ namespace FitGymTool.Domain.DrivenPorts;
 /// <summary>
 /// The Member Fees Data Service Interface.
 /// </summary>
-public interface IMemberFeesManager
+public interface IMemberFeesDataManager
 {
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.

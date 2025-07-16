@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 
 import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { DrawerService } from '@core/services/drawer.service';
+import { name } from 'node_modules/@azure/msal-angular/packageMetadata';
 
 @Component({
   selector: 'app-left-navigation-component',
@@ -55,6 +56,11 @@ export class LeftNavigationComponent implements OnInit {
         onClick: () => this.navigateFacilityDashboard(),
       },
       {
+        name: 'Report a bug',
+        icon: 'pi pi-exclamation-triangle',
+        onClick: () => this.handleBugReport(),
+      },
+      {
         name: 'Logout',
         icon: 'pi pi-sign-out',
         onClick: () => this.logoutRedirect(),
@@ -62,14 +68,18 @@ export class LeftNavigationComponent implements OnInit {
     ];
   }
 
-  public closeCallback(e: any): void {
+  protected closeCallback(e: any): void {
     this.drawerRef.close(e);
     this.drawerService.closeDrawer();
   }
 
-  public homePageRedirect(): void {
+  protected homePageRedirect(): void {
     this.routerService.navigate([RouteConstants.Dashboard.Link]);
     this.drawerService.closeDrawer();
+  }
+
+  private handleBugReport(): void {
+    alert('Feature being actively worked on');
   }
 
   private logoutRedirect(): void {

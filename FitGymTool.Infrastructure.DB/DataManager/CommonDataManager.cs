@@ -7,8 +7,10 @@
 
 using AutoMapper;
 using FitGymTool.Domain.DrivenPorts;
+using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Infrastructure.DB.Contracts;
+using FitGymTool.Infrastructure.DB.Entity;
 using FitGymTool.Infrastructure.DB.Entity.Mapping;
 using FitGymTool.Infrastructure.DB.Helpers.Constants;
 using Microsoft.Extensions.Logging;
@@ -23,8 +25,8 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// <param name="logger">The logger service.</param>
 /// <param name="unitOfWork">The unit of work.</param>
 /// <param name="mapper">The auto mapper.</param>
-/// <seealso cref="IFitGymCommonManager" />
-public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CommonDataManager> logger) : IFitGymCommonManager
+/// <seealso cref="ICommonDataManager" />
+public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CommonDataManager> logger) : ICommonDataManager
 {
 	/// <summary>
 	/// The unit of work
@@ -49,12 +51,12 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
+			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
 
-			var feesDurationMapping = await _unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(filter: x => x.IsActive);
-			var feesPaymentStatusMapping = await _unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(filter: x => x.IsActive);
-			var membershipStatusMapping = await _unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
+			var feesDurationMapping = await this._unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(filter: x => x.IsActive);
+			var feesPaymentStatusMapping = await this._unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(filter: x => x.IsActive);
+			var membershipStatusMapping = await this._unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
 
 			var feesDurationMappingDomain = this._mapper.Map<IEnumerable<FeesDurationMappingDomain>>(feesDurationMapping);
 			var feesPaymentMappingDomain = this._mapper.Map<IEnumerable<FeesPaymentStatusMappingDomain>>(feesPaymentStatusMapping);
@@ -71,14 +73,50 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
+			this._logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
+			this._logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
+		}
+	}
+
+	/// <summary>
+	/// Adds the new bug report data asynchronous.
+	/// </summary>
+	/// <param name="bugReportDataDomain">The bug report data.</param>
+	/// <returns>The boolean for success/failure.</returns>
+	public async Task<bool> AddNewBugReportDataAsync(BugReportDataDomain bugReportDataDomain)
+	{
+		try
+		{
+			this._logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
+			var bugSeverityEntity = (await this._unitOfWork.Repository<BugSeverityMapping>().FirstOrDefaultAsync(sev => sev.SeverityName == "Medium" && sev.IsActive));
+			var bugStatusEntity = (await this._unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == "Not Started" && status.IsActive));
+
+			var bugReportData = this._mapper.Map<BugReportData>(bugReportDataDomain);
+			bugReportData.BugSeverityId = bugSeverityEntity?.Id ?? 0;
+			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
+
+			await this._unitOfWork.Repository<BugReportData>().AddAsync(bugReportData);
+			await this._unitOfWork.SaveChangesAsync();
+
+			return true;
+		}
+		catch (Exception ex)
+		{
+			this._logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			this._logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
 		}
 	}
 }

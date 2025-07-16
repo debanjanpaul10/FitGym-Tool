@@ -1,17 +1,16 @@
 ﻿// *********************************************************************************
-//	<copyright file="FeesPaymentStatusMapping.cs" company="Personal">
-//		Copyright (c) 2025 Personal
-//	</copyright>
-// <summary>The Fees Payment Status Mapping Entity Model.</summary>
+// <copyright file="BugItemStatusMapping.cs" company="Personal">
+//     Copyright (c) 2025 Personal
+// </copyright>
+// <summary>The Bug Item Status Mapping Entity Class.</summary>
 // *********************************************************************************
-
-namespace FitGymTool.Infrastructure.DB.Entity.Mapping;
+namespace FitGymTool.Domain.Models.MappingDomain;
 
 /// <summary>
-/// The Fees Payment Status Mapping Entity Model.
+/// The Bug Item Status Mapping Entity Class.
 /// </summary>
 /// <seealso cref="BaseEntity"/>
-public class FeesPaymentStatusMapping : BaseEntity
+public class BugItemStatusMappingDomain : BaseDomain
 {
 	/// <summary>
 	/// Gets or sets the identifier.

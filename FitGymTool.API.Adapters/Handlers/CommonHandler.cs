@@ -7,8 +7,10 @@
 
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Domain.DrivingPorts;
+using FitGymTool.Domain.Models;
 
 namespace FitGymTool.API.Adapters.Handlers;
 
@@ -29,6 +31,19 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// The mapper
 	/// </summary>
 	private readonly IMapper _mapper = mapper;
+
+	/// <summary>
+	/// Adds the new bug report data asynchronous.
+	/// </summary>
+	/// <param name="bugReportDataDTO">The bug report data domain.</param>
+	/// <returns>
+	/// The boolean for success/failure
+	/// </returns>
+	public async Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO)
+	{
+		var bugReportDataDomain = this._mapper.Map<BugReportDataDomain>(bugReportDataDTO); 
+		return await this._commonService.AddNewBugReportDataAsync(bugReportDataDomain);
+	}
 
 	/// <summary>
 	/// Gets the mappings master data asynchronous.

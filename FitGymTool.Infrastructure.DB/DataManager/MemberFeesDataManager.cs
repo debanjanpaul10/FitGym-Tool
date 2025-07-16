@@ -20,8 +20,8 @@ namespace FitGymTool.Infrastructure.DB.DataManager;
 /// </summary>
 /// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
-/// <seealso cref="IMemberFeesManager" />
-public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDataManager> logger) : IMemberFeesManager
+/// <seealso cref="IMemberFeesDataManager" />
+public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDataManager> logger) : IMemberFeesDataManager
 {
 	/// <summary>
 	/// The unit of work
