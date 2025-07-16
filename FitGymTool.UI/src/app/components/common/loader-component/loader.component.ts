@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
@@ -16,7 +16,7 @@ import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-loader-component',
-  imports: [ProgressSpinnerModule, CommonModule],
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.scss',
 })
