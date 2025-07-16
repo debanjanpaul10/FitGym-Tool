@@ -134,7 +134,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onCancel(): void {
+  protected onCancel(): void {
     this.memberForm.reset();
     this.memberForm.patchValue({
       memberJoinDate: new Date(),
