@@ -57,9 +57,9 @@ public static class Program
 			});
 		});
 
-		builder.Services.AddSwaggerGen(c =>
+		builder.Services.AddSwaggerGen(options =>
 		{
-			c.SwaggerDoc(SwaggerConstants.ApiVersion, new OpenApiInfo
+			options.SwaggerDoc(SwaggerConstants.ApiVersion, new OpenApiInfo
 			{
 				Title = SwaggerConstants.ApplicationAPIName,
 				Version = SwaggerConstants.ApiVersion,
@@ -92,13 +92,13 @@ public static class Program
 		if (app.Environment.IsDevelopment())
 		{
 			app.MapOpenApi();
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint(SwaggerConstants.SwaggerEndpointUrl, $"{SwaggerConstants.ApplicationAPIName}.{SwaggerConstants.ApiVersion}");
+				c.RoutePrefix = SwaggerConstants.SwaggerUiPrefix;
+			});
 		}
-		app.UseSwagger();
-		app.UseSwaggerUI(c =>
-		{
-			c.SwaggerEndpoint(SwaggerConstants.SwaggerEndpointUrl, $"{SwaggerConstants.ApplicationAPIName}.{SwaggerConstants.ApiVersion}");
-			c.RoutePrefix = SwaggerConstants.SwaggerUiPrefix;
-		});
 
 		app.UseExceptionHandler();
 		app.UseHttpsRedirection();

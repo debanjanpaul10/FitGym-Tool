@@ -5,9 +5,9 @@
 // <summary>The Member Fees Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.DrivenPorts;
-using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models;
+using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
@@ -19,7 +19,7 @@ namespace FitGymTool.Domain.Services;
 /// </summary>
 /// <param name="logger">The logger.</param>
 /// <param name="memberFeesDataService">The member fees data service.</param>
-/// <seealso cref="DrivingPorts.IMemberFeesService" />
+/// <seealso cref="Ports.In.IMemberFeesService" />
 public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILogger<MemberFeesService> logger) : IMemberFeesService
 {
 	/// <summary>

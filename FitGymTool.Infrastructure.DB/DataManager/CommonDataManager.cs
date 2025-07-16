@@ -6,9 +6,9 @@
 // *********************************************************************************
 
 using AutoMapper;
-using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
+using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.Entity;
 using FitGymTool.Infrastructure.DB.Entity.Mapping;

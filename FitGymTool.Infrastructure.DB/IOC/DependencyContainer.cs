@@ -5,7 +5,7 @@
 // <summary>The DI Container Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.DrivenPorts;
+using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Infrastructure.DB.Contracts;
 using FitGymTool.Infrastructure.DB.DataManager;
 using FitGymTool.Infrastructure.DB.Mapper;

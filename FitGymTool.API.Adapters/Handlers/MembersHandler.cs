@@ -8,8 +8,8 @@
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response.Members;
-using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
 

@@ -5,7 +5,7 @@
 // <summary>The Dependency Injection Container Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.DrivingPorts;
+using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 

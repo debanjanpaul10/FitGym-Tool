@@ -7,7 +7,7 @@
 
 using FitGymTool.Domain.Models.Members;
 
-namespace FitGymTool.Domain.DrivingPorts;
+namespace FitGymTool.Domain.Ports.In;
 
 /// <summary>
 /// The Members Service Interface.

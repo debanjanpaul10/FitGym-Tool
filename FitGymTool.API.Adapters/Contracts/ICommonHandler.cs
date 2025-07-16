@@ -7,7 +7,6 @@
 
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
-using FitGymTool.Domain.Models;
 
 namespace FitGymTool.API.Adapters.Contracts;
 

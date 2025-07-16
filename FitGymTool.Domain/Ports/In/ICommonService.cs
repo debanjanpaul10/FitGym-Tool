@@ -8,7 +8,7 @@
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 
-namespace FitGymTool.Domain.DrivingPorts;
+namespace FitGymTool.Domain.Ports.In;
 
 /// <summary>
 /// The Fit Gym Common Data Service Interface.

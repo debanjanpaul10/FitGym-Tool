@@ -5,9 +5,9 @@
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.DrivenPorts;
-using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;

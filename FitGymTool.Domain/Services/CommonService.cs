@@ -5,10 +5,10 @@
 // <summary>The Fit Gym Common Data Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.DrivenPorts;
-using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
+using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
@@ -21,7 +21,7 @@ namespace FitGymTool.Domain.Services;
 /// <param name="fitGymDataService">The Fit Gym common manager Service.</param>
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
-/// <seealso cref="DrivingPorts.ICommonService" />
+/// <seealso cref="Ports.In.ICommonService" />
 public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
