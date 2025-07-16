@@ -46,7 +46,6 @@ public class DataMapperProfile: Profile
 			.ForMember(destination => destination.MembershipStatusId,
 				option => option.MapFrom(source => 0));
 
-		CreateMap<BugReportData, BugReportDataDomain>().ReverseMap()
-			.ForMember(dest => dest.Id, option => option.Ignore());
+		CreateMap<BugReportDataDomain, BugReportData>();
 	}
 }

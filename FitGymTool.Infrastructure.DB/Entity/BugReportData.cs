@@ -5,8 +5,6 @@
 // <summary>The Bug Report Data Entity Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Infrastructure.DB.Entity.Mapping;
-
 namespace FitGymTool.Infrastructure.DB.Entity;
 
 /// <summary>
@@ -54,25 +52,4 @@ public class BugReportData : BaseEntity
 	/// The bug status identifier.
 	/// </value>
 	public int BugStatusId { get; set; }
-
-
-	#region NAVIGATION FIELDS
-
-	/// <summary>
-	/// Gets or sets the bug item status mapping.
-	/// </summary>
-	/// <value>
-	/// The bug item status mapping.
-	/// </value>
-	public BugItemStatusMapping? BugItemStatusMapping { get; set; } = new BugItemStatusMapping();
-
-	/// <summary>
-	/// Gets or sets the bug severity mapping.
-	/// </summary>
-	/// <value>
-	/// The bug severity mapping.
-	/// </value>
-	public BugSeverityMapping? BugSeverityMapping { get; set; } = new BugSeverityMapping();
-
-	#endregion
 }

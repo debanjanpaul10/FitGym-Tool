@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { DrawerService } from '@core/services/drawer.service';
-import { name } from 'node_modules/@azure/msal-angular/packageMetadata';
+import { DialogPopupService } from '@core/services/dialog-popup.service';
 
 @Component({
   selector: 'app-left-navigation-component',
@@ -32,6 +32,8 @@ export class LeftNavigationComponent implements OnInit {
   private readonly authService: MsalService = inject(MsalService);
   private readonly drawerService: DrawerService = inject(DrawerService);
   private readonly routerService: Router = inject(Router);
+  private readonly dialogPopupService: DialogPopupService =
+    inject(DialogPopupService);
 
   constructor() {
     this.isVisible = this.drawerService.isDrawerOpen;
@@ -79,7 +81,8 @@ export class LeftNavigationComponent implements OnInit {
   }
 
   private handleBugReport(): void {
-    alert('Feature being actively worked on');
+    this.dialogPopupService.openBugReportDialog();
+    this.drawerService.closeDrawer();
   }
 
   private logoutRedirect(): void {

@@ -78,5 +78,13 @@ public static class DatabaseConstants
 	/// </summary>
 	public const string NotApplicableStringConstant = "NA";
 
+	/// <summary>
+	/// The medium constant
+	/// </summary>
+	public const string MediumConstant = "Medium";
 
+	/// <summary>
+	/// The not started constant
+	/// </summary>
+	public const string NotStartedConstant = "Not Started";
 }

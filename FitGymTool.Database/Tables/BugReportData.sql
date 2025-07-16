@@ -8,6 +8,7 @@
 	[DateCreated] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
 	[IsActive] BIT NOT NULL DEFAULT 1,
 	CONSTRAINT [FK_BugReportData_BugSeverityMapping] FOREIGN KEY ([BugSeverityId]) REFERENCES [dbo].[BugSeverityMapping]([Id]),
 	CONSTRAINT [FK_BugReportData_BugItemStatusMapping] FOREIGN KEY ([BugStatusId]) REFERENCES [dbo].[BugItemStatusMapping]([Id])

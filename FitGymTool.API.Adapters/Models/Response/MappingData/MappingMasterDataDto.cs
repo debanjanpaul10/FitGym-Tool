@@ -35,4 +35,12 @@ public class MappingMasterDataDto
 	/// The membership status mapping.
 	/// </value>
 	public IEnumerable<MembershipStatusMappingDto> MembershipStatusMapping { get; set; } = [];
+
+	/// <summary>
+	/// Gets or sets the bug severity mapping.
+	/// </summary>
+	/// <value>
+	/// The bug severity mapping.
+	/// </value>
+	public IEnumerable<BugSeverityMappingDto> BugSeverityMapping { get; set; } = [];
 }
