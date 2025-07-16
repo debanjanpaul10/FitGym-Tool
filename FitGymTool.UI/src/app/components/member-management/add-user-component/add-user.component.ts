@@ -5,6 +5,8 @@ import {
   OnInit,
   signal,
   WritableSignal,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -49,6 +51,8 @@ import { MembersApiService } from '@services/members-api.service';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit, OnDestroy {
+  @Output() memberAdded: EventEmitter<void> = new EventEmitter<void>();
+
   protected visible: WritableSignal<boolean> = signal(false);
   protected memberForm: FormGroup;
   protected addMemberConstants =
@@ -117,6 +121,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
             this.toasterService.showSuccess(
               ToasterSuccessMessages.MemberManagement.AddMemberSuccess
             );
+            this.memberAdded.emit();
             this.onCancel();
           } else {
             this.toasterService.showError(response.responseData);

@@ -66,12 +66,20 @@ export class MemberManagementComponent implements OnInit {
     );
   }
 
-  public handleAddNewUser(): void {
+  protected handleAddNewMember(): void {
     this.dialogPopupService.openAddMemberDialog();
   }
 
-  public handleTerminateUser(): void {
+  protected handleTerminateMember(): void {
     alert('Feature will be worked on soon!');
+  }
+
+  protected handleEditMember(): void {
+    alert('Feature will be worked on soon!');
+  }
+
+  protected onMemberAdded(): void {
+    this.getAllMembersData();
   }
 
   // #region PRIVATE Methods

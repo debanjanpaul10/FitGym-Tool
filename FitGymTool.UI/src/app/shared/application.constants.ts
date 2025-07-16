@@ -103,6 +103,11 @@ export class MemberManagementConstants {
       ImageSrc: '../../../assets/Images/terminate-user.jpg',
       Alt: 'Terminate a member image',
     },
+    UpdateMember: {
+      Name: 'Update an existing member',
+      ImageSrc: '../../../assets/Images/edit-user.jpg',
+      Alt: 'Update member image',
+    },
   };
   public static AddNewMemberConstants = {
     genderOptions: [

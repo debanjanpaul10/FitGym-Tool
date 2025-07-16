@@ -3,7 +3,7 @@
     <div class="col-sm-4">
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
-        (click)="handleAddNewUser()"
+        (click)="handleAddNewMember()"
       >
         <img
           class="card-img-top"
@@ -24,7 +24,7 @@
     <div class="col-sm-4">
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
-        (click)="handleTerminateUser()"
+        (click)="handleTerminateMember()"
       >
         <img
           class="card-img-top"
@@ -44,17 +44,19 @@
     <div class="col-sm-4">
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
-        (click)="handleTerminateUser()"
+        (click)="handleEditMember()"
       >
         <img
           class="card-img-top"
-          src="../../../assets/Images/terminate-user.jpg"
-          alt="Add User Image"
+          [src]="MemberDashboardConstants.UpdateMember.ImageSrc"
+          [alt]="MemberDashboardConstants.UpdateMember.Alt"
           height="auto"
           width="auto"
         />
         <div class="card-body">
-          <h4 class="card-title">Terminate an existing user</h4>
+          <h4 class="card-title">
+            {{ MemberDashboardConstants.UpdateMember.Name }}
+          </h4>
         </div>
       </div>
     </div>
@@ -78,6 +80,8 @@
   </div>
 
   <div class="row">
-    <app-add-user-component></app-add-user-component>
+    <app-add-user-component
+      (memberAdded)="onMemberAdded()"
+    ></app-add-user-component>
   </div>
 </div>
