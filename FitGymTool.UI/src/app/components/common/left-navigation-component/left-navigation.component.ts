@@ -8,11 +8,12 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
-import { DrawerConstants, RouteConstants } from '@shared/application.constants';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
-import { DrawerService } from '@core/services/drawer.service';
 import { Router } from '@angular/router';
+
+import { DrawerConstants, RouteConstants } from '@shared/application.constants';
+import { DrawerService } from '@core/services/drawer.service';
 
 @Component({
   selector: 'app-left-navigation-component',
@@ -23,9 +24,9 @@ import { Router } from '@angular/router';
 export class LeftNavigationComponent implements OnInit {
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
-  public DrawerConstants = DrawerConstants;
-  public isVisible: WritableSignal<boolean> = signal(false);
-  public menuItems: any;
+  protected DrawerConstants = DrawerConstants;
+  protected isVisible: WritableSignal<boolean> = signal(false);
+  protected menuItems: any;
 
   private readonly authService: MsalService = inject(MsalService);
   private readonly drawerService: DrawerService = inject(DrawerService);

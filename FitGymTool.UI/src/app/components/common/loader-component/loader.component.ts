@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
@@ -16,14 +16,14 @@ import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-loader-component',
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, ProgressSpinnerModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.scss',
 })
 export class LoaderComponent implements OnInit {
   @Input() detectRouteTransitions: boolean = false;
 
-  public isLoading$: Observable<boolean>;
+  protected isLoading$: Observable<boolean>;
 
   private readonly loaderService: LoaderService = inject(LoaderService);
   private readonly routerService: Router = inject(Router);
