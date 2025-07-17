@@ -8,12 +8,12 @@
 using Azure.Identity;
 using FitGymTool.API.Adapters.IOC;
 using FitGymTool.API.Controllers;
-using FitGymTool.Infrastructure.DB.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using System.Security.Claims;
 using FitGymTool.Domain.IOC;
 using static FitGymTool.API.Helpers.APIConstants;
+using FitGymTool.Persistence.Adapters.IOC;
 
 namespace FitGymTool.API.IOC;
 
