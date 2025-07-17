@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj" />
-	<ProjectReference Include="..\FitGymTool.Domain\FitGymTool.Domain.csproj" />
-	<ProjectReference Include="..\FitGymTool.Infrastructure.DB\FitGymTool.Infrastructure.DB.csproj" />
+	<ProjectReference Include="..\Adapters\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj" />
+	<ProjectReference Include="..\Adapters\FitGymTool.Persistence.Adapters\FitGymTool.Persistence.Adapters.csproj" />
+	<ProjectReference Include="..\Core\FitGymTool.Domain\FitGymTool.Domain.csproj" />
   </ItemGroup>
 
 </Project>

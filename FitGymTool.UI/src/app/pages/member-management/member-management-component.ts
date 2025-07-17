@@ -29,7 +29,7 @@ import { MemberManagementConstants } from '@shared/application.constants';
 })
 export class MemberManagementComponent implements OnInit {
   public MemberDashboardConstants =
-    MemberManagementConstants.MembersDashboardConstant;
+    MemberManagementConstants.MembersDashboardConstants;
 
   public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
   public isUsersDataLoading: WritableSignal<boolean> = signal(true);
