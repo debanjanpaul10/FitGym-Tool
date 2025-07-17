@@ -6,7 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.Ports.In;
-using FitGymTool.Domain.Services;
+using FitGymTool.Domain.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FitGymTool.Domain.IOC;

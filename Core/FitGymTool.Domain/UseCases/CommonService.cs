@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
-namespace FitGymTool.Domain.Services;
+namespace FitGymTool.Domain.UseCases;
 
 /// <summary>
 /// The Fit Gym Common Data Service Class.
@@ -21,7 +21,7 @@ namespace FitGymTool.Domain.Services;
 /// <param name="fitGymDataService">The Fit Gym common manager Service.</param>
 /// <param name="mapper">The mapper.</param>
 /// <param name="logger">The logger.</param>
-/// <seealso cref="Ports.In.ICommonService" />
+/// <seealso cref="ICommonService" />
 public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
@@ -45,7 +45,7 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
 			
 			bugReportDataDomain.IsActive = true;
@@ -53,17 +53,17 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 			bugReportDataDomain.DateModified = DateTime.UtcNow;
 			bugReportDataDomain.ModifiedBy = bugReportDataDomain.CreatedBy;
 
-			return await this._commonManager.AddNewBugReportDataAsync(bugReportDataDomain);
+			return await _commonManager.AddNewBugReportDataAsync(bugReportDataDomain);
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
 		}
 	}
@@ -78,19 +78,19 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			return await this._commonManager.GetMappingsMasterDataAsync();
+			return await _commonManager.GetMappingsMasterDataAsync();
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}
