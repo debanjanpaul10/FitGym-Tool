@@ -58,10 +58,6 @@ export class CurrentRevenueComponent
     inject(MemberFeesApiService);
   private readonly toasterService: ToasterService = inject(ToasterService);
 
-  /**
-   * Angular lifecycle hook that is called after component initialization.
-   * Initiates fetching of current revenue data and subscribes to mapping master data updates.
-   */
   ngOnInit(): void {
     this.getCurrentRevenueData();
 
@@ -79,10 +75,6 @@ export class CurrentRevenueComponent
       );
   }
 
-  /**
-   * Angular lifecycle hook that is called after the view has been checked.
-   * Ensures the chart is initialized once the canvas is available.
-   */
   ngAfterViewChecked(): void {
     if (
       !this.chartInitialized &&
@@ -95,10 +87,6 @@ export class CurrentRevenueComponent
     }
   }
 
-  /**
-   * Angular lifecycle hook that is called when the component is destroyed.
-   * Cleans up the chart and unsubscribes from subscriptions.
-   */
   ngOnDestroy(): void {
     this.revenueChart?.destroy();
     this.chartInitialized = false;
