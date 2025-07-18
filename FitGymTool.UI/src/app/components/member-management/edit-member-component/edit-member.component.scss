@@ -32,51 +32,25 @@
     position: absolute;
     top: 10px;
     z-index: 999;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
+    right: 20px;
 
     &.show {
       opacity: 1;
       visibility: visible;
-      animation: pulse 2s infinite;
-    }
-
-    &.right {
-      right: 20px;
-    }
-
-    &.left {
-      left: 20px;
-    }
-
-    &:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    i {
-      font-size: 1.5rem;
-      font-weight: bold;
     }
   }
+}
 
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 0.8;
-    }
-    50% {
-      opacity: 1;
-    }
+// Field container styles
+.field-container {
+  width: 100%;
+
+  .p-error {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--red-500);
   }
 }
 
@@ -98,5 +72,21 @@
     z-index: 1 !important;
     background-color: var(--surface-ground) !important;
     border-bottom: 1px solid var(--surface-border) !important;
+  }
+
+  // Validation styles
+  .p-invalid {
+    border-color: var(--red-500) !important;
+  }
+
+  .p-select.p-invalid .p-select-label,
+  .p-datepicker.p-invalid .p-datepicker-input {
+    border-color: var(--red-500) !important;
+  }
+
+  // Adjust table cell height for error messages
+  td {
+    vertical-align: top;
+    padding: 0.75rem 0.5rem;
   }
 }

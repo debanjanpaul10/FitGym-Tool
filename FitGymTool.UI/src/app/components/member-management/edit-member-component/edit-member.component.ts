@@ -9,7 +9,6 @@ import {
   ViewChild,
   WritableSignal,
   ElementRef,
-  AfterViewInit,
 } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { Dialog } from 'primeng/dialog';
@@ -53,7 +52,7 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
   templateUrl: './edit-member.component.html',
   styleUrl: './edit-member.component.scss',
 })
-export class EditMemberComponent implements AfterViewInit {
+export class EditMemberComponent {
   @Input() membersData: MemberDetailsDto[] = [];
   @Input() membershipStatusOptions: MembershipStatusMappingDto[] = [];
   @Output() memberDetailsUpdate: EventEmitter<void> = new EventEmitter<void>();
@@ -64,6 +63,7 @@ export class EditMemberComponent implements AfterViewInit {
     MemberManagementConstants.UpdateMemberDetailsConstants;
   protected visible: WritableSignal<boolean> = signal(false);
   protected sortedMembersData: MemberDetailsDto[] = [];
+  protected originalMembersData: Map<number, MemberDetailsDto> = new Map();
   protected columnHeaders: Column[] = [];
   protected genderOptions = [
     { label: 'Male', value: 'Male' },
@@ -108,8 +108,11 @@ export class EditMemberComponent implements AfterViewInit {
           }))
           .sort((m1, m2) => m1.memberId - m2.memberId);
 
-        // Check scroll indicator after data is loaded
-        setTimeout(() => this.checkScrollIndicator(), 500);
+        // Store original data for dirty checking
+        this.originalMembersData.clear();
+        this.sortedMembersData.forEach((member) => {
+          this.originalMembersData.set(member.memberId, { ...member });
+        });
       }
     });
   }
@@ -137,6 +140,8 @@ export class EditMemberComponent implements AfterViewInit {
             this.toasterService.showSuccess(
               ToasterSuccessMessages.MemberManagement.UpdateMemberSuccess
             );
+            // Update the original data to reflect the saved state, which will disable the button
+            this.originalMembersData.set(member.memberId, { ...member });
             this.memberDetailsUpdate.emit();
           } else {
             this.toasterService.showError(response?.responseData);
@@ -157,58 +162,113 @@ export class EditMemberComponent implements AfterViewInit {
     this.visible.set(false);
   }
 
-  ngAfterViewInit(): void {
-    // Check scroll indicator when view is initialized
-    setTimeout(() => this.checkScrollIndicator(), 100);
+  protected isRowDirty(member: MemberDetailsDto): boolean {
+    const original = this.originalMembersData.get(member.memberId);
+    if (!original) return false;
+
+    return (
+      original.memberName !== member.memberName ||
+      original.memberEmail !== member.memberEmail ||
+      original.memberPhoneNumber !== member.memberPhoneNumber ||
+      original.memberAddress !== member.memberAddress ||
+      original.memberGender !== member.memberGender ||
+      this.compareDates(original.memberDateOfBirth, member.memberDateOfBirth) ||
+      this.compareDates(original.memberJoinDate, member.memberJoinDate)
+    );
   }
 
-  protected onTableScroll(event: Event): void {
-    this.checkScrollIndicator();
+  private compareDates(date1: Date, date2: Date): boolean {
+    if (!date1 && !date2) return false;
+    if (!date1 || !date2) return true;
+    return date1.getTime() !== date2.getTime();
   }
 
-  private checkScrollIndicator(): void {
-    if (!this.tableContainer) {
-      console.log('No table container found');
-      return;
+  protected isRowValid(member: MemberDetailsDto): boolean {
+    return (
+      this.isValidName(member.memberName) &&
+      this.isValidEmail(member.memberEmail) &&
+      this.isValidPhoneNumber(member.memberPhoneNumber) &&
+      this.isValidAddress(member.memberAddress) &&
+      this.isValidGender(member.memberGender) &&
+      this.isValidDate(member.memberDateOfBirth) &&
+      this.isValidDate(member.memberJoinDate)
+    );
+  }
+
+  protected isValidName(name: string): boolean {
+    return name !== '' && name.trim().length >= 2 && name.trim().length <= 100;
+  }
+
+  protected isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return email !== '' && emailRegex.test(email.trim());
+  }
+
+  protected isValidPhoneNumber(phone: string): boolean {
+    const phoneRegex = /^\d{10}$/;
+    return phone !== '' && phoneRegex.test(phone.replace(/\s/g, ''));
+  }
+
+  protected isValidAddress(address: string): boolean {
+    return (
+      address !== '' &&
+      address.trim().length >= 5 &&
+      address.trim().length <= 500
+    );
+  }
+
+  protected isValidGender(gender: string): boolean {
+    return gender !== '' && ['Male', 'Female', 'Other'].includes(gender);
+  }
+
+  protected isValidDate(date: Date): boolean {
+    return date && date instanceof Date && !isNaN(date.getTime());
+  }
+
+  protected canUpdateRow(member: MemberDetailsDto): boolean {
+    return this.isRowDirty(member) && this.isRowValid(member);
+  }
+
+  protected getFieldError(member: MemberDetailsDto, field: string): string {
+    switch (field) {
+      case 'memberName':
+        if (!this.isValidName(member.memberName)) {
+          return 'Name must be between 2-100 characters';
+        }
+        break;
+      case 'memberEmail':
+        if (!this.isValidEmail(member.memberEmail)) {
+          return 'Please enter a valid email address';
+        }
+        break;
+      case 'memberPhoneNumber':
+        if (!this.isValidPhoneNumber(member.memberPhoneNumber)) {
+          return 'Phone number must be exactly 10 digits';
+        }
+        break;
+      case 'memberAddress':
+        if (!this.isValidAddress(member.memberAddress)) {
+          return 'Address must be between 5-500 characters';
+        }
+        break;
+      case 'memberGender':
+        if (!this.isValidGender(member.memberGender)) {
+          return 'Please select a valid gender';
+        }
+        break;
+      case 'memberDateOfBirth':
+      case 'memberJoinDate':
+        if (
+          !this.isValidDate(member[field as keyof MemberDetailsDto] as Date)
+        ) {
+          return 'Please select a valid date';
+        }
+        break;
     }
+    return '';
+  }
 
-    const element = this.tableContainer.nativeElement;
-    const scrollLeft = element.scrollLeft;
-    const scrollWidth = element.scrollWidth;
-    const clientWidth = element.clientWidth;
-    const maxScrollLeft = scrollWidth - clientWidth;
-
-    console.log('Scroll check:', {
-      scrollLeft,
-      scrollWidth,
-      clientWidth,
-      maxScrollLeft,
-    });
-
-    // Show indicator if there's content to scroll
-    this.showScrollIndicator = scrollWidth > clientWidth;
-
-    // For testing, let's always show the indicator
-    this.showScrollIndicator = true;
-
-    if (this.showScrollIndicator) {
-      // If at the beginning, show right arrow
-      if (scrollLeft <= 10) {
-        this.scrollDirection = 'right';
-      }
-      // If at the end, show left arrow
-      else if (scrollLeft >= maxScrollLeft - 10) {
-        this.scrollDirection = 'left';
-      }
-      // If in the middle, show right arrow (default)
-      else {
-        this.scrollDirection = 'right';
-      }
-    }
-
-    console.log('Scroll indicator state:', {
-      showScrollIndicator: this.showScrollIndicator,
-      scrollDirection: this.scrollDirection,
-    });
+  protected hasFieldError(member: MemberDetailsDto, field: string): boolean {
+    return this.getFieldError(member, field) !== '';
   }
 }

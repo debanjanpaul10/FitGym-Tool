@@ -4,24 +4,16 @@
   [visible]="visible()"
   [style]="{ width: '90rem' }"
   [blockScroll]="true"
+  [closable]="false"
 >
-  <div
-    class="edit-members-table"
-    #tableContainer
-    (scroll)="onTableScroll($event)"
-  >
+  <div class="edit-members-table" #tableContainer>
     <!-- Scroll indicator arrow -->
-    <div
-      class="scroll-indicator"
-      [class.show]="showScrollIndicator"
-      [class.left]="scrollDirection === 'left'"
-      [class.right]="scrollDirection === 'right'"
-    >
+    <div class="scroll-indicator" [class.show]="true">
       <p-button
         icon="pi pi-arrow-right"
-        variant="outlined"
         [rounded]="true"
-        severity="success"
+        variant="outlined"
+        severity="info"
         size="large"
       ></p-button>
     </div>
@@ -47,46 +39,86 @@
         <tr>
           <td *ngFor="let col of columns">
             <ng-container *ngIf="col.field === 'memberName'; else checkEmail">
-              <input
-                pInputText
-                [(ngModel)]="rowData.memberName"
-                placeholder="Enter member name"
-                class="form-input"
-              />
+              <div class="field-container">
+                <input
+                  pInputText
+                  [(ngModel)]="rowData.memberName"
+                  placeholder="Enter member name"
+                  class="form-input"
+                  [class.p-invalid]="hasFieldError(rowData, 'memberName')"
+                />
+                <small
+                  class="p-error"
+                  *ngIf="hasFieldError(rowData, 'memberName')"
+                >
+                  {{ getFieldError(rowData, "memberName") }}
+                </small>
+              </div>
             </ng-container>
             <ng-template #checkEmail>
               <ng-container
                 *ngIf="col.field === 'memberEmail'; else checkPhone"
               >
-                <input
-                  pInputText
-                  [(ngModel)]="rowData.memberEmail"
-                  placeholder="Enter email address"
-                  class="form-input"
-                />
+                <div class="field-container">
+                  <input
+                    pInputText
+                    [(ngModel)]="rowData.memberEmail"
+                    placeholder="Enter email address"
+                    class="form-input"
+                    [class.p-invalid]="hasFieldError(rowData, 'memberEmail')"
+                  />
+                  <small
+                    class="p-error"
+                    *ngIf="hasFieldError(rowData, 'memberEmail')"
+                  >
+                    {{ getFieldError(rowData, "memberEmail") }}
+                  </small>
+                </div>
               </ng-container>
               <ng-template #checkPhone>
                 <ng-container
                   *ngIf="col.field === 'memberPhoneNumber'; else checkAddress"
                 >
-                  <input
-                    pInputText
-                    [(ngModel)]="rowData.memberPhoneNumber"
-                    placeholder="Enter phone number"
-                    class="form-input"
-                  />
+                  <div class="field-container">
+                    <input
+                      pInputText
+                      [(ngModel)]="rowData.memberPhoneNumber"
+                      placeholder="Enter phone number"
+                      class="form-input"
+                      [class.p-invalid]="
+                        hasFieldError(rowData, 'memberPhoneNumber')
+                      "
+                    />
+                    <small
+                      class="p-error"
+                      *ngIf="hasFieldError(rowData, 'memberPhoneNumber')"
+                    >
+                      {{ getFieldError(rowData, "memberPhoneNumber") }}
+                    </small>
+                  </div>
                 </ng-container>
                 <ng-template #checkAddress>
                   <ng-container
                     *ngIf="col.field === 'memberAddress'; else checkDateOfBirth"
                   >
-                    <textarea
-                      pInputTextarea
-                      [(ngModel)]="rowData.memberAddress"
-                      placeholder="Enter address"
-                      class="form-input"
-                      rows="2"
-                    ></textarea>
+                    <div class="field-container">
+                      <textarea
+                        pInputTextarea
+                        [(ngModel)]="rowData.memberAddress"
+                        placeholder="Enter address"
+                        class="form-input"
+                        rows="2"
+                        [class.p-invalid]="
+                          hasFieldError(rowData, 'memberAddress')
+                        "
+                      ></textarea>
+                      <small
+                        class="p-error"
+                        *ngIf="hasFieldError(rowData, 'memberAddress')"
+                      >
+                        {{ getFieldError(rowData, "memberAddress") }}
+                      </small>
+                    </div>
                   </ng-container>
                   <ng-template #checkDateOfBirth>
                     <ng-container
@@ -95,30 +127,52 @@
                         else checkGender
                       "
                     >
-                      <p-datepicker
-                        [(ngModel)]="rowData.memberDateOfBirth"
-                        [showIcon]="true"
-                        iconDisplay="input"
-                        dateFormat="dd/mm/yy"
-                        placeholder="Select date of birth"
-                        class="form-input"
-                        [inline]="false"
-                        [showOnFocus]="false"
-                        [style]="{ width: '100%' }"
-                      ></p-datepicker>
+                      <div class="field-container">
+                        <p-datepicker
+                          [(ngModel)]="rowData.memberDateOfBirth"
+                          [showIcon]="true"
+                          iconDisplay="input"
+                          dateFormat="dd/mm/yy"
+                          placeholder="Select date of birth"
+                          class="form-input"
+                          [class.p-invalid]="
+                            hasFieldError(rowData, 'memberDateOfBirth')
+                          "
+                          [inline]="false"
+                          [showOnFocus]="false"
+                          [style]="{ width: '100%' }"
+                        ></p-datepicker>
+                        <small
+                          class="p-error"
+                          *ngIf="hasFieldError(rowData, 'memberDateOfBirth')"
+                        >
+                          {{ getFieldError(rowData, "memberDateOfBirth") }}
+                        </small>
+                      </div>
                     </ng-container>
                     <ng-template #checkGender>
                       <ng-container
                         *ngIf="col.field === 'memberGender'; else checkJoinDate"
                       >
-                        <p-select
-                          [(ngModel)]="rowData.memberGender"
-                          [options]="genderOptions"
-                          optionLabel="label"
-                          optionValue="value"
-                          placeholder="Select gender"
-                          class="form-input"
-                        ></p-select>
+                        <div class="field-container">
+                          <p-select
+                            [(ngModel)]="rowData.memberGender"
+                            [options]="genderOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select gender"
+                            class="form-input"
+                            [class.p-invalid]="
+                              hasFieldError(rowData, 'memberGender')
+                            "
+                          ></p-select>
+                          <small
+                            class="p-error"
+                            *ngIf="hasFieldError(rowData, 'memberGender')"
+                          >
+                            {{ getFieldError(rowData, "memberGender") }}
+                          </small>
+                        </div>
                       </ng-container>
                       <ng-template #checkJoinDate>
                         <ng-container
@@ -127,16 +181,27 @@
                             else checkActions
                           "
                         >
-                          <p-datepicker
-                            [(ngModel)]="rowData.memberJoinDate"
-                            [showIcon]="true"
-                            iconDisplay="input"
-                            dateFormat="dd/mm/yy"
-                            placeholder="Select join date"
-                            class="form-input"
-                            [inline]="false"
-                            [showOnFocus]="false"
-                          ></p-datepicker>
+                          <div class="field-container">
+                            <p-datepicker
+                              [(ngModel)]="rowData.memberJoinDate"
+                              [showIcon]="true"
+                              iconDisplay="input"
+                              dateFormat="dd/mm/yy"
+                              placeholder="Select join date"
+                              class="form-input"
+                              [class.p-invalid]="
+                                hasFieldError(rowData, 'memberJoinDate')
+                              "
+                              [inline]="false"
+                              [showOnFocus]="false"
+                            ></p-datepicker>
+                            <small
+                              class="p-error"
+                              *ngIf="hasFieldError(rowData, 'memberJoinDate')"
+                            >
+                              {{ getFieldError(rowData, "memberJoinDate") }}
+                            </small>
+                          </div>
                         </ng-container>
                         <ng-template #checkActions>
                           <ng-container
@@ -148,6 +213,7 @@
                               severity="success"
                               variant="outlined"
                               (click)="onMemberDetailsChangeUpdate(rowData)"
+                              [disabled]="!canUpdateRow(rowData)"
                             ></p-button>
                           </ng-container>
                           <ng-template #defaultCell>
