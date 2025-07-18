@@ -1,8 +1,6 @@
 import {
   Component,
   inject,
-  OnDestroy,
-  OnInit,
   signal,
   WritableSignal,
   Output,
@@ -21,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { IftaLabelModule } from 'primeng/iftalabel';
 
 import { AddMemberDto } from '@models/DTO/add-member-dto.model';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
@@ -47,6 +46,7 @@ import { MembersApiService } from '@services/members-api.service';
     TextareaModule,
     DatePickerModule,
     SelectModule,
+    IftaLabelModule,
   ],
   templateUrl: './add-member.component.html',
   styleUrl: './add-member.component.scss',

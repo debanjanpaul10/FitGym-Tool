@@ -1,56 +1,35 @@
-:host {
-  .container-fluid {
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-    overflow: hidden;
-  }
-}
-
-// Fix for dialog causing horizontal scrollbar/white space
-:host ::ng-deep {
-  .p-dialog-mask {
-    overflow: hidden;
-  }
-
-  .p-dialog {
-    max-width: calc(100vw - 2rem);
-    max-height: calc(100vh - 2rem);
-  }
-}
-
-// Prevent body overflow when dialog is open
-:host ::ng-deep body.p-overflow-hidden {
-  overflow: hidden !important;
-  padding-right: 0 !important;
-}
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.form-field {
+.form-row {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-field:nth-child(4), // Address field
-.form-field:nth-child(8) {
-  // Membership status field
-  grid-column: 1 / -1; // Span full width
-}
-
-.field-label {
-  font-weight: 600;
-  color: var(--text-color);
-  font-size: 0.875rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  margin-top: 20px;
 }
 
 .form-input {
   width: 100%;
+}
+
+::ng-deep .p-dropdown-panel {
+  bottom: 100% !important;
+  top: auto !important;
+}
+
+::ng-deep .p-select-overlay {
+  transform: translateY(-100%) !important;
+}
+
+.form-row-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  margin-top: 20px;
+
+  > div {
+    flex: 1;
+  }
 }
 
 .form-actions {
@@ -59,89 +38,4 @@
   gap: 0.75rem;
   padding-top: 1rem;
   border-top: 1px solid var(--secondary-color);
-}
-
-// Additional PrimeNG component styling for the form
-:host ::ng-deep {
-  .p-dialog-content {
-    padding: 1.5rem;
-  }
-
-  .p-inputtext,
-  .p-dropdown,
-  .p-calendar input {
-    background: var(--primary-color);
-    border: 1px solid var(--secondary-color);
-    color: var(--text-color);
-    padding: 0.75rem;
-    border-radius: 6px;
-
-    &:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
-    }
-  }
-
-  .p-dropdown-panel {
-    background: var(--primary-color);
-    border: 1px solid var(--secondary-color);
-  }
-
-  .p-dropdown-item {
-    color: var(--text-color);
-
-    &:hover {
-      background: var(--secondary-color);
-    }
-  }
-
-  .p-calendar-w-btn {
-    .p-button {
-      background: var(--secondary-color);
-      border: 1px solid var(--secondary-color);
-
-      &:hover {
-        background: var(--accent-color);
-      }
-    }
-  }
-
-  .p-datepicker {
-    background: var(--primary-color);
-    border: 1px solid var(--secondary-color);
-    color: var(--text-color);
-  }
-
-  .p-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 500;
-  }
-
-  // Membership status dropdown - show above
-  .membership-status-dropdown {
-    position: relative;
-  }
-}
-
-// Target the membership status dropdown specifically
-::ng-deep .form-field:nth-child(8) {
-  .p-select-overlay {
-    transform: translateY(-100%) translateY(-8px) !important;
-  }
-
-  .p-select-panel {
-    transform: translateY(-100%) translateY(-8px) !important;
-  }
-}
-
-// Global override for membership status panel
-::ng-deep .membership-status-panel {
-  transform: translateY(-100%) translateY(-8px) !important;
-}
-
-// Additional targeting for PrimeNG select overlay
-::ng-deep p-select[id="membershipStatus"] ~ .p-select-overlay,
-::ng-deep #membershipStatus_overlay {
-  transform: translateY(-100%) translateY(-8px) !important;
 }
