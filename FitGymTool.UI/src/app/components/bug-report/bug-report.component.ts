@@ -74,6 +74,7 @@ export class BugReportComponent implements OnDestroy {
 
     effect(() => {
       if (this.visible()) {
+        this.setPageUrl();
         this.mappingMasterDataSubscription =
           this.commonService.subscribeToMapping(
             'bugSeverityMapping',
@@ -91,6 +92,7 @@ export class BugReportComponent implements OnDestroy {
         }
       }
     });
+    this.setPageUrl();
   }
 
   ngOnDestroy(): void {
@@ -110,6 +112,7 @@ export class BugReportComponent implements OnDestroy {
         bugDescription: this.bugReportForm.value.bugDescription,
         bugSeverity: this.bugReportForm.value.bugSeverity,
         createdBy: '',
+        pageUrl: window.location.href,
       };
 
       this.commonApiService.AddBugReportDataAsync(bugReportData).subscribe({
@@ -141,6 +144,7 @@ export class BugReportComponent implements OnDestroy {
   protected resetAndCloseForm(): void {
     this.bugReportForm.reset();
     this.visible.set(false);
+    this.setPageUrl();
   }
 
   /**
@@ -148,7 +152,7 @@ export class BugReportComponent implements OnDestroy {
    * @returns {FormGroup} The initialized bug report form group.
    */
   private createForm(): FormGroup {
-    return this.formBuilder.group({
+    var formData = this.formBuilder.group({
       bugTitle: [
         '',
         [
@@ -166,7 +170,10 @@ export class BugReportComponent implements OnDestroy {
         ],
       ],
       bugSeverity: [{ value: '', disabled: true }, [Validators.required]],
+      pageUrl: ['', [Validators.required]],
     });
+
+    return formData;
   }
 
   /**
@@ -206,5 +213,13 @@ export class BugReportComponent implements OnDestroy {
         bugSeverity: mediumSeverity.id,
       });
     }
+  }
+
+  private setPageUrl(): void {
+    const pageUrl = window.location.pathname;
+
+    this.bugReportForm.patchValue({
+      pageUrl: pageUrl,
+    });
   }
 }

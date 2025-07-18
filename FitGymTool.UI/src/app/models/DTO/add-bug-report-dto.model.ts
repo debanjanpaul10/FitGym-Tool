@@ -3,4 +3,5 @@ export class AddBugReportDto {
   public bugDescription: string = '';
   public bugSeverity: number = 0;
   public createdBy: string = '';
+  public pageUrl: string = '';
 }
