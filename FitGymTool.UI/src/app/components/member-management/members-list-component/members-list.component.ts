@@ -9,6 +9,7 @@ import { FilterService, SortEvent } from 'primeng/api';
 
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { Column } from '@models/interfaces/column.interface';
+import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 
 /**
  * Component responsible for displaying and filtering a list of gym members.
@@ -28,15 +29,12 @@ import { Column } from '@models/interfaces/column.interface';
   styleUrl: './members-list.component.scss',
 })
 export class MembersListComponent {
-  @Input() public membersData!: MemberDetailsDto[];
+  @Input() membersData!: MemberDetailsDto[];
+  @Input() membershipStatusOptions: MembershipStatusMappingDto[] = [];
   @ViewChild('dt') dt!: Table;
 
   public columnHeaders!: Column[];
-  public membershipStatusOptions = [
-    { label: 'Active', value: 'Active' },
-    { label: 'Expired', value: 'Expired' },
-    { label: 'On Termination', value: 'On Termination' },
-  ];
+
   public selectedJoinDate: Date | null = null;
   public selectedMembershipStatus: string | null = null;
   public sortedMembersData!: MemberDetailsDto[];

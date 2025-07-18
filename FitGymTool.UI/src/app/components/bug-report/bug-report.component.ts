@@ -1,8 +1,8 @@
 import {
   Component,
+  effect,
   inject,
   OnDestroy,
-  OnInit,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -49,7 +49,7 @@ import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-
   templateUrl: './bug-report.component.html',
   styleUrl: './bug-report.component.scss',
 })
-export class BugReportComponent implements OnInit, OnDestroy {
+export class BugReportComponent implements OnDestroy {
   protected visible: WritableSignal<boolean> = signal(false);
   protected bugReportForm: FormGroup;
   protected bugReportConstants = CommonApplicationConstants.BugReportConstants;
@@ -69,18 +69,26 @@ export class BugReportComponent implements OnInit, OnDestroy {
   constructor() {
     this.visible = this.dialogPopupService.isBugReportDialogOpen;
     this.bugReportForm = this.createForm();
-  }
 
-  ngOnInit(): void {
-    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
-      'bugSeverityMapping',
-      (options) => {
-        this.bugSeverityMappingOptions = options as BugSeverityMappingDto[];
-      },
-      () => {
-        this.getMasterMappingsData();
+    effect(() => {
+      if (this.visible()) {
+        this.mappingMasterDataSubscription =
+          this.commonService.subscribeToMapping(
+            'bugSeverityMapping',
+            (options) => {
+              this.bugSeverityMappingOptions =
+                options as BugSeverityMappingDto[];
+            },
+            () => {
+              this.getMasterMappingsData();
+            }
+          );
+      } else {
+        if (this.mappingMasterDataSubscription) {
+          this.mappingMasterDataSubscription.unsubscribe();
+        }
       }
-    );
+    });
   }
 
   ngOnDestroy(): void {
@@ -155,7 +163,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
           Validators.maxLength(500),
         ],
       ],
-      bugSeverity: ['', [Validators.required]],
+      bugSeverity: [{ value: '', disabled: true }, [Validators.required]],
     });
   }
 
@@ -169,6 +177,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
         if (response && response.isSuccess) {
           this.bugSeverityMappingOptions =
             response.responseData?.bugSeverityMapping;
+          this.setDefaultSeverity();
         }
       },
       error: (err: Error) => {
@@ -180,5 +189,20 @@ export class BugReportComponent implements OnInit, OnDestroy {
         this.loaderService.loadingOff();
       },
     });
+  }
+
+  /**
+   * Sets the default severity to "Medium" and keeps the field disabled.
+   */
+  private setDefaultSeverity(): void {
+    const mediumSeverity = this.bugSeverityMappingOptions.find(
+      (option) => option.severityName.toLowerCase() === 'medium'
+    );
+
+    if (mediumSeverity) {
+      this.bugReportForm.patchValue({
+        bugSeverity: mediumSeverity.id,
+      });
+    }
   }
 }

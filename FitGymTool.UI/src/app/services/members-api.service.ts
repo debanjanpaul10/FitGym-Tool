@@ -6,6 +6,7 @@ import { environment } from '@environments/environment.development';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
 import { AddMemberDto } from '@models/DTO/add-member-dto.model';
+import { UpdateMembershipStatusDto } from '@models/DTO/update-membership-status-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,12 @@ export class MembersApiService {
       this.membersApiRoutes.AddMember_ApiRoute
     }${true}`;
     return this.httpClient.post<ResponseDto>(apiUrl, newMemberData);
+  }
+
+  public UpdateMembershipStatus(
+    updateMembershipStatus: UpdateMembershipStatusDto
+  ): Observable<ResponseDto> {
+    const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.UpdateMembershipDetails_ApiRoute}`;
+    return this.httpClient.put<ResponseDto>(apiUrl, updateMembershipStatus);
   }
 }

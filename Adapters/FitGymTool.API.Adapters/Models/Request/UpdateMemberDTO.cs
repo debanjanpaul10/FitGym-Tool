@@ -5,7 +5,7 @@
 // <summary>UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.API.Adapters.Models.Response.Members;
+namespace FitGymTool.API.Adapters.Models.Request;
 
 /// <summary>
 /// UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.
@@ -41,10 +41,4 @@ public class UpdateMemberDTO
 	/// Gets or sets the Member Gender.
 	/// </summary>
 	public string MemberGender { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the Membership Status.
-	/// </summary>
-	public string MembershipStatus { get; set; } = string.Empty;
-
 }

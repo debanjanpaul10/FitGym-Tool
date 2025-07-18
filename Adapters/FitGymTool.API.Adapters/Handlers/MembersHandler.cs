@@ -7,7 +7,8 @@
 
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
-using FitGymTool.API.Adapters.Models.Response.Members;
+using FitGymTool.API.Adapters.Models.Request;
+using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.In;
 
@@ -48,16 +49,6 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	}
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
-	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
-	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> DeleteMemberAsync(int memberId)
-	{
-		return await this._membersService.DeleteMemberAsync(memberId);
-	}
-
-	/// <summary>
 	/// Gets all members from the database asynchronously.
 	/// </summary>
 	/// <returns>A list of MemberDetailsDTO.</returns>
@@ -83,9 +74,20 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
+	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails)
 	{
 		var domainRequest = this._mapper.Map<UpdateMemberDomain>(memberDetails);
-		return await this._membersService.UpdateMemberAsync(domainRequest);
+		return await this._membersService.UpdateMemberDetailsAsync(domainRequest);
+	}
+
+	/// <summary>
+	/// Updates the membership status asynchronous.
+	/// </summary>
+	/// <param name="updateMembershipStatusDto">The update membership status dto.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto)
+	{
+		var domainRequest = this._mapper.Map<UpdateMembershipStatusDomain>(updateMembershipStatusDto);
+		return await this._membersService.UpdateMembershipStatusAsync(domainRequest);
 	}
 }

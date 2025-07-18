@@ -4,8 +4,8 @@ export class ApiRoutes {
     AddMember_ApiRoute: 'AddMember/',
     GetAllMembers_ApiRoute: 'GetAllMembers',
     GetMemberByEmailId_ApiRoute: 'GetMemberByEmailId',
-    UpdateMember_ApiRoute: 'UpdateMember',
-    DeleteMember_ApiRoute: 'DeleteMember',
+    UpdateMemberDetails_ApiRoute: 'UpdateMemberDetails',
+    UpdateMembershipDetails_ApiRoute: 'UpdateMembershipStatus',
   };
   public static CommonApi = {
     BaseRoute: 'api/Common/',

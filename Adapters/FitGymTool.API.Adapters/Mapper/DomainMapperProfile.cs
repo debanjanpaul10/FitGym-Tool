@@ -9,7 +9,6 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
-using FitGymTool.API.Adapters.Models.Response.Members;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Models.Members;

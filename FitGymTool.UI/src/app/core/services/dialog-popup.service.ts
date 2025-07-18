@@ -6,6 +6,7 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 export class DialogPopupService {
   public isAddMemberDialogOpen: WritableSignal<boolean> = signal(false);
   public isBugReportDialogOpen: WritableSignal<boolean> = signal(false);
+  public isUpdateMembershipDialogOpen: WritableSignal<boolean> = signal(false);
 
   public openAddMemberDialog(): void {
     this.isAddMemberDialogOpen.set(true);
@@ -21,5 +22,13 @@ export class DialogPopupService {
 
   public closeBugReportDialog(): void {
     this.isBugReportDialogOpen.set(false);
+  }
+
+  public openMembershipStatusDialog(): void {
+    this.isUpdateMembershipDialogOpen.set(true);
+  }
+
+  public closeMembershipStatusDialog(): void {
+    this.isUpdateMembershipDialogOpen.set(false);
   }
 }

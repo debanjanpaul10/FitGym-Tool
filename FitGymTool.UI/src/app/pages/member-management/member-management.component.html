@@ -11,7 +11,6 @@
           [alt]="MemberDashboardConstants.AddMember.Alt"
           height="auto"
           width="auto"
-          ks
         />
         <div class="card-body">
           <h4 class="card-title">
@@ -74,14 +73,23 @@
       <div *ngIf="!isUsersDataLoading()">
         <app-members-list-component
           [membersData]="allUsersData()!"
+          [membershipStatusOptions]="membershipStatusOptions"
         ></app-members-list-component>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <app-add-user-component
-      (memberAdded)="onMemberAdded()"
-    ></app-add-user-component>
+    <app-add-member-component
+      (memberAdded)="onMemberUpdated()"
+      [membershipStatusOptions]="membershipStatusOptions"
+    ></app-add-member-component>
+  </div>
+
+  <div class="row">
+    <app-update-membership-status-component
+      [memberDetails]="allUsersData()"
+      (membershipStatusUpdate)="onMemberUpdated()"
+    ></app-update-membership-status-component>
   </div>
 </div>

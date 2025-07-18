@@ -6,8 +6,8 @@
 // *********************************************************************************
 
 using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.API.Adapters.Models.Response.Members;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -154,14 +154,14 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> UpdateMemberAsync([FromBody] UpdateMemberDTO memberDetails)
+	public async Task<ResponseDTO> UpdateMemberDetailsAsync([FromBody] UpdateMemberDTO memberDetails)
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersHandler.UpdateMemberAsync(memberDetails);
+				var result = await membersHandler.UpdateMemberDetailsAsync(memberDetails);
 				if (result)
 				{
 					return this.HandleSuccessRequestResponse(result);
@@ -174,51 +174,52 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
+	/// Updates the membership status data asynchronous.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
-	/// <returns>The boolean result for success/failure.</returns>
-	[HttpDelete(RouteConstants.MembersApiRoutes.DeleteMember_ApiRoute)]
+	/// <param name="membershipStatusDto">The membership status dto.</param>
+	/// <returns>The action result of the response.</returns>
+	[HttpPut(RouteConstants.MembersApiRoutes.UpdateMembershipStatus_ApiRoute)]
 	[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> DeleteMemberAsync([FromRoute] int memberId)
+	public async Task<ResponseDTO> UpdateMembershipStatusDataAsync([FromBody] UpdateMembershipStatusDTO membershipStatusDto)
 	{
 		try
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				var result = await membersHandler.DeleteMemberAsync(memberId);
+				membershipStatusDto.ModifiedBy = base.UserEmail;
+				var result = await membersHandler.UpdateMembershipStatusAsync(membershipStatusDto);
 				if (result)
 				{
 					return this.HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
+				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
 			return this.HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, ex.Message));
 			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, base.UserFullName));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 }
