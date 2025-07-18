@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
-namespace FitGymTool.Domain.Services;
+namespace FitGymTool.Domain.UseCases;
 
 /// <summary>
 /// The Members Service Class.
@@ -44,7 +44,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
 
 			// Domain-side validation for DateTime fields
@@ -65,18 +65,18 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			// Ensure all DateTime fields are set to valid values in the domain model
 			memberDetails.EnsureValidDates();
 
-			var result = await this._membersDataService.AddNewMemberAsync(memberDetails);
+			var result = await _membersDataService.AddNewMemberAsync(memberDetails);
 			return result;
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, effectiveEmail));
 		}
 	}
@@ -89,21 +89,21 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
-			var members = await this._membersDataService.GetAllMembersAsync();
+			var members = await _membersDataService.GetAllMembersAsync();
 			return members;
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}
@@ -117,14 +117,14 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 
-			var member = await this._membersDataService.GetMemberByEmailIdAsync(memberEmail);
+			var member = await _membersDataService.GetMemberByEmailIdAsync(memberEmail);
 			if (member is null)
 			{
 				var ex = new InvalidOperationException(ValidationErrorMessages.MemberNotFoundMessageConstant);
-				this._logger.LogError(ex, string.Format(
+				_logger.LogError(ex, string.Format(
 					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
@@ -133,13 +133,13 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, memberEmail));
 		}
 	}
@@ -153,21 +153,21 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var result = await this._membersDataService.UpdateMemberAsync(memberDetails);
+			var result = await _membersDataService.UpdateMemberAsync(memberDetails);
 			return result;
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
@@ -181,21 +181,21 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 
-			var result = await this._membersDataService.DeleteMemberAsync(memberId);
+			var result = await _membersDataService.DeleteMemberAsync(memberId);
 			return result;
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
 		}
 	}

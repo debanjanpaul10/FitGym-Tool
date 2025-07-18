@@ -32,7 +32,7 @@ import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-statu
 import { CommonApiService } from '@services/common-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { LoaderService } from '@core/services/loader.service';
-import { ToasterService } from '@services/toaster.service';
+import { ToasterService } from '@core/services/toaster.service';
 import { MembersApiService } from '@services/members-api.service';
 
 /**

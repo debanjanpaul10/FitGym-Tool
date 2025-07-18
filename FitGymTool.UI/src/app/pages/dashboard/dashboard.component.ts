@@ -13,7 +13,7 @@ import { CurrentRevenueComponent } from '@components/dashboard/current-revenue-c
 import { CommonApiService } from '@services/common-api.service';
 import { LoaderService } from '@core/services/loader.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster.service';
+import { ToasterService } from '@core/services/toaster.service';
 import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 

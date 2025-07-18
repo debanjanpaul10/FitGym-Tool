@@ -12,14 +12,14 @@ using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
-namespace FitGymTool.Domain.Services;
+namespace FitGymTool.Domain.UseCases;
 
 /// <summary>
 /// The Member Fees Service Class.
 /// </summary>
 /// <param name="logger">The logger.</param>
 /// <param name="memberFeesDataService">The member fees data service.</param>
-/// <seealso cref="Ports.In.IMemberFeesService" />
+/// <seealso cref="IMemberFeesService" />
 public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILogger<MemberFeesService> logger) : IMemberFeesService
 {
 	/// <summary>
@@ -40,20 +40,20 @@ public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILo
 	{
 		try
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 			
-			return await this._memberFeesDataService.GetCurrentMonthFeesAndRevenueStatusAsync();
+			return await _memberFeesDataService.GetCurrentMonthFeesAndRevenueStatusAsync();
 		}
 		catch (Exception ex)
 		{
-			this._logger.LogError(ex, string.Format(
+			_logger.LogError(ex, string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			this._logger.LogInformation(string.Format(
+			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}

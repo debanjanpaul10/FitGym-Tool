@@ -25,6 +25,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.API.Adapters", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Domain", "Core\FitGymTool.Domain\FitGymTool.Domain.csproj", "{34D4FE81-D34D-9CA1-2C35-138F2D9CE2AD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.API.Adapters.UnitTests", "UnitTesting\FitGymTool.API.Adapters.UnitTests\FitGymTool.API.Adapters.UnitTests.csproj", "{4C5673B0-88E6-43B6-98E2-4EB254784891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Domain.UnitTests", "UnitTesting\FitGymTool.Domain.UnitTests\FitGymTool.Domain.UnitTests.csproj", "{44F6B3C9-633A-456F-AA0F-DBA2C0812218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Persistence.Adapters.UnitTests", "UnitTesting\FitGymTool.Persistence.Adapters.UnitTests\FitGymTool.Persistence.Adapters.UnitTests.csproj", "{3E1B04B3-032F-4E81-A2EA-073B394E7B90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +61,18 @@ Global
 		{34D4FE81-D34D-9CA1-2C35-138F2D9CE2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34D4FE81-D34D-9CA1-2C35-138F2D9CE2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34D4FE81-D34D-9CA1-2C35-138F2D9CE2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C5673B0-88E6-43B6-98E2-4EB254784891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C5673B0-88E6-43B6-98E2-4EB254784891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C5673B0-88E6-43B6-98E2-4EB254784891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C5673B0-88E6-43B6-98E2-4EB254784891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F6B3C9-633A-456F-AA0F-DBA2C0812218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F6B3C9-633A-456F-AA0F-DBA2C0812218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F6B3C9-633A-456F-AA0F-DBA2C0812218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F6B3C9-633A-456F-AA0F-DBA2C0812218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +81,9 @@ Global
 		{6A0A167A-1009-B26B-6F12-CA66676A74DE} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
 		{AAC9718F-2916-EACA-A6FF-1BA411F304F0} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
 		{34D4FE81-D34D-9CA1-2C35-138F2D9CE2AD} = {FBF56CC3-7AE6-AD2D-3F14-7F97FD322CD6}
+		{4C5673B0-88E6-43B6-98E2-4EB254784891} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
+		{44F6B3C9-633A-456F-AA0F-DBA2C0812218} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
+		{3E1B04B3-032F-4E81-A2EA-073B394E7B90} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F10EEE12-6C17-41C8-8EAB-C08DB01E502F}

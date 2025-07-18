@@ -24,7 +24,7 @@ import { CommonApiService } from '@services/common-api.service';
 import { LoaderService } from '@core/services/loader.service';
 import { AddBugReportDto } from '@models/DTO/add-bug-report-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster.service';
+import { ToasterService } from '@core/services/toaster.service';
 import {
   CommonApplicationConstants,
   ToasterSuccessMessages,
