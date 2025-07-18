@@ -14,16 +14,12 @@ import { Table, TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
-import {
-  ReactiveFormsModule,
-  FormsModule,
-  FormGroup,
-  FormBuilder,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { IftaLabel } from 'primeng/iftalabel';
 
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
-import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { Column } from '@models/interfaces/column.interface';
 import {
   MemberManagementConstants,
@@ -31,10 +27,9 @@ import {
 } from '@shared/application.constants';
 import { LoaderService } from '@core/services/loader.service';
 import { MembersApiService } from '@services/members-api.service';
-import { UpdateMembershipStatusDto } from '@models/DTO/update-membership-status-dto.model';
+import { UpdateMembershipStatusDto } from '@models/DTO/members/update-membership-status-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
-import { IftaLabel } from 'primeng/iftalabel';
 
 @Component({
   selector: 'app-update-membership-status-component',
@@ -45,7 +40,6 @@ import { IftaLabel } from 'primeng/iftalabel';
     CommonModule,
     ButtonModule,
     IftaLabel,
-    ReactiveFormsModule,
     FormsModule,
   ],
   templateUrl: './update-membership-status.component.html',

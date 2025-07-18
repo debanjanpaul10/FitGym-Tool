@@ -15,7 +15,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 import { ChartConstants } from '@shared/application.constants';
 import { MembersApiService } from '@services/members-api.service';
-import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import { CommonService } from '@core/services/common.service';

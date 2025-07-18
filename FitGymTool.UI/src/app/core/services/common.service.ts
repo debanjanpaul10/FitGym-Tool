@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
-import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,13 +41,15 @@ export class CommonService {
     setOptions: (options: T[]) => void,
     fetchMappings: () => void
   ) {
-    return this.MappingMasterData.subscribe((data: MasterMappingDataDto | null) => {
-      const mapping = data && data[mappingKey];
-      if (mapping && Object.values(mapping).length > 0) {
-        setOptions(mapping as T[]);
-      } else {
-        fetchMappings();
+    return this.MappingMasterData.subscribe(
+      (data: MasterMappingDataDto | null) => {
+        const mapping = data && data[mappingKey];
+        if (mapping && Object.values(mapping).length > 0) {
+          setOptions(mapping as T[]);
+        } else {
+          fetchMappings();
+        }
       }
-    });
+    );
   }
 }

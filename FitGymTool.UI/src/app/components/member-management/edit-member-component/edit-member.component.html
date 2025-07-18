@@ -1,1 +1,192 @@
-<p>edit-member-component works!</p>
+<p-dialog
+  [header]="memberDetailsUpdateConstants.Header"
+  [modal]="true"
+  [visible]="visible()"
+  [style]="{ width: '90rem' }"
+  [blockScroll]="true"
+>
+  <div
+    class="edit-members-table"
+    #tableContainer
+    (scroll)="onTableScroll($event)"
+  >
+    <!-- Scroll indicator arrow -->
+    <div
+      class="scroll-indicator"
+      [class.show]="showScrollIndicator"
+      [class.left]="scrollDirection === 'left'"
+      [class.right]="scrollDirection === 'right'"
+    >
+      <p-button
+        icon="pi pi-arrow-right"
+        variant="outlined"
+        [rounded]="true"
+        severity="success"
+        size="large"
+      ></p-button>
+    </div>
+    <p-table
+      #memberDetailsUpdateTable
+      [value]="sortedMembersData"
+      [rows]="10"
+      [paginator]="true"
+      [columns]="columnHeaders"
+      [customSort]="false"
+      ngClass="edit-members-table"
+      showGridLines
+      stripedRows
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <ng-container *ngIf="col.field === 'memberName'; else checkEmail">
+              <input
+                pInputText
+                [(ngModel)]="rowData.memberName"
+                placeholder="Enter member name"
+                class="form-input"
+              />
+            </ng-container>
+            <ng-template #checkEmail>
+              <ng-container
+                *ngIf="col.field === 'memberEmail'; else checkPhone"
+              >
+                <input
+                  pInputText
+                  [(ngModel)]="rowData.memberEmail"
+                  placeholder="Enter email address"
+                  class="form-input"
+                />
+              </ng-container>
+              <ng-template #checkPhone>
+                <ng-container
+                  *ngIf="col.field === 'memberPhoneNumber'; else checkAddress"
+                >
+                  <input
+                    pInputText
+                    [(ngModel)]="rowData.memberPhoneNumber"
+                    placeholder="Enter phone number"
+                    class="form-input"
+                  />
+                </ng-container>
+                <ng-template #checkAddress>
+                  <ng-container
+                    *ngIf="col.field === 'memberAddress'; else checkDateOfBirth"
+                  >
+                    <textarea
+                      pInputTextarea
+                      [(ngModel)]="rowData.memberAddress"
+                      placeholder="Enter address"
+                      class="form-input"
+                      rows="2"
+                    ></textarea>
+                  </ng-container>
+                  <ng-template #checkDateOfBirth>
+                    <ng-container
+                      *ngIf="
+                        col.field === 'memberDateOfBirth';
+                        else checkGender
+                      "
+                    >
+                      <p-datepicker
+                        [(ngModel)]="rowData.memberDateOfBirth"
+                        [showIcon]="true"
+                        iconDisplay="input"
+                        dateFormat="dd/mm/yy"
+                        placeholder="Select date of birth"
+                        class="form-input"
+                        [inline]="false"
+                        [showOnFocus]="false"
+                        [style]="{ width: '100%' }"
+                      ></p-datepicker>
+                    </ng-container>
+                    <ng-template #checkGender>
+                      <ng-container
+                        *ngIf="col.field === 'memberGender'; else checkJoinDate"
+                      >
+                        <p-select
+                          [(ngModel)]="rowData.memberGender"
+                          [options]="genderOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          placeholder="Select gender"
+                          class="form-input"
+                        ></p-select>
+                      </ng-container>
+                      <ng-template #checkJoinDate>
+                        <ng-container
+                          *ngIf="
+                            col.field === 'memberJoinDate';
+                            else checkActions
+                          "
+                        >
+                          <p-datepicker
+                            [(ngModel)]="rowData.memberJoinDate"
+                            [showIcon]="true"
+                            iconDisplay="input"
+                            dateFormat="dd/mm/yy"
+                            placeholder="Select join date"
+                            class="form-input"
+                            [inline]="false"
+                            [showOnFocus]="false"
+                          ></p-datepicker>
+                        </ng-container>
+                        <ng-template #checkActions>
+                          <ng-container
+                            *ngIf="col.field === 'actions'; else defaultCell"
+                          >
+                            <p-button
+                              type="button"
+                              label="Update"
+                              severity="success"
+                              variant="outlined"
+                              (click)="onMemberDetailsChangeUpdate(rowData)"
+                            ></p-button>
+                          </ng-container>
+                          <ng-template #defaultCell>
+                            {{ rowData[col.field] }}
+                          </ng-template>
+                        </ng-template>
+                      </ng-template>
+                    </ng-template>
+                  </ng-template>
+                </ng-template>
+              </ng-template>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columnHeaders.length" class="text-center py-4">
+            <div class="empty-state">
+              <i
+                class="pi pi-search"
+                style="font-size: 2rem; color: #6c757d"
+              ></i>
+              <p class="mt-2 mb-0">No results found</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="form-actions">
+    <p-button
+      label="Cancel"
+      severity="danger"
+      type="button"
+      variant="outlined"
+      (onClick)="onCancel()"
+    >
+    </p-button>
+  </div>
+</p-dialog>

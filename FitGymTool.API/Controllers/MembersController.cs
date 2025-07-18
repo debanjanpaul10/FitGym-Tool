@@ -9,6 +9,7 @@ using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Helpers;
+using FitGymTool.Persistence.Adapters.Entity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
@@ -44,6 +45,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
+				base.PrepareDefaultDtoData(memberDetails);
 				var result = await membersHandler.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
 				if (result)
 				{
@@ -161,6 +163,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
+				base.PrepareDefaultDtoData(memberDetails);
 				var result = await membersHandler.UpdateMemberDetailsAsync(memberDetails);
 				if (result)
 				{
@@ -200,7 +203,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
 			if (this.IsAuthorized())
 			{
-				membershipStatusDto.ModifiedBy = base.UserEmail;
+				base.PrepareDefaultDtoData(membershipStatusDto);
 				var result = await membersHandler.UpdateMembershipStatusAsync(membershipStatusDto);
 				if (result)
 				{

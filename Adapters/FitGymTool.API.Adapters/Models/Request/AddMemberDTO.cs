@@ -10,7 +10,7 @@ namespace FitGymTool.API.Adapters.Models.Request;
 /// <summary>
 /// The Add Member Data Transfer Object Class.
 /// </summary>
-public class AddMemberDTO
+public class AddMemberDTO : BaseDTO
 {
 	/// <summary>
 	/// Gets or sets the Member Name.

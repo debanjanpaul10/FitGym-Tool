@@ -43,8 +43,10 @@ public class DataMapperProfile: Profile
 				option => option.MapFrom(source => 0));
 
 		CreateMap<UpdateMemberDomain, MemberDetails>()
-			.ForMember(destination => destination.MembershipStatusId,
-				option => option.MapFrom(source => 0));
+			.ForMember(destination => destination.MemberId, options => options.Ignore())
+			.ForMember(destination => destination.IsActive, options => options.Ignore())
+			.ForMember(destination => destination.CreatedBy, options => options.Ignore())
+			.ForMember(destination => destination.DateCreated, options => options.Ignore());
 
 		CreateMap<BugReportDataDomain, BugReportData>();
 		CreateMap<UpdateMembershipStatusDomain, MemberDetails>()

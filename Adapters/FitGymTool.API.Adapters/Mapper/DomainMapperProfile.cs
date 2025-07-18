@@ -41,6 +41,7 @@ public class DomainMapperProfile: Profile
 		CreateMap<UpdateMemberDTO, UpdateMemberDomain>();
 		CreateMap<MemberDetailsDomain, MemberDetailsDTO>()
 			.ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatus));
+		
 		CreateMap<AddBugReportDTO, BugReportDataDomain>()
 			.ForMember(destination => destination.Id, options => options.Ignore())
 			.ForMember(destination => destination.BugSeverityId, options => options.Ignore())

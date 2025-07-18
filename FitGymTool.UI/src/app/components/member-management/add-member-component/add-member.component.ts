@@ -21,7 +21,7 @@ import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { IftaLabelModule } from 'primeng/iftalabel';
 
-import { AddMemberDto } from '@models/DTO/add-member-dto.model';
+import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import {
   MemberManagementConstants,

@@ -9,6 +9,7 @@ using FitGymTool.API.Adapters.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using FitGymTool.API.Helpers;
+using FitGymTool.API.Adapters.Models.Request;
 
 namespace FitGymTool.API.Controllers;
 
@@ -116,5 +117,11 @@ public abstract class BaseController : ControllerBase
 		}
 
 		return false;
+	}
+
+	protected void PrepareDefaultDtoData<T>(T inputDto) where T: BaseDTO
+	{
+		inputDto.DateModifed = DateTime.Now;
+		inputDto.ModifiedBy = this.UserEmail;
 	}
 }

@@ -36,6 +36,7 @@ export class ToasterSuccessMessages {
     AddMemberSuccess: 'Member Added Successfully',
     MembershipStatusUpdatedSuccess:
       'Membership status has been updated successfully',
+    UpdateMemberSuccess: 'Member details have been update successfully',
   };
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
@@ -131,6 +132,10 @@ export class MemberManagementConstants {
 
   public static UpdateMembershipStatusConstants = {
     Header: 'Update the membership status',
+  };
+
+  public static UpdateMemberDetailsConstants = {
+    Header: 'Update the member details',
   };
 }
 

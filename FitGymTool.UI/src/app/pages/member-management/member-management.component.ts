@@ -14,7 +14,7 @@ import { MembersApiService } from '@services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import { ButtonModule } from 'primeng/button';
-import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { AddMemberComponent } from '@components/member-management/add-member-component/add-member.component';
@@ -23,6 +23,7 @@ import { UpdateMembershipStatusComponent } from '@components/member-management/u
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 import { LoaderService } from '@core/services/loader.service';
 import { CommonApiService } from '@services/common-api.service';
+import { EditMemberComponent } from '@components/member-management/edit-member-component/edit-member.component';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -38,6 +39,7 @@ import { CommonApiService } from '@services/common-api.service';
     ButtonModule,
     AddMemberComponent,
     UpdateMembershipStatusComponent,
+    EditMemberComponent,
   ],
   templateUrl: './member-management.component.html',
   styleUrl: './member-management.component.scss',
@@ -99,7 +101,7 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
   }
 
   protected handleEditMember(): void {
-    alert('Feature will be worked on soon!');
+    this.dialogPopupService.openMemberUpdateDetailsDialog();
   }
 
   protected onMemberUpdated(): void {

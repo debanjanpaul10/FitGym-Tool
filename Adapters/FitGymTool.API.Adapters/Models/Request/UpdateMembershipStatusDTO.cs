@@ -9,7 +9,7 @@ namespace FitGymTool.API.Adapters.Models.Request;
 /// <summary>
 /// Update Membership Status Data DTO.
 /// </summary>
-public class UpdateMembershipStatusDTO
+public class UpdateMembershipStatusDTO : BaseDTO
 {
 	/// <summary>
 	/// Gets or sets the member identifier.
@@ -34,12 +34,4 @@ public class UpdateMembershipStatusDTO
 	/// The member email address.
 	/// </value>
 	public string MemberEmailAddress { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the modified by.
-	/// </summary>
-	/// <value>
-	/// The modified by.
-	/// </value>
-	public string ModifiedBy { get; set; } = string.Empty;
 }

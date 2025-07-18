@@ -59,8 +59,6 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			memberDetails.IsActive = true;
 			memberDetails.CreatedBy = effectiveEmail!;
 			memberDetails.DateCreated = DateTime.UtcNow;
-			memberDetails.ModifiedBy = effectiveEmail!;
-			memberDetails.DateModified = DateTime.UtcNow;
 
 			// Ensure all DateTime fields are set to valid values in the domain model
 			memberDetails.EnsureValidDates();

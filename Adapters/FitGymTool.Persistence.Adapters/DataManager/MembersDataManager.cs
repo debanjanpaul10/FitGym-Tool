@@ -174,10 +174,16 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 			}
 
 			// Update the entity for only updated values
-			var memberDetailsData = this._mapper.Map(memberDetails, existingMember);
-			existingMember.DateModified = DateTime.UtcNow;
+			existingMember.MemberName = memberDetails.MemberName;
+			existingMember.MemberPhoneNumber = memberDetails.MemberPhoneNumber;
+			existingMember.MemberAddress = memberDetails.MemberAddress;
+			existingMember.MemberDateOfBirth = memberDetails.MemberDateOfBirth;
+			existingMember.MemberJoinDate = memberDetails.MemberJoinDate;
+			memberDetails.MemberGender = memberDetails.MemberGender;
+			memberDetails.DateModified = memberDetails.DateModified;
+			memberDetails.ModifiedBy = memberDetails.ModifiedBy;
 
-			this._unitOfWork.Repository<MemberDetails>().Update(memberDetailsData);
+			this._unitOfWork.Repository<MemberDetails>().Update(existingMember);
 			await this._unitOfWork.SaveChangesAsync();
 
 			return true;

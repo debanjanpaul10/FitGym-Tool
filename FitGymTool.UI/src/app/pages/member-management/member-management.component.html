@@ -93,4 +93,12 @@
       (membershipStatusUpdate)="onMemberUpdated()"
     ></app-update-membership-status-component>
   </div>
+
+  <div class="row">
+    <app-edit-member-component
+      [membersData]="allUsersData()!"
+      [membershipStatusOptions]="membershipStatusOptions"
+      (memberDetailsUpdate)="onMemberUpdated()"
+    ></app-edit-member-component>
+  </div>
 </div>

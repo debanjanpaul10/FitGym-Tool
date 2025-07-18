@@ -7,6 +7,8 @@ export class DialogPopupService {
   public isAddMemberDialogOpen: WritableSignal<boolean> = signal(false);
   public isBugReportDialogOpen: WritableSignal<boolean> = signal(false);
   public isUpdateMembershipDialogOpen: WritableSignal<boolean> = signal(false);
+  public isUpdateMemberDetailsDialogOpen: WritableSignal<boolean> =
+    signal(false);
 
   public openAddMemberDialog(): void {
     this.isAddMemberDialogOpen.set(true);
@@ -30,5 +32,13 @@ export class DialogPopupService {
 
   public closeMembershipStatusDialog(): void {
     this.isUpdateMembershipDialogOpen.set(false);
+  }
+
+  public openMemberUpdateDetailsDialog(): void {
+    this.isUpdateMemberDetailsDialogOpen.set(true);
+  }
+
+  public closeMemberUpdateDetailsDialog(): void {
+    this.isUpdateMemberDetailsDialogOpen.set(false);
   }
 }

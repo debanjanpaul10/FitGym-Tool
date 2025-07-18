@@ -10,7 +10,7 @@ namespace FitGymTool.API.Adapters.Models.Request;
 /// <summary>
 /// UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.
 /// </summary>
-public class UpdateMemberDTO
+public class UpdateMemberDTO : BaseDTO
 {
 	/// <summary>
 	/// Gets or sets the Member ID.
@@ -36,6 +36,14 @@ public class UpdateMemberDTO
 	/// Gets or sets the Member Date of Birth.
 	/// </summary>
 	public DateTime MemberDateOfBirth { get; set; }
+
+	/// <summary>
+	/// Gets or sets the member join date.
+	/// </summary>
+	/// <value>
+	/// The member join date.
+	/// </value>
+	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member Gender.
