@@ -103,14 +103,14 @@ export class MemberManagementConstants {
       ImageSrc: '../../../assets/Images/add-user.jpg',
       Alt: 'Add member image',
     },
-    UpdateMember: {
+    UpdateMemberDetails: {
       Name: 'Update an existing member details',
       ImageSrc: '../../../assets/Images/edit-user.jpg',
       Alt: 'Update member image',
     },
     UpdateMembershipStatus: {
       Name: 'Update Membership status of member',
-      ImageSrc: '../../../assets/Images/terminate-user.jpg',
+      ImageSrc: '../../../assets/Images/member-status-update.jpg',
       Alt: 'Update membership status image',
     },
   };
