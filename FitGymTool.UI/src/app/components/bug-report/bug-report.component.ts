@@ -35,6 +35,14 @@ import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-
 
 /**
  * Component for submitting bug reports. Handles form creation, validation, severity mapping, and submission logic.
+ *
+ * This component provides a dialog-based interface for users to report bugs with the following features:
+ * - Reactive form with validation for bug title, description, and severity
+ * - Dynamic loading of bug severity options from master data
+ * - Automatic page URL capture for context
+ * - Form submission with API integration
+ * - Loading states and toast notifications
+ * - Proper cleanup of subscriptions
  */
 @Component({
   selector: 'app-bug-report',
@@ -215,6 +223,9 @@ export class BugReportComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Sets the page url.
+   */
   private setPageUrl(): void {
     const pageUrl = window.location.pathname;
 

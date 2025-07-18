@@ -45,12 +45,12 @@ export class ActiveMembersComponent
   @ViewChild('activeUsersChartCanvas', { static: false })
   activeUsersChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  public chartConstants = ChartConstants.ActiveUsersChartConstants;
-  public activeCount: number = 0;
-  public terminationCount: number = 0;
-  public expiredCount: number = 0;
-  public memberDetails: WritableSignal<MemberDetailsDto[] | []> = signal([]);
-  public isLoading: WritableSignal<boolean> = signal(true);
+  protected chartConstants = ChartConstants.ActiveUsersChartConstants;
+  protected activeCount: number = 0;
+  protected terminationCount: number = 0;
+  protected expiredCount: number = 0;
+  protected memberDetails: WritableSignal<MemberDetailsDto[] | []> = signal([]);
+  protected isLoading: WritableSignal<boolean> = signal(true);
 
   private activeUsersChart: Chart | null = null;
   private chartInitialized = false;

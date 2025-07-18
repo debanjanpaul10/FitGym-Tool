@@ -39,11 +39,11 @@ export class CurrentRevenueComponent
   @ViewChild('revenueChartCanvas', { static: false })
   revenueChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  public chartConstants = ChartConstants.RevenueChartConstants;
-  public feesPaymentStatusMapping: FeesPaymentStatusMappingDto[] = [];
-  public chartLabels: string[] = [];
-  public isLoading: WritableSignal<boolean> = signal(true);
-  public currentFeesAndRevenueData: WritableSignal<
+  protected chartConstants = ChartConstants.RevenueChartConstants;
+  protected feesPaymentStatusMapping: FeesPaymentStatusMappingDto[] = [];
+  protected chartLabels: string[] = [];
+  protected isLoading: WritableSignal<boolean> = signal(true);
+  protected currentFeesAndRevenueData: WritableSignal<
     CurrentMonthFeesAndRevenueStatus[]
   > = signal([]);
 
@@ -84,7 +84,12 @@ export class CurrentRevenueComponent
    * Ensures the chart is initialized once the canvas is available.
    */
   ngAfterViewChecked(): void {
-    if (!this.chartInitialized && this.revenueChartCanvas?.nativeElement) {
+    if (
+      !this.chartInitialized &&
+      this.revenueChartCanvas?.nativeElement &&
+      this.chartLabels.length > 0 &&
+      !this.isLoading()
+    ) {
       this.createOrUpdateChart();
       this.chartInitialized = true;
     }
@@ -107,7 +112,7 @@ export class CurrentRevenueComponent
    * @param index The index number of the labels array.
    * @returns The colour value as a string.
    */
-  public getLegendColor(index: number): string {
+  protected getLegendColor(index: number): string {
     const colors = [...this.colors];
     return colors[index % colors.length];
   }
@@ -122,85 +127,94 @@ export class CurrentRevenueComponent
     if (!this.revenueChartCanvas) {
       return;
     }
+
     const labels = this.chartLabels;
     this.labelsForTooltip = [...labels];
     const data = this.getChartDataFromApi();
+
     if (this.revenueChart) {
-      this.revenueChart.destroy();
-      this.revenueChart = null;
-      this.createOrUpdateChart();
+      // Update existing chart data instead of recreating
+      this.revenueChart.data.labels = labels;
+      this.revenueChart.data.datasets[0].data = data;
+      this.revenueChart.update('none'); // Use 'none' animation mode to prevent flickering
       return;
-    } else {
-      const labelsForTooltip = this.labelsForTooltip;
-      this.revenueChart = new Chart(this.revenueChartCanvas.nativeElement, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              data: data,
-              backgroundColor: this.colors,
-            },
-          ],
+    }
+
+    // Create new chart only if it doesn't exist
+    const labelsForTooltip = this.labelsForTooltip;
+    this.revenueChart = new Chart(this.revenueChartCanvas.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: this.colors,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 0, // Disable animations to prevent flickering
         },
-        options: {
-          indexAxis: 'y',
-          plugins: {
-            legend: {
-              display: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            color: '#f1f1f1',
+            font: {
+              family: 'Cascadia Mono',
             },
-            title: {
+          },
+          tooltip: {
+            callbacks: {
+              title: () => [],
+              label: (context: any): string => {
+                const labelIndex = context.dataIndex;
+                const label =
+                  labelsForTooltip[labelIndex] ?? `Label ${labelIndex + 1}`;
+                const value = context.parsed?.x ?? context.raw ?? '';
+                return `${label}: ${value}`;
+              },
+            },
+            titleFont: {
+              family: 'Cascadia Mono',
+            },
+            bodyFont: {
+              family: 'Cascadia Mono',
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
               color: '#f1f1f1',
               font: {
                 family: 'Cascadia Mono',
               },
             },
-            tooltip: {
-              callbacks: {
-                title: () => [],
-                label: (context: any): string => {
-                  const labelIndex = context.dataIndex;
-                  const label =
-                    labelsForTooltip[labelIndex] ?? `Label ${labelIndex + 1}`;
-                  const value = context.parsed?.x ?? context.raw ?? '';
-                  return `${label}: ${value}`;
-                },
-              },
-              titleFont: {
-                family: 'Cascadia Mono',
-              },
-              bodyFont: {
-                family: 'Cascadia Mono',
-              },
+            grid: {
+              color: 'rgba(241,241,241,0.2)',
             },
           },
-          scales: {
-            x: {
-              ticks: {
-                color: '#f1f1f1',
-                font: {
-                  family: 'Cascadia Mono',
-                },
-              },
-              grid: {
-                color: 'rgba(241,241,241,0.2)',
+          y: {
+            ticks: {
+              color: '#f1f1f1',
+              font: {
+                family: 'Cascadia Mono',
               },
             },
-            y: {
-              ticks: {
-                color: '#f1f1f1',
-                font: {
-                  family: 'Cascadia Mono',
-                },
-              },
-              grid: {
-                color: 'rgba(241,241,241,0.2)',
-              },
+            grid: {
+              color: 'rgba(241,241,241,0.2)',
             },
           },
         },
-      });
-    }
+      },
+    });
   }
 
   /**

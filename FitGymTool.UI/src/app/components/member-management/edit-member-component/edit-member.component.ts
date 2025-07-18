@@ -116,6 +116,7 @@ export class EditMemberComponent {
       }
     });
   }
+
   protected onMemberDetailsChangeUpdate(member: MemberDetailsDto): void {
     if (!member) {
       this.toasterService.showError('Enter the details, they cannot be null');
@@ -176,12 +177,6 @@ export class EditMemberComponent {
       this.compareDates(original.memberDateOfBirth, member.memberDateOfBirth) ||
       this.compareDates(original.memberJoinDate, member.memberJoinDate)
     );
-  }
-
-  private compareDates(date1: Date, date2: Date): boolean {
-    if (!date1 && !date2) return false;
-    if (!date1 || !date2) return true;
-    return date1.getTime() !== date2.getTime();
   }
 
   protected isRowValid(member: MemberDetailsDto): boolean {
@@ -271,5 +266,11 @@ export class EditMemberComponent {
 
   protected hasFieldError(member: MemberDetailsDto, field: string): boolean {
     return this.getFieldError(member, field) !== '';
+  }
+
+  private compareDates(date1: Date, date2: Date): boolean {
+    if (!date1 && !date2) return false;
+    if (!date1 || !date2) return true;
+    return date1.getTime() !== date2.getTime();
   }
 }
