@@ -17,7 +17,7 @@ import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { FeesPaymentStatusMappingDto } from '@models/DTO/Mapping/fees-payment-status-mapping-dto.model';
 import { MemberFeesApiService } from '@services/member-fees-api.service';
-import { ToasterService } from '@services/toaster.service';
+import { ToasterService } from '@core/services/toaster.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { CurrentMonthFeesAndRevenueStatus } from '@models/DTO/current-month-fees-revenue-status.model';
 import { SkeletonModule } from 'primeng/skeleton';

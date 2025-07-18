@@ -11,7 +11,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
 import { MembersApiService } from '@services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { ToasterService } from '@services/toaster.service';
+import { ToasterService } from '@core/services/toaster.service';
 import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
