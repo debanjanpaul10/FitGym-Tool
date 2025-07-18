@@ -119,6 +119,11 @@ public abstract class BaseController : ControllerBase
 		return false;
 	}
 
+	/// <summary>
+	/// Prepares the default dto data.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="inputDto">The input dto.</param>
 	protected void PrepareDefaultDtoData<T>(T inputDto) where T: BaseDTO
 	{
 		inputDto.DateModifed = DateTime.Now;
