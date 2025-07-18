@@ -4,5 +4,6 @@ export class UpdateMemberDto {
   public memberPhoneNumber: string = '';
   public memberAddress: string = '';
   public memberDateOfBirth: Date = new Date();
+  public memberJoinDate: Date = new Date();
   public memberGender: string = '';
 }

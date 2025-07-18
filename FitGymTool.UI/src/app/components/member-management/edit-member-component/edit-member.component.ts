@@ -130,6 +130,7 @@ export class EditMemberComponent {
       memberId: member.memberId,
       memberName: member.memberName,
       memberPhoneNumber: member.memberPhoneNumber,
+      memberJoinDate: member.memberJoinDate,
     };
 
     this.membersApiService
