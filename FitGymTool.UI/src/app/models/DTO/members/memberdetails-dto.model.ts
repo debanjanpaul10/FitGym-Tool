@@ -1,45 +1,17 @@
+/**
+ * Data transfer object for complete member details information.
+ * Contains comprehensive member data including identification, personal details,
+ * contact information, and membership status used for member management operations.
+ */
 export class MemberDetailsDto {
-  public memberId: number;
-
-  public memberName: string;
-
-  public memberEmail: string;
-
-  public memberPhoneNumber: string;
-
-  public memberAddress: string;
-
-  public memberDateOfBirth: Date;
-
-  public memberGender: string;
-
-  public memberJoinDate: Date;
-
-  public membershipStatus: string;
-
-  public memberGuid: string;
-
-  constructor(
-    MemberId: number = 0,
-    MemberName: string = '',
-    MemberEmail: string = '',
-    MemberPhoneNumber: string = '',
-    MemberAddress: string = '',
-    MemberDateOfBirth: Date = new Date(),
-    MemberGender: string = '',
-    MemberJoinDate: Date = new Date(),
-    MembershipStatus: string = '',
-    MemberGuid: string = ''
-  ) {
-    this.memberId = MemberId;
-    this.memberName = MemberName;
-    this.memberEmail = MemberEmail;
-    this.memberPhoneNumber = MemberPhoneNumber;
-    this.memberAddress = MemberAddress;
-    this.memberDateOfBirth = MemberDateOfBirth;
-    this.memberGender = MemberGender;
-    this.memberJoinDate = MemberJoinDate;
-    this.membershipStatus = MembershipStatus;
-    this.memberGuid = MemberGuid;
-  }
+  public memberId: number = 0;
+  public memberName: string = '';
+  public memberEmail: string = '';
+  public memberPhoneNumber: string = '';
+  public memberAddress: string = '';
+  public memberDateOfBirth: Date = new Date();
+  public memberGender: string = '';
+  public memberJoinDate: Date = new Date();
+  public membershipStatus: string = '';
+  public memberGuid: string = '';
 }

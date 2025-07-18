@@ -23,6 +23,7 @@ import {
   MsalInterceptor,
   MsalService,
 } from '@azure/msal-angular';
+import { MessageService } from 'primeng/api';
 
 import { routes } from './app.routes';
 import {
@@ -31,7 +32,6 @@ import {
   MSALInterceptorConfigFactory,
 } from '@core/helpers/msal-service';
 import { AuthInterceptor } from '@core/interceptors/auth.interceptor';
-import { MessageService } from 'primeng/api';
 import { msalInitializer } from '@core/helpers/msal-initializer';
 
 export const appConfig: ApplicationConfig = {
