@@ -151,13 +151,15 @@
     <div class="form-actions">
       <p-button
         label="Cancel"
-        severity="secondary"
+        severity="danger"
         type="button"
-        (click)="onCancel()"
+        variant="outlined"
+        (onClick)="onCancel()"
       />
       <p-button
         label="Add Member"
         type="submit"
+        variant="outlined"
         [disabled]="memberForm.invalid"
       />
     </div>

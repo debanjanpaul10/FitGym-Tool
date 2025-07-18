@@ -47,5 +47,6 @@ public class DomainMapperProfile: Profile
 			.ForMember(destination => destination.BugStatusId, options => options.Ignore())
 			.ForMember(destination => destination.Title, option => option.MapFrom(source => source.BugTitle))
 			.ForMember(destination => destination.Description, option => option.MapFrom(source => source.BugDescription));
+		CreateMap<UpdateMembershipStatusDTO, UpdateMembershipStatusDomain>();
 	}
 }

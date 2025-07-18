@@ -29,15 +29,14 @@ import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-statu
   styleUrl: './members-list.component.scss',
 })
 export class MembersListComponent {
-  @Input() membersData!: MemberDetailsDto[];
+  @Input() membersData: MemberDetailsDto[] = [];
   @Input() membershipStatusOptions: MembershipStatusMappingDto[] = [];
   @ViewChild('dt') dt!: Table;
 
-  public columnHeaders!: Column[];
-
-  public selectedJoinDate: Date | null = null;
-  public selectedMembershipStatus: string | null = null;
-  public sortedMembersData!: MemberDetailsDto[];
+  protected columnHeaders!: Column[];
+  protected selectedJoinDate: Date | null = null;
+  protected selectedMembershipStatus: string | null = null;
+  protected sortedMembersData!: MemberDetailsDto[];
 
   private isSorted: boolean | null = null;
   private currentSortField: string = 'memberId';
@@ -83,7 +82,7 @@ export class MembersListComponent {
    * @param event - The date selection event from the date picker
    * @param table - Reference to the PrimeNG table component
    */
-  public onJoinDateChange(event: any, table: any) {
+  protected onJoinDateChange(event: any, table: any) {
     if (this.selectedJoinDate) {
       table.filter(this.selectedJoinDate, 'memberJoinDate', 'custom');
     } else {
@@ -97,7 +96,7 @@ export class MembersListComponent {
    * @param event - The selection change event from the dropdown
    * @param table - Reference to the PrimeNG table component
    */
-  public onMembershipStatusChange(event: any, table: any) {
+  protected onMembershipStatusChange(event: any, table: any) {
     if (this.selectedMembershipStatus) {
       table.filter(this.selectedMembershipStatus, 'membershipStatus', 'equals');
     } else {
@@ -110,7 +109,7 @@ export class MembersListComponent {
    * Removes both date and membership status filters from the table.
    * @param table - Reference to the PrimeNG table component
    */
-  public clearFilters(table: any) {
+  protected clearFilters(table: any) {
     this.selectedJoinDate = null;
     this.selectedMembershipStatus = null;
     table.filter('', 'memberJoinDate', 'custom');
@@ -122,7 +121,7 @@ export class MembersListComponent {
    * Updates the sort state and triggers sorting or reset as needed.
    * @param event - The sort event from the PrimeNG table containing field and order information
    */
-  public customSort(event: SortEvent) {
+  protected customSort(event: SortEvent) {
     const sortField = event.field ?? 'memberId';
     this.handleSorting(sortField);
   }

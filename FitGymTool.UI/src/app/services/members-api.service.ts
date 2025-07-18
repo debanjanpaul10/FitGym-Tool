@@ -38,7 +38,7 @@ export class MembersApiService {
     return this.httpClient.post<ResponseDto>(apiUrl, newMemberData);
   }
 
-  public UpdateMembershipStatus(
+  public UpdateMembershipStatusAsync(
     updateMembershipStatus: UpdateMembershipStatusDto
   ): Observable<ResponseDto> {
     const apiUrl: string = `${this.apiBaseUrl}${this.membersApiRoutes.UpdateMembershipDetails_ApiRoute}`;

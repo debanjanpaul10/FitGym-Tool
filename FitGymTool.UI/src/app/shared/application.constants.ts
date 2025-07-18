@@ -34,6 +34,8 @@ export class RouteConstants {
 export class ToasterSuccessMessages {
   public static MemberManagement = {
     AddMemberSuccess: 'Member Added Successfully',
+    MembershipStatusUpdatedSuccess:
+      'Membership status has been updated successfully',
   };
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
@@ -125,6 +127,10 @@ export class MemberManagementConstants {
       { label: 'Pending', value: 'Pending' },
     ],
     Header: 'Add a new member',
+  };
+
+  public static UpdateMembershipStatusConstants = {
+    Header: 'Update the membership status',
   };
 }
 

@@ -216,7 +216,7 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 				throw ex;
 			}
 
-			existingMember.MembershipStatusId = updateMembershipStatusDomain.MemberId;
+			existingMember.MembershipStatusId = updateMembershipStatusDomain.MembershipStatusId;
 			existingMember.DateModified = DateTime.UtcNow;
 			existingMember.ModifiedBy = updateMembershipStatusDomain.ModifiedBy;
 

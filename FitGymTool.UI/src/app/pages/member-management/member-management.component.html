@@ -88,7 +88,8 @@
 
   <div class="row">
     <app-update-membership-status-component
-      [memberDetails]="allUsersData()"
+      [membersData]="allUsersData()!"
+      [membershipStatusOptions]="membershipStatusOptions"
       (membershipStatusUpdate)="onMemberUpdated()"
     ></app-update-membership-status-component>
   </div>
