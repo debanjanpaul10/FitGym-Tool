@@ -5,6 +5,9 @@
   [style]="{ width: '60rem' }"
   [blockScroll]="true"
 >
+  <p-message severity="warn">{{
+    bugReportConstants.InformationMessage
+  }}</p-message>
   <form [formGroup]="bugReportForm" (ngSubmit)="submitBugReportForm()">
     <!-- Bug Title -->
     <div class="form-row">
@@ -35,23 +38,37 @@
       </p-iftalabel>
     </div>
 
-    <!-- Bug Severity -->
-    <div class="form-row">
-      <p-iftalabel>
-        <p-select
-          id="bugSeverity"
-          formControlName="bugSeverity"
-          [options]="bugSeverityMappingOptions"
-          optionLabel="severityName"
-          optionValue="id"
-          placeholder="Select the bug severity"
-          appendTo="body"
-          dropdownPosition="top"
-          class="form-input bug-severity-dropdown"
-          panelClass="bug-severity-panel"
-        ></p-select>
-        <label for="bugSeverity" class="field-label">Severity</label>
-      </p-iftalabel>
+    <!-- Bug Severity and Page URL -->
+    <div class="form-row-horizontal">
+      <div>
+        <p-iftalabel>
+          <p-select
+            id="bugSeverity"
+            formControlName="bugSeverity"
+            [options]="bugSeverityMappingOptions"
+            optionLabel="severityName"
+            optionValue="id"
+            placeholder="Select the bug severity"
+            appendTo="body"
+            dropdownPosition="top"
+            class="form-input bug-severity-dropdown"
+            panelClass="bug-severity-panel"
+          ></p-select>
+          <label for="bugSeverity" class="field-label">Severity</label>
+        </p-iftalabel>
+      </div>
+      <div>
+        <p-iftalabel>
+          <input
+            pInputText
+            id="pageUrl"
+            formControlName="pageUrl"
+            placeholder="Enter the page URL"
+            class="form-input"
+          />
+          <label for="pageUrl" class="field-label">Page URL</label>
+        </p-iftalabel>
+      </div>
     </div>
 
     <div class="form-actions">

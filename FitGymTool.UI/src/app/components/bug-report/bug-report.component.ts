@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { IftaLabelModule } from 'primeng/iftalabel';
+import { MessageModule } from 'primeng/message';
 
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApiService } from '@services/common-api.service';
@@ -45,6 +46,7 @@ import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-
     TextareaModule,
     ReactiveFormsModule,
     IftaLabelModule,
+    MessageModule,
   ],
   templateUrl: './bug-report.component.html',
   styleUrl: './bug-report.component.scss',

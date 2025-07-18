@@ -15,8 +15,21 @@
   top: auto !important;
 }
 
-.p-select-overlay {
+::ng-deep .p-select-overlay {
   transform: translateY(-100%) !important;
+}
+
+.form-row-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  margin-top: 20px;
+
+  > div {
+    flex: 1;
+  }
 }
 
 .form-actions {

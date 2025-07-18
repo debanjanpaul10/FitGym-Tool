@@ -101,15 +101,15 @@ export class MemberManagementConstants {
       ImageSrc: '../../../assets/Images/add-user.jpg',
       Alt: 'Add member image',
     },
-    TerminateMember: {
-      Name: 'Terminate an existing member',
-      ImageSrc: '../../../assets/Images/terminate-user.jpg',
-      Alt: 'Terminate a member image',
-    },
     UpdateMember: {
-      Name: 'Update an existing member',
+      Name: 'Update an existing member details',
       ImageSrc: '../../../assets/Images/edit-user.jpg',
       Alt: 'Update member image',
+    },
+    UpdateMembershipStatus: {
+      Name: 'Update Membership status of member',
+      ImageSrc: '../../../assets/Images/terminate-user.jpg',
+      Alt: 'Update membership status image',
     },
   };
   public static AddNewMemberConstants = {
@@ -131,5 +131,7 @@ export class MemberManagementConstants {
 export class CommonApplicationConstants {
   public static BugReportConstants = {
     Header: 'File a bug report',
+    InformationMessage:
+      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
   };
 }
