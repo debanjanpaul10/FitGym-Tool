@@ -206,7 +206,7 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 		try
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
 			var existingMember = await _unitOfWork.Repository<MemberDetails>()
 				.FirstOrDefaultAsync(predicate: member => member.MemberId == updateMembershipStatusDomain.MemberId && member.MemberEmail == updateMembershipStatusDomain.MemberEmailAddress && member.IsActive);
 			if (existingMember is null)
