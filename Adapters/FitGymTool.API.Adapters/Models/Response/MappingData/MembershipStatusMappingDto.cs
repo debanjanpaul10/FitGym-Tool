@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 // <copyright file="MembershipStatusMappingDto.cs" company="Personal">
-//     Copyright (c) 2025 Personal
+//     Copyright (c) 2025 <Debanjan's Lab>
 // </copyright>
 // <summary>The Membership Status Mapping Data DTO.</summary>
 // *********************************************************************************

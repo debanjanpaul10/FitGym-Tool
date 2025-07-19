@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="MemberFeesHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Member Fees Handler Adapter Class.</summary>
 // *********************************************************************************
@@ -38,7 +38,7 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// </returns>
 	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
-		var feesAndRevenueStatusData = await this._memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
-		return this._mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>>(feesAndRevenueStatusData);
+		var feesAndRevenueStatusData = await _memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
+		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>>(feesAndRevenueStatusData);
 	}
 }

@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="AddMemberDTO.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Add Member Data Transfer Object Class.</summary>
 // *********************************************************************************

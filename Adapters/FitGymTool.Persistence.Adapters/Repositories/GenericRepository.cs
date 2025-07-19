@@ -1,6 +1,6 @@
 // *********************************************************************************
 //	<copyright file="GenericRepository.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Generic Repository Class.</summary>
 // *********************************************************************************

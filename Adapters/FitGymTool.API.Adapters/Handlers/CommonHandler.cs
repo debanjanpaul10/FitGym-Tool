@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="FitGymCommonHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Fit Gym Common Handler Adapter Service.</summary>
 // *********************************************************************************
@@ -41,8 +41,8 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO)
 	{
-		var bugReportDataDomain = this._mapper.Map<BugReportDataDomain>(bugReportDataDTO); 
-		return await this._commonService.AddNewBugReportDataAsync(bugReportDataDomain);
+		var bugReportDataDomain = _mapper.Map<BugReportDataDomain>(bugReportDataDTO); 
+		return await _commonService.AddNewBugReportDataAsync(bugReportDataDomain);
 	}
 
 	/// <summary>
@@ -53,7 +53,7 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<MappingMasterDataDto> GetMappingsMasterDataAsync()
 	{
-		var mappingsMasterData = await this._commonService.GetMappingsMasterDataAsync();
-		return this._mapper.Map<MappingMasterDataDto>(mappingsMasterData);
+		var mappingsMasterData = await _commonService.GetMappingsMasterDataAsync();
+		return _mapper.Map<MappingMasterDataDto>(mappingsMasterData);
 	}
 }

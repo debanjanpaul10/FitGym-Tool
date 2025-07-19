@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="IUnitOfWork.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Unit of Work Interface.</summary>
 // *********************************************************************************

@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="FitGymToolExceptions.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The FitGym Tool Business Exceptions.</summary>
 // *********************************************************************************
@@ -47,7 +47,7 @@ public class FitGymToolExceptions : Exception
 	/// <param name="details">The details.</param>
 	public FitGymToolExceptions(string? message) : base(message)
 	{
-		this.ExceptionMessage = message;
+		ExceptionMessage = message;
 	}
 
 	/// <summary>
@@ -58,8 +58,8 @@ public class FitGymToolExceptions : Exception
 	/// <param name="details">The details.</param>
 	public FitGymToolExceptions(string? message, int statusCode, string? details) : base(message)
 	{
-		this.ExceptionMessage = message;
-		this.StatusCode = statusCode;
-		this.Details = details;
+		ExceptionMessage = message;
+		StatusCode = statusCode;
+		Details = details;
 	}
 }

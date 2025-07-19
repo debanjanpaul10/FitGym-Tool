@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="AddBugReportDto.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Add New Bug Report Data DTO.</summary>
 // *********************************************************************************

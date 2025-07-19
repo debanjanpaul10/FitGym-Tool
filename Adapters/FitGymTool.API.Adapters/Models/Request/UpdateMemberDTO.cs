@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="UpdateMemberDTO.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.</summary>
 // *********************************************************************************
