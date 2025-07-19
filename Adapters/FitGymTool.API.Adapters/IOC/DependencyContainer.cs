@@ -9,12 +9,14 @@ using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Handlers;
 using FitGymTool.API.Adapters.Mapper;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.API.Adapters.IOC;
 
 /// <summary>
 /// The DI Container Class.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class DependencyContainer
 {
 	/// <summary>

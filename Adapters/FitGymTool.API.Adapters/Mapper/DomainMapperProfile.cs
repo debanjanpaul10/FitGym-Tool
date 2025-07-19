@@ -12,6 +12,7 @@ using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Models.Members;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.API.Adapters.Mapper;
 
@@ -19,6 +20,7 @@ namespace FitGymTool.API.Adapters.Mapper;
 /// The Domain Mapper Profile Class.
 /// </summary>
 /// <seealso cref="AutoMapper.Profile" />
+[ExcludeFromCodeCoverage]
 public class DomainMapperProfile: Profile
 {
 	/// <summary>
