@@ -1,10 +1,11 @@
 ﻿// *********************************************************************************
 //	<copyright file="FitGymCommonService.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Fit Gym Common Data Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Ports.In;
@@ -47,12 +48,8 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
-			
-			bugReportDataDomain.IsActive = true;
-			bugReportDataDomain.DateCreated = DateTime.UtcNow;
-			bugReportDataDomain.DateModified = DateTime.UtcNow;
-			bugReportDataDomain.ModifiedBy = bugReportDataDomain.CreatedBy;
 
+			bugReportDataDomain.PrepareBugReportDataDomain();
 			return await _commonManager.AddNewBugReportDataAsync(bugReportDataDomain);
 		}
 		catch (Exception ex)

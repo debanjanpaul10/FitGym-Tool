@@ -9,11 +9,25 @@ import { MsalService } from '@azure/msal-angular';
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 
 import { environment } from '@environments/environment.development';
+import { ConfigurationConstants } from '@shared/application.constants';
 
+/**
+ * HTTP interceptor that handles authentication for outgoing requests.
+ * Automatically adds Bearer tokens to requests and handles token refresh scenarios.
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private authService = inject(MsalService);
+  private authenticatorConstants =
+    ConfigurationConstants.AuthenticatorConstants;
 
+  /**
+   * Intercepts HTTP requests to add authentication headers.
+   * Handles token acquisition, refresh, and fallback authentication scenarios.
+   * @param request - The outgoing HTTP request to be intercepted
+   * @param next - The next handler in the interceptor chain
+   * @returns Observable of HTTP events with authentication headers added
+   */
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -24,7 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     const isGraphApi = request.url.startsWith(
-      'https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName'
+      this.authenticatorConstants.GraphApiUrl
     );
     const scopes = isGraphApi
       ? environment.msalConfig.scopes
@@ -49,9 +63,12 @@ export class AuthInterceptor implements HttpInterceptor {
         catchError((error: any) => {
           if (
             error &&
-            error.errorCode === 'invalid_grant' &&
+            error.errorCode ===
+              this.authenticatorConstants.InvalidGrantConstant &&
             error.errorMessage &&
-            error.errorMessage.includes('AADSTS65001')
+            error.errorMessage.includes(
+              this.authenticatorConstants.InvalidGrantError
+            )
           ) {
             return from(
               this.authService.instance.acquireTokenPopup({

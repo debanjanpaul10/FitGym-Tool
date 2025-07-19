@@ -1,3 +1,8 @@
+/**
+ * Data transfer object for current month fees and revenue status information.
+ * Contains member fee details including payment status, amounts, and date ranges
+ * used for revenue tracking and financial reporting in the current month.
+ */
 export class CurrentMonthFeesAndRevenueStatus {
   public memberId: number = 0;
   public memberEmail: string = '';

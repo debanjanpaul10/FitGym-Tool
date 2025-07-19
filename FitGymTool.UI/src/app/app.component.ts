@@ -20,7 +20,7 @@ import { HeaderComponent } from '@components/common/header-component/header.comp
 import { LeftNavigationComponent } from '@components/common/left-navigation-component/left-navigation.component';
 import { LoaderComponent } from '@components/common/loader-component/loader.component';
 import { LoaderService } from '@core/services/loader.service';
-import { RouteConstants } from '@shared/application.constants';
+import { RouteConstants } from '@shared/routes.constants';
 import { ToasterComponent } from '@components/common/toaster-component/toaster.component';
 import { FooterComponent } from '@components/common/footer-component/footer.component';
 import { BugReportComponent } from '@components/bug-report/bug-report.component';

@@ -1,0 +1,105 @@
+<p-dialog
+  [header]="membershipStatusConstants.Header"
+  [modal]="true"
+  [visible]="visible()"
+  [style]="{ width: '80rem' }"
+  [blockScroll]="true"
+  [closable]="false"
+>
+  <div class="membership-status-table">
+    <p-table
+      #membershipStatusTable
+      [value]="sortedMembersData"
+      [rows]="10"
+      [paginator]="true"
+      [columns]="columnHeaders"
+      [customSort]="false"
+      ngClass="members-table"
+      showGridlines
+      stripedRows
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <ng-container
+              *ngIf="col.field === 'memberJoinDate'; else normalCell"
+            >
+              {{ rowData[col.field] | date : "d MMM yyyy" }}
+            </ng-container>
+            <ng-template #normalCell>
+              <ng-container
+                *ngIf="col.field === 'membershipStatus'; else defaultCell"
+              >
+                <p-iftalabel>
+                  <div class="membership-dropdown-wrapper">
+                    <p-select
+                      id="membershipStatus"
+                      [options]="membershipStatusOptions"
+                      optionLabel="statusName"
+                      optionValue="id"
+                      [(ngModel)]="rowData.membershipStatusId"
+                      class="form-input membership-status-dropdown"
+                      [showClear]="false"
+                      [ngStyle]="{ width: '100%' }"
+                    ></p-select>
+                  </div>
+                  <label for="membershipStatus" class="field-label"
+                    >Membership Status</label
+                  >
+                </p-iftalabel>
+              </ng-container>
+              <ng-container *ngIf="col.field === 'actions'">
+                <p-button
+                  type="button"
+                  label="Update"
+                  severity="success"
+                  variant="outlined"
+                  (click)="
+                    onMembershipStatusChangesUpdate(
+                      rowData,
+                      rowData.membershipStatusId
+                    )
+                  "
+                ></p-button>
+              </ng-container>
+              <ng-template #defaultCell>
+                {{ rowData[col.field] }}
+              </ng-template>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columnHeaders.length" class="text-center py-4">
+            <div class="empty-state">
+              <i
+                class="pi pi-search"
+                style="font-size: 2rem; color: #6c757d"
+              ></i>
+              <p class="mt-2 mb-0">No results found</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="form-actions">
+    <p-button
+      label="Cancel"
+      severity="danger"
+      type="button"
+      variant="outlined"
+      (onClick)="onCancel()"
+    >
+    </p-button>
+  </div>
+</p-dialog>

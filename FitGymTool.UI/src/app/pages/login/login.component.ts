@@ -9,10 +9,8 @@ import {
 import { RedirectRequest, EventType } from '@azure/msal-browser';
 import { ButtonModule } from 'primeng/button';
 
-import {
-  LoginPageConstants,
-  RouteConstants,
-} from '@shared/application.constants';
+import { LoginPageConstants } from '@shared/application.constants';
+import { RouteConstants } from '@shared/routes.constants';
 
 @Component({
   selector: 'app-login',

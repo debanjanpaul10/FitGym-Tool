@@ -1,13 +1,10 @@
+/**
+ * Generic data transfer object for API responses.
+ * Standardizes the structure of all API responses with status information,
+ * success indicators, and response data payload.
+ */
 export class ResponseDto {
-  public statusCode: number;
-
-  public isSuccess: boolean;
-
-  public responseData: any;
-
-  constructor(StatusCode: number, IsSuccess: boolean, ResponseData: any) {
-    this.statusCode = StatusCode;
-    this.isSuccess = IsSuccess;
-    this.responseData = ResponseData;
-  }
+  public statusCode: number = 0;
+  public isSuccess: boolean = false;
+  public responseData: any = [];
 }

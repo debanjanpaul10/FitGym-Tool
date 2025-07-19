@@ -11,7 +11,6 @@
           [alt]="MemberDashboardConstants.AddMember.Alt"
           height="auto"
           width="auto"
-          ks
         />
         <div class="card-body">
           <h4 class="card-title">
@@ -28,14 +27,14 @@
       >
         <img
           class="card-img-top"
-          [src]="MemberDashboardConstants.TerminateMember.ImageSrc"
-          [alt]="MemberDashboardConstants.TerminateMember.Alt"
+          [src]="MemberDashboardConstants.UpdateMembershipStatus.ImageSrc"
+          [alt]="MemberDashboardConstants.UpdateMembershipStatus.Alt"
           height="auto"
           width="auto"
         />
         <div class="card-body">
           <h4 class="card-title">
-            {{ MemberDashboardConstants.TerminateMember.Name }}
+            {{ MemberDashboardConstants.UpdateMembershipStatus.Name }}
           </h4>
         </div>
       </div>
@@ -48,14 +47,14 @@
       >
         <img
           class="card-img-top"
-          [src]="MemberDashboardConstants.UpdateMember.ImageSrc"
-          [alt]="MemberDashboardConstants.UpdateMember.Alt"
+          [src]="MemberDashboardConstants.UpdateMemberDetails.ImageSrc"
+          [alt]="MemberDashboardConstants.UpdateMemberDetails.Alt"
           height="auto"
           width="auto"
         />
         <div class="card-body">
           <h4 class="card-title">
-            {{ MemberDashboardConstants.UpdateMember.Name }}
+            {{ MemberDashboardConstants.UpdateMemberDetails.Name }}
           </h4>
         </div>
       </div>
@@ -74,14 +73,32 @@
       <div *ngIf="!isUsersDataLoading()">
         <app-members-list-component
           [membersData]="allUsersData()!"
+          [membershipStatusOptions]="membershipStatusOptions"
         ></app-members-list-component>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <app-add-user-component
-      (memberAdded)="onMemberAdded()"
-    ></app-add-user-component>
+    <app-add-member-component
+      (memberAdded)="onMemberUpdated()"
+      [membershipStatusOptions]="membershipStatusOptions"
+    ></app-add-member-component>
+  </div>
+
+  <div class="row">
+    <app-update-membership-status-component
+      [membersData]="allUsersData()!"
+      [membershipStatusOptions]="membershipStatusOptions"
+      (membershipStatusUpdate)="onMemberUpdated()"
+    ></app-update-membership-status-component>
+  </div>
+
+  <div class="row">
+    <app-edit-member-component
+      [membersData]="allUsersData()!"
+      [membershipStatusOptions]="membershipStatusOptions"
+      (memberDetailsUpdate)="onMemberUpdated()"
+    ></app-edit-member-component>
   </div>
 </div>

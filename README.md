@@ -10,11 +10,11 @@ The application follows a modern, layered architecture pattern with clear separa
 
 ### Backend Architecture (.NET Core)
 
--   **API Layer** (`FitGymTool.API`) - RESTful Web API controllers and middleware
--   **Business Layer** (`FitGymTool.Business`) - Business logic and service implementations
--   **Data Access Layer** (`FitGymTool.DataAccess`) - Repository pattern and data access logic
--   **Shared Layer** (`FitGymTool.Shared`) - Common DTOs, models, constants, and utilities
--   **Database Layer** (`FitGymTool.Database`) - SQL Server database schema and stored procedures
+-   **API** (`FitGymTool.API`) - RESTful Web API controllers and middleware
+-   **Core Domain** (`FitGymTool.Domain`) - The Core of the Application containing the Core business logic, the ports and the use cases
+-	**API Adapters**(`Adapters/FitGymTool.API.Adapters`) - The API adapters used to convert the DTO into Domain Entities.
+-   **Persistence Adapters** (`Adapters/FitGymTool.Persistence.Adapters`) - Repository pattern and data access logic and implementation of the driven ports.
+-   **Database** (`FitGymTool.Database`) - SQL Server database schema and stored procedures
 
 ### Frontend Architecture (Angular)
 
@@ -102,24 +102,6 @@ The application follows a modern, layered architecture pattern with clear separa
 -   **Referential Integrity**: Foreign key constraints maintaining data consistency
 -   **Optimized Indexing**: Performance-tuned indexes for common queries
 
-## API Endpoints
-
-### Members Controller
-
--   `POST /api/members/add/{isFromAdmin}` - Add new member
--   `GET /api/members/all` - Retrieve all members
--   `POST /api/members/by-email` - Get member by email ID
--   `PUT /api/members/update` - Update member details
--   `DELETE /api/members/{memberId}` - Delete member
-
-### Member Fees Controller
-
--   `GET /api/member-fees/current-month-status` - Get current month fees and revenue status
-
-### Common Controller
-
--   `GET /api/common/mapping-data` - Retrieve master data for dropdowns and mappings
-
 ## Security Features
 
 ### Authentication
@@ -169,6 +151,7 @@ The application follows a modern, layered architecture pattern with clear separa
 -   **SOLID Principles** implementation throughout the codebase
 -   **Dependency Injection** for loose coupling and testability
 -   **Comprehensive Logging** for debugging and monitoring
+-	**Hexagonal Architecture** implementation for better adaptability, scalability and testability
 
 ### Error Handling
 

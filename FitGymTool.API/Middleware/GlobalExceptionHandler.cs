@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="GlobalExceptionHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Global Exception Handler.</summary>
 // *********************************************************************************
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
 			problemDetails.Title = exception.Message;
 		}
 
-		this._logger.LogError(problemDetails.Title);
+		_logger.LogError(problemDetails.Title);
 		problemDetails.Status = httpContext.Response.StatusCode;
 		await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken).ConfigureAwait(false);
 

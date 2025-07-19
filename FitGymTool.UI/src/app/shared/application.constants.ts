@@ -1,39 +1,19 @@
-export class RouteConstants {
-  public static Dashboard = {
-    Name: 'Dashboard',
-    Link: 'dashboard',
-    RouteValue: '/dashboard',
-  };
-  public static Login = {
-    Name: 'Login',
-    Link: '',
-    RouteValue: '/',
-  };
-  public static Error = {
-    Name: 'Error',
-    Link: 'error',
-    RouteValue: '/error',
-  };
-  public static MemberManagement = {
-    Name: 'Members',
-    Link: 'members',
-    RouteValue: '/members',
-  };
-  public static FeesManagement = {
-    Name: 'Fees',
-    Link: 'fees',
-    RouteValue: '/fees',
-  };
-  public static FacilityManagement = {
-    Name: 'Facility',
-    Link: 'facility',
-    RouteValue: '/facility',
+export class ConfigurationConstants {
+  public static AuthenticatorConstants = {
+    GraphApiUrl:
+      'https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName',
+    InvalidGrantConstant: 'invalid_grant',
+    InvalidGrantError: 'AADSTS65001',
+    RedirectError: 'Redirect Error',
   };
 }
 
 export class ToasterSuccessMessages {
   public static MemberManagement = {
     AddMemberSuccess: 'Member Added Successfully',
+    MembershipStatusUpdatedSuccess:
+      'Membership status has been updated successfully',
+    UpdateMemberSuccess: 'Member details have been update successfully',
   };
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
@@ -101,15 +81,15 @@ export class MemberManagementConstants {
       ImageSrc: '../../../assets/Images/add-user.jpg',
       Alt: 'Add member image',
     },
-    TerminateMember: {
-      Name: 'Terminate an existing member',
-      ImageSrc: '../../../assets/Images/terminate-user.jpg',
-      Alt: 'Terminate a member image',
-    },
-    UpdateMember: {
-      Name: 'Update an existing member',
+    UpdateMemberDetails: {
+      Name: 'Update an existing member details',
       ImageSrc: '../../../assets/Images/edit-user.jpg',
       Alt: 'Update member image',
+    },
+    UpdateMembershipStatus: {
+      Name: 'Update Membership status of member',
+      ImageSrc: '../../../assets/Images/member-status-update.jpg',
+      Alt: 'Update membership status image',
     },
   };
   public static AddNewMemberConstants = {
@@ -126,10 +106,20 @@ export class MemberManagementConstants {
     ],
     Header: 'Add a new member',
   };
+
+  public static UpdateMembershipStatusConstants = {
+    Header: 'Update the membership status',
+  };
+
+  public static UpdateMemberDetailsConstants = {
+    Header: 'Update the member details',
+  };
 }
 
 export class CommonApplicationConstants {
   public static BugReportConstants = {
     Header: 'File a bug report',
+    InformationMessage:
+      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
   };
 }

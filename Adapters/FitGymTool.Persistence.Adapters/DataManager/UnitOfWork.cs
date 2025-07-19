@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="UnitOfWork.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Unit of Work Class.</summary>
 // *********************************************************************************
@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using FitGymTool.Domain.Models;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Repositories;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
 
@@ -18,6 +19,7 @@ namespace FitGymTool.Persistence.Adapters.DataManager;
 /// </summary>
 /// <param name="dbContext">The sql db context.</param>
 /// <seealso cref="IUnitOfWork"/>
+[ExcludeFromCodeCoverage]
 public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 {
 	/// <summary>

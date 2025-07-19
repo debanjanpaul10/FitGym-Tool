@@ -1,16 +1,16 @@
 ﻿// *********************************************************************************
-//	<copyright file="MemberDetailsDTO.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//	<copyright file="UpdateMemberDTO.cs" company="Personal">
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
-// <summary>The Member Details Data Transfer Object.</summary>
+// <summary>UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.API.Adapters.Models.Response.Members;
+namespace FitGymTool.API.Adapters.Models.Request;
 
 /// <summary>
-/// The Member Details Data Transfer Object.
+/// UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.
 /// </summary>
-public class MemberDetailsDTO
+public class UpdateMemberDTO : BaseDTO
 {
 	/// <summary>
 	/// Gets or sets the Member ID.
@@ -21,11 +21,6 @@ public class MemberDetailsDTO
 	/// Gets or sets the Member Name.
 	/// </summary>
 	public string MemberName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the Member Email.
-	/// </summary>
-	public string MemberEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Member Phone Number.
@@ -43,22 +38,15 @@ public class MemberDetailsDTO
 	public DateTime MemberDateOfBirth { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Member Gender.
+	/// Gets or sets the member join date.
 	/// </summary>
-	public string MemberGender { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the Member Join Date.
-	/// </summary>
+	/// <value>
+	/// The member join date.
+	/// </value>
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status Name.
+	/// Gets or sets the Member Gender.
 	/// </summary>
-	public string MembershipStatus { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the Member GUID.
-	/// </summary>
-	public Guid MemberGuid { get; set; }
+	public string MemberGender { get; set; } = string.Empty;
 }

@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="DependencyContainer.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The DI Container Class.</summary>
 // *********************************************************************************
@@ -12,6 +12,7 @@ using FitGymTool.Persistence.Adapters.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using static FitGymTool.Persistence.Adapters.Helpers.Constants.DatabaseConstants;
 
 namespace FitGymTool.Persistence.Adapters.IOC;
@@ -19,6 +20,7 @@ namespace FitGymTool.Persistence.Adapters.IOC;
 /// <summary>
 /// The Dependency Container Class.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class DependencyContainer
 {
 	/// <summary>
@@ -67,7 +69,7 @@ public static class DependencyContainer
 	/// Adds the data managers.
 	/// </summary>
 	/// <param name="services">The services.</param>
-	/// <returns></returns>
+	/// <returns>The service collection.</returns>
 	private static IServiceCollection AddDataManagers(this IServiceCollection services)
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>()

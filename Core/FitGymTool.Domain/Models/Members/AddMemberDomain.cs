@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="AddMemberDomain.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>Add Member Domain Class.</summary>
 // *********************************************************************************
@@ -57,27 +57,4 @@ public class AddMemberDomain : BaseDomain
 	/// Gets or sets the Member GUID.
 	/// </summary>
 	public Guid MemberGuid { get; set; } = new Guid();
-
-	/// <summary>
-	/// Ensures all DateTime fields are set to valid values.
-	/// </summary>
-	public void EnsureValidDates()
-	{
-		if (MemberDateOfBirth == DateTime.MinValue)
-		{
-			MemberDateOfBirth = DateTime.UtcNow;
-		}
-		if (MemberJoinDate == DateTime.MinValue)
-		{
-			MemberJoinDate = DateTime.UtcNow;
-		}
-		if (DateCreated == DateTime.MinValue)
-		{
-			DateCreated = DateTime.UtcNow;
-		}
-		if (DateModified == DateTime.MinValue)
-		{
-			DateModified = DateTime.UtcNow;
-		}
-	}
 }

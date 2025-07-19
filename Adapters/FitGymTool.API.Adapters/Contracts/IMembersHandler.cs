@@ -1,11 +1,13 @@
 ﻿// *********************************************************************************
 //	<copyright file="IMembersHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Members Handler Adapter Interface.</summary>
 // *********************************************************************************
 
-using FitGymTool.API.Adapters.Models.Response.Members;
+using FitGymTool.API.Adapters.Models.Request;
+using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.Domain.Models.Members;
 
 namespace FitGymTool.API.Adapters.Contracts;
 
@@ -41,12 +43,12 @@ public interface IMembersHandler
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails);
+	Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails);
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
+	/// Updates the membership status asynchronous.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="updateMembershipStatusDto">The update membership status dto.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> DeleteMemberAsync(int memberId);
+	Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto);
 }

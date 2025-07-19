@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="BaseController.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Base Controller Class.</summary>
 // *********************************************************************************
@@ -9,6 +9,7 @@ using FitGymTool.API.Adapters.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using FitGymTool.API.Helpers;
+using FitGymTool.API.Adapters.Models.Request;
 
 namespace FitGymTool.API.Controllers;
 
@@ -40,21 +41,21 @@ public abstract class BaseController : ControllerBase
 			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userFullName))
 			{
-				this.UserFullName = userFullName;
+				UserFullName = userFullName;
 			}
 			else
 			{
-				this.UserFullName = APIConstants.HeaderConstants.NotApplicableStringConstant;
+				UserFullName = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 
 			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userEmail))
 			{
-				this.UserEmail = userEmail;
+				UserEmail = userEmail;
 			}
 			else
 			{
-				this.UserEmail = APIConstants.HeaderConstants.NotApplicableStringConstant;
+				UserEmail = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 		}
 	}
@@ -110,11 +111,22 @@ public abstract class BaseController : ControllerBase
 	/// <returns>The boolean for authentication.</returns>
 	protected bool IsAuthorized()
 	{
-		if (!string.IsNullOrEmpty(this.UserFullName) && !string.IsNullOrEmpty(this.UserEmail))
+		if (!string.IsNullOrEmpty(UserFullName) && !string.IsNullOrEmpty(UserEmail))
 		{
 			return true;
 		}
 
 		return false;
+	}
+
+	/// <summary>
+	/// Prepares the default dto data.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="inputDto">The input dto.</param>
+	protected void PrepareDefaultDtoData<T>(T inputDto) where T: BaseDTO
+	{
+		inputDto.DateModified = DateTime.Now;
+		inputDto.ModifiedBy = UserEmail;
 	}
 }

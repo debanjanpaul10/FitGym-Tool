@@ -1,13 +1,14 @@
 ﻿// *********************************************************************************
 //	<copyright file="MembersHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Members Handler Adapter Class.</summary>
 // *********************************************************************************
 
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
-using FitGymTool.API.Adapters.Models.Response.Members;
+using FitGymTool.API.Adapters.Models.Request;
+using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.In;
 
@@ -43,18 +44,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = this._mapper.Map<AddMemberDomain>(memberDetails);
-		return await this._membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
-	}
-
-	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
-	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
-	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> DeleteMemberAsync(int memberId)
-	{
-		return await this._membersService.DeleteMemberAsync(memberId);
+		var domainRequest = _mapper.Map<AddMemberDomain>(memberDetails);
+		return await _membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
 	/// <summary>
@@ -63,8 +54,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>A list of MemberDetailsDTO.</returns>
 	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
 	{
-		var domainMembers = await this._membersService.GetAllMembersAsync();
-		return this._mapper.Map<List<MemberDetailsDTO>>(domainMembers);
+		var domainMembers = await _membersService.GetAllMembersAsync();
+		return _mapper.Map<List<MemberDetailsDTO>>(domainMembers);
 	}
 
 	/// <summary>
@@ -74,8 +65,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
 	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
 	{
-		var domainMember = await this._membersService.GetMemberByEmailIdAsync(memberEmail);
-		return this._mapper.Map<MemberDetailsDTO>(domainMember);
+		var domainMember = await _membersService.GetMemberByEmailIdAsync(memberEmail);
+		return _mapper.Map<MemberDetailsDTO>(domainMember);
 	}
 
 	/// <summary>
@@ -83,9 +74,20 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDTO memberDetails)
+	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails)
 	{
-		var domainRequest = this._mapper.Map<UpdateMemberDomain>(memberDetails);
-		return await this._membersService.UpdateMemberAsync(domainRequest);
+		var domainRequest = _mapper.Map<UpdateMemberDomain>(memberDetails);
+		return await _membersService.UpdateMemberDetailsAsync(domainRequest);
+	}
+
+	/// <summary>
+	/// Updates the membership status asynchronous.
+	/// </summary>
+	/// <param name="updateMembershipStatusDto">The update membership status dto.</param>
+	/// <returns>The boolean result for success/failure.</returns>
+	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto)
+	{
+		var domainRequest = _mapper.Map<UpdateMembershipStatusDomain>(updateMembershipStatusDto);
+		return await _membersService.UpdateMembershipStatusAsync(domainRequest);
 	}
 }

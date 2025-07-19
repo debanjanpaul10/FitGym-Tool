@@ -1,8 +1,8 @@
 import {
   Component,
+  effect,
   inject,
   OnDestroy,
-  OnInit,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { IftaLabelModule } from 'primeng/iftalabel';
+import { MessageModule } from 'primeng/message';
 
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApiService } from '@services/common-api.service';
@@ -34,6 +35,14 @@ import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-
 
 /**
  * Component for submitting bug reports. Handles form creation, validation, severity mapping, and submission logic.
+ *
+ * This component provides a dialog-based interface for users to report bugs with the following features:
+ * - Reactive form with validation for bug title, description, and severity
+ * - Dynamic loading of bug severity options from master data
+ * - Automatic page URL capture for context
+ * - Form submission with API integration
+ * - Loading states and toast notifications
+ * - Proper cleanup of subscriptions
  */
 @Component({
   selector: 'app-bug-report',
@@ -45,11 +54,12 @@ import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-
     TextareaModule,
     ReactiveFormsModule,
     IftaLabelModule,
+    MessageModule,
   ],
   templateUrl: './bug-report.component.html',
   styleUrl: './bug-report.component.scss',
 })
-export class BugReportComponent implements OnInit, OnDestroy {
+export class BugReportComponent implements OnDestroy {
   protected visible: WritableSignal<boolean> = signal(false);
   protected bugReportForm: FormGroup;
   protected bugReportConstants = CommonApplicationConstants.BugReportConstants;
@@ -69,18 +79,28 @@ export class BugReportComponent implements OnInit, OnDestroy {
   constructor() {
     this.visible = this.dialogPopupService.isBugReportDialogOpen;
     this.bugReportForm = this.createForm();
-  }
 
-  ngOnInit(): void {
-    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
-      'bugSeverityMapping',
-      (options) => {
-        this.bugSeverityMappingOptions = options as BugSeverityMappingDto[];
-      },
-      () => {
-        this.getMasterMappingsData();
+    effect(() => {
+      if (this.visible()) {
+        this.setPageUrl();
+        this.mappingMasterDataSubscription =
+          this.commonService.subscribeToMapping(
+            'bugSeverityMapping',
+            (options) => {
+              this.bugSeverityMappingOptions =
+                options as BugSeverityMappingDto[];
+            },
+            () => {
+              this.getMasterMappingsData();
+            }
+          );
+      } else {
+        if (this.mappingMasterDataSubscription) {
+          this.mappingMasterDataSubscription.unsubscribe();
+        }
       }
-    );
+    });
+    this.setPageUrl();
   }
 
   ngOnDestroy(): void {
@@ -100,6 +120,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
         bugDescription: this.bugReportForm.value.bugDescription,
         bugSeverity: this.bugReportForm.value.bugSeverity,
         createdBy: '',
+        pageUrl: window.location.href,
       };
 
       this.commonApiService.AddBugReportDataAsync(bugReportData).subscribe({
@@ -131,6 +152,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
   protected resetAndCloseForm(): void {
     this.bugReportForm.reset();
     this.visible.set(false);
+    this.setPageUrl();
   }
 
   /**
@@ -138,7 +160,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
    * @returns {FormGroup} The initialized bug report form group.
    */
   private createForm(): FormGroup {
-    return this.formBuilder.group({
+    var formData = this.formBuilder.group({
       bugTitle: [
         '',
         [
@@ -155,8 +177,11 @@ export class BugReportComponent implements OnInit, OnDestroy {
           Validators.maxLength(500),
         ],
       ],
-      bugSeverity: ['', [Validators.required]],
+      bugSeverity: [{ value: '', disabled: true }, [Validators.required]],
+      pageUrl: ['', [Validators.required]],
     });
+
+    return formData;
   }
 
   /**
@@ -169,6 +194,7 @@ export class BugReportComponent implements OnInit, OnDestroy {
         if (response && response.isSuccess) {
           this.bugSeverityMappingOptions =
             response.responseData?.bugSeverityMapping;
+          this.setDefaultSeverity();
         }
       },
       error: (err: Error) => {
@@ -179,6 +205,32 @@ export class BugReportComponent implements OnInit, OnDestroy {
       complete: () => {
         this.loaderService.loadingOff();
       },
+    });
+  }
+
+  /**
+   * Sets the default severity to "Medium" and keeps the field disabled.
+   */
+  private setDefaultSeverity(): void {
+    const mediumSeverity = this.bugSeverityMappingOptions.find(
+      (option) => option.severityName.toLowerCase() === 'medium'
+    );
+
+    if (mediumSeverity) {
+      this.bugReportForm.patchValue({
+        bugSeverity: mediumSeverity.id,
+      });
+    }
+  }
+
+  /**
+   * Sets the page url.
+   */
+  private setPageUrl(): void {
+    const pageUrl = window.location.pathname;
+
+    this.bugReportForm.patchValue({
+      pageUrl: pageUrl,
     });
   }
 }

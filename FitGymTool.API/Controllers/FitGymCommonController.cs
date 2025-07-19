@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="FitGymCommonController.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Fit Gym Common Controller Class.</summary>
 // *********************************************************************************
@@ -41,23 +41,23 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				var result = await fitGymCommonHandler.GetMappingsMasterDataAsync();
 				if (result is not null)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
@@ -80,24 +80,24 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				addBugReportData.CreatedBy = base.UserEmail;
 				var result = await fitGymCommonHandler.AddNewBugReportDataAsync(addBugReportData);
 				if (result)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{

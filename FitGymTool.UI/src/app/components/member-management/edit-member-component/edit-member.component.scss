@@ -1,0 +1,92 @@
+.edit-members-table {
+  position: relative;
+  overflow-x: auto;
+
+  .p-datepicker {
+    width: 100%;
+    min-width: 200px;
+  }
+
+  // Target specific date columns
+  :nth-child(6), // Date of Birth column
+  :nth-child(8) {
+    // Join Date column
+    min-width: 220px;
+    width: 220px;
+  }
+
+  // Ensure date picker inputs have adequate width
+  .form-input {
+    width: 100%;
+    min-width: 180px;
+  }
+
+  // Style for table cells containing date pickers
+  td:has(.p-datepicker) {
+    min-width: 220px;
+    width: 220px;
+  }
+
+  // Scroll indicator arrow
+  .scroll-indicator {
+    position: absolute;
+    top: 10px;
+    z-index: 999;
+    opacity: 0;
+    right: 20px;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+// Field container styles
+.field-container {
+  width: 100%;
+
+  .p-error {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--red-500);
+  }
+}
+
+// Global styles for this component's date pickers
+::ng-deep .edit-members-table {
+  .p-datepicker-input {
+    width: 100% !important;
+    min-width: 180px !important;
+  }
+
+  .p-datepicker-trigger {
+    width: auto !important;
+  }
+
+  // Sticky header
+  .p-datatable-thead > tr > th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1 !important;
+    background-color: var(--surface-ground) !important;
+    border-bottom: 1px solid var(--surface-border) !important;
+  }
+
+  // Validation styles
+  .p-invalid {
+    border-color: var(--red-500) !important;
+  }
+
+  .p-select.p-invalid .p-select-label,
+  .p-datepicker.p-invalid .p-datepicker-input {
+    border-color: var(--red-500) !important;
+  }
+
+  // Adjust table cell height for error messages
+  td {
+    vertical-align: top;
+    padding: 0.75rem 0.5rem;
+  }
+}

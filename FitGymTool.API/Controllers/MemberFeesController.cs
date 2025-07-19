@@ -1,10 +1,9 @@
 ﻿// *********************************************************************************
 //	<copyright file="MemberFeesController.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Member Fees Controller Class.</summary>
 // *********************************************************************************
-
 
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
@@ -42,18 +41,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 		{
 			logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				var result = await memberFeesHandler.GetCurrentMonthFeesAndRevenueStatusAsync();
 				if (result is not null)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{

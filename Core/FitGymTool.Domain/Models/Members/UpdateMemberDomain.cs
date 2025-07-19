@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="UpdateMemberDomain.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Member Details Entity Class.</summary>
 // *********************************************************************************
@@ -55,11 +55,6 @@ public class UpdateMemberDomain : BaseDomain
 	/// Gets or sets the Member Join Date.
 	/// </summary>
 	public DateTime MemberJoinDate { get; set; }
-
-	/// <summary>
-	/// Gets or sets the Membership Status ID.
-	/// </summary>
-	public int MembershipStatusId { get; set; }
 
 	/// <summary>
 	/// Gets or sets the Member GUID.

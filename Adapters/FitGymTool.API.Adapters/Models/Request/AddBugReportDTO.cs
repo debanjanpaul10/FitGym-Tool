@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="AddBugReportDto.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Add New Bug Report Data DTO.</summary>
 // *********************************************************************************
@@ -43,4 +43,12 @@ public class AddBugReportDTO
 	/// The created by.
 	/// </value>
 	public string CreatedBy { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the page URL.
+	/// </summary>
+	/// <value>
+	/// The page URL.
+	/// </value>
+	public string PageUrl { get; set; } = string.Empty;
 }

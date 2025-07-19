@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="BugReportData.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Bug Report Data Entity Class.</summary>
 // *********************************************************************************
@@ -52,4 +52,12 @@ public class BugReportData : BaseEntity
 	/// The bug status identifier.
 	/// </value>
 	public int BugStatusId { get; set; }
+
+	/// <summary>
+	/// Gets or sets the page URL.
+	/// </summary>
+	/// <value>
+	/// The page URL.
+	/// </value>
+	public string PageUrl { get; set; } = string.Empty;
 }

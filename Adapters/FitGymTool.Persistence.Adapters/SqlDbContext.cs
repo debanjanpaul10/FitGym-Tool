@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="SqlDbContext.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The SQL DB Context Class.</summary>
 // *********************************************************************************

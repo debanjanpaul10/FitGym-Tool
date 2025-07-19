@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="IRepository.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>Interface definition of the contract for a generic repository pattern.</summary>
 // *********************************************************************************
