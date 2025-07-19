@@ -126,7 +126,7 @@ public abstract class BaseController : ControllerBase
 	/// <param name="inputDto">The input dto.</param>
 	protected void PrepareDefaultDtoData<T>(T inputDto) where T: BaseDTO
 	{
-		inputDto.DateModifed = DateTime.Now;
+		inputDto.DateModified = DateTime.Now;
 		inputDto.ModifiedBy = UserEmail;
 	}
 }

@@ -26,5 +26,5 @@ public class BaseDTO
 	/// <value>
 	/// The date modifed.
 	/// </value>
-	public DateTime DateModifed { get; set; } = DateTime.UtcNow;
+	public DateTime DateModified { get; set; } = DateTime.UtcNow;
 }

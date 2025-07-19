@@ -34,7 +34,7 @@ public static class ApiAdaptersTestsHelper
 	{
 		return new AddMemberDTO()
 		{ 
-			DateModifed = DateTime.Now,
+			DateModified = DateTime.Now,
 			MemberAddress = "Lorem Ipsum Hello World",
 			MemberDateOfBirth = DateTime.Now.AddYears(-RandomBirthYearCounter),
 			MemberEmail = CurrentLoggedInUser,
@@ -62,7 +62,7 @@ public static class ApiAdaptersTestsHelper
 			MemberDateOfBirth = DateTime.Now.AddYears(-25),
 			MemberJoinDate = DateTime.Now.AddMonths(-6),
 			MemberGender = "Female",
-			DateModifed = DateTime.Now,
+			DateModified = DateTime.Now,
 			ModifiedBy = CurrentLoggedInUser
 		};
 	}
@@ -78,7 +78,7 @@ public static class ApiAdaptersTestsHelper
 			MemberId = 1,
 			MembershipStatusId = 2,
 			MemberEmailAddress = CurrentLoggedInUser,
-			DateModifed = DateTime.Now,
+			DateModified = DateTime.Now,
 			ModifiedBy = CurrentLoggedInUser
 		};
 	}
