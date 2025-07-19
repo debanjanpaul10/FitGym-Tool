@@ -9,7 +9,6 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
-using FitGymTool.API.Adapters.Models.Response.Members;
 using FitGymTool.Domain.Models;
 using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Models.Members;
@@ -42,11 +41,13 @@ public class DomainMapperProfile: Profile
 		CreateMap<UpdateMemberDTO, UpdateMemberDomain>();
 		CreateMap<MemberDetailsDomain, MemberDetailsDTO>()
 			.ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatus));
+		
 		CreateMap<AddBugReportDTO, BugReportDataDomain>()
 			.ForMember(destination => destination.Id, options => options.Ignore())
 			.ForMember(destination => destination.BugSeverityId, options => options.Ignore())
 			.ForMember(destination => destination.BugStatusId, options => options.Ignore())
 			.ForMember(destination => destination.Title, option => option.MapFrom(source => source.BugTitle))
 			.ForMember(destination => destination.Description, option => option.MapFrom(source => source.BugDescription));
+		CreateMap<UpdateMembershipStatusDTO, UpdateMembershipStatusDomain>();
 	}
 }

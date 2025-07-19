@@ -5,14 +5,16 @@
 // <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
+using System.Globalization;
 using AutoMapper;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Entity;
 using FitGymTool.Persistence.Adapters.Entity.Mapping;
+using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
+using FitGymTool.Domain.Helpers;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
@@ -68,8 +70,8 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 			}
 
 			// Lookup MembershipStatusMapping by status name
-			var statusEntity = (await this._unitOfWork.Repository<MembershipStatusMapping>()
-				.FindAsync(ms => ms.StatusName == memberDetails.MembershipStatus && ms.IsActive)).FirstOrDefault();
+			var statusEntity = await this._unitOfWork.Repository<MembershipStatusMapping>()
+				.FirstOrDefaultAsync(ms => ms.StatusName == memberDetails.MembershipStatus && ms.IsActive);
 
 			var memberDetailsData = this._mapper.Map<MemberDetails>(memberDetails);
 			memberDetailsData.MembershipStatusId = statusEntity?.Id ?? 0;
@@ -157,27 +159,26 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails)
+	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDomain memberDetails)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
 			var existingMember = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberDetails.MemberId && m.IsActive);
 			if (existingMember is null)
 			{
 				var ex = new InvalidOperationException(ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
 
 			// Update the entity for only updated values
-			var memberDetailsData = this._mapper.Map(memberDetails, existingMember);
-			existingMember.DateModified = DateTime.UtcNow;
+			existingMember.PrepareUpdateMemberDataEntity(memberDetails);
 
-			this._unitOfWork.Repository<MemberDetails>().Update(memberDetailsData);
+			this._unitOfWork.Repository<MemberDetails>().Update(existingMember);
 			await this._unitOfWork.SaveChangesAsync();
 
 			return true;
@@ -185,39 +186,39 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
+	/// Updates the membership status asynchronous.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="updateMembershipStatusDomain">The update membership status domain.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> DeleteMemberAsync(int memberId)
+	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDomain updateMembershipStatusDomain)
 	{
 		try
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
-
-			var member = await this._unitOfWork.Repository<MemberDetails>().FirstOrDefaultAsync(predicate: m => m.MemberId == memberId && m.IsActive);
-			if (member is null)
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
+			var existingMember = await this._unitOfWork.Repository<MemberDetails>()
+				.FirstOrDefaultAsync(predicate: member => member.MemberId == updateMembershipStatusDomain.MemberId && member.MemberEmail == updateMembershipStatusDomain.MemberEmailAddress && member.IsActive);
+			if (existingMember is null)
 			{
 				var ex = new InvalidOperationException(ValidationErrorMessages.MemberNotFoundMessageConstant);
 				this._logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, ex.Message));
 				throw ex;
 			}
 
-			member.IsActive = false;
-			this._unitOfWork.Repository<MemberDetails>().Update(member);
+			existingMember.PrepareMembershipStatusUpdateDataEntity(updateMembershipStatusDomain);
+			this._unitOfWork.Repository<MemberDetails>().Update(existingMember);
 			await this._unitOfWork.SaveChangesAsync();
 
 			return true;
@@ -225,13 +226,13 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 		catch (Exception ex)
 		{
 			this._logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			this._logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
 		}
 	}
 }

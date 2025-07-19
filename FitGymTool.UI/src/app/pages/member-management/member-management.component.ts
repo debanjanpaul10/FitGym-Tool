@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
+  OnDestroy,
   OnInit,
   signal,
   WritableSignal,
@@ -13,11 +14,16 @@ import { MembersApiService } from '@services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import { ButtonModule } from 'primeng/button';
-import { MemberDetailsDto } from '@models/DTO/memberdetails-dto.model';
+import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
-import { AddUserComponent } from '@components/member-management/add-user-component/add-user.component';
+import { AddMemberComponent } from '@components/member-management/add-member-component/add-member.component';
 import { CommonService } from '@core/services/common.service';
+import { UpdateMembershipStatusComponent } from '@components/member-management/update-membership-status-component/update-membership-status.component';
+import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
+import { LoaderService } from '@core/services/loader.service';
+import { CommonApiService } from '@services/common-api.service';
+import { EditMemberComponent } from '@components/member-management/edit-member-component/edit-member.component';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -31,17 +37,22 @@ import { CommonService } from '@core/services/common.service';
     MembersListComponent,
     SkeletonModule,
     ButtonModule,
-    AddUserComponent,
+    AddMemberComponent,
+    UpdateMembershipStatusComponent,
+    EditMemberComponent,
   ],
   templateUrl: './member-management.component.html',
   styleUrl: './member-management.component.scss',
 })
-export class MemberManagementComponent implements OnInit {
-  public MemberDashboardConstants =
+export class MemberManagementComponent implements OnInit, OnDestroy {
+  protected MemberDashboardConstants =
     MemberManagementConstants.MembersDashboardConstants;
+  protected allUsersData: WritableSignal<MemberDetailsDto[] | null> =
+    signal(null);
+  protected isUsersDataLoading: WritableSignal<boolean> = signal(false);
+  protected membershipStatusOptions: MembershipStatusMappingDto[] = [];
 
-  public allUsersData: WritableSignal<MemberDetailsDto[] | null> = signal(null);
-  public isUsersDataLoading: WritableSignal<boolean> = signal(false);
+  private mappingMasterDataSubscription: any;
 
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
@@ -49,11 +60,10 @@ export class MemberManagementComponent implements OnInit {
   private readonly dialogPopupService: DialogPopupService =
     inject(DialogPopupService);
   private readonly commonService: CommonService = inject(CommonService);
+  private readonly loaderService: LoaderService = inject(LoaderService);
+  private readonly commonApiService: CommonApiService =
+    inject(CommonApiService);
 
-  /**
-   * Angular lifecycle hook that is called after component initialization.
-   * Initiates the process to fetch all member data from the API.
-   */
   ngOnInit(): void {
     this.commonService.MemberDetailsData.subscribe(
       (data: MemberDetailsDto[] | null) => {
@@ -64,6 +74,22 @@ export class MemberManagementComponent implements OnInit {
         }
       }
     );
+
+    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
+      'membershipStatusMapping',
+      (options) => {
+        this.membershipStatusOptions = options as MembershipStatusMappingDto[];
+      },
+      () => {
+        this.getMasterMappingsData();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.mappingMasterDataSubscription) {
+      this.mappingMasterDataSubscription.unsubscribe();
+    }
   }
 
   protected handleAddNewMember(): void {
@@ -71,14 +97,14 @@ export class MemberManagementComponent implements OnInit {
   }
 
   protected handleTerminateMember(): void {
-    alert('Feature will be worked on soon!');
+    this.dialogPopupService.openMembershipStatusDialog();
   }
 
   protected handleEditMember(): void {
-    alert('Feature will be worked on soon!');
+    this.dialogPopupService.openMemberUpdateDetailsDialog();
   }
 
-  protected onMemberAdded(): void {
+  protected onMemberUpdated(): void {
     this.getAllMembersData();
   }
 
@@ -109,6 +135,29 @@ export class MemberManagementComponent implements OnInit {
       },
       complete: () => {
         this.isUsersDataLoading.set(false);
+      },
+    });
+  }
+
+  /**
+   * Fetches the master mappings data for membership status from the API.
+   */
+  private getMasterMappingsData(): void {
+    this.loaderService.loadingOn();
+    this.commonApiService.GetMappingsMasterDataAsync().subscribe({
+      next: (response: ResponseDto) => {
+        if (response && response.isSuccess) {
+          this.membershipStatusOptions =
+            response.responseData?.membershipStatusMapping;
+        }
+      },
+      error: (err: Error) => {
+        this.loaderService.loadingOff();
+        console.error(err);
+        this.toasterService.showError(err.message);
+      },
+      complete: () => {
+        this.loaderService.loadingOff();
       },
     });
   }

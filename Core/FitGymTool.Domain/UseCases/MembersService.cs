@@ -5,6 +5,7 @@
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
@@ -53,18 +54,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 				throw new InvalidOperationException("Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.");
 			}
 
-			// Set the effective email for the member
-			memberDetails.MemberEmail = effectiveEmail!;
-			memberDetails.MemberGuid = Guid.NewGuid();
-			memberDetails.IsActive = true;
-			memberDetails.CreatedBy = effectiveEmail!;
-			memberDetails.DateCreated = DateTime.UtcNow;
-			memberDetails.ModifiedBy = effectiveEmail!;
-			memberDetails.DateModified = DateTime.UtcNow;
-
-			// Ensure all DateTime fields are set to valid values in the domain model
-			memberDetails.EnsureValidDates();
-
+			memberDetails.PrepareNewMemberDetailsData(effectiveEmail);
 			var result = await _membersDataService.AddNewMemberAsync(memberDetails);
 			return result;
 		}
@@ -149,54 +139,53 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails)
+	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDomain memberDetails)
 	{
 		try
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var result = await _membersDataService.UpdateMemberAsync(memberDetails);
+			var result = await _membersDataService.UpdateMemberDetailsAsync(memberDetails);
 			return result;
 		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 		}
 	}
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
+	/// Updates the membership status asynchronous.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="updateMembershipStatusDomain">The update membership status domain.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> DeleteMemberAsync(int memberId)
+	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDomain updateMembershipStatusDomain)
 	{
 		try
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
-
-			var result = await _membersDataService.DeleteMemberAsync(memberId);
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
+			var result = await this._membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
 			return result;
 		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, ex.Message));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(DeleteMemberAsync), DateTime.UtcNow, memberId));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
 		}
 	}
 }

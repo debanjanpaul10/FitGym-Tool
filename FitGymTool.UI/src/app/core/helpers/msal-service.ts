@@ -8,9 +8,15 @@ import {
   IPublicClientApplication,
   PublicClientApplication,
 } from '@azure/msal-browser';
-import { environment } from '@environments/environment.development';
-import { RouteConstants } from '@shared/application.constants';
 
+import { environment } from '@environments/environment.development';
+import { RouteConstants } from '@shared/routes.constants';
+
+/**
+ * Factory function that creates and configures the MSAL Public Client Application instance.
+ * Sets up authentication configuration, cache settings, and system preferences for Azure AD integration.
+ * @returns Configured IPublicClientApplication instance for handling authentication
+ */
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
@@ -31,6 +37,11 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   });
 }
 
+/**
+ * Factory function that creates the MSAL interceptor configuration.
+ * Defines protected resources and their required scopes for automatic token attachment.
+ * @returns MsalInterceptorConfiguration with protected resource mappings and interaction type
+ */
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, string[]>();
   protectedResourceMap.set(
@@ -44,6 +55,11 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   };
 }
 
+/**
+ * Factory function that creates the MSAL guard configuration for route protection.
+ * Configures authentication requirements, scopes, and fallback routes for protected routes.
+ * @returns MsalGuardConfiguration with interaction type, auth request, and failure route settings
+ */
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,

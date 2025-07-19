@@ -5,7 +5,6 @@
 // <summary>The Member Fees Controller Class.</summary>
 // *********************************************************************************
 
-
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Helpers;

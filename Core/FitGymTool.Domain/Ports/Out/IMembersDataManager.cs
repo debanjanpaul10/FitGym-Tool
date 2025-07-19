@@ -39,12 +39,12 @@ public interface IMembersDataManager
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> UpdateMemberAsync(UpdateMemberDomain memberDetails);
+	Task<bool> UpdateMemberDetailsAsync(UpdateMemberDomain memberDetails);
 
 	/// <summary>
-	/// Deletes a member by MemberId asynchronously.
+	/// Updates the membership status asynchronous.
 	/// </summary>
-	/// <param name="memberId">The member's ID.</param>
+	/// <param name="updateMembershipStatusDomain">The update membership status domain.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> DeleteMemberAsync(int memberId);
+	Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDomain updateMembershipStatusDomain);
 }

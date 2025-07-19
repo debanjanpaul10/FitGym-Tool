@@ -5,11 +5,19 @@
   backdrop-filter: blur(11.5px) !important;
   -webkit-backdrop-filter: blur(11.5px) !important;
   border: 1px solid rgba(255, 255, 255, 0.41) !important;
+  height: 34.0625rem !important;
+
+  .card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .chart-container {
   width: 100%;
-  min-height: 20rem;
+  height: 20rem;
+  max-height: 20rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -19,10 +27,10 @@
 
 .chart-container canvas {
   width: 100% !important;
-  height: 100% !important;
+  height: 18rem !important;
   max-width: 100%;
+  max-height: 18rem;
   min-width: 18.75rem;
-  max-height: 21.875rem;
   display: block;
   flex-shrink: 0;
 }

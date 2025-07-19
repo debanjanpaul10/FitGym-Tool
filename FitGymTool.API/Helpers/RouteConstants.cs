@@ -40,12 +40,12 @@ public static class RouteConstants
 		/// <summary>
 		/// The route for updating an existing member's details.
 		/// </summary>
-		public const string UpdateMember_ApiRoute = "UpdateMember";
+		public const string UpdateMember_ApiRoute = "UpdateMemberDetails";
 
 		/// <summary>
-		/// The route for deleting a member by MemberId.
+		/// The update membership status API route
 		/// </summary>
-		public const string DeleteMember_ApiRoute = "DeleteMember/{memberId}";
+		public const string UpdateMembershipStatus_ApiRoute = "UpdateMembershipStatus";
 	}
 
 	/// <summary>

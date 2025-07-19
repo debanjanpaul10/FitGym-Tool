@@ -57,11 +57,6 @@ public class UpdateMemberDomain : BaseDomain
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status ID.
-	/// </summary>
-	public int MembershipStatusId { get; set; }
-
-	/// <summary>
 	/// Gets or sets the Member GUID.
 	/// </summary>
 	public Guid MemberGuid { get; set; }

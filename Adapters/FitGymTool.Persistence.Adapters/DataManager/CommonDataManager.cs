@@ -71,8 +71,6 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 				MembershipStatusMapping = membershipStatusMappingDomain,
 				BugSeverityMapping = bugSeverityMappingDomain,
 			};
-
-
 		}
 		catch (Exception ex)
 		{
@@ -102,6 +100,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<C
 			var bugStatusEntity = await this._unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive);
 
 			var bugReportData = this._mapper.Map<BugReportData>(bugReportDataDomain);
+			
 			//TODO: overwriting as of now, later needs to be checked by AI or something.
 			bugReportData.BugSeverityId = bugSeverityEntity?.Id ?? 0;
 			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;

@@ -55,6 +55,14 @@ public class BugReportDataDomain : BaseDomain
 	/// </value>
 	public int BugStatusId { get; set; }
 
+	/// <summary>
+	/// Gets or sets the page URL.
+	/// </summary>
+	/// <value>
+	/// The page URL.
+	/// </value>
+	public string PageUrl { get; set; } = string.Empty;
+
 
 	#region NAVIGATION FIELDS
 

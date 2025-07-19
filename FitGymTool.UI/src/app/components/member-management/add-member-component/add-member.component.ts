@@ -1,12 +1,11 @@
 import {
   Component,
   inject,
-  OnDestroy,
-  OnInit,
   signal,
   WritableSignal,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -20,16 +19,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { IftaLabelModule } from 'primeng/iftalabel';
 
-import { AddMemberDto } from '@models/DTO/add-member-dto.model';
+import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import {
   MemberManagementConstants,
   ToasterSuccessMessages,
 } from '@shared/application.constants';
-import { CommonService } from '@core/services/common.service';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
-import { CommonApiService } from '@services/common-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { LoaderService } from '@core/services/loader.service';
 import { ToasterService } from '@core/services/toaster.service';
@@ -39,7 +37,7 @@ import { MembersApiService } from '@services/members-api.service';
  * Component for adding a new gym member. Handles form creation, validation, membership status mapping, and submission logic.
  */
 @Component({
-  selector: 'app-add-user-component',
+  selector: 'app-add-member-component',
   imports: [
     DialogModule,
     ButtonModule,
@@ -48,11 +46,13 @@ import { MembersApiService } from '@services/members-api.service';
     TextareaModule,
     DatePickerModule,
     SelectModule,
+    IftaLabelModule,
   ],
-  templateUrl: './add-user.component.html',
-  styleUrl: './add-user.component.scss',
+  templateUrl: './add-member.component.html',
+  styleUrl: './add-member.component.scss',
 })
-export class AddUserComponent implements OnInit, OnDestroy {
+export class AddMemberComponent {
+  @Input() membershipStatusOptions: MembershipStatusMappingDto[] = [];
   @Output() memberAdded: EventEmitter<void> = new EventEmitter<void>();
 
   protected visible: WritableSignal<boolean> = signal(false);
@@ -60,16 +60,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
   protected addMemberConstants =
     MemberManagementConstants.AddNewMemberConstants;
   protected genderOptions = this.addMemberConstants.genderOptions;
-  protected membershipStatusOptions: MembershipStatusMappingDto[] = [];
-
-  private mappingMasterDataSubscription: any;
 
   private readonly dialogPopupService: DialogPopupService =
     inject(DialogPopupService);
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
-  private readonly commonService: CommonService = inject(CommonService);
-  private readonly commonApiService: CommonApiService =
-    inject(CommonApiService);
   private readonly loaderService: LoaderService = inject(LoaderService);
   private readonly toasterService: ToasterService = inject(ToasterService);
   private readonly membersApiService: MembersApiService =
@@ -78,24 +72,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
   constructor() {
     this.visible = this.dialogPopupService.isAddMemberDialogOpen;
     this.memberForm = this.createForm();
-  }
-
-  ngOnInit(): void {
-    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
-      'membershipStatusMapping',
-      (options) => {
-        this.membershipStatusOptions = options as MembershipStatusMappingDto[];
-      },
-      () => {
-        this.getMasterMappingsData();
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    if (this.mappingMasterDataSubscription) {
-      this.mappingMasterDataSubscription.unsubscribe();
-    }
   }
 
   /**
@@ -167,29 +143,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
       memberGender: ['', [Validators.required]],
       memberJoinDate: [new Date(), [Validators.required]],
       membershipStatus: ['', [Validators.required]],
-    });
-  }
-
-  /**
-   * Fetches the master mappings data for membership status from the API.
-   */
-  private getMasterMappingsData(): void {
-    this.loaderService.loadingOn();
-    this.commonApiService.GetMappingsMasterDataAsync().subscribe({
-      next: (response: ResponseDto) => {
-        if (response && response.isSuccess) {
-          this.membershipStatusOptions =
-            response.responseData?.membershipStatusMapping;
-        }
-      },
-      error: (err: Error) => {
-        this.loaderService.loadingOff();
-        console.error(err);
-        this.toasterService.showError(err.message);
-      },
-      complete: () => {
-        this.loaderService.loadingOff();
-      },
     });
   }
 }

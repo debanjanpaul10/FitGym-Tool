@@ -1,31 +1,27 @@
 ﻿// *********************************************************************************
-//	<copyright file="MemberDetailsDTO.cs" company="Personal">
+//	<copyright file="AddMemberDTO.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>The Member Details Data Transfer Object.</summary>
+// <summary>The Add Member Data Transfer Object Class.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.API.Adapters.Models.Response.Members;
+namespace FitGymTool.API.Adapters.Models.Request;
 
 /// <summary>
-/// The Member Details Data Transfer Object.
+/// The Add Member Data Transfer Object Class.
 /// </summary>
-public class MemberDetailsDTO
+public class AddMemberDTO : BaseDTO
 {
-	/// <summary>
-	/// Gets or sets the Member ID.
-	/// </summary>
-	public int MemberId { get; set; }
-
 	/// <summary>
 	/// Gets or sets the Member Name.
 	/// </summary>
 	public string MemberName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Gets or sets the Member Email.
+	/// Gets or sets the Member Email Address.
+	/// If added by admin, only then has non-null value.
 	/// </summary>
-	public string MemberEmail { get; set; } = string.Empty;
+	public string? MemberEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Member Phone Number.
@@ -53,12 +49,7 @@ public class MemberDetailsDTO
 	public DateTime MemberJoinDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the Membership Status Name.
+	/// Gets or sets the Membership Status.
 	/// </summary>
 	public string MembershipStatus { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Gets or sets the Member GUID.
-	/// </summary>
-	public Guid MemberGuid { get; set; }
 }

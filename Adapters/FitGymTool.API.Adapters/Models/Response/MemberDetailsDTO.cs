@@ -1,16 +1,16 @@
 ﻿// *********************************************************************************
-//	<copyright file="UpdateMemberDTO.cs" company="Personal">
+//	<copyright file="MemberDetailsDTO.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
-// <summary>UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.</summary>
+// <summary>The Member Details Data Transfer Object.</summary>
 // *********************************************************************************
 
-namespace FitGymTool.API.Adapters.Models.Response.Members;
+namespace FitGymTool.API.Adapters.Models.Response;
 
 /// <summary>
-/// UpdateMemberDTO is a Data Transfer Object (DTO) used to update member details.
+/// The Member Details Data Transfer Object.
 /// </summary>
-public class UpdateMemberDTO
+public class MemberDetailsDTO
 {
 	/// <summary>
 	/// Gets or sets the Member ID.
@@ -21,6 +21,11 @@ public class UpdateMemberDTO
 	/// Gets or sets the Member Name.
 	/// </summary>
 	public string MemberName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the Member Email.
+	/// </summary>
+	public string MemberEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the Member Phone Number.
@@ -43,8 +48,17 @@ public class UpdateMemberDTO
 	public string MemberGender { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Gets or sets the Membership Status.
+	/// Gets or sets the Member Join Date.
+	/// </summary>
+	public DateTime MemberJoinDate { get; set; }
+
+	/// <summary>
+	/// Gets or sets the Membership Status Name.
 	/// </summary>
 	public string MembershipStatus { get; set; } = string.Empty;
 
+	/// <summary>
+	/// Gets or sets the Member GUID.
+	/// </summary>
+	public Guid MemberGuid { get; set; }
 }
