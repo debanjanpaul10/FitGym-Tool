@@ -18,3 +18,36 @@ export class ApiRoutes {
       'GetCurrentMonthFeesAndRevenueStatus',
   };
 }
+
+export class RouteConstants {
+  public static Dashboard = {
+    Name: 'Dashboard',
+    Link: 'dashboard',
+    RouteValue: '/dashboard',
+  };
+  public static Login = {
+    Name: 'Login',
+    Link: '',
+    RouteValue: '/',
+  };
+  public static Error = {
+    Name: 'Error',
+    Link: 'error',
+    RouteValue: '/error',
+  };
+  public static MemberManagement = {
+    Name: 'Members',
+    Link: 'members',
+    RouteValue: '/members',
+  };
+  public static FeesManagement = {
+    Name: 'Fees',
+    Link: 'fees',
+    RouteValue: '/fees',
+  };
+  public static FacilityManagement = {
+    Name: 'Facility',
+    Link: 'facility',
+    RouteValue: '/facility',
+  };
+}

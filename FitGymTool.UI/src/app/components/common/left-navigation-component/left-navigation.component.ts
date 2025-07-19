@@ -12,9 +12,10 @@ import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { Router } from '@angular/router';
 
-import { DrawerConstants, RouteConstants } from '@shared/application.constants';
+import { DrawerConstants } from '@shared/application.constants';
 import { DrawerService } from '@core/services/drawer.service';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
+import { RouteConstants } from '@shared/routes.constants';
 
 /**
  * Left navigation component that provides a drawer-based side navigation menu.

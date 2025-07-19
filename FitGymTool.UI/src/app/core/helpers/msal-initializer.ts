@@ -2,6 +2,16 @@ import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { filter, take } from 'rxjs';
 
+import { ConfigurationConstants } from '@shared/application.constants';
+
+/**
+ * Factory function that creates an MSAL initialization function for application startup.
+ * Handles redirect authentication flows, sets active accounts, and ensures proper initialization timing.
+ * Implements timeout fallback and interaction status monitoring for reliable authentication setup.
+ * @param msalService - The MSAL service instance for handling authentication operations
+ * @param broadcastService - The MSAL broadcast service for monitoring authentication status
+ * @returns Function that returns a Promise resolving when MSAL initialization is complete
+ */
 export function msalInitializer(
   msalService: MsalService,
   broadcastService: MsalBroadcastService
@@ -27,7 +37,11 @@ export function msalInitializer(
             msalService.instance.setActiveAccount(result.account);
           }
         },
-        error: (error) => console.error('Redirect error', error),
+        error: (error) =>
+          console.error(
+            ConfigurationConstants.AuthenticatorConstants.RedirectError,
+            error
+          ),
         complete: () => {
           broadcastService.inProgress$
             .pipe(

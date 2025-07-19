@@ -1,33 +1,10 @@
-export class RouteConstants {
-  public static Dashboard = {
-    Name: 'Dashboard',
-    Link: 'dashboard',
-    RouteValue: '/dashboard',
-  };
-  public static Login = {
-    Name: 'Login',
-    Link: '',
-    RouteValue: '/',
-  };
-  public static Error = {
-    Name: 'Error',
-    Link: 'error',
-    RouteValue: '/error',
-  };
-  public static MemberManagement = {
-    Name: 'Members',
-    Link: 'members',
-    RouteValue: '/members',
-  };
-  public static FeesManagement = {
-    Name: 'Fees',
-    Link: 'fees',
-    RouteValue: '/fees',
-  };
-  public static FacilityManagement = {
-    Name: 'Facility',
-    Link: 'facility',
-    RouteValue: '/facility',
+export class ConfigurationConstants {
+  public static AuthenticatorConstants = {
+    GraphApiUrl:
+      'https://graph.microsoft.com/v1.0/users?$filter=startswith(displayName',
+    InvalidGrantConstant: 'invalid_grant',
+    InvalidGrantError: 'AADSTS65001',
+    RedirectError: 'Redirect Error',
   };
 }
 

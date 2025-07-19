@@ -31,6 +31,10 @@ import { UpdateMembershipStatusDto } from '@models/DTO/members/update-membership
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 
+/**
+ * Component for updating membership status of members in a tabular format.
+ * Provides functionality to change member status with validation and API integration.
+ */
 @Component({
   selector: 'app-update-membership-status-component',
   imports: [
@@ -93,6 +97,12 @@ export class UpdateMembershipStatusComponent {
     });
   }
 
+  /**
+   * Handles the update of membership status by calling the API service.
+   * Validates status selection, shows loading state, and handles success/error responses.
+   * @param member - The member whose status is being updated
+   * @param newStatusId - The new membership status ID to be assigned
+   */
   protected onMembershipStatusChangesUpdate(
     member: MemberDetailsDto,
     newStatusId: number
@@ -133,6 +143,9 @@ export class UpdateMembershipStatusComponent {
       });
   }
 
+  /**
+   * Handles the cancel action by hiding the membership status dialog.
+   */
   protected onCancel(): void {
     this.visible.set(false);
   }

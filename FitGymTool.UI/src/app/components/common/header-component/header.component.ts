@@ -11,10 +11,11 @@ import { MsalService } from '@azure/msal-angular';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccountInfo } from '@azure/msal-browser';
+import { Router } from '@angular/router';
 
 import { DrawerService } from '@core/services/drawer.service';
-import { DrawerConstants, RouteConstants } from '@shared/application.constants';
-import { Router } from '@angular/router';
+import { DrawerConstants } from '@shared/application.constants';
+import { RouteConstants } from '@shared/routes.constants';
 
 /**
  * Header component that displays the application header with navigation and user information.
