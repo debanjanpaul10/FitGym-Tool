@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="MembersService.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
@@ -173,7 +173,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
-			var result = await this._membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
+			var result = await _membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
 			return result;
 		}
 		catch (Exception ex)

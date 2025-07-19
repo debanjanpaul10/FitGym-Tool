@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="BaseController.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Base Controller Class.</summary>
 // *********************************************************************************
@@ -41,21 +41,21 @@ public abstract class BaseController : ControllerBase
 			var userFullName = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserFullNameClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userFullName))
 			{
-				this.UserFullName = userFullName;
+				UserFullName = userFullName;
 			}
 			else
 			{
-				this.UserFullName = APIConstants.HeaderConstants.NotApplicableStringConstant;
+				UserFullName = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 
 			var userEmail = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(claim => claim.Type.Equals(APIConstants.AuthenticationConstants.UserEmailClaimConstant))?.Value;
 			if (!string.IsNullOrEmpty(userEmail))
 			{
-				this.UserEmail = userEmail;
+				UserEmail = userEmail;
 			}
 			else
 			{
-				this.UserEmail = APIConstants.HeaderConstants.NotApplicableStringConstant;
+				UserEmail = APIConstants.HeaderConstants.NotApplicableStringConstant;
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public abstract class BaseController : ControllerBase
 	/// <returns>The boolean for authentication.</returns>
 	protected bool IsAuthorized()
 	{
-		if (!string.IsNullOrEmpty(this.UserFullName) && !string.IsNullOrEmpty(this.UserEmail))
+		if (!string.IsNullOrEmpty(UserFullName) && !string.IsNullOrEmpty(UserEmail))
 		{
 			return true;
 		}
@@ -126,7 +126,7 @@ public abstract class BaseController : ControllerBase
 	/// <param name="inputDto">The input dto.</param>
 	protected void PrepareDefaultDtoData<T>(T inputDto) where T: BaseDTO
 	{
-		inputDto.DateModifed = DateTime.Now;
-		inputDto.ModifiedBy = this.UserEmail;
+		inputDto.DateModified = DateTime.Now;
+		inputDto.ModifiedBy = UserEmail;
 	}
 }

@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="RouteConstants.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Route Constants class contains constants for API route paths.</summary>
 // *********************************************************************************

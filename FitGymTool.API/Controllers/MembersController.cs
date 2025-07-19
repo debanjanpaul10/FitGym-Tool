@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="MembersController.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Members Controller Class.</summary>
 // *********************************************************************************
@@ -42,24 +42,24 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				base.PrepareDefaultDtoData(memberDetails);
 				var result = await membersHandler.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
 				if (result)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
@@ -81,23 +81,23 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				var result = await membersHandler.GetAllMembersAsync();
 				if (result is not null)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
@@ -121,23 +121,23 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		{
 			logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				var result = await membersHandler.GetMemberByEmailIdAsync(memberEmailId);
 				if (result is not null)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
@@ -160,24 +160,24 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				base.PrepareDefaultDtoData(memberDetails);
 				var result = await membersHandler.UpdateMemberDetailsAsync(memberDetails);
 				if (result)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{
@@ -200,24 +200,24 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (this.IsAuthorized())
+			if (IsAuthorized())
 			{
 				base.PrepareDefaultDtoData(membershipStatusDto);
 				var result = await membersHandler.UpdateMembershipStatusAsync(membershipStatusDto);
 				if (result)
 				{
-					return this.HandleSuccessRequestResponse(result);
+					return HandleSuccessRequestResponse(result);
 				}
 
-				return this.HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 			}
 
-			return this.HandleUnAuthorizedRequestResponse();
+			return HandleUnAuthorizedRequestResponse();
 		}
 		catch (Exception ex)
 		{
 			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, ex.Message));
-			return this.HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
 		}
 		finally
 		{

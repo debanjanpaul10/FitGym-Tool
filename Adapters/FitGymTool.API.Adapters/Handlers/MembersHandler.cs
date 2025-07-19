@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="MembersHandler.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Members Handler Adapter Class.</summary>
 // *********************************************************************************
@@ -44,8 +44,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = this._mapper.Map<AddMemberDomain>(memberDetails);
-		return await this._membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
+		var domainRequest = _mapper.Map<AddMemberDomain>(memberDetails);
+		return await _membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
 	/// <summary>
@@ -54,8 +54,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>A list of MemberDetailsDTO.</returns>
 	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
 	{
-		var domainMembers = await this._membersService.GetAllMembersAsync();
-		return this._mapper.Map<List<MemberDetailsDTO>>(domainMembers);
+		var domainMembers = await _membersService.GetAllMembersAsync();
+		return _mapper.Map<List<MemberDetailsDTO>>(domainMembers);
 	}
 
 	/// <summary>
@@ -65,8 +65,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
 	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
 	{
-		var domainMember = await this._membersService.GetMemberByEmailIdAsync(memberEmail);
-		return this._mapper.Map<MemberDetailsDTO>(domainMember);
+		var domainMember = await _membersService.GetMemberByEmailIdAsync(memberEmail);
+		return _mapper.Map<MemberDetailsDTO>(domainMember);
 	}
 
 	/// <summary>
@@ -76,8 +76,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails)
 	{
-		var domainRequest = this._mapper.Map<UpdateMemberDomain>(memberDetails);
-		return await this._membersService.UpdateMemberDetailsAsync(domainRequest);
+		var domainRequest = _mapper.Map<UpdateMemberDomain>(memberDetails);
+		return await _membersService.UpdateMemberDetailsAsync(domainRequest);
 	}
 
 	/// <summary>
@@ -87,7 +87,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto)
 	{
-		var domainRequest = this._mapper.Map<UpdateMembershipStatusDomain>(updateMembershipStatusDto);
-		return await this._membersService.UpdateMembershipStatusAsync(domainRequest);
+		var domainRequest = _mapper.Map<UpdateMembershipStatusDomain>(updateMembershipStatusDto);
+		return await _membersService.UpdateMembershipStatusAsync(domainRequest);
 	}
 }

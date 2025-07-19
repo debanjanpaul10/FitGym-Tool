@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="BaseDTO.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Base DTO class.</summary>
 // *********************************************************************************
@@ -26,5 +26,5 @@ public class BaseDTO
 	/// <value>
 	/// The date modifed.
 	/// </value>
-	public DateTime DateModifed { get; set; } = DateTime.UtcNow;
+	public DateTime DateModified { get; set; } = DateTime.UtcNow;
 }

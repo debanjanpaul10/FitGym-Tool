@@ -1,6 +1,6 @@
 ﻿// *********************************************************************************
 //	<copyright file="QueryableExtensions.cs" company="Personal">
-//		Copyright (c) 2025 Personal
+//		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>Class containing extension methods for IQueryable to filter entities.</summary>
 // *********************************************************************************
