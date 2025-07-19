@@ -12,6 +12,7 @@ using FitGymTool.Persistence.Adapters.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using static FitGymTool.Persistence.Adapters.Helpers.Constants.DatabaseConstants;
 
 namespace FitGymTool.Persistence.Adapters.IOC;
@@ -19,6 +20,7 @@ namespace FitGymTool.Persistence.Adapters.IOC;
 /// <summary>
 /// The Dependency Container Class.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class DependencyContainer
 {
 	/// <summary>

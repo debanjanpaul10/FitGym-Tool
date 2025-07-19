@@ -8,6 +8,7 @@
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace FitGymTool.Persistence.Adapters.Repositories;
@@ -18,6 +19,7 @@ namespace FitGymTool.Persistence.Adapters.Repositories;
 /// <typeparam name="TEntity">The Type Entity.</typeparam>
 /// <param name="context">The SQL DB context.</param>
 /// <seealso cref="IRepository"/>
+[ExcludeFromCodeCoverage]
 public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEntity> where TEntity : class
 {
 	/// <summary>
