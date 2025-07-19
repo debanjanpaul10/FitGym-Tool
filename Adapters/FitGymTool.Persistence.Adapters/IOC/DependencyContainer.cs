@@ -69,7 +69,7 @@ public static class DependencyContainer
 	/// Adds the data managers.
 	/// </summary>
 	/// <param name="services">The services.</param>
-	/// <returns></returns>
+	/// <returns>The service collection.</returns>
 	private static IServiceCollection AddDataManagers(this IServiceCollection services)
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>()
