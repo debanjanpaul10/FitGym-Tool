@@ -5,6 +5,7 @@
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
@@ -53,16 +54,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 				throw new InvalidOperationException("Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.");
 			}
 
-			// Set the effective email for the member
-			memberDetails.MemberEmail = effectiveEmail!;
-			memberDetails.MemberGuid = Guid.NewGuid();
-			memberDetails.IsActive = true;
-			memberDetails.CreatedBy = effectiveEmail!;
-			memberDetails.DateCreated = DateTime.UtcNow;
-
-			// Ensure all DateTime fields are set to valid values in the domain model
-			memberDetails.EnsureValidDates();
-
+			memberDetails.PrepareNewMemberDetailsData(effectiveEmail);
 			var result = await _membersDataService.AddNewMemberAsync(memberDetails);
 			return result;
 		}

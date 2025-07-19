@@ -5,14 +5,16 @@
 // <summary>The Members Data Service Class.</summary>
 // *********************************************************************************
 
+using System.Globalization;
 using AutoMapper;
 using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Entity;
 using FitGymTool.Persistence.Adapters.Entity.Mapping;
+using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
+using FitGymTool.Domain.Helpers;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
@@ -68,8 +70,8 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 			}
 
 			// Lookup MembershipStatusMapping by status name
-			var statusEntity = (await this._unitOfWork.Repository<MembershipStatusMapping>()
-				.FindAsync(ms => ms.StatusName == memberDetails.MembershipStatus && ms.IsActive)).FirstOrDefault();
+			var statusEntity = await this._unitOfWork.Repository<MembershipStatusMapping>()
+				.FirstOrDefaultAsync(ms => ms.StatusName == memberDetails.MembershipStatus && ms.IsActive);
 
 			var memberDetailsData = this._mapper.Map<MemberDetails>(memberDetails);
 			memberDetailsData.MembershipStatusId = statusEntity?.Id ?? 0;
@@ -174,14 +176,7 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 			}
 
 			// Update the entity for only updated values
-			existingMember.MemberName = memberDetails.MemberName;
-			existingMember.MemberPhoneNumber = memberDetails.MemberPhoneNumber;
-			existingMember.MemberAddress = memberDetails.MemberAddress;
-			existingMember.MemberDateOfBirth = memberDetails.MemberDateOfBirth;
-			existingMember.MemberJoinDate = memberDetails.MemberJoinDate;
-			memberDetails.MemberGender = memberDetails.MemberGender;
-			memberDetails.DateModified = memberDetails.DateModified;
-			memberDetails.ModifiedBy = memberDetails.ModifiedBy;
+			existingMember.PrepareUpdateMemberDataEntity(memberDetails);
 
 			this._unitOfWork.Repository<MemberDetails>().Update(existingMember);
 			await this._unitOfWork.SaveChangesAsync();
@@ -222,10 +217,7 @@ public class MembersDataManager(IUnitOfWork unitOfWork, IMapper mapper, ILogger<
 				throw ex;
 			}
 
-			existingMember.MembershipStatusId = updateMembershipStatusDomain.MembershipStatusId;
-			existingMember.DateModified = DateTime.UtcNow;
-			existingMember.ModifiedBy = updateMembershipStatusDomain.ModifiedBy;
-
+			existingMember.PrepareMembershipStatusUpdateDataEntity(updateMembershipStatusDomain);
 			this._unitOfWork.Repository<MemberDetails>().Update(existingMember);
 			await this._unitOfWork.SaveChangesAsync();
 
