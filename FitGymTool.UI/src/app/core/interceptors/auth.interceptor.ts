@@ -8,7 +8,7 @@ import { inject, Injectable } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ConfigurationConstants } from '@shared/application.constants';
 
 /**

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';

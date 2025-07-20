@@ -18,4 +18,3 @@ appsettings.Development.json
 # NODE
 **.angular/
 **dist/
-**/src/env/environment.development.ts

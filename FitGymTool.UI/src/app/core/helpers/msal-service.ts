@@ -9,7 +9,7 @@ import {
   PublicClientApplication,
 } from '@azure/msal-browser';
 
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { RouteConstants } from '@shared/routes.constants';
 
 /**
