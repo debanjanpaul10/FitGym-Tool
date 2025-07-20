@@ -11,7 +11,6 @@
 
 # Local Development Files
 appsettings.Development.json
-**environment.development.json
 /FitGymTool.Database/FitGymTool.Database.dbmdl
 /FitGymTool.Database/FitGymTool.Database.jfm
 **.kiro
@@ -19,3 +18,4 @@ appsettings.Development.json
 # NODE
 **.angular/
 **dist/
+**/src/env/environment.development.ts
