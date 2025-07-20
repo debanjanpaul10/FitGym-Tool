@@ -10,8 +10,8 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
     <EnableDefaultSqlItems>false</EnableDefaultSqlItems>
+    <ProjectGuid>{c28974f8-df6a-40fd-8f4b-02748f867f8b}</ProjectGuid>
   </PropertyGroup>
-
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
@@ -20,7 +20,6 @@
     <Folder Include="Helpers" />
     <Folder Include="Functions" />
   </ItemGroup>
-
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
     <Build Include="Tables\FeesStatus.sql" />
@@ -36,7 +35,6 @@
     <Build Include="Tables\BugItemStatusMapping.sql" />
     <Build Include="Tables\BugSeverityMapping.sql" />
   </ItemGroup>
-
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
@@ -45,17 +43,14 @@
     <None Include="PostDeploymentScripts\Script.INSERT_BugItemStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_BugSeverityMapping.sql" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Helpers\CleanupAll.sql" />
     <None Include="Helpers\MockUsersData.sql" />
     <None Include="Helpers\MockFeesData.sql" />
   </ItemGroup>
-
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
-
 </Project>
