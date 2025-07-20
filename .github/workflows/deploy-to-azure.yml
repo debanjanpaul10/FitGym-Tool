@@ -92,9 +92,9 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Set up Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "20.x"
+                  node-version: "22.x"
 
             - name: Install dependencies and build UI
               run: |
@@ -109,6 +109,8 @@ jobs:
                   action: "upload"
                   app_location: ${{ env.WEB_PROJECT_PATH }}
                   output_location: "dist/FitGymTool.UI/browser"
+              env:
+                  NODE_VERSION: "22"
 
     build-database:
         name: Build FitGymTool.Database
