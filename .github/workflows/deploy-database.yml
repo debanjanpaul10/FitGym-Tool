@@ -1,0 +1,87 @@
+name: Deploy FitGymTool Database
+
+env:
+    DATABASE_PROJECT_PATH: FitGymTool.Database/FitGymTool.Database.sqlproj
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "FitGymTool.Database/**"
+            - ".github/workflows/deploy-database.yml"
+    pull_request:
+        branches:
+            - main
+        types:
+            - closed
+        paths:
+            - "FitGymTool.Database/**"
+            - ".github/workflows/deploy-database.yml"
+    workflow_dispatch:
+
+jobs:
+    build-database:
+        name: Build FitGymTool.Database
+        runs-on: windows-latest
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch' }}
+        outputs:
+            artifact_path: ${{ steps.set-artifact-path.outputs.path }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: "9.0.x"
+
+            - name: Restore and build database project
+              run: |
+                  dotnet restore ${{ env.DATABASE_PROJECT_PATH }}
+                  dotnet build ${{ env.DATABASE_PROJECT_PATH }} --configuration Release --no-restore
+
+            - name: Publish DACPAC
+              run: |
+                  dotnet publish ${{ env.DATABASE_PROJECT_PATH }} --configuration Release --no-build --output ./publish-db
+
+            - name: Set artifact path
+              id: set-artifact-path
+              run: echo "path=./publish-db" >> $GITHUB_OUTPUT
+
+            - name: Upload Database Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: db-artifact
+                  path: ./publish-db
+
+    deploy-database:
+        name: Deploy FitGymTool.Database
+        runs-on: windows-latest
+        needs: build-database
+        environment: Production
+        permissions:
+            id-token: write
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Azure Login
+              uses: azure/login@v2
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Download Database Artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: db-artifact
+                  path: ./publish-db
+
+            - name: Deploy to Azure SQL Database
+              uses: azure/sql-action@v2.3
+              with:
+                  connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+                  path: "./publish-db/FitGymTool.Database.dacpac"
+                  action: "publish"
+                  arguments: "/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false /p:IgnoreUserSettingsObjects=true /p:IgnoreLoginSids=true /p:IgnorePermissions=true /p:IgnoreRoleMembership=true"
