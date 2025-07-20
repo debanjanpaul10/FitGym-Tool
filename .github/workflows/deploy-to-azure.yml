@@ -171,10 +171,10 @@ jobs:
                   name: db-artifact
                   path: ./publish-db
 
-            - name: Deploy to Azure SQL Server
+            - name: Deploy to Azure SQL Database
               uses: azure/sql-action@v2.3
               with:
                   connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
                   path: "./publish-db/FitGymTool.Database.dacpac"
                   action: "publish"
-                  arguments: "/p:DropObjectsNotInSource=true"
+                  arguments: "/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false /p:IgnoreUserSettingsObjects=true /p:IgnoreLoginSids=true /p:IgnorePermissions=true /p:IgnoreRoleMembership=true"
