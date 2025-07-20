@@ -1,0 +1,69 @@
+name: Deploy All FitGymTool Components
+
+on:
+    workflow_dispatch:
+        inputs:
+            deploy_api:
+                description: "Deploy FitGymTool.API"
+                required: false
+                default: true
+                type: boolean
+            deploy_web:
+                description: "Deploy FitGymTool.UI"
+                required: false
+                default: true
+                type: boolean
+            deploy_database:
+                description: "Deploy FitGymTool.Database"
+                required: false
+                default: true
+                type: boolean
+
+jobs:
+    trigger-api-deployment:
+        name: Trigger API Deployment
+        runs-on: ubuntu-latest
+        if: ${{ inputs.deploy_api }}
+        steps:
+            - name: Trigger API Workflow
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.actions.createWorkflowDispatch({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          workflow_id: 'deploy-api.yml',
+                          ref: 'main'
+                      });
+
+    trigger-web-deployment:
+        name: Trigger Web Deployment
+        runs-on: ubuntu-latest
+        if: ${{ inputs.deploy_web }}
+        steps:
+            - name: Trigger Web Workflow
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.actions.createWorkflowDispatch({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          workflow_id: 'deploy-web.yml',
+                          ref: 'main'
+                      });
+
+    trigger-database-deployment:
+        name: Trigger Database Deployment
+        runs-on: ubuntu-latest
+        if: ${{ inputs.deploy_database }}
+        steps:
+            - name: Trigger Database Workflow
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.actions.createWorkflowDispatch({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          workflow_id: 'deploy-database.yml',
+                          ref: 'main'
+                      });
