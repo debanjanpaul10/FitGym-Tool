@@ -1,74 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="1.0.0" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Name>FitGymTool.Database</Name>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{718b5d5b-5e76-4f4c-a259-69beadbc58ed}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
-    <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
-    <RootNamespace>FitGymTool.Database</RootNamespace>
-    <AssemblyName>FitGymTool.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
-    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
-    <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetLanguage>CS</TargetLanguage>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseSet>True</TargetDatabaseSet>
     <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
+    <EnableDefaultSqlItems>false</EnableDefaultSqlItems>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <!-- Determine Visual Studio version and SSDT availability -->
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">17.0</VisualStudioVersion>
-    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">16.0</VisualStudioVersion>
-    <SSDTExists Condition="'$(SSDTExists)' == '' AND Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">15.0</VisualStudioVersion>
-    <SSDTExists Condition="'$(SSDTExists)' == '' AND Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">14.0</VisualStudioVersion>
-    <SSDTExists Condition="'$(SSDTExists)' == '' AND Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <!-- Import SSDT targets if available -->
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == '' AND '$(SSDTExists)' == 'True'" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <!-- Fallback target for when SSDT is not available -->
-  <Target Name="Build" Condition="'$(SSDTExists)' != 'True'">
-    <Message Text="SSDT targets not found. Skipping database project build. This project requires Visual Studio with SQL Server Data Tools or MSBuild with SSDT components installed." Importance="high" />
-  </Target>
-  <Target Name="Publish" Condition="'$(SSDTExists)' != 'True'">
-    <Message Text="SSDT targets not found. Cannot publish database project. This project requires Visual Studio with SQL Server Data Tools or MSBuild with SSDT components installed." Importance="high" />
-  </Target>
+
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
@@ -77,6 +20,7 @@
     <Folder Include="Helpers" />
     <Folder Include="Functions" />
   </ItemGroup>
+
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
     <Build Include="Tables\FeesStatus.sql" />
@@ -92,6 +36,7 @@
     <Build Include="Tables\BugItemStatusMapping.sql" />
     <Build Include="Tables\BugSeverityMapping.sql" />
   </ItemGroup>
+
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_FeesPaymentStatusMapping.sql" />
@@ -100,9 +45,17 @@
     <None Include="PostDeploymentScripts\Script.INSERT_BugItemStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_BugSeverityMapping.sql" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="Helpers\CleanupAll.sql" />
     <None Include="Helpers\MockUsersData.sql" />
     <None Include="Helpers\MockFeesData.sql" />
   </ItemGroup>
+
+  <Target Name="BeforeBuild">
+    <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+
 </Project>
