@@ -76,7 +76,7 @@ jobs:
             - name: Deploy to Azure App Service
               uses: Azure/webapps-deploy@v2
               with:
-                  app-name: app-webapi-notes-tracker
+                  app-name: app-webapi-fitgym-tool
                   slot-name: production
                   publish-profile: ${{ secrets.AZURE_WEBAPI_PUBLISH_PROFILE }}
                   package: ./publish-api
@@ -108,7 +108,7 @@ jobs:
                   azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_TOKEN }}
                   action: "upload"
                   app_location: ${{ env.WEB_PROJECT_PATH }}
-                  output_location: "dist/notes-tracker-web/browser"
+                  output_location: "dist/FitGymTool.UI/browser"
 
     build-database:
         name: Build FitGymTool.Database

@@ -59,12 +59,15 @@
     <SSDTExists Condition="'$(SSDTExists)' == '' AND Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
-  <!-- Import SSDT targets if available, otherwise skip -->
+  <!-- Import SSDT targets if available -->
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == '' AND '$(SSDTExists)' == 'True'" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <!-- Fallback target for when SSDT is not available -->
   <Target Name="Build" Condition="'$(SSDTExists)' != 'True'">
     <Message Text="SSDT targets not found. Skipping database project build. This project requires Visual Studio with SQL Server Data Tools or MSBuild with SSDT components installed." Importance="high" />
+  </Target>
+  <Target Name="Publish" Condition="'$(SSDTExists)' != 'True'">
+    <Message Text="SSDT targets not found. Cannot publish database project. This project requires Visual Studio with SQL Server Data Tools or MSBuild with SSDT components installed." Importance="high" />
   </Target>
   <ItemGroup>
     <Folder Include="Properties" />
