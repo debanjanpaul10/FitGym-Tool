@@ -15,3 +15,7 @@ appsettings.Development.json
 /FitGymTool.Database/FitGymTool.Database.dbmdl
 /FitGymTool.Database/FitGymTool.Database.jfm
 **.kiro
+
+# NODE
+**.angular/
+**dist/
