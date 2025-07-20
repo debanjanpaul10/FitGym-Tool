@@ -30,7 +30,7 @@ jobs:
     build-api:
         name: Build FitGymTool.API
         if: ${{ inputs.deploy_api }}
-        uses: ./.github/workflows/templates/build-dotnet.yml
+        uses: ./.github/workflows/build-dotnet.yml
         with:
             project_path: ${{ env.API_PROJECT_PATH }}
             dotnet_version: "9.0.x"
@@ -41,7 +41,7 @@ jobs:
         name: Deploy FitGymTool.API
         needs: build-api
         if: ${{ inputs.deploy_api }}
-        uses: ./.github/workflows/templates/deploy-azure-app-service.yml
+        uses: ./.github/workflows/deploy-azure-app-service.yml
         with:
             artifact_name: api-artifact
             artifact_path: ./publish-api
@@ -53,7 +53,7 @@ jobs:
     build-web:
         name: Build FitGymTool.UI
         if: ${{ inputs.deploy_web }}
-        uses: ./.github/workflows/templates/build-angular.yml
+        uses: ./.github/workflows/build-angular.yml
         with:
             project_path: ${{ env.WEB_PROJECT_PATH }}
             node_version: "22.x"
@@ -82,7 +82,7 @@ jobs:
     build-database:
         name: Build FitGymTool.Database
         if: ${{ inputs.deploy_database }}
-        uses: ./.github/workflows/templates/build-dotnet.yml
+        uses: ./.github/workflows/build-dotnet.yml
         with:
             project_path: ${{ env.DATABASE_PROJECT_PATH }}
             dotnet_version: "9.0.x"
@@ -93,7 +93,7 @@ jobs:
         name: Deploy FitGymTool.Database
         needs: build-database
         if: ${{ inputs.deploy_database }}
-        uses: ./.github/workflows/templates/deploy-azure-sql.yml
+        uses: ./.github/workflows/deploy-azure-sql.yml
         with:
             artifact_name: db-artifact
             artifact_path: ./publish-db
