@@ -4,26 +4,12 @@ env:
     WEB_PROJECT_PATH: FitGymTool.UI
 
 on:
-    push:
-        branches:
-            - main
-        paths:
-            - "FitGymTool.UI/**"
-            - ".github/workflows/deploy-web.yml"
-    pull_request:
-        branches:
-            - main
-        types:
-            - closed
-        paths:
-            - "FitGymTool.UI/**"
-            - ".github/workflows/deploy-web.yml"
     workflow_dispatch:
 
 jobs:
     build-and-deploy-web:
         name: "Build and Deploy FitGymTool.UI"
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         runs-on: ubuntu-latest
         environment: Production
 
