@@ -1,0 +1,50 @@
+name: Build .NET Project Template
+
+on:
+    workflow_call:
+        inputs:
+            project_path:
+                required: true
+                type: string
+                description: "Path to the .NET project file"
+            dotnet_version:
+                required: false
+                type: string
+                default: "9.0.x"
+                description: ".NET version to use"
+            output_path:
+                required: true
+                type: string
+                description: "Output path for published artifacts"
+            artifact_name:
+                required: true
+                type: string
+                description: "Name for the uploaded artifact"
+
+jobs:
+    build:
+        name: Build .NET Project
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: ${{ inputs.dotnet_version }}
+
+            - name: Restore dependencies
+              run: dotnet restore ${{ inputs.project_path }}
+
+            - name: Build project
+              run: dotnet build ${{ inputs.project_path }} --configuration Release --no-restore
+
+            - name: Publish project
+              run: dotnet publish ${{ inputs.project_path }} --configuration Release --no-build --output ${{ inputs.output_path }}
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ inputs.artifact_name }}
+                  path: ${{ inputs.output_path }}

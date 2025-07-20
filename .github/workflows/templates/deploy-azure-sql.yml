@@ -1,0 +1,59 @@
+name: Deploy to Azure SQL Database Template
+
+on:
+    workflow_call:
+        inputs:
+            artifact_name:
+                required: true
+                type: string
+                description: "Name of the database artifact"
+            artifact_path:
+                required: true
+                type: string
+                description: "Path to extract the artifact"
+            dacpac_file:
+                required: true
+                type: string
+                description: "Path to the DACPAC file"
+            deploy_arguments:
+                required: false
+                type: string
+                default: "/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false /p:IgnoreUserSettingsObjects=true /p:IgnoreLoginSids=true /p:IgnorePermissions=true /p:IgnoreRoleMembership=true"
+                description: "SQL deployment arguments"
+        secrets:
+            azure_credentials:
+                required: true
+                description: "Azure service principal credentials"
+            connection_string:
+                required: true
+                description: "Azure SQL Database connection string"
+
+jobs:
+    deploy:
+        name: Deploy to Azure SQL Database
+        runs-on: windows-latest
+        environment: Production
+        permissions:
+            id-token: write
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Azure Login
+              uses: azure/login@v2
+              with:
+                  creds: ${{ secrets.azure_credentials }}
+
+            - name: Download database artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: ${{ inputs.artifact_name }}
+                  path: ${{ inputs.artifact_path }}
+
+            - name: Deploy to Azure SQL Database
+              uses: azure/sql-action@v2.3
+              with:
+                  connection-string: ${{ secrets.connection_string }}
+                  path: ${{ inputs.dacpac_file }}
+                  action: "publish"
+                  arguments: ${{ inputs.deploy_arguments }}
