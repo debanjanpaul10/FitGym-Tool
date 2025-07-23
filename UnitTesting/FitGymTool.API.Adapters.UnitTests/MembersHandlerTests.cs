@@ -6,10 +6,11 @@
 // *********************************************************************************
 
 using AutoMapper;
+using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Handlers;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.Ports.In;
 using Moq;
 
@@ -31,6 +32,11 @@ public class MembersHandlerTests
 	private readonly Mock<IMapper> _mockMapper = new();
 
 	/// <summary>
+	/// The mock common handler
+	/// </summary>
+	private readonly Mock<ICommonHandler> _mockCommonHandler = new();
+
+	/// <summary>
 	/// The members handler
 	/// </summary>
 	private readonly MembersHandler _membersHandler;
@@ -40,7 +46,7 @@ public class MembersHandlerTests
 	/// </summary>
 	public MembersHandlerTests()
 	{
-		_membersHandler = new(_mockMembersService.Object, _mockMapper.Object);
+		_membersHandler = new(_mockMembersService.Object, _mockMapper.Object, _mockCommonHandler.Object);
 	}
 
 	/// <summary>
@@ -53,14 +59,14 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<AddMemberDomain>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, true);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<AddMemberDomain>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
+		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
 	}
 
 	/// <summary>
@@ -73,14 +79,14 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<AddMemberDomain>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, false);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<AddMemberDomain>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
+		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
 	}
 
 	/// <summary>
@@ -93,7 +99,7 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<AddMemberDomain>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(false);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(false);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, true);
@@ -117,7 +123,7 @@ public class MembersHandlerTests
 		};
 
 		_mockMembersService.Setup(x => x.GetAllMembersAsync()).ReturnsAsync(mockDomainMembers);
-		_mockMapper.Setup(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetailsDomain>>())).Returns(mockDtoMembers);
+		_mockMapper.Setup(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetails>>())).Returns(mockDtoMembers);
 
 		// Act
 		var result = await _membersHandler.GetAllMembersAsync();
@@ -126,7 +132,7 @@ public class MembersHandlerTests
 		Assert.NotNull(result);
 		Assert.Equal(2, result.Count);
 		_mockMembersService.Verify(x => x.GetAllMembersAsync(), Times.Once);
-		_mockMapper.Verify(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetailsDomain>>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetails>>()), Times.Once);
 	}
 
 	/// <summary>
@@ -136,11 +142,11 @@ public class MembersHandlerTests
 	public async Task GetAllMembersAsync_WhenNoMembersExist_ThenReturnEmptyList()
 	{
 		// Arrange
-		var mockDomainMembers = new List<MemberDetailsDomain>();
+		var mockDomainMembers = new List<MemberDetails>();
 		var mockDtoMembers = new List<MemberDetailsDTO>();
 
 		_mockMembersService.Setup(x => x.GetAllMembersAsync()).ReturnsAsync(mockDomainMembers);
-		_mockMapper.Setup(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetailsDomain>>())).Returns(mockDtoMembers);
+		_mockMapper.Setup(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetails>>())).Returns(mockDtoMembers);
 
 		// Act
 		var result = await _membersHandler.GetAllMembersAsync();
@@ -149,7 +155,7 @@ public class MembersHandlerTests
 		Assert.NotNull(result);
 		Assert.Empty(result);
 		_mockMembersService.Verify(x => x.GetAllMembersAsync(), Times.Once);
-		_mockMapper.Verify(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetailsDomain>>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<List<MemberDetailsDTO>>(It.IsAny<List<MemberDetails>>()), Times.Once);
 	}
 
 	/// <summary>
@@ -164,7 +170,7 @@ public class MembersHandlerTests
 		var mockDtoMember = ApiAdaptersTestsHelper.PrepareMemberDetailsDto();
 
 		_mockMembersService.Setup(x => x.GetMemberByEmailIdAsync(memberEmail)).ReturnsAsync(mockDomainMember);
-		_mockMapper.Setup(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetailsDomain>())).Returns(mockDtoMember);
+		_mockMapper.Setup(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetails>())).Returns(mockDtoMember);
 
 		// Act
 		var result = await _membersHandler.GetMemberByEmailIdAsync(memberEmail);
@@ -173,7 +179,7 @@ public class MembersHandlerTests
 		Assert.NotNull(result);
 		Assert.Equal(mockDtoMember.MemberEmail, result.MemberEmail);
 		_mockMembersService.Verify(x => x.GetMemberByEmailIdAsync(memberEmail), Times.Once);
-		_mockMapper.Verify(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetailsDomain>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
@@ -184,11 +190,11 @@ public class MembersHandlerTests
 	{
 		// Arrange
 		var memberEmail = "nonexistent@email.com";
-		MemberDetailsDomain? mockDomainMember = null!;
+		MemberDetails? mockDomainMember = null!;
 		MemberDetailsDTO? mockDtoMember = null!;
 
 		_mockMembersService.Setup(x => x.GetMemberByEmailIdAsync(It.IsAny<string>())).ReturnsAsync(mockDomainMember);
-		_mockMapper.Setup(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetailsDomain>())).Returns(mockDtoMember);
+		_mockMapper.Setup(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetails>())).Returns(mockDtoMember);
 
 		// Act
 		var result = await _membersHandler.GetMemberByEmailIdAsync(memberEmail);
@@ -196,7 +202,7 @@ public class MembersHandlerTests
 		// Assert
 		Assert.Null(result);
 		_mockMembersService.Verify(x => x.GetMemberByEmailIdAsync(memberEmail), Times.Once);
-		_mockMapper.Verify(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetailsDomain>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetailsDTO>(It.IsAny<MemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
@@ -208,15 +214,15 @@ public class MembersHandlerTests
 		// Arrange
 		var mockUpdateMemberDto = ApiAdaptersTestsHelper.PrepareUpdateMemberDataDto();
 
-		_mockMembersService.Setup(x => x.UpdateMemberDetailsAsync(It.IsAny<UpdateMemberDomain>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.UpdateMemberDetailsAsync(It.IsAny<MemberDetails>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.UpdateMemberDetailsAsync(mockUpdateMemberDto);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.UpdateMemberDetailsAsync(It.IsAny<UpdateMemberDomain>()), Times.Once);
-		_mockMapper.Verify(x => x.Map<UpdateMemberDomain>(It.IsAny<UpdateMemberDTO>()), Times.Once);
+		_mockMembersService.Verify(x => x.UpdateMemberDetailsAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetails>(It.IsAny<UpdateMemberDTO>()), Times.Once);
 	}
 
 	/// <summary>
@@ -228,15 +234,15 @@ public class MembersHandlerTests
 		// Arrange
 		var mockUpdateMemberDto = ApiAdaptersTestsHelper.PrepareUpdateMemberDataDto();
 
-		_mockMembersService.Setup(x => x.UpdateMemberDetailsAsync(It.IsAny<UpdateMemberDomain>())).ReturnsAsync(false);
+		_mockMembersService.Setup(x => x.UpdateMemberDetailsAsync(It.IsAny<MemberDetails>())).ReturnsAsync(false);
 
 		// Act
 		var result = await _membersHandler.UpdateMemberDetailsAsync(mockUpdateMemberDto);
 
 		// Assert
 		Assert.False(result);
-		_mockMembersService.Verify(x => x.UpdateMemberDetailsAsync(It.IsAny<UpdateMemberDomain>()), Times.Once);
-		_mockMapper.Verify(x => x.Map<UpdateMemberDomain>(It.IsAny<UpdateMemberDTO>()), Times.Once);
+		_mockMembersService.Verify(x => x.UpdateMemberDetailsAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetails>(It.IsAny<UpdateMemberDTO>()), Times.Once);
 	}
 
 	/// <summary>
@@ -248,15 +254,15 @@ public class MembersHandlerTests
 		// Arrange
 		var mockUpdateMembershipStatusDto = ApiAdaptersTestsHelper.PrepareUpdateMembershipStatusDto();
 
-		_mockMembersService.Setup(x => x.UpdateMembershipStatusAsync(It.IsAny<UpdateMembershipStatusDomain>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.UpdateMembershipStatusAsync(It.IsAny<MemberDetails>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.UpdateMembershipStatusAsync(mockUpdateMembershipStatusDto);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.UpdateMembershipStatusAsync(It.IsAny<UpdateMembershipStatusDomain>()), Times.Once);
-		_mockMapper.Verify(x => x.Map<UpdateMembershipStatusDomain>(It.IsAny<UpdateMembershipStatusDTO>()), Times.Once);
+		_mockMembersService.Verify(x => x.UpdateMembershipStatusAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetails>(It.IsAny<UpdateMembershipStatusDTO>()), Times.Once);
 	}
 
 	/// <summary>
@@ -268,14 +274,14 @@ public class MembersHandlerTests
 		// Arrange
 		var mockUpdateMembershipStatusDto = ApiAdaptersTestsHelper.PrepareUpdateMembershipStatusDto();
 
-		_mockMembersService.Setup(x => x.UpdateMembershipStatusAsync(It.IsAny<UpdateMembershipStatusDomain>())).ReturnsAsync(false);
+		_mockMembersService.Setup(x => x.UpdateMembershipStatusAsync(It.IsAny<MemberDetails>())).ReturnsAsync(false);
 
 		// Act
 		var result = await _membersHandler.UpdateMembershipStatusAsync(mockUpdateMembershipStatusDto);
 
 		// Assert
 		Assert.False(result);
-		_mockMembersService.Verify(x => x.UpdateMembershipStatusAsync(It.IsAny<UpdateMembershipStatusDomain>()), Times.Once);
-		_mockMapper.Verify(x => x.Map<UpdateMembershipStatusDomain>(It.IsAny<UpdateMembershipStatusDTO>()), Times.Once);
+		_mockMembersService.Verify(x => x.UpdateMembershipStatusAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMapper.Verify(x => x.Map<MemberDetails>(It.IsAny<UpdateMembershipStatusDTO>()), Times.Once);
 	}
 }

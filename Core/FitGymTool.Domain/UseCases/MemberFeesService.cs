@@ -5,7 +5,8 @@
 // <summary>The Member Fees Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
@@ -33,10 +34,37 @@ public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILo
 	private readonly ILogger<MemberFeesService> _logger = logger;
 
 	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="FeesStructure" />
+	/// </returns>
+	public async Task<IEnumerable<FeesStructure>> GetCurrentFeesStructureAsync()
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			return await _memberFeesDataService.GetCurrentFeesStructureAsync();
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+		}
+	}
+
+	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The list of current month fees and revenue status.</returns>
-	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDomain>> GetCurrentMonthFeesAndRevenueStatusAsync()
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatus"/></returns>
+	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatus>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		try
 		{

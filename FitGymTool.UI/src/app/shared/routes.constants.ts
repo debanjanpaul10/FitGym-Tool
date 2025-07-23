@@ -16,6 +16,7 @@ export class ApiRoutes {
     BaseRoute: 'api/MemberFees/',
     GetCurrentMonthFeesAndRevenueStatus_ApiRoute:
       'GetCurrentMonthFeesAndRevenueStatus',
+    GetCurrentFeesStructure_ApiRoute: 'GetCurrentFeesStructure',
   };
 }
 

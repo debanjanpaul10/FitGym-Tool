@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 
 namespace FitGymTool.API.Adapters.Contracts;
 
@@ -19,4 +20,10 @@ public interface IMemberFeesHandler
 	/// </summary>
 	/// <returns>The list of current month fees and revenue status.</returns>
 	Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>> GetCurrentMonthFeesAndRevenueStatusAsync();
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructureDomain"/></returns>
+	Task<IEnumerable<FeesStructureDTO>> GetCurrentFeesStructureAsync();
 }

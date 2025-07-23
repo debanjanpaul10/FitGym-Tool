@@ -19,4 +19,9 @@ export class MemberFeesApiService {
     const apiUrl: string = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetCurrentMonthFeesAndRevenueStatus_ApiRoute}`;
     return this.httpClient.get<ResponseDto>(apiUrl);
   }
+
+  public GetCurrentFeesStructureAsync(): Observable<ResponseDto> {
+    const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetCurrentFeesStructure_ApiRoute}`;
+    return this.httpClient.get<ResponseDto>(apiUrl);
+  }
 }

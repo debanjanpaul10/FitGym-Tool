@@ -7,8 +7,8 @@
 
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Helpers;
-using FitGymTool.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
@@ -29,9 +29,9 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The response data dto.</returns>
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatusDto"/></returns>
 	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentMonthFeesAndRevenueStatus_ApiRoute)]
-	[ProducesResponseType(typeof(CurrentMonthFeesAndRevenueStatusDomain), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(IEnumerable<CurrentMonthFeesAndRevenueStatusDto>), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -39,8 +39,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	{
 		try
 		{
-			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
 			if (IsAuthorized())
 			{
 				var result = await memberFeesHandler.GetCurrentMonthFeesAndRevenueStatusAsync();
@@ -56,14 +55,50 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructureDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentFeesStructure_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<FeesStructureDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<ResponseDTO> GetCurrentFeesStructureAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetCurrentFeesStructureAsync();
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
 		}
 	}
 }

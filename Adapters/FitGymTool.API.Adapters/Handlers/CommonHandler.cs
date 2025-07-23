@@ -9,7 +9,7 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
-using FitGymTool.Domain.Models;
+using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -41,8 +41,8 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO)
 	{
-		var bugReportDataDomain = _mapper.Map<BugReportDataDomain>(bugReportDataDTO); 
-		return await _commonService.AddNewBugReportDataAsync(bugReportDataDomain);
+		var bugReportData = _mapper.Map<BugReportData>(bugReportDataDTO); 
+		return await _commonService.AddNewBugReportDataAsync(bugReportData);
 	}
 
 	/// <summary>

@@ -7,7 +7,7 @@
 
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
 
 namespace FitGymTool.API.Adapters.UnitTests;
 
@@ -32,7 +32,7 @@ public static class ApiAdaptersTestsHelper
 	/// <returns>Add member DTO.</returns>
 	public static AddMemberDTO PrepareAddMemberDataDto()
 	{
-		return new AddMemberDTO()
+		return new()
 		{ 
 			DateModified = DateTime.Now,
 			MemberAddress = "Lorem Ipsum Hello World",
@@ -53,7 +53,7 @@ public static class ApiAdaptersTestsHelper
 	/// <returns>Update member DTO.</returns>
 	public static UpdateMemberDTO PrepareUpdateMemberDataDto()
 	{
-		return new UpdateMemberDTO()
+		return new()
 		{
 			MemberId = 1,
 			MemberName = "Updated Member Name",
@@ -73,7 +73,7 @@ public static class ApiAdaptersTestsHelper
 	/// <returns>Update membership status DTO.</returns>
 	public static UpdateMembershipStatusDTO PrepareUpdateMembershipStatusDto()
 	{
-		return new UpdateMembershipStatusDTO()
+		return new()
 		{
 			MemberId = 1,
 			MembershipStatusId = 2,
@@ -89,7 +89,7 @@ public static class ApiAdaptersTestsHelper
 	/// <returns>Member details DTO.</returns>
 	public static MemberDetailsDTO PrepareMemberDetailsDto()
 	{
-		return new MemberDetailsDTO()
+		return new()
 		{
 			MemberId = 1,
 			MemberGuid = Guid.NewGuid(),
@@ -108,9 +108,9 @@ public static class ApiAdaptersTestsHelper
 	/// Prepares the member details domain.
 	/// </summary>
 	/// <returns>Member details domain.</returns>
-	public static MemberDetailsDomain PrepareMemberDetailsDomain()
+	public static MemberDetails PrepareMemberDetailsDomain()
 	{
-		return new MemberDetailsDomain()
+		return new()
 		{
 			MemberId = 1,
 			MemberGuid = Guid.NewGuid(),
@@ -121,7 +121,7 @@ public static class ApiAdaptersTestsHelper
 			MemberDateOfBirth = DateTime.Now.AddYears(-RandomBirthYearCounter),
 			MemberGender = "Male",
 			MemberJoinDate = DateTime.Now.AddMonths(-3),
-			MembershipStatus = "Active"
+			MembershipStatusId = 1
 		};
 	}
 
@@ -129,11 +129,11 @@ public static class ApiAdaptersTestsHelper
 	/// Prepares the list of member details domain.
 	/// </summary>
 	/// <returns>List of member details domain.</returns>
-	public static List<MemberDetailsDomain> PrepareMemberDetailsDomainList()
+	public static List<MemberDetails> PrepareMemberDetailsDomainList()
 	{
-		return new List<MemberDetailsDomain>()
+		return new List<MemberDetails>()
 		{
-			new MemberDetailsDomain()
+			new()
 			{
 				MemberId = 1,
 				MemberGuid = Guid.NewGuid(),
@@ -144,9 +144,9 @@ public static class ApiAdaptersTestsHelper
 				MemberDateOfBirth = DateTime.Now.AddYears(-25),
 				MemberGender = "Male",
 				MemberJoinDate = DateTime.Now.AddMonths(-6),
-				MembershipStatus = "Active"
+				MembershipStatusId = 1
 			},
-			new MemberDetailsDomain()
+			new()
 			{
 				MemberId = 2,
 				MemberGuid = Guid.NewGuid(),
@@ -157,7 +157,7 @@ public static class ApiAdaptersTestsHelper
 				MemberDateOfBirth = DateTime.Now.AddYears(-30),
 				MemberGender = "Female",
 				MemberJoinDate = DateTime.Now.AddMonths(-3),
-				MembershipStatus = "Inactive"
+				MembershipStatusId = 3
 			}
 		};
 	}

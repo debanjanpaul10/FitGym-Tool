@@ -8,6 +8,7 @@
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -40,5 +41,15 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	{
 		var feesAndRevenueStatusData = await _memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
 		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>>(feesAndRevenueStatusData);
+	}
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructureDomain"/></returns>
+	public async Task<IEnumerable<FeesStructureDTO>> GetCurrentFeesStructureAsync()
+	{
+		var feesStructureDomainData = await _memberFeesService.GetCurrentFeesStructureAsync();
+		return _mapper.Map<IEnumerable<FeesStructureDTO>>(feesStructureDomainData);
 	}
 }

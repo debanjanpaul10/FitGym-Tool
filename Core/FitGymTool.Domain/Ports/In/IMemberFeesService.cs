@@ -5,7 +5,9 @@
 // <summary>The Member Fees Service Interface.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
+
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.Ports.In;
 
@@ -17,6 +19,12 @@ public interface IMemberFeesService
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The list of current month fees and revenue status.</returns>
-	Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDomain>> GetCurrentMonthFeesAndRevenueStatusAsync();
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatus"/></returns>
+	Task<IEnumerable<CurrentMonthFeesAndRevenueStatus>> GetCurrentMonthFeesAndRevenueStatusAsync();
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructure"/></returns>
+	Task<IEnumerable<FeesStructure>> GetCurrentFeesStructureAsync();
 }

@@ -5,9 +5,9 @@
 // <summary>The Fit Gym Common Data Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Helpers;
-using FitGymTool.Domain.Models;
-using FitGymTool.Domain.Models.MappingDomain;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
@@ -42,7 +42,7 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 	/// <returns>
 	/// The boolean for success/failure
 	/// </returns>
-	public async Task<bool> AddNewBugReportDataAsync(BugReportDataDomain bugReportDataDomain)
+	public async Task<bool> AddNewBugReportDataAsync(BugReportData bugReportDataDomain)
 	{
 		try
 		{
@@ -71,7 +71,7 @@ public class CommonService(ICommonDataManager fitGymDataService, ILogger<CommonS
 	/// <returns>
 	/// The mapping master data dto.
 	/// </returns>
-	public async Task<MappingMasterDataDomain> GetMappingsMasterDataAsync()
+	public async Task<MappingMasterData> GetMappingsMasterDataAsync()
 	{
 		try
 		{

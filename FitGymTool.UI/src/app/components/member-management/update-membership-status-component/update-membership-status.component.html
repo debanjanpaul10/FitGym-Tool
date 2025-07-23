@@ -48,6 +48,7 @@
                       class="form-input membership-status-dropdown"
                       [showClear]="false"
                       [ngStyle]="{ width: '100%' }"
+                      (onChange)="onStatusSelectionChange(rowData)"
                     ></p-select>
                   </div>
                   <label for="membershipStatus" class="field-label"
@@ -56,18 +57,35 @@
                 </p-iftalabel>
               </ng-container>
               <ng-container *ngIf="col.field === 'actions'">
-                <p-button
-                  type="button"
-                  label="Update"
-                  severity="success"
-                  variant="outlined"
-                  (click)="
-                    onMembershipStatusChangesUpdate(
-                      rowData,
-                      rowData.membershipStatusId
-                    )
+                <ng-container
+                  *ngIf="
+                    updatedMembersSet.has(rowData.memberId);
+                    else updateButton
                   "
-                ></p-button>
+                >
+                  <div class="update-success">
+                    <i
+                      class="pi pi-check-circle"
+                      style="color: green; margin-right: 5px"
+                    ></i>
+                    <span>Updated</span>
+                  </div>
+                </ng-container>
+                <ng-template #updateButton>
+                  <p-button
+                    type="button"
+                    label="Update"
+                    severity="success"
+                    variant="outlined"
+                    [disabled]="!isUpdateButtonEnabled(rowData)"
+                    (click)="
+                      onMembershipStatusChangesUpdate(
+                        rowData,
+                        rowData.membershipStatusId
+                      )
+                    "
+                  ></p-button>
+                </ng-template>
               </ng-container>
               <ng-template #defaultCell>
                 {{ rowData[col.field] }}

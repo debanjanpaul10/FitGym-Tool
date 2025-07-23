@@ -21,6 +21,11 @@ public static class DatabaseConstants
 		/// The execute function get current fees and revenue status
 		/// </summary>
 		public const string Execute_FN_GetCurrentFeesAndRevenueStatus = "SELECT * FROM dbo.FN_GetCurrentFeesAndRevenueStatus()";
+
+		/// <summary>
+		/// The execute function get current members fees status
+		/// </summary>
+		public const string Execute_FN_GetCurrentMembersFeesStatus = "SELECT * FROM dbo.FN_GetCurrentMembersFeesStatus()";
 	}
 
 	/// <summary>

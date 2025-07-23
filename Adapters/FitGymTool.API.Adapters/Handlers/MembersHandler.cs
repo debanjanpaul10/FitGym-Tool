@@ -9,7 +9,7 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -19,8 +19,9 @@ namespace FitGymTool.API.Adapters.Handlers;
 /// </summary>
 /// <param name="mapper">The mapper.</param>
 /// <param name="membersService">The Members service.</param>
+/// <param name="commonHandler">The common handler.</param>
 /// <seealso cref="FitGymTool.API.Adapters.Contracts.IMembersHandler" />
-public class MembersHandler(IMembersService membersService, IMapper mapper) : IMembersHandler
+public class MembersHandler(IMembersService membersService, IMapper mapper, ICommonHandler commonHandler) : IMembersHandler
 {
 	/// <summary>
 	/// The members service
@@ -31,6 +32,11 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// The mapper
 	/// </summary>
 	private readonly IMapper _mapper = mapper;
+
+	/// <summary>
+	/// The common handler
+	/// </summary>
+	private readonly ICommonHandler _commonHandler = commonHandler;
 
 	/// <summary>
 	/// Adds a new member to the database asynchronously.
@@ -44,7 +50,21 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = _mapper.Map<AddMemberDomain>(memberDetails);
+		var domainRequest = _mapper.Map<MemberDetails>(memberDetails);
+
+		// Get membership status ID from status name
+		if (!string.IsNullOrEmpty(memberDetails.MembershipStatus))
+		{
+			var mappingData = await _commonHandler.GetMappingsMasterDataAsync();
+			var membershipStatusMapping = mappingData.MembershipStatusMapping
+				.FirstOrDefault(x => x.StatusName.Equals(memberDetails.MembershipStatus, StringComparison.OrdinalIgnoreCase));
+
+			if (membershipStatusMapping != null)
+			{
+				domainRequest.MembershipStatusId = membershipStatusMapping.Id;
+			}
+		}
+
 		return await _membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
@@ -76,7 +96,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails)
 	{
-		var domainRequest = _mapper.Map<UpdateMemberDomain>(memberDetails);
+		var domainRequest = _mapper.Map<MemberDetails>(memberDetails);
 		return await _membersService.UpdateMemberDetailsAsync(domainRequest);
 	}
 
@@ -87,7 +107,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper) : IM
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto)
 	{
-		var domainRequest = _mapper.Map<UpdateMembershipStatusDomain>(updateMembershipStatusDto);
+		var domainRequest = _mapper.Map<MemberDetails>(updateMembershipStatusDto);
 		return await _membersService.UpdateMembershipStatusAsync(domainRequest);
 	}
 }

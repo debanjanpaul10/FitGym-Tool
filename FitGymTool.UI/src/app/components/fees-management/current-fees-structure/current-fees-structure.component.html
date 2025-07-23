@@ -1,0 +1,62 @@
+<div class="card-containers">
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="isFeesStructureLoading()">
+        <p-skeleton
+          height="20rem"
+          width="100%"
+          ngClass="fees-structure-skeleton"
+        ></p-skeleton>
+      </div>
+      <div *ngIf="!isFeesStructureLoading()">
+        <div class="fees-structure-card card shadow-m border-0 bg-dark">
+          <div class="card-body">
+            <h1 class="card-title">Current Fees Structure</h1>
+          </div>
+          <p-table
+            #fstable
+            [value]="feesStructureData()"
+            [rows]="10"
+            [columns]="columnHeaders"
+            ngClass="fees-structure-table"
+            showGridlines
+            stripedRows
+          >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{ col.header }}
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{ rowData[col.field] }}
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td
+                  [attr.colspan]="columnHeaders.length"
+                  class="text-center py-4"
+                >
+                  <div class="empty-state">
+                    <i
+                      class="pi pi-search"
+                      style="font-size: 2rem; color: #6c757d"
+                    ></i>
+                    <p class="mt-2 mb-0">No results found</p>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

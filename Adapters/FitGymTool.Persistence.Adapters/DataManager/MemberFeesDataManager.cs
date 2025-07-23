@@ -1,11 +1,12 @@
 ﻿// *********************************************************************************
-//	<copyright file="IMemberFeesDataService.cs" company="Personal">
+//	<copyright file="MemberFeesDataManager.cs" company="Personal">
 //		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
-// <summary>The Members Data Service Class.</summary>
+// <summary>The Members Fees Data Service Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
@@ -37,15 +38,14 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
 	/// <returns>The list of current month fees and revenue status.</returns>
-	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDomain>> GetCurrentMonthFeesAndRevenueStatusAsync()
+	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatus>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		try
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
-			var result = await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatusDomain>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
-			return result;
+			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
 		}
 		catch (Exception ex)
 		{
@@ -57,6 +57,60 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="T:FitGymTool.Domain.Models.FeesStructureDomain" />
+	/// </returns>
+	public async Task<IEnumerable<FeesStructure>> GetCurrentFeesStructureAsync()
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			return await _unitOfWork.Repository<FeesStructure>().GetAllAsync(filter: fs => fs.IsActive, includeProperties: nameof(FeesStructure.FeesDurationMapping));
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="CurrentMembersFeesStatus" />
+	/// </returns>
+	public async Task<IEnumerable<CurrentMembersFeesStatus>> GetCurrentMembersFeesStatusAsync()
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMembersFeesStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentMembersFeesStatus);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}
 }

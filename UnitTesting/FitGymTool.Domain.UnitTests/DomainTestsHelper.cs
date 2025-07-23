@@ -5,7 +5,7 @@
 // <summary>The Domain Tests Helper Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
 
 namespace FitGymTool.Domain.UnitTests;
 
@@ -28,7 +28,7 @@ public static class DomainTestsHelper
     /// Prepares the add member domain data.
     /// </summary>
     /// <returns></returns>
-    public static AddMemberDomain PrepareAddMemberDomainData()
+    public static MemberDetails PrepareAddMemberDomainData()
     {
         return new()
         {
@@ -40,7 +40,7 @@ public static class DomainTestsHelper
             MemberJoinDate = DateTime.Now,
             MemberName = "New Member",
             MemberPhoneNumber = "123456789",
-            MembershipStatus = "Active",
+            MembershipStatusId = 1,
             ModifiedBy = CurrentLoggedInMember
         };
     }
@@ -49,7 +49,7 @@ public static class DomainTestsHelper
     /// Prepares the add member domain data with invalid dates.
     /// </summary>
     /// <returns></returns>
-    public static AddMemberDomain PrepareAddMemberDomainDataWithInvalidDates()
+    public static MemberDetails PrepareAddMemberDomainDataWithInvalidDates()
     {
         return new()
         {
@@ -61,7 +61,7 @@ public static class DomainTestsHelper
             MemberJoinDate = DateTime.MinValue,
             MemberName = "New Member",
             MemberPhoneNumber = "123456789",
-            MembershipStatus = "Active",
+            MembershipStatusId = 1,
             ModifiedBy = CurrentLoggedInMember
         };
     }
@@ -70,7 +70,7 @@ public static class DomainTestsHelper
     /// Prepares the update member domain data.
     /// </summary>
     /// <returns></returns>
-    public static UpdateMemberDomain PrepareUpdateMemberDomainData()
+    public static MemberDetails PrepareUpdateMemberDomainData()
     {
         return new()
         {
@@ -92,13 +92,13 @@ public static class DomainTestsHelper
     /// Prepares the update membership status domain data.
     /// </summary>
     /// <returns></returns>
-    public static UpdateMembershipStatusDomain PrepareUpdateMembershipStatusDomainData()
+    public static MemberDetails PrepareUpdateMembershipStatusDomainData()
     {
         return new()
         {
             MemberId = 1,
             MembershipStatusId = 2,
-            MemberEmailAddress = CurrentLoggedInMember,
+            MemberEmail = CurrentLoggedInMember,
             ModifiedBy = CurrentLoggedInMember
         };
     }
@@ -107,7 +107,7 @@ public static class DomainTestsHelper
     /// Prepares the member details domain data.
     /// </summary>
     /// <returns></returns>
-    public static MemberDetailsDomain PrepareMemberDetailsDomainData()
+    public static MemberDetails PrepareMemberDetailsDomainData()
     {
         return new()
         {
@@ -120,7 +120,7 @@ public static class DomainTestsHelper
             MemberDateOfBirth = DateTime.Now.AddYears(-RandomInteger),
             MemberGender = "Male",
             MemberJoinDate = DateTime.Now.AddMonths(-3),
-            MembershipStatus = "Active"
+            MembershipStatusId = 1
         };
     }
 
@@ -128,9 +128,9 @@ public static class DomainTestsHelper
     /// Prepares the list of member details domain data.
     /// </summary>
     /// <returns></returns>
-    public static List<MemberDetailsDomain> PrepareMemberDetailsDomainDataList()
+    public static List<MemberDetails> PrepareMemberDetailsDomainDataList()
     {
-        return new List<MemberDetailsDomain>()
+        return new List<MemberDetails>()
         {
             new()
             {
@@ -143,7 +143,7 @@ public static class DomainTestsHelper
                 MemberDateOfBirth = DateTime.Now.AddYears(-25),
                 MemberGender = "Male",
                 MemberJoinDate = DateTime.Now.AddMonths(-6),
-                MembershipStatus = "Active"
+                MembershipStatusId = 1
             },
             new()
             {
@@ -156,7 +156,7 @@ public static class DomainTestsHelper
                 MemberDateOfBirth = DateTime.Now.AddYears(-30),
                 MemberGender = "Female",
                 MemberJoinDate = DateTime.Now.AddMonths(-3),
-                MembershipStatus = "Inactive"
+                MembershipStatusId = 3
             }
         };
     }

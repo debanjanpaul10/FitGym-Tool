@@ -53,9 +53,13 @@
         <tr>
           <td *ngFor="let col of columns">
             <ng-container
-              *ngIf="col.field === 'memberDateOfBirth' || col.field === 'memberJoinDate'; else normalCell"
+              *ngIf="
+                col.field === 'memberDateOfBirth' ||
+                  col.field === 'memberJoinDate';
+                else normalCell
+              "
             >
-              {{ rowData[col.field] | date: 'd MMM yyyy' }}
+              {{ rowData[col.field] | date : "d MMM yyyy" }}
             </ng-container>
             <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
           </td>

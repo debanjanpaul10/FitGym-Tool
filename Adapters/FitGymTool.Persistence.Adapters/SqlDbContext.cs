@@ -5,17 +5,19 @@
 // <summary>The SQL DB Context Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
-using FitGymTool.Persistence.Adapters.Entity.Mapping;
-using FitGymTool.Persistence.Adapters.Entity;
 using Microsoft.EntityFrameworkCore;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.Mapping;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.Persistence.Adapters;
 
 /// <summary>
-/// The SQL DB Context Class.
+/// The SQL DB context class.
 /// </summary>
-/// <seealso cref="DbContext"/>
+/// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
+[ExcludeFromCodeCoverage]
 public class SqlDbContext : DbContext
 {
 	/// <summary>
@@ -72,7 +74,15 @@ public class SqlDbContext : DbContext
 	/// <summary>
 	/// Gets or sets the current month fees and revenue status (for raw SQL queries).
 	/// </summary>
-	public DbSet<CurrentMonthFeesAndRevenueStatusDomain> CurrentMonthFeesAndRevenueStatus { get; set; }
+	public DbSet<CurrentMonthFeesAndRevenueStatus> CurrentMonthFeesAndRevenueStatus { get; set; }
+
+	/// <summary>
+	/// Gets or sets the current member fees status.
+	/// </summary>
+	/// <value>
+	/// The current member fees status.
+	/// </value>
+	public DbSet<CurrentMembersFeesStatus> CurrentMemberFeesStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the bug report data.
@@ -177,6 +187,15 @@ public class SqlDbContext : DbContext
 			.HasForeignKey(m => m.MembershipStatusId)
 			.HasPrincipalKey(ms => ms.Id);
 
-		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatusDomain>().HasNoKey();
+		modelBuilder.Entity<FeesStructure>().HasKey(fs => fs.Id);
+		modelBuilder.Entity<FeesDurationMapping>().HasKey(fdm => fdm.Id);
+		modelBuilder.Entity<FeesStructure>()
+			.HasOne(fs => fs.FeesDurationMapping)
+			.WithMany()
+			.HasForeignKey(fs => fs.FeesDurationId)
+			.HasPrincipalKey(fdm => fdm.Id);
+
+		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatus>().HasNoKey();
+		modelBuilder.Entity<CurrentMembersFeesStatus>().HasNoKey();
 	}
 }

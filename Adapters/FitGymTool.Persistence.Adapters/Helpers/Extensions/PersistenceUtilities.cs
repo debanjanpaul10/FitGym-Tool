@@ -5,8 +5,7 @@
 // <summary>The Persistence Utilities class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models.Members;
-using FitGymTool.Persistence.Adapters.Entity;
+using FitGymTool.Domain.DomainEntities;
 
 namespace FitGymTool.Persistence.Adapters.Helpers.Extensions;
 
@@ -20,7 +19,7 @@ public static class PersistenceUtilities
 	/// </summary>
 	/// <param name="existingMember">The existing member.</param>
 	/// <param name="memberDetails">The member details.</param>
-	public static void PrepareUpdateMemberDataEntity(this MemberDetails existingMember, UpdateMemberDomain memberDetails)
+	public static void PrepareUpdateMemberDataEntity(this MemberDetails existingMember, MemberDetails memberDetails)
 	{
 		existingMember.MemberName = memberDetails.MemberName;
 		existingMember.MemberPhoneNumber = memberDetails.MemberPhoneNumber;
@@ -37,7 +36,7 @@ public static class PersistenceUtilities
 	/// </summary>
 	/// <param name="existingMember">The existing member.</param>
 	/// <param name="updateMembershipStatusDomain">The update membership status domain.</param>
-	public static void PrepareMembershipStatusUpdateDataEntity(this MemberDetails existingMember, UpdateMembershipStatusDomain updateMembershipStatusDomain)
+	public static void PrepareMembershipStatusUpdateDataEntity(this MemberDetails existingMember, MemberDetails updateMembershipStatusDomain)
 	{
 		existingMember.MembershipStatusId = updateMembershipStatusDomain.MembershipStatusId;
 		existingMember.DateModified = DateTime.UtcNow;

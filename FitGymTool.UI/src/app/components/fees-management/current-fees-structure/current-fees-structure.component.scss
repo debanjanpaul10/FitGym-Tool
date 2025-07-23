@@ -1,0 +1,78 @@
+.card-containers {
+  margin: 20px !important;
+  padding: 20px !important;
+}
+.fees-structure-skeleton {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
+}
+
+.fees-structure-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+// Table organization and styling
+.fees-structure-table ::ng-deep .p-datatable {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.fees-structure-table ::ng-deep .p-datatable-wrapper {
+  border-radius: 12px !important;
+}
+
+.fees-structure-table ::ng-deep .p-datatable-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+// Header styling
+.fees-structure-table ::ng-deep .p-datatable-thead > tr > th {
+  padding: 1rem 1.5rem !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  text-align: left !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: none !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+// Body cell styling
+.fees-structure-table ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 1.25rem 1.5rem !important;
+  font-size: 0.9rem !important;
+  text-align: left !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  vertical-align: middle !important;
+}
+
+// Amount column alignment
+.fees-structure-table ::ng-deep .p-datatable-tbody > tr > td:last-child,
+.fees-structure-table ::ng-deep .p-datatable-thead > tr > th:last-child {
+  text-align: right !important;
+  font-weight: 500 !important;
+}
+
+// Row hover effect
+.fees-structure-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+// Remove border from last row
+.fees-structure-table ::ng-deep .p-datatable-tbody > tr:last-child > td {
+  border-bottom: none !important;
+}
+
+.fees-structure-card {
+  padding: 0.625rem !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(11.5px) !important;
+  -webkit-backdrop-filter: blur(11.5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.41) !important;
+  color: var(--text-color);
+}

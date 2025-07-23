@@ -5,8 +5,8 @@
 // <summary>The Members Service Class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.Helpers;
-using FitGymTool.Domain.Models.Members;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
@@ -40,7 +40,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// <param name="userEmail">The user email.</param>
 	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(AddMemberDomain memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(MemberDetails memberDetails, string userEmail, bool isFromAdmin)
 	{
 		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
@@ -75,7 +75,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// Gets all members from the database asynchronously.
 	/// </summary>
 	/// <returns>A list of MemberDetailsDomain.</returns>
-	public async Task<List<MemberDetailsDomain>> GetAllMembersAsync()
+	public async Task<List<MemberDetails>> GetAllMembersAsync()
 	{
 		try
 		{
@@ -103,7 +103,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// </summary>
 	/// <param name="memberEmail">The member's Email ID.</param>
 	/// <returns>The MemberDetailsDomain object if found; otherwise, null.</returns>
-	public async Task<MemberDetailsDomain> GetMemberByEmailIdAsync(string memberEmail)
+	public async Task<MemberDetails> GetMemberByEmailIdAsync(string memberEmail)
 	{
 		try
 		{
@@ -139,7 +139,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// </summary>
 	/// <param name="memberDetails">The updated member details.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDomain memberDetails)
+	public async Task<bool> UpdateMemberDetailsAsync(MemberDetails memberDetails)
 	{
 		try
 		{
@@ -167,12 +167,12 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// </summary>
 	/// <param name="updateMembershipStatusDomain">The update membership status domain.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDomain updateMembershipStatusDomain)
+	public async Task<bool> UpdateMembershipStatusAsync(MemberDetails updateMembershipStatusDomain)
 	{
 		try
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmail));
 			var result = await _membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
 			return result;
 		}
@@ -185,7 +185,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 		finally
 		{
 			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmailAddress));
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmail));
 		}
 	}
 }

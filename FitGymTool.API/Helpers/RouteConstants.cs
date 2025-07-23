@@ -83,5 +83,10 @@ public static class RouteConstants
 		/// The get current month fees and revenue status API route
 		/// </summary>
 		public const string GetCurrentMonthFeesAndRevenueStatus_ApiRoute = "GetCurrentMonthFeesAndRevenueStatus";
+
+		/// <summary>
+		/// The get current fees structure API route
+		/// </summary>
+		public const string GetCurrentFeesStructure_ApiRoute = "GetCurrentFeesStructure";
 	}
 }

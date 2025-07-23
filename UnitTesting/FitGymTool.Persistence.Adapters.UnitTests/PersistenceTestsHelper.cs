@@ -5,9 +5,8 @@
 // <summary>The Persistence Tests Helper Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models.Members;
-using FitGymTool.Persistence.Adapters.Entity;
-using FitGymTool.Persistence.Adapters.Entity.Mapping;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.Mapping;
 
 namespace FitGymTool.Persistence.Adapters.UnitTests;
 
@@ -30,9 +29,9 @@ public static class PersistenceTestsHelper
 	/// Creates a valid AddMemberDomain for testing.
 	/// </summary>
 	/// <returns>A valid AddMemberDomain instance.</returns>
-	public static AddMemberDomain CreateValidAddMemberDomain()
+	public static MemberDetails CreateValidAddMemberDomain()
 	{
-		return new AddMemberDomain
+		return new MemberDetails
 		{
 			MemberName = "John Doe",
 			MemberEmail = CurrentLoggedInMember,
@@ -41,7 +40,7 @@ public static class PersistenceTestsHelper
 			MemberDateOfBirth = new DateTime(1990, 1, 1),
 			MemberGender = "Male",
 			MemberJoinDate = DateTime.UtcNow.Date,
-			MembershipStatus = "Active",
+			MembershipStatusId = 1,
 			MemberGuid = Guid.NewGuid(),
 			IsActive = true,
 			DateCreated = DateTime.UtcNow,
@@ -57,9 +56,9 @@ public static class PersistenceTestsHelper
 	/// <param name="memberId">The member ID.</param>
 	/// <param name="email">The email address (optional).</param>
 	/// <returns>A valid UpdateMemberDomain instance.</returns>
-	public static UpdateMemberDomain CreateValidUpdateMemberDomain()
+	public static MemberDetails CreateValidUpdateMemberDomain()
 	{
-		return new UpdateMemberDomain
+		return new MemberDetails
 		{
 			MemberId = new Random().Next(1, 10),
 			MemberName = "Jane Doe",
@@ -84,13 +83,13 @@ public static class PersistenceTestsHelper
 	/// <param name="memberId">The member ID.</param>
 	/// <param name="email">The email address (optional).</param>
 	/// <returns>A valid UpdateMembershipStatusDomain instance.</returns>
-	public static UpdateMembershipStatusDomain CreateValidUpdateMembershipStatusDomain(int memberId = 1)
+	public static MemberDetails CreateValidUpdateMembershipStatusDomain(int memberId = 1)
 	{
-		return new UpdateMembershipStatusDomain
+		return new MemberDetails
 		{
 			MemberId = memberId,
 			MembershipStatusId = 2,
-			MemberEmailAddress = CurrentLoggedInMember,
+			MemberEmail = CurrentLoggedInMember,
 			ModifiedBy = "TestUser"
 		};
 	}
@@ -130,9 +129,9 @@ public static class PersistenceTestsHelper
 	/// <param name="memberId">The member ID.</param>
 	/// <param name="email">The email address (optional).</param>
 	/// <returns>A valid MemberDetailsDomain instance.</returns>
-	public static MemberDetailsDomain CreateValidMemberDetailsDomain(int memberId = 1, string email = "test@example.com")
+	public static MemberDetails CreateValidMemberDetailsDomain(int memberId = 1, string email = "test@example.com")
 	{
-		return new MemberDetailsDomain
+		return new MemberDetails
 		{
 			MemberId = memberId,
 			MemberName = "John Doe",
@@ -142,7 +141,7 @@ public static class PersistenceTestsHelper
 			MemberDateOfBirth = new DateTime(1990, 1, 1),
 			MemberGender = "Male",
 			MemberJoinDate = DateTime.UtcNow.Date,
-			MembershipStatus = "Active",
+			MembershipStatusId = 1,
 			MemberGuid = Guid.NewGuid(),
 			IsActive = true,
 			DateCreated = DateTime.UtcNow,
@@ -192,9 +191,9 @@ public static class PersistenceTestsHelper
 	/// </summary>
 	/// <param name="count">The number of instances to create.</param>
 	/// <returns>A list of valid MemberDetailsDomain instances.</returns>
-	public static List<MemberDetailsDomain> CreateValidMemberDetailsDomainList(int count = 3)
+	public static List<MemberDetails> CreateValidMemberDetailsDomainList(int count = 3)
 	{
-		var members = new List<MemberDetailsDomain>();
+		var members = new List<MemberDetails>();
 		for (int i = 1; i <= count; i++)
 		{
 			members.Add(CreateValidMemberDetailsDomain(i, $"test{i}@example.com"));
