@@ -139,4 +139,43 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
 		}
 	}
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="emailId">The email identifier.</param>
+	/// <returns>The list of <see cref="MemberPaymentHistoryDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetPaymentHistoryDataForMember_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<MemberPaymentHistoryDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync(string emailId)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetPaymentHistoryDataForMemberAsync(emailId);
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
 }

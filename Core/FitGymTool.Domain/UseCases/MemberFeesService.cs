@@ -112,4 +112,33 @@ public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILo
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
 	}
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="userEmailId">The user email address.</param>
+	/// <returns>
+	/// The list of <see cref="MemberPaymentHistoryData" />
+	/// </returns>
+	public async Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+
+			return await _memberFeesDataService.GetPaymentHistoryDataForMemberAsync(userEmailId);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+		}
+	}
 }

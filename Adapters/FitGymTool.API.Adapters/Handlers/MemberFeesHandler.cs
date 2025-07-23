@@ -64,4 +64,17 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 		var feesStatusDomainData = await _memberFeesService.GetCurrentMembersFeesStatusAsync();
 		return _mapper.Map<IEnumerable<CurrentMembersFeesStatusDTO>>(feesStatusDomainData);
 	}
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="userEmailId">The user email address.</param>
+	/// <returns>
+	/// The list of <see cref="MemberPaymentHistoryData" />
+	/// </returns>
+	public async Task<IEnumerable<MemberPaymentHistoryDTO>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
+	{
+		var memberPaymentHistoryData = await _memberFeesService.GetPaymentHistoryDataForMemberAsync(userEmailId);
+		return _mapper.Map<IEnumerable<MemberPaymentHistoryDTO>>(memberPaymentHistoryData);
+	}
 }

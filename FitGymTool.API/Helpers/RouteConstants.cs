@@ -93,5 +93,10 @@ public static class RouteConstants
 		/// The get current members fees status API route
 		/// </summary>
 		public const string GetCurrentMembersFeesStatus_ApiRoute = "GetCurrentMembersFeesStatus";
+
+		/// <summary>
+		/// The get payment history data for member API route
+		/// </summary>
+		public const string GetPaymentHistoryDataForMember_ApiRoute = "GetPaymentHistoryDataForMember";
 	}
 }
