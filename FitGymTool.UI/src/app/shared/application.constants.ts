@@ -15,6 +15,7 @@ export class ToasterSuccessMessages {
       'Membership status has been updated successfully',
     UpdateMemberSuccess: 'Member details have been update successfully',
   };
+
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
   };
@@ -97,6 +98,7 @@ export class MemberManagementConstants {
       Alt: 'Update membership status image',
     },
   };
+
   public static AddNewMemberConstants = {
     genderOptions: [
       { label: 'Male', value: 'Male' },
@@ -126,5 +128,12 @@ export class CommonApplicationConstants {
     Header: 'File a bug report',
     InformationMessage:
       'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
+  };
+}
+
+export class FeesManagementConstants {
+  public static CurrentFeesStructureConstants = {
+    Header: 'Current Fees Structure',
+    SubHeader: `The fees structure as of ${new Date().toLocaleDateString()}`,
   };
 }

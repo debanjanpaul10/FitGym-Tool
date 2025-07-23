@@ -12,17 +12,17 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
+import { Skeleton } from 'primeng/skeleton';
+import { Chart, registerables } from 'chart.js';
+// Register Chart.js components
+Chart.register(...registerables);
 
 import { ToasterService } from '@core/services/toaster.service';
 import { CurrentMembersFeesStatusDTO } from '@models/DTO/current-members-fees-status-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { MemberFeesApiService } from '@services/member-fees-api.service';
-import { Chart, registerables } from 'chart.js';
-// Register Chart.js components
-Chart.register(...registerables);
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { ChartConstants } from '@shared/application.constants';
-import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-current-member-fees-status',
@@ -132,7 +132,7 @@ export class CurrentMemberFeesStatusComponent
       this.feesStatusChart = new Chart(
         this.feesStatusChartCanvas.nativeElement,
         {
-          type: 'doughnut',
+          type: 'pie',
           data: {
             datasets: [
               {
@@ -177,7 +177,6 @@ export class CurrentMemberFeesStatusComponent
                 },
               },
             },
-            cutout: '60%',
           },
         }
       );

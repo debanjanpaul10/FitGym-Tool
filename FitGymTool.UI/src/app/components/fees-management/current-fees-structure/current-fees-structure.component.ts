@@ -15,6 +15,7 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
 import { MemberFeesApiService } from '@services/member-fees-api.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Column } from '@models/interfaces/column.interface';
+import { FeesManagementConstants } from '@shared/application.constants';
 
 @Component({
   selector: 'app-current-fees-structure',
@@ -28,6 +29,8 @@ export class CurrentFeesStructureComponent implements OnInit {
   protected feesStructureData: WritableSignal<FeesStructureDTO[]> = signal([]);
   protected isFeesStructureLoading: WritableSignal<boolean> = signal(false);
   protected columnHeaders: Column[] = [];
+  protected currentFeesStructureConstants =
+    FeesManagementConstants.CurrentFeesStructureConstants;
 
   private readonly _memberFeesApiService: MemberFeesApiService =
     inject(MemberFeesApiService);
@@ -36,7 +39,7 @@ export class CurrentFeesStructureComponent implements OnInit {
   constructor() {
     this.columnHeaders = [
       { field: 'feesDuration', header: 'Duration' },
-      { field: 'feesAmount', header: 'Amount' },
+      { field: 'feesAmount', header: 'Amount (₹)' },
     ];
   }
 

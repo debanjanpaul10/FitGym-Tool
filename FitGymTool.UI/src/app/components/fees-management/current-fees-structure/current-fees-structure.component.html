@@ -9,7 +9,10 @@
   <div *ngIf="!isFeesStructureLoading()" class="h-100">
     <div class="fees-structure-card card shadow-m border-0 bg-dark h-100">
       <div class="card-body">
-        <h1 class="card-title">Current Fees Structure</h1>
+        <h1 class="card-title">{{ currentFeesStructureConstants.Header }}</h1>
+        <h6 class="card-subtitle">
+          {{ currentFeesStructureConstants.SubHeader }}
+        </h6>
       </div>
       <div class="table-container flex-grow-1">
         <p-table
