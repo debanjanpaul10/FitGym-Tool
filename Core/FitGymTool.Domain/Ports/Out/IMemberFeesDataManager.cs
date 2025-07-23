@@ -33,4 +33,11 @@ public interface IMemberFeesDataManager
 	/// </summary>
 	/// <returns>The list of <see cref="CurrentMembersFeesStatus"/></returns>
 	Task<IEnumerable<CurrentMembersFeesStatus>> GetCurrentMembersFeesStatusAsync();
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="userEmailId">The user email address.</param>
+	/// <returns>The list of <see cref="MemberPaymentHistoryData"/></returns>
+	Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId);
 }

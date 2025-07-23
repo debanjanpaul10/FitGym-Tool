@@ -1,4 +1,4 @@
-﻿// *********************************************************************************
+// *********************************************************************************
 //	<copyright file="MemberFeesDataManager.cs" company="Personal">
 //		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
@@ -112,5 +112,10 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 		}
+	}
+
+	public Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
+	{
+		throw new NotImplementedException();
 	}
 }

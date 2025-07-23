@@ -28,12 +28,14 @@
     <Build Include="Tables\FeesPaymentStatusMapping.sql" />
     <Build Include="Tables\FeesDurationMapping.sql" />
     <Build Include="Tables\FeesStructure.sql" />
-    <Build Include="Functions\FN_GetPaymentHistoryDataForMembers.sql" />
     <Build Include="Functions\FN_GetCurrentMembersFeesStatus.sql" />
     <Build Include="Functions\FN_GetCurrentFeesAndRevenueStatus.sql" />
     <Build Include="Tables\BugReportData.sql" />
     <Build Include="Tables\BugItemStatusMapping.sql" />
     <Build Include="Tables\BugSeverityMapping.sql" />
+    <Build Include="Stored Procedures\dbo.SP_GetPaymentHistoryForMember.sql" />
+    <Build Include="Tables\dbo.ErrorLog.sql" />
+    <Build Include="Stored Procedures\dbo.SP_InsertErrorLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

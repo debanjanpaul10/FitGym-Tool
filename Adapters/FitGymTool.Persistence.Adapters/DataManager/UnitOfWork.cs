@@ -26,6 +26,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// The SQL DB Context.
 	/// </summary>
 	private readonly SqlDbContext _dbContext = dbContext;
+
 	/// <summary>
 	/// The repositories dictionary to hold repositories for different entity types.
 	/// </summary>

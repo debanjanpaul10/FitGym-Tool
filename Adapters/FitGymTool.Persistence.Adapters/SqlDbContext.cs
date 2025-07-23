@@ -85,6 +85,14 @@ public class SqlDbContext : DbContext
 	public DbSet<CurrentMembersFeesStatus> CurrentMemberFeesStatus { get; set; }
 
 	/// <summary>
+	/// Gets or sets the member payment history data.
+	/// </summary>
+	/// <value>
+	/// The member payment history data.
+	/// </value>
+	public DbSet<MemberPaymentHistoryData> MemberPaymentHistoryData { get; set; }
+
+	/// <summary>
 	/// Gets or sets the bug report data.
 	/// </summary>
 	/// <value>

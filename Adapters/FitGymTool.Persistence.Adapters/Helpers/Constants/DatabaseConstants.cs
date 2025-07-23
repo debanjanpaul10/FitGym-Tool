@@ -29,6 +29,18 @@ public static class DatabaseConstants
 	}
 
 	/// <summary>
+	/// The Stored Procedure constants.
+	/// </summary>
+	public static class StoredProceduresConstants
+	{
+		/// <summary>
+		/// The get payment history for member procedure
+		/// </summary>
+		public const string GetPaymentHistoryForMember_SP = "[dbo].[SP_GetPaymentHistoryForMember]";
+	}
+
+
+	/// <summary>
 	/// The error messages class.
 	/// </summary>
 	public static class ErrorMessages
