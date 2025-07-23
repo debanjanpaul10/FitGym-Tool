@@ -1,9 +1,12 @@
 <div class="card-containers">
-  <div class="row">
-    <div class="col-sm-6">
+  <div class="row equal-height-row">
+    <div class="col-sm-6 equal-height-col">
       <app-current-fees-structure></app-current-fees-structure>
+    </div>
+    <div class="col-sm-6 equal-height-col">
+      <app-current-member-fees-status
+        [mappingMasterData]="mappingMasterData()"
+      ></app-current-member-fees-status>
     </div>
   </div>
 </div>
-
-<app-current-member-fees-status></app-current-member-fees-status>

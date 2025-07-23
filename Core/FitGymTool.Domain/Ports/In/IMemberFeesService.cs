@@ -27,4 +27,10 @@ public interface IMemberFeesService
 	/// </summary>
 	/// <returns>The list of <see cref="FeesStructure"/></returns>
 	Task<IEnumerable<FeesStructure>> GetCurrentFeesStructureAsync();
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="CurrentMembersFeesStatus"/></returns>
+	Task<IEnumerable<CurrentMembersFeesStatus>> GetCurrentMembersFeesStatusAsync();
 }

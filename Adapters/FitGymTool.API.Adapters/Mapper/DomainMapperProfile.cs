@@ -33,7 +33,7 @@ public class DomainMapperProfile : Profile
         CreateMap<FeesPaymentStatusMapping, FeesPaymentStatusMappingDto>();
         CreateMap<MembershipStatusMapping, MembershipStatusMappingDto>();
         CreateMap<FeesDurationMapping, FeesDurationMappingDto>();
-        CreateMap<CurrentMonthFeesAndRevenueStatus, CurrentMonthFeesAndRevenueStatusDto>();
+        CreateMap<CurrentMonthFeesAndRevenueStatus, CurrentMonthFeesAndRevenueStatusDTO>();
         CreateMap<BugSeverityMapping, BugSeverityMappingDto>()
             .ForMember(destination => destination.Id, option => option.MapFrom(source => source.Id))
             .ForMember(destination => destination.SeverityName, option => option.MapFrom(source => source.SeverityName));
@@ -60,5 +60,6 @@ public class DomainMapperProfile : Profile
             .ForMember(dest => dest.MemberEmail, option => option.MapFrom(source => source.MemberEmailAddress));
         CreateMap<FeesStructure, FeesStructureDTO>()
             .ForMember(dest => dest.FeesDuration, option => option.MapFrom(source => source.FeesDurationMapping != null ? source.FeesDurationMapping.DurationTypeName : string.Empty));
+        CreateMap<CurrentMembersFeesStatus, CurrentMembersFeesStatusDTO>();
     }
 }

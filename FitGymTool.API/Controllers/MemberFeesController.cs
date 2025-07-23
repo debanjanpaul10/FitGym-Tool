@@ -29,9 +29,9 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatusDto"/></returns>
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatusDTO"/></returns>
 	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentMonthFeesAndRevenueStatus_ApiRoute)]
-	[ProducesResponseType(typeof(IEnumerable<CurrentMonthFeesAndRevenueStatusDto>), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -99,6 +99,44 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="CurrentMembersFeesStatusDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentMembersFeesStatus_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<CurrentMembersFeesStatusDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	public async Task<ResponseDTO> GetCurrentMembersFeesStatusAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetCurrentMembersFeesStatusAsync();
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
 		}
 	}
 }

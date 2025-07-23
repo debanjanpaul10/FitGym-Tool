@@ -10,7 +10,7 @@ namespace FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 /// <summary>
 /// The Current Month Fees and Revenue Status Data DTO.
 /// </summary>
-public class CurrentMonthFeesAndRevenueStatusDto
+public class CurrentMonthFeesAndRevenueStatusDTO
 {
 	/// <summary>
 	/// Gets or sets the member identifier.

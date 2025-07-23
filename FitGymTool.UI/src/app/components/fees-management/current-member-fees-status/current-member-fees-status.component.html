@@ -1,1 +1,40 @@
-<p>current-member-fees-status works!</p>
+<div class="card-containers">
+  <div *ngIf="isMembersFeesDataLoading()">
+    <p-skeleton
+      height="100%"
+      width="100%"
+      ngClass="current-member-fees-skeleton"
+    ></p-skeleton>
+  </div>
+
+  <div *ngIf="!isMembersFeesDataLoading()" class="h-100">
+    <div class="current-member-fees-card card shadow-m border-0 bg-dark h-100">
+      <div class="card-body d-flex flex-column">
+        <h1 class="card-title">{{ chartConstants.Header }}</h1>
+        <h6 class="card-subtitle mb-4">{{ chartConstants.SubHeader }}</h6>
+        <div
+          class="chart-container d-flex justify-content-center align-items-center flex-grow-1"
+        >
+          <div class="chart-wrapper d-flex align-items-center">
+            <canvas #feesStatusChart></canvas>
+            <div class="chart-legend">
+              <div
+                class="legend-item"
+                *ngFor="
+                  let status of mappingMasterData.feesPaymentStatusMapping;
+                  let i = index
+                "
+              >
+                <span
+                  class="legend-color"
+                  [style.background-color]="colors[i]"
+                ></span>
+                <span class="legend-label">{{ status.statusName }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

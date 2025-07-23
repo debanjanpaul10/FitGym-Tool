@@ -75,4 +75,29 @@
   -webkit-backdrop-filter: blur(11.5px) !important;
   border: 1px solid rgba(255, 255, 255, 0.41) !important;
   color: var(--text-color);
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Make sure the card takes up all available height */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:host > .card-containers {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host > .card-containers > div {
+  flex: 1;
 }

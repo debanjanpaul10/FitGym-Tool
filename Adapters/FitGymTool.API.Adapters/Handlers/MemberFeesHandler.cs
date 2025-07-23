@@ -37,10 +37,10 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// <returns>
 	/// The list of current month fees and revenue status.
 	/// </returns>
-	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>> GetCurrentMonthFeesAndRevenueStatusAsync()
+	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		var feesAndRevenueStatusData = await _memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
-		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>>(feesAndRevenueStatusData);
+		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>>(feesAndRevenueStatusData);
 	}
 
 	/// <summary>
@@ -51,5 +51,17 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	{
 		var feesStructureDomainData = await _memberFeesService.GetCurrentFeesStructureAsync();
 		return _mapper.Map<IEnumerable<FeesStructureDTO>>(feesStructureDomainData);
+	}
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="CurrentMembersFeesStatusDTO" />
+	/// </returns>
+	public async Task<IEnumerable<CurrentMembersFeesStatusDTO>> GetCurrentMembersFeesStatusAsync()
+	{
+		var feesStatusDomainData = await _memberFeesService.GetCurrentMembersFeesStatusAsync();
+		return _mapper.Map<IEnumerable<CurrentMembersFeesStatusDTO>>(feesStatusDomainData);
 	}
 }

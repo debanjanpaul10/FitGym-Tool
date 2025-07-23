@@ -61,6 +61,33 @@ public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILo
 	}
 
 	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="CurrentMembersFeesStatus" />
+	/// </returns>
+	public async Task<IEnumerable<CurrentMembersFeesStatus>> GetCurrentMembersFeesStatusAsync()
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			return await _memberFeesDataService.GetCurrentMembersFeesStatusAsync();
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+		}
+	}
+
+	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
 	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatus"/></returns>

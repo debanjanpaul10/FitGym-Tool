@@ -17,6 +17,7 @@ export class ApiRoutes {
     GetCurrentMonthFeesAndRevenueStatus_ApiRoute:
       'GetCurrentMonthFeesAndRevenueStatus',
     GetCurrentFeesStructure_ApiRoute: 'GetCurrentFeesStructure',
+    GetCurrentMembersFeesStatus_ApiRoute: 'GetCurrentMembersFeesStatus',
   };
 }
 

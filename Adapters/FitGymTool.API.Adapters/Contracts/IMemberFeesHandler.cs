@@ -18,12 +18,18 @@ public interface IMemberFeesHandler
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The list of current month fees and revenue status.</returns>
-	Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>> GetCurrentMonthFeesAndRevenueStatusAsync();
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatusDTO"/></returns>
+	Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>> GetCurrentMonthFeesAndRevenueStatusAsync();
 
 	/// <summary>
 	/// Gets the current fees structure asynchronous.
 	/// </summary>
-	/// <returns>The list of <see cref="FeesStructureDomain"/></returns>
+	/// <returns>The list of <see cref="FeesStructureDTO"/></returns>
 	Task<IEnumerable<FeesStructureDTO>> GetCurrentFeesStructureAsync();
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="CurrentMembersFeesStatusDTO"/></returns>
+	Task<IEnumerable<CurrentMembersFeesStatusDTO>> GetCurrentMembersFeesStatusAsync();
 }

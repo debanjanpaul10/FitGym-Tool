@@ -72,6 +72,11 @@ export class ChartConstants {
     Header: 'Active Members',
     SubHeader: 'Current status of the Gym Members',
   };
+
+  public static CurrentMemberFeesStatusChartConstants = {
+    Header: 'Current Member Fees Status',
+    SubHeader: 'Current status of the fees payment status for current members',
+  };
 }
 
 export class MemberManagementConstants {
