@@ -62,7 +62,7 @@ export class LeftNavigationComponent implements OnInit {
       },
       {
         name: 'Facility Management',
-        icon: 'pi pi-hammer',
+        icon: 'pi pi-cog',
         onClick: () => this.navigateFacilityDashboard(),
       },
       {
