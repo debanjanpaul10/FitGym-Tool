@@ -44,8 +44,8 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-
-			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus);
+			
+			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
@@ -72,6 +72,7 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			
 			return await _unitOfWork.Repository<FeesStructure>().GetAllAsync(filter: fs => fs.IsActive, includeProperties: nameof(FeesStructure.FeesDurationMapping));
 		}
 		catch (Exception ex)
@@ -99,7 +100,8 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMembersFeesStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentMembersFeesStatus);
+			
+			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMembersFeesStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentMembersFeesStatus).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
@@ -114,8 +116,32 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 		}
 	}
 
-	public Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="userEmailId">The user email identifier.</param>
+	/// <returns>
+	/// The list of <see cref="MemberPaymentHistoryData" />
+	/// </returns>
+	public async Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+
+			return await _unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(
+				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+		}
 	}
 }
