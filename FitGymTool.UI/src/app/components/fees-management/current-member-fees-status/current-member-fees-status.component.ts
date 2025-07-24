@@ -3,12 +3,10 @@ import {
   AfterViewChecked,
   Component,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   signal,
   ViewChild,
   WritableSignal,
@@ -25,6 +23,7 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
 import { MemberFeesApiService } from '@services/member-fees-api.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { ChartConstants } from '@shared/application.constants';
+import { FeesManagementService } from '@core/services/fees-management-service.service';
 
 @Component({
   selector: 'app-current-member-fees-status',
@@ -36,8 +35,6 @@ export class CurrentMemberFeesStatusComponent
   implements OnInit, AfterViewChecked, OnDestroy
 {
   @Input() mappingMasterData: MasterMappingDataDto = new MasterMappingDataDto();
-  @Output() memberFeesDataEvent: EventEmitter<CurrentMembersFeesStatusDTO[]> =
-    new EventEmitter<CurrentMembersFeesStatusDTO[]>();
 
   @ViewChild('feesStatusChart', { static: false })
   feesStatusChartCanvas!: ElementRef<HTMLCanvasElement>;
@@ -47,12 +44,12 @@ export class CurrentMemberFeesStatusComponent
   protected isMembersFeesDataLoading: WritableSignal<boolean> = signal(false);
   protected chartConstants =
     ChartConstants.CurrentMemberFeesStatusChartConstants;
-
-  // Counters for each payment status
-  protected paidCount: number = 0;
-  protected dueCount: number = 0;
-  protected overdueCount: number = 0;
-  protected toBeCancelledCount: number = 0;
+  protected counts = {
+    paidCount: 0,
+    dueCount: 0,
+    overdueCount: 0,
+    toBeCancelledCount: 0,
+  };
 
   private feesStatusChart: Chart | null = null;
   private chartInitialized: boolean = false;
@@ -61,6 +58,9 @@ export class CurrentMemberFeesStatusComponent
   private readonly memberFeesApiService: MemberFeesApiService =
     inject(MemberFeesApiService);
   private readonly toasterService: ToasterService = inject(ToasterService);
+  private readonly _feesManagementService: FeesManagementService = inject(
+    FeesManagementService
+  );
 
   ngOnInit(): void {
     this.getCurrentMembersFeesStatus();
@@ -89,7 +89,8 @@ export class CurrentMemberFeesStatusComponent
       next: (response: ResponseDto) => {
         if (response?.isSuccess && response?.responseData) {
           this.memberFeesData.set(response?.responseData);
-          this.memberFeesDataEvent.emit(response?.responseData);
+          this._feesManagementService.currentMemberFees =
+            response?.responseData;
           this.updateChartDataFromMembers(response.responseData);
         } else {
           this.toasterService.showError(response?.responseData);
@@ -144,10 +145,10 @@ export class CurrentMemberFeesStatusComponent
               {
                 label: this.chartConstants.SubHeader,
                 data: [
-                  this.paidCount,
-                  this.dueCount,
-                  this.overdueCount,
-                  this.toBeCancelledCount,
+                  this.counts.paidCount,
+                  this.counts.dueCount,
+                  this.counts.overdueCount,
+                  this.counts.toBeCancelledCount,
                 ],
                 backgroundColor: this.colors,
                 borderWidth: 1,
@@ -197,10 +198,10 @@ export class CurrentMemberFeesStatusComponent
     feesStatus: CurrentMembersFeesStatusDTO[]
   ): void {
     // Reset counters
-    this.paidCount = 0;
-    this.dueCount = 0;
-    this.overdueCount = 0;
-    this.toBeCancelledCount = 0;
+    this.counts.paidCount = 0;
+    this.counts.dueCount = 0;
+    this.counts.overdueCount = 0;
+    this.counts.toBeCancelledCount = 0;
 
     // Get status names from mapping
     const statusNames =
@@ -216,16 +217,16 @@ export class CurrentMemberFeesStatusComponent
     for (const fee of feesStatus) {
       switch (fee.feesPaymentStatus) {
         case paidStatus:
-          this.paidCount++;
+          this.counts.paidCount++;
           break;
         case dueStatus:
-          this.dueCount++;
+          this.counts.dueCount++;
           break;
         case overdueStatus:
-          this.overdueCount++;
+          this.counts.overdueCount++;
           break;
         case toBeCancelledStatus:
-          this.toBeCancelledCount++;
+          this.counts.toBeCancelledCount++;
           break;
       }
     }
@@ -233,10 +234,10 @@ export class CurrentMemberFeesStatusComponent
     // If the chart is already initialized, update it
     if (this.feesStatusChart) {
       this.feesStatusChart.data.datasets[0].data = [
-        this.paidCount,
-        this.dueCount,
-        this.overdueCount,
-        this.toBeCancelledCount,
+        this.counts.paidCount,
+        this.counts.dueCount,
+        this.counts.overdueCount,
+        this.counts.toBeCancelledCount,
       ];
       this.feesStatusChart.update();
     }

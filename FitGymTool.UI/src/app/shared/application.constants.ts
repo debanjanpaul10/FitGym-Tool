@@ -8,6 +8,17 @@ export class ConfigurationConstants {
   };
 }
 
+export class CommonApplicationConstants {
+  public static BugReportConstants = {
+    Header: 'File a bug report',
+    InformationMessage:
+      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
+  };
+  public static HeaderConstants = {
+    AIFeaturesMessage: 'AI Features will be out soon!',
+  };
+}
+
 export class ToasterSuccessMessages {
   public static MemberManagement = {
     AddMemberSuccess: 'Member Added Successfully',
@@ -123,17 +134,14 @@ export class MemberManagementConstants {
   };
 }
 
-export class CommonApplicationConstants {
-  public static BugReportConstants = {
-    Header: 'File a bug report',
-    InformationMessage:
-      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
-  };
-}
-
 export class FeesManagementConstants {
   public static CurrentFeesStructureConstants = {
     Header: 'Current Fees Structure',
     SubHeader: `The fees structure as of ${new Date().toLocaleDateString()}`,
+  };
+
+  public static MemberFeesPaymentListConstants = {
+    Header: 'Current Members Fees Payment Status',
+    SubHeader: `Payment status as of ${new Date().toLocaleDateString()}`,
   };
 }

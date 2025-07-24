@@ -1,20 +1,17 @@
 <div class="card-containers">
-  <div class="row equal-height-row">
+  <div class="row equal-height-row mt-3">
     <div class="col-sm-6 equal-height-col">
       <app-current-fees-structure></app-current-fees-structure>
     </div>
     <div class="col-sm-6 equal-height-col">
       <app-current-member-fees-status
         [mappingMasterData]="mappingMasterData()"
-        (memberFeesDataEvent)="memberFeesDataEvent($event)"
       ></app-current-member-fees-status>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-3 mt-3">
     <div class="col-12">
-      <app-member-fees-payment-list
-        [feesStatusData]="feesStatusData"
-      ></app-member-fees-payment-list>
+      <app-member-fees-payment-list></app-member-fees-payment-list>
     </div>
   </div>
 </div>
