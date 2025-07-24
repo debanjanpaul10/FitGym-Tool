@@ -6,7 +6,15 @@
     <div class="col-sm-6 equal-height-col">
       <app-current-member-fees-status
         [mappingMasterData]="mappingMasterData()"
+        (memberFeesDataEvent)="memberFeesDataEvent($event)"
       ></app-current-member-fees-status>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-member-fees-payment-list
+        [feesStatusData]="feesStatusData"
+      ></app-member-fees-payment-list>
     </div>
   </div>
 </div>

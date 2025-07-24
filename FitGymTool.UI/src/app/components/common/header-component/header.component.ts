@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccountInfo } from '@azure/msal-browser';
 import { Router } from '@angular/router';
+import { MessageModule } from 'primeng/message';
 
 import { DrawerService } from '@core/services/drawer.service';
 import { DrawerConstants } from '@shared/application.constants';
@@ -25,7 +26,13 @@ import { RouteConstants } from '@shared/routes.constants';
  */
 @Component({
   selector: 'app-header-component',
-  imports: [AvatarModule, CommonModule, ButtonModule, TooltipModule],
+  imports: [
+    AvatarModule,
+    CommonModule,
+    ButtonModule,
+    TooltipModule,
+    MessageModule,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

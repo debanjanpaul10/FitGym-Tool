@@ -18,6 +18,8 @@ export class ApiRoutes {
       'GetCurrentMonthFeesAndRevenueStatus',
     GetCurrentFeesStructure_ApiRoute: 'GetCurrentFeesStructure',
     GetCurrentMembersFeesStatus_ApiRoute: 'GetCurrentMembersFeesStatus',
+    GetPaymentHistoryDataForMember_ApiRoute:
+      'GetPaymentHistoryDataForMember?userId=',
   };
 }
 

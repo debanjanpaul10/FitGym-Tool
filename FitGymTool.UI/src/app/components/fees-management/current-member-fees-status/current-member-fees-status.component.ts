@@ -3,10 +3,12 @@ import {
   AfterViewChecked,
   Component,
   ElementRef,
+  EventEmitter,
   inject,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   signal,
   ViewChild,
   WritableSignal,
@@ -34,6 +36,9 @@ export class CurrentMemberFeesStatusComponent
   implements OnInit, AfterViewChecked, OnDestroy
 {
   @Input() mappingMasterData: MasterMappingDataDto = new MasterMappingDataDto();
+  @Output() memberFeesDataEvent: EventEmitter<CurrentMembersFeesStatusDTO[]> =
+    new EventEmitter<CurrentMembersFeesStatusDTO[]>();
+
   @ViewChild('feesStatusChart', { static: false })
   feesStatusChartCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -84,6 +89,7 @@ export class CurrentMemberFeesStatusComponent
       next: (response: ResponseDto) => {
         if (response?.isSuccess && response?.responseData) {
           this.memberFeesData.set(response?.responseData);
+          this.memberFeesDataEvent.emit(response?.responseData);
           this.updateChartDataFromMembers(response.responseData);
         } else {
           this.toasterService.showError(response?.responseData);

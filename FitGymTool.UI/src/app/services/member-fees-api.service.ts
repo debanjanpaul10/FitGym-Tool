@@ -29,4 +29,11 @@ export class MemberFeesApiService {
     const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetCurrentMembersFeesStatus_ApiRoute}`;
     return this.httpClient.get<ResponseDto>(apiUrl);
   }
+
+  public GetPaymentHistoryDataForMemberAsync(
+    userEmail: string = ''
+  ): Observable<ResponseDto> {
+    const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetPaymentHistoryDataForMember_ApiRoute}${userEmail}`;
+    return this.httpClient.get<ResponseDto>(apiUrl);
+  }
 }

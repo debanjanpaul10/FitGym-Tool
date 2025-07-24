@@ -44,7 +44,7 @@
   z-index: 1100;
   background: #18181b;
   border-bottom: 2px solid #27272a;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-left,
@@ -74,4 +74,56 @@
   fill: #fff !important;
 }
 
-// NOTE: Ensure main content has padding-top: 55px to avoid being hidden under the fixed header.
+.message-row {
+  position: relative;
+  top: 55px;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+  margin: 0;
+  padding: 0;
+}
+
+// Global PrimeNG message overrides
+:host ::ng-deep p-message {
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+:host ::ng-deep .p-message {
+  opacity: 1 !important;
+  background-color: #1d293e !important;
+  display: flex !important;
+  visibility: visible !important;
+  z-index: 1200 !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+}
+
+:host ::ng-deep .p-message-text {
+  text-align: center !important;
+  flex: 1 !important;
+}
+
+:host ::ng-deep .p-message-close-button {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+:host ::ng-deep .p-message-close:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+:host ::ng-deep .p-message-close .p-message-close-icon {
+  color: #fff !important;
+}

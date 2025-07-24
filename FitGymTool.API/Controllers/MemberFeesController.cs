@@ -150,7 +150,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync(string emailId)
+	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync([FromQuery] string emailId)
 	{
 		try
 		{

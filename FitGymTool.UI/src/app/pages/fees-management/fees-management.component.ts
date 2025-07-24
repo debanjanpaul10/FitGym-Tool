@@ -14,10 +14,16 @@ import { ToasterService } from '@core/services/toaster.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { CommonApiService } from '@services/common-api.service';
+import { MemberFeesPaymentListComponent } from '@components/fees-management/member-fees-payment-list/member-fees-payment-list.component';
+import { CurrentMembersFeesStatusDTO } from '@models/DTO/current-members-fees-status-dto.model';
 
 @Component({
   selector: 'app-fees-management',
-  imports: [CurrentFeesStructureComponent, CurrentMemberFeesStatusComponent],
+  imports: [
+    CurrentFeesStructureComponent,
+    CurrentMemberFeesStatusComponent,
+    MemberFeesPaymentListComponent,
+  ],
   templateUrl: './fees-management.component.html',
   styleUrl: './fees-management.component.scss',
 })
@@ -25,6 +31,8 @@ export class FeesManagementComponent implements OnInit {
   protected mappingMasterData: WritableSignal<MasterMappingDataDto> = signal(
     new MasterMappingDataDto()
   );
+  protected feesStatusData: WritableSignal<CurrentMembersFeesStatusDTO[]> =
+    signal([]);
 
   private readonly _commonApiService: CommonApiService =
     inject(CommonApiService);
@@ -53,5 +61,11 @@ export class FeesManagementComponent implements OnInit {
         this._loaderService.loadingOff();
       },
     });
+  }
+
+  protected memberFeesDataEvent(
+    feesStatusData: CurrentMembersFeesStatusDTO[]
+  ): void {
+    this.feesStatusData.set(feesStatusData);
   }
 }
