@@ -28,12 +28,36 @@
             <ng-container
               *ngIf="
                 col.field === 'dueDate' || col.field === 'lastPaymentDate';
-                else normalCell
+                else checkButtonCell
               "
             >
               {{ rowData[col.field] | date : "d MMM yyyy" }}
             </ng-container>
-            <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
+
+            <ng-template #checkButtonCell>
+              <ng-container *ngIf="col.field === ''; else normalCell">
+                <p-button
+                  icon="pi pi-receipt"
+                  [style]="{ width: '100%', height: '5vh', padding: '10px' }"
+                  (onClick)="handleMemberClick(rowData.memberEmail)"
+                  >Details&nbsp;
+                </p-button>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #normalCell>
+              <ng-container *ngIf="col.field === 'feesPaymentStatus'">
+                <span
+                  [class]="getPaymentStatusClass(rowData[col.field])"
+                  class="badge px-2 py-1"
+                >
+                  {{ rowData[col.field] }}
+                </span>
+              </ng-container>
+              <ng-container *ngIf="col.field !== 'feesPaymentStatus'">
+                {{ rowData[col.field] }}
+              </ng-container>
+            </ng-template>
           </td>
         </tr>
       </ng-template>
@@ -54,3 +78,7 @@
     </p-table>
   </div>
 </div>
+
+<app-member-fees-payment-history
+  [memberEmail]="selectedMember"
+></app-member-fees-payment-history>

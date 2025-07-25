@@ -36,6 +36,8 @@
     <Build Include="Stored Procedures\dbo.SP_GetPaymentHistoryForMember.sql" />
     <Build Include="Tables\dbo.ErrorLog.sql" />
     <Build Include="Stored Procedures\dbo.SP_InsertErrorLog.sql" />
+    <Build Include="Tables\dbo.MemberFeesPaymentDurationMapping.sql" />
+    <Build Include="Functions\FN_CalculateNextTimeframeFeesPayment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

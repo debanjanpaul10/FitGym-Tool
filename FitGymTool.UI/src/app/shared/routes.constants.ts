@@ -19,7 +19,7 @@ export class ApiRoutes {
     GetCurrentFeesStructure_ApiRoute: 'GetCurrentFeesStructure',
     GetCurrentMembersFeesStatus_ApiRoute: 'GetCurrentMembersFeesStatus',
     GetPaymentHistoryDataForMember_ApiRoute:
-      'GetPaymentHistoryDataForMember?userId=',
+      'GetPaymentHistoryDataForMember?emailId=',
   };
 }
 

@@ -19,7 +19,7 @@ import { FeesPaymentStatusMappingDto } from '@models/DTO/Mapping/fees-payment-st
 import { MemberFeesApiService } from '@services/member-fees-api.service';
 import { ToasterService } from '@core/services/toaster.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { CurrentMonthFeesAndRevenueStatus } from '@models/DTO/current-month-fees-revenue-status.model';
+import { CurrentMonthFeesAndRevenueStatusDTO } from '@models/DTO/current-month-fees-revenue-status.model';
 import { SkeletonModule } from 'primeng/skeleton';
 
 /**
@@ -44,7 +44,7 @@ export class CurrentRevenueComponent
   protected chartLabels: string[] = [];
   protected isLoading: WritableSignal<boolean> = signal(true);
   protected currentFeesAndRevenueData: WritableSignal<
-    CurrentMonthFeesAndRevenueStatus[]
+    CurrentMonthFeesAndRevenueStatusDTO[]
   > = signal([]);
 
   private revenueChart: Chart | null = null;

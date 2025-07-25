@@ -36,7 +36,7 @@ public static class DatabaseConstants
 		/// <summary>
 		/// The get payment history for member procedure
 		/// </summary>
-		public const string GetPaymentHistoryForMember_SP = "EXEC [dbo].[SP_GetPaymentHistoryForMember] @UserEmailId = {0}";
+		public const string GetPaymentHistoryForMember_SP = "EXEC [dbo].[SP_GetPaymentHistoryForMember] @MemberEmailId = {0}";
 	}
 
 

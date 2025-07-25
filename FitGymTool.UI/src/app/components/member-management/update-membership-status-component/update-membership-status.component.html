@@ -25,6 +25,7 @@
           </th>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
@@ -33,6 +34,7 @@
             >
               {{ rowData[col.field] | date : "d MMM yyyy" }}
             </ng-container>
+
             <ng-template #normalCell>
               <ng-container
                 *ngIf="col.field === 'membershipStatus'; else defaultCell"
@@ -56,6 +58,7 @@
                   >
                 </p-iftalabel>
               </ng-container>
+
               <ng-container *ngIf="col.field === 'actions'">
                 <ng-container
                   *ngIf="
@@ -71,6 +74,7 @@
                     <span>Updated</span>
                   </div>
                 </ng-container>
+
                 <ng-template #updateButton>
                   <p-button
                     type="button"
@@ -87,6 +91,7 @@
                   ></p-button>
                 </ng-template>
               </ng-container>
+
               <ng-template #defaultCell>
                 {{ rowData[col.field] }}
               </ng-template>

@@ -3,7 +3,7 @@
  * Contains all necessary information required to create a new bug report
  * including title, description, severity level, and context information.
  */
-export class AddBugReportDto {
+export class AddBugReportDTO {
   public bugTitle: string = '';
   public bugDescription: string = '';
   public bugSeverity: number = 0;

@@ -13,10 +13,17 @@ import { FeesManagementService } from '@core/services/fees-management-service.se
 import { CurrentMembersFeesStatusDTO } from '@models/DTO/current-members-fees-status-dto.model';
 import { Column } from '@models/interfaces/column.interface';
 import { FeesManagementConstants } from '@shared/application.constants';
+import { MemberFeesPaymentHistoryComponent } from '../member-fees-payment-history/member-fees-payment-history.component';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-member-fees-payment-list',
-  imports: [CommonModule, TableModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    MemberFeesPaymentHistoryComponent,
+    Button,
+  ],
   templateUrl: './member-fees-payment-list.component.html',
   styleUrl: './member-fees-payment-list.component.scss',
 })
@@ -29,6 +36,7 @@ export class MemberFeesPaymentListComponent implements OnInit {
   protected columnHeaders!: Column[];
   protected memberFeesConstants =
     FeesManagementConstants.MemberFeesPaymentListConstants;
+  protected selectedMember: string = '';
 
   private readonly _feesManagementService: FeesManagementService = inject(
     FeesManagementService
@@ -44,6 +52,7 @@ export class MemberFeesPaymentListComponent implements OnInit {
       { field: 'feesAmountDue', header: 'Due Amount (₹)' },
       { field: 'feesPaymentStatus', header: 'Fee Payment Status' },
       { field: 'lastPaymentDate', header: 'Last Payment Date' },
+      { field: '', header: '' },
     ];
   }
 
@@ -52,9 +61,30 @@ export class MemberFeesPaymentListComponent implements OnInit {
       (data: CurrentMembersFeesStatusDTO[]) => {
         if (data && data.length > 0) {
           this.currentMemberFeesData.set(data);
-          console.log(this.currentMemberFeesData());
         }
       }
     );
+  }
+
+  protected handleMemberClick(event: any): void {
+    this.selectedMember = '';
+    setTimeout(() => {
+      this.selectedMember = event;
+    }, 0);
+  }
+
+  protected getPaymentStatusClass(status: string): string {
+    switch (status?.toLowerCase()) {
+      case 'paid':
+        return 'bg-success text-white';
+      case 'pending':
+        return 'bg-info text-white';
+      case 'overdue':
+        return 'bg-danger text-white';
+      case 'due':
+        return 'bg-warning text-dark';
+      default:
+        return 'bg-secondary text-white';
+    }
   }
 }
