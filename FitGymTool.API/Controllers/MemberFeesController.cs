@@ -11,7 +11,9 @@ using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Swashbuckle.AspNetCore.Annotations;
 using static FitGymTool.API.Helpers.APIConstants;
+using static FitGymTool.API.Helpers.SwaggerConstants.MemberFeesController;
 
 namespace FitGymTool.API.Controllers;
 
@@ -35,6 +37,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentMonthFeesAndRevenueStatusAction.Summary, Description = GetCurrentMonthFeesAndRevenueStatusAction.Description, OperationId = GetCurrentMonthFeesAndRevenueStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		try
@@ -73,6 +76,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentFeesStructureAction.Summary, Description = GetCurrentFeesStructureAction.Description, OperationId = GetCurrentFeesStructureAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentFeesStructureAsync()
 	{
 		try
@@ -111,6 +115,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentMembersFeesStatusAction.Summary, Description = GetCurrentMembersFeesStatusAction.Description, OperationId = GetCurrentMembersFeesStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentMembersFeesStatusAsync()
 	{
 		try
@@ -150,6 +155,7 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetPaymentHistoryDataForMemberAction.Summary, Description = GetPaymentHistoryDataForMemberAction.Description, OperationId = GetPaymentHistoryDataForMemberAction.OperationId)]
 	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync([FromQuery] string emailId)
 	{
 		try
