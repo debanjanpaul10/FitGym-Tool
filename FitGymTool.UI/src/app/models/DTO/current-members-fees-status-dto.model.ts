@@ -3,8 +3,8 @@ export class CurrentMembersFeesStatusDTO {
   public memberName: string = '';
   public memberEmail: string = '';
   public memberStatus: string = '';
-  public feesAmountDue: number = 0.0;
-  public dueDate: Date = new Date();
-  public lastPaymentDate: Date = new Date();
+  public dueAmount: number = 0.0;
+  public dueDate: Date | null = null;
+  public paidAmount: number = 0.0;
   public feesPaymentStatus: string = '';
 }

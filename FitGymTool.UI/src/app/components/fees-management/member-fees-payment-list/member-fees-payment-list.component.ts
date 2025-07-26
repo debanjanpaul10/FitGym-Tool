@@ -49,9 +49,8 @@ export class MemberFeesPaymentListComponent implements OnInit {
       { field: 'memberEmail', header: 'Email' },
       { field: 'memberStatus', header: 'Membership Status' },
       { field: 'dueDate', header: 'Payment Due Date' },
-      { field: 'feesAmountDue', header: 'Due Amount (₹)' },
+      { field: 'dueAmount', header: 'Due Amount (₹)' },
       { field: 'feesPaymentStatus', header: 'Fee Payment Status' },
-      { field: 'lastPaymentDate', header: 'Last Payment Date' },
       { field: '', header: '' },
     ];
   }

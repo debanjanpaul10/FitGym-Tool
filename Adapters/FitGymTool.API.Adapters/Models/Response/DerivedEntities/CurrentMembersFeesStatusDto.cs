@@ -50,7 +50,7 @@ public class CurrentMembersFeesStatusDTO
 	/// <value>
 	/// The fees amount due.
 	/// </value>
-	public decimal FeesAmountDue { get; set; }
+	public decimal DueAmount { get; set; }
 
 	/// <summary>
 	/// Gets or sets the due date.
@@ -58,15 +58,15 @@ public class CurrentMembersFeesStatusDTO
 	/// <value>
 	/// The due date.
 	/// </value>
-	public DateTime DueDate { get; set; }
+	public DateTime? DueDate { get; set; }
 
 	/// <summary>
-	/// Gets or sets the last payment date.
+	/// Gets or sets the paid amount.
 	/// </summary>
 	/// <value>
-	/// The last payment date.
+	/// The paid amount.
 	/// </value>
-	public DateTime LastPaymentDate { get; set; }
+	public decimal PaidAmount { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees payment status.
