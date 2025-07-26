@@ -34,10 +34,11 @@
     <Build Include="Tables\BugItemStatusMapping.sql" />
     <Build Include="Tables\BugSeverityMapping.sql" />
     <Build Include="Stored Procedures\dbo.SP_GetPaymentHistoryForMember.sql" />
-    <Build Include="Tables\dbo.ErrorLog.sql" />
     <Build Include="Stored Procedures\dbo.SP_InsertErrorLog.sql" />
-    <Build Include="Tables\dbo.MemberFeesPaymentDurationMapping.sql" />
     <Build Include="Functions\FN_CalculateNextTimeframeFeesPayment.sql" />
+    <Build Include="Stored Procedures\dbo.SP_CalculateNextPaymentDataForMember.sql" />
+    <Build Include="Tables\ErrorLog.sql" />
+    <Build Include="Tables\MemberFeesPaymentDurationMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
