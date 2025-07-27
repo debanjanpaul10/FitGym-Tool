@@ -38,6 +38,7 @@
     <Build Include="Stored Procedures\dbo.SP_CalculateNextPaymentDataForMember.sql" />
     <Build Include="Tables\ErrorLog.sql" />
     <Build Include="Tables\MemberFeesPaymentDurationMapping.sql" />
+    <Build Include="Stored Procedures\dbo.SP_AddNewMemberData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

@@ -17,13 +17,14 @@ import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
-import { AddMemberComponent } from '@components/member-management/add-member-component/add-member.component';
+import { MainFormContainerComponent } from '@components/member-management/add-new-member-form/main-form-container-component/main-form-container.component';
 import { CommonService } from '@core/services/common.service';
 import { UpdateMembershipStatusComponent } from '@components/member-management/update-membership-status-component/update-membership-status.component';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
 import { LoaderService } from '@core/services/loader.service';
 import { CommonApiService } from '@services/common-api.service';
 import { EditMemberComponent } from '@components/member-management/edit-member-component/edit-member.component';
+import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 /**
  * Component responsible for managing gym members, including fetching and displaying member data.
@@ -37,7 +38,7 @@ import { EditMemberComponent } from '@components/member-management/edit-member-c
     MembersListComponent,
     SkeletonModule,
     ButtonModule,
-    AddMemberComponent,
+    MainFormContainerComponent,
     UpdateMembershipStatusComponent,
     EditMemberComponent,
   ],
@@ -51,6 +52,8 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     signal(null);
   protected isUsersDataLoading: WritableSignal<boolean> = signal(false);
   protected membershipStatusOptions: MembershipStatusMappingDto[] = [];
+  protected masterMappingData: MasterMappingDataDto =
+    new MasterMappingDataDto();
 
   private mappingMasterDataSubscription: any;
 
@@ -146,9 +149,8 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     this.loaderService.loadingOn();
     this.commonApiService.GetMappingsMasterDataAsync().subscribe({
       next: (response: ResponseDto) => {
-        if (response && response.isSuccess) {
-          this.membershipStatusOptions =
-            response.responseData?.membershipStatusMapping;
+        if (response?.isSuccess && response?.responseData) {
+          this.masterMappingData = response.responseData;
         }
       },
       error: (err: Error) => {

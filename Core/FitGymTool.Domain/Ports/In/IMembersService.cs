@@ -7,6 +7,7 @@
 
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.Ports.In;
 
@@ -22,7 +23,7 @@ public interface IMembersService
 	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <param name="userEmail">The user email.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> AddNewMemberAsync(MemberDetails memberDetails, string userEmail, bool isFromAdmin);
+	Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails, string userEmail, bool isFromAdmin);
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.

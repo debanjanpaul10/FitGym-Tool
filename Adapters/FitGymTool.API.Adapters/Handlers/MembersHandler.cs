@@ -10,6 +10,7 @@ using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -50,14 +51,12 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = _mapper.Map<MemberDetails>(memberDetails);
-
-		// Get membership status ID from status name
+		var domainRequest = _mapper.Map<NewMemberDetails>(memberDetails);
 		if (!string.IsNullOrEmpty(memberDetails.MembershipStatus))
 		{
 			var mappingData = await _commonHandler.GetMappingsMasterDataAsync();
 			var membershipStatusMapping = mappingData.MembershipStatusMapping
-				.FirstOrDefault(x => x.StatusName.Equals(memberDetails.MembershipStatus, StringComparison.OrdinalIgnoreCase));
+				.FirstOrDefault(predicate: x => x.StatusName.Equals(memberDetails.MembershipStatus, StringComparison.OrdinalIgnoreCase));
 
 			if (membershipStatusMapping != null)
 			{

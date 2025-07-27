@@ -1,0 +1,40 @@
+<div>
+  <form [formGroup]="feesPaymentDurationForm">
+    <div class="form-row horizontal">
+      <div>
+        <p-iftalabel>
+          <p-select
+            id="subscriptionDuration"
+            formControlName="feesDurationTypeName"
+            [options]="masterMappingData.feesDurationMapping"
+            optionLabel="durationTypeName"
+            optionValue="durationTypeName"
+            placeholder="Select payment duration"
+            appendTo="body"
+            class="form-input"
+          ></p-select>
+          <label for="subscriptionDuration" class="field-label">
+            Subscription Duration
+          </label>
+        </p-iftalabel>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <p-button
+        label="Cancel"
+        severity="danger"
+        type="button"
+        variant="outlined"
+        (onClick)="onCancel()"
+      />
+      <p-button
+        label="Next Stage"
+        type="button"
+        variant="outlined"
+        (onClick)="submitMemberFeesPaymentDurationForm()"
+        [disabled]="feesPaymentDurationForm.invalid"
+      />
+    </div>
+  </form>
+</div>

@@ -25,6 +25,7 @@ export class ToasterSuccessMessages {
     MembershipStatusUpdatedSuccess:
       'Membership status has been updated successfully',
     UpdateMemberSuccess: 'Member details have been update successfully',
+    MembershipDetailsSuccess: 'Membership details saved successfully',
   };
 
   public static Common = {
@@ -122,7 +123,9 @@ export class MemberManagementConstants {
       { label: 'Suspended', value: 'Suspended' },
       { label: 'Pending', value: 'Pending' },
     ],
-    Header: 'Add a new member',
+    NewMemberHeader: 'Add a new member',
+    MapSubscriptionFees: 'Map the subscription duration',
+    FinalValidation: 'Check the final details',
   };
 
   public static UpdateMembershipStatusConstants = {

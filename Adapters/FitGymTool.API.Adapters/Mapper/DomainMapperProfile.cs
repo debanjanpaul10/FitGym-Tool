@@ -37,19 +37,15 @@ public class DomainMapperProfile : Profile
         CreateMap<BugSeverityMapping, BugSeverityMappingDto>()
             .ForMember(destination => destination.Id, option => option.MapFrom(source => source.Id))
             .ForMember(destination => destination.SeverityName, option => option.MapFrom(source => source.SeverityName));
-
-        // Members mapping configurations
-        CreateMap<AddMemberDTO, MemberDetails>()
-            .ForMember(destination => destination.MembershipStatusId, option => option.Ignore()) // Will be handled in the service layer
+        CreateMap<AddMemberDTO, NewMemberDetails>()
+            .ForMember(destination => destination.MembershipStatusId, option => option.Ignore())
             .ReverseMap()
-            .ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatusMapping != null ?
-            source.MembershipStatusMapping.StatusName : string.Empty));
+            .ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
 
         CreateMap<UpdateMemberDTO, MemberDetails>();
         CreateMap<MemberDetails, MemberDetailsDTO>()
             .ForMember(destination => destination.MembershipStatus, option => option
                 .MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
-
         CreateMap<AddBugReportDTO, BugReportData>()
             .ForMember(destination => destination.Id, options => options.Ignore())
             .ForMember(destination => destination.BugSeverityId, options => options.Ignore())

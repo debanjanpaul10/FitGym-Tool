@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
 
 namespace FitGymTool.Persistence.Adapters.UnitTests;
@@ -29,9 +30,9 @@ public static class PersistenceTestsHelper
 	/// Creates a valid AddMemberDomain for testing.
 	/// </summary>
 	/// <returns>A valid AddMemberDomain instance.</returns>
-	public static MemberDetails CreateValidAddMemberDomain()
+	public static NewMemberDetails CreateValidAddMemberDomain()
 	{
-		return new MemberDetails
+		return new()
 		{
 			MemberName = "John Doe",
 			MemberEmail = CurrentLoggedInMember,
@@ -58,7 +59,7 @@ public static class PersistenceTestsHelper
 	/// <returns>A valid UpdateMemberDomain instance.</returns>
 	public static MemberDetails CreateValidUpdateMemberDomain()
 	{
-		return new MemberDetails
+		return new()
 		{
 			MemberId = new Random().Next(1, 10),
 			MemberName = "Jane Doe",

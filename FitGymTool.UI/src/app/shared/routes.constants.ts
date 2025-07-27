@@ -3,9 +3,10 @@ export class ApiRoutes {
     BaseRoute: 'api/Members/',
     AddMember_ApiRoute: 'AddMember/',
     GetAllMembers_ApiRoute: 'GetAllMembers',
-    GetMemberByEmailId_ApiRoute: 'GetMemberByEmailId',
+    GetMemberByEmailId_ApiRoute: 'GetMemberByEmailId?memberEmailId=',
     UpdateMemberDetails_ApiRoute: 'UpdateMemberDetails',
     UpdateMembershipDetails_ApiRoute: 'UpdateMembershipStatus',
+    AddMemberFeesPaymentDuration_ApiRoute: 'AddMemberFeesPaymentDuration',
   };
   public static CommonApi = {
     BaseRoute: 'api/Common/',

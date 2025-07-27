@@ -11,6 +11,7 @@ using FitGymTool.API.Adapters.Handlers;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 using Moq;
 
@@ -59,14 +60,14 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, true);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
+		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
 	}
 
 	/// <summary>
@@ -79,14 +80,14 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, false);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
+		_mockMembersService.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>(), It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
 	}
 
 	/// <summary>
@@ -99,7 +100,7 @@ public class MembersHandlerTests
 		var mockAddUserDataDto = ApiAdaptersTestsHelper.PrepareAddMemberDataDto();
 		var mockUserEmail = ApiAdaptersTestsHelper.CurrentLoggedInUser;
 
-		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(false);
+		_mockMembersService.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>(), It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(false);
 
 		// Act
 		var result = await _membersHandler.AddNewMemberAsync(mockAddUserDataDto, mockUserEmail, true);

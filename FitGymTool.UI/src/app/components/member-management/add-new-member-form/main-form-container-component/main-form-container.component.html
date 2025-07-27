@@ -1,0 +1,50 @@
+<p-dialog
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: 'auto', 'min-height': '700px', 'max-height': '700px' }"
+  [blockScroll]="true"
+>
+  <p-stepper [value]="currentStep()" class="basis-[50rem]">
+    <p-step-list>
+      <p-step [value]="1">{{ addMemberConstants.NewMemberHeader }}</p-step>
+      <p-step [value]="2">{{ addMemberConstants.MapSubscriptionFees }}</p-step>
+      <p-step [value]="3">{{ addMemberConstants.FinalValidation }}</p-step>
+    </p-step-list>
+
+    <p-step-panels>
+      <p-step-panel [value]="1">
+        <ng-template #content let-activeCallback="activeCallback">
+          <app-new-member-creation
+            [masterMappingData]="masterMappingData"
+            [(visible)]="visible"
+            [(currentStep)]="currentStep"
+            (newMemberData)="onNewMemberDataChange($event)"
+          ></app-new-member-creation>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="2">
+        <ng-template #content let-activeCallback="activeCallback">
+          <app-subscription-details-selection
+            [masterMappingData]="masterMappingData"
+            [currentMemberData]="newMemberData"
+            [(visible)]="visible"
+            [(currentStep)]="currentStep"
+            (newMemberData)="onNewMemberDataChange($event)"
+          ></app-subscription-details-selection>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="3">
+        <ng-template #content let-activeCallback="activeCallback">
+          <app-final-validation-form
+            [masterMappingData]="masterMappingData"
+            [(visible)]="visible"
+            [(currentStep)]="currentStep"
+            (newMemberData)="onNewMemberDataChange($event)"
+          ></app-final-validation-form>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
+</p-dialog>

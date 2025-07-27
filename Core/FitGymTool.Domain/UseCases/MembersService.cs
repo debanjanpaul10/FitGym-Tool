@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
@@ -40,7 +41,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 	/// <param name="userEmail">The user email.</param>
 	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(MemberDetails memberDetails, string userEmail, bool isFromAdmin)
+	public async Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails, string userEmail, bool isFromAdmin)
 	{
 		var effectiveEmail = isFromAdmin ? memberDetails.MemberEmail : userEmail;
 		try
@@ -51,12 +52,11 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			// Domain-side validation for DateTime fields
 			if (memberDetails.MemberDateOfBirth == DateTime.MinValue || memberDetails.MemberJoinDate == DateTime.MinValue)
 			{
-				throw new InvalidOperationException("Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.");
+				throw new InvalidOperationException(ValidationErrorMessages.DatesMustBeValidConstant);
 			}
 
 			memberDetails.PrepareNewMemberDetailsData(effectiveEmail);
-			var result = await _membersDataService.AddNewMemberAsync(memberDetails);
-			return result;
+			return await _membersDataService.AddNewMemberAsync(memberDetails);
 		}
 		catch (Exception ex)
 		{
@@ -82,8 +82,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
 
-			var members = await _membersDataService.GetAllMembersAsync();
-			return members;
+			return await _membersDataService.GetAllMembersAsync();
 		}
 		catch (Exception ex)
 		{
@@ -146,8 +145,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var result = await _membersDataService.UpdateMemberDetailsAsync(memberDetails);
-			return result;
+			return await _membersDataService.UpdateMemberDetailsAsync(memberDetails);
 		}
 		catch (Exception ex)
 		{
@@ -173,8 +171,7 @@ public class MembersService(IMembersDataManager membersDataService, ILogger<Memb
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusDomain.MemberEmail));
-			var result = await _membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
-			return result;
+			return await _membersDataService.UpdateMembershipStatusAsync(updateMembershipStatusDomain);
 		}
 		catch (Exception ex)
 		{

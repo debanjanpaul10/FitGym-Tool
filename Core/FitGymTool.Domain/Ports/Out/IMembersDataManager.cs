@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.Ports.Out;
 
@@ -19,7 +20,7 @@ public interface IMembersDataManager
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> AddNewMemberAsync(MemberDetails memberDetails);
+	Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails);
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.

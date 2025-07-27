@@ -1,11 +1,5 @@
-<p-dialog
-  [header]="addMemberConstants.Header"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '50rem' }"
-  [blockScroll]="true"
->
-  <form [formGroup]="memberForm" (ngSubmit)="submitNewUserForm()">
+<div>
+  <form [formGroup]="memberForm">
     <!-- Member Name -->
     <div class="form-row-horizontal">
       <div>
@@ -133,7 +127,7 @@
           <p-select
             id="membershipStatus"
             formControlName="membershipStatus"
-            [options]="membershipStatusOptions"
+            [options]="masterMappingData.membershipStatusMapping"
             optionLabel="statusName"
             optionValue="statusName"
             placeholder="Membership Status"
@@ -157,11 +151,12 @@
         (onClick)="onCancel()"
       />
       <p-button
-        label="Add Member"
-        type="submit"
+        label="Next Stage"
+        type="button"
         variant="outlined"
+        (onClick)="submitNewUserForm()"
         [disabled]="memberForm.invalid"
       />
     </div>
   </form>
-</p-dialog>
+</div>

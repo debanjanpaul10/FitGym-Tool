@@ -51,5 +51,5 @@ public interface IUnitOfWork : IDisposable
 	/// <param name="sql">The SQL.</param>
 	/// <param name="parameters">The parameters.</param>
 	/// <returns>The SQL query response.</returns>
-	Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new();
+	Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters);
 }

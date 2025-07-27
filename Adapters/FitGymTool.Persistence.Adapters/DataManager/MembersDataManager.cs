@@ -5,15 +5,17 @@
 // <summary>The Members Data Manager Class.</summary>
 // *********************************************************************************
 
-using System.Globalization;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
+using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
+using FitGymTool.Persistence.Adapters.Helpers.Constants;
 using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
-using FitGymTool.Domain.Helpers;
+using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
-using FitGymTool.Domain.DomainEntities.Mapping;
-using FitGymTool.Domain.DomainEntities;
+using static FitGymTool.Persistence.Adapters.Helpers.Extensions.PersistenceUtilities;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
 
@@ -22,7 +24,6 @@ namespace FitGymTool.Persistence.Adapters.DataManager;
 /// </summary>
 /// <param name="unitOfWork">The unit of work.</param>
 /// <param name="logger">The logger.</param>
-/// <param name="mapper">The mapper.</param>
 /// <seealso cref="IMembersDataManager"/>
 public class MembersDataManager(IUnitOfWork unitOfWork, ILogger<MembersDataManager> logger) : IMembersDataManager
 {
@@ -41,36 +42,16 @@ public class MembersDataManager(IUnitOfWork unitOfWork, ILogger<MembersDataManag
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	public async Task<bool> AddNewMemberAsync(MemberDetails memberDetails)
+	public async Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails)
 	{
 		try
 		{
-			// Ensure all DateTime fields are valid before mapping
 			memberDetails.EnsureValidDates();
-
-			// Log all DateTime fields for debugging
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var existingMember = (await _unitOfWork.Repository<MemberDetails>()
-			    .FindAsync(predicate: member => member.MemberEmail == memberDetails.MemberEmail && member.IsActive)).Any();
-			if (existingMember)
-			{
-				var ex = new InvalidOperationException(ValidationErrorMessages.MemberAlreadyExistsMessageConstant);
-				_logger.LogError(ex, string.Format(
-					CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
-				throw ex;
-			}
-
-			// Lookup MembershipStatusMapping by status name
-			var statusEntity = await _unitOfWork.Repository<MembershipStatusMapping>()
-				.FirstOrDefaultAsync(ms => ms.Id == memberDetails.MembershipStatusId && ms.IsActive);
-
-			memberDetails.MembershipStatusId = statusEntity?.Id ?? 0;
-
-			await _unitOfWork.Repository<MemberDetails>().AddAsync(memberDetails);
-			await _unitOfWork.SaveChangesAsync();
-
+			var parameters = PrepareNewMemberSPParameters(memberDetails);
+			await _unitOfWork.ExecuteSqlQueryAsync<object>(DatabaseConstants.StoredProceduresConstants.AddNewMemberData_SP, parameters);
 			return true;
 		}
 		catch (Exception ex)

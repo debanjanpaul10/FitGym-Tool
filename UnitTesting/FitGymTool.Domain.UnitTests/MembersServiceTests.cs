@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Helpers;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Domain.UseCases;
@@ -52,14 +53,14 @@ public class MembersServiceTests
 		var mockAddUserDomainData = DomainTestsHelper.PrepareAddMemberDomainData();
 		var mockLoggedInUser = DomainTestsHelper.CurrentLoggedInMember;
 
-		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>())).ReturnsAsync(true);
+		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersService.AddNewMemberAsync(mockAddUserDomainData, mockLoggedInUser, true);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
@@ -72,14 +73,14 @@ public class MembersServiceTests
 		var mockAddUserDomainData = DomainTestsHelper.PrepareAddMemberDomainData();
 		var mockLoggedInUser = DomainTestsHelper.CurrentLoggedInMember;
 
-		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>())).ReturnsAsync(true);
+		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>())).ReturnsAsync(true);
 
 		// Act
 		var result = await _membersService.AddNewMemberAsync(mockAddUserDomainData, mockLoggedInUser, false);
 
 		// Assert
 		Assert.True(result);
-		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
@@ -92,14 +93,14 @@ public class MembersServiceTests
 		var mockAddUserDomainData = DomainTestsHelper.PrepareAddMemberDomainData();
 		var mockLoggedInUser = DomainTestsHelper.CurrentLoggedInMember;
 
-		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>())).ReturnsAsync(false);
+		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>())).ReturnsAsync(false);
 
 		// Act
 		var result = await _membersService.AddNewMemberAsync(mockAddUserDomainData, mockLoggedInUser, true);
 
 		// Assert
 		Assert.False(result);
-		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
@@ -117,7 +118,7 @@ public class MembersServiceTests
 			() => _membersService.AddNewMemberAsync(mockAddUserDomainData, mockLoggedInUser, true));
 
 		Assert.Contains("Invalid date values", exception.Message);
-		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>()), Times.Never);
+		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>()), Times.Never);
 	}
 
 	/// <summary>
@@ -131,14 +132,14 @@ public class MembersServiceTests
 		var mockLoggedInUser = DomainTestsHelper.CurrentLoggedInMember;
 		var expectedException = new Exception("Database connection failed");
 
-		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>())).ThrowsAsync(expectedException);
+		_mockMembersDataManager.Setup(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>())).ThrowsAsync(expectedException);
 
 		// Act & Assert
 		var exception = await Assert.ThrowsAsync<Exception>(
 			() => _membersService.AddNewMemberAsync(mockAddUserDomainData, mockLoggedInUser, true));
 
 		Assert.Equal(expectedException.Message, exception.Message);
-		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<MemberDetails>()), Times.Once);
+		_mockMembersDataManager.Verify(x => x.AddNewMemberAsync(It.IsAny<NewMemberDetails>()), Times.Once);
 	}
 
 	/// <summary>
