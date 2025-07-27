@@ -27,6 +27,7 @@ import { EditMemberComponent } from '@components/member-management/edit-member-c
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 /**
+ * @component
  * Component responsible for managing gym members, including fetching and displaying member data.
  * Utilizes MembersApiService to retrieve member information, LoaderService to indicate loading state,
  * and ToasterService to display error messages.
@@ -87,22 +88,42 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Opens the add new member dialog by triggering the dialog popup service.
+   * This method is called when the user clicks the add member button.
+   */
   protected handleAddNewMember(): void {
     this.dialogPopupService.openAddMemberDialog();
   }
 
+  /**
+   * Opens the membership status update dialog to terminate or modify a member's status.
+   * This method is called when the user wants to change a member's membership status.
+   */
   protected handleTerminateMember(): void {
     this.dialogPopupService.openMembershipStatusDialog();
   }
 
+  /**
+   * Opens the member details update dialog to edit existing member information.
+   * This method is called when the user wants to modify a member's personal details.
+   */
   protected handleEditMember(): void {
     this.dialogPopupService.openMemberUpdateDetailsDialog();
   }
 
+  /**
+   * Refreshes the member data list after a member has been updated.
+   * This method is called as a callback when member information is successfully modified.
+   */
   protected onMemberUpdated(): void {
     this.getAllMembersData();
   }
 
+  /**
+   * Triggers a refresh of the master mapping data by calling the API to fetch updated mappings.
+   * This method is used to ensure the component has the latest mapping information.
+   */
   protected refreshMasterMappingData(): void {
     this.getMasterMappingsData();
   }
@@ -139,7 +160,9 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Fetches the master mappings data for membership status from the API.
+   * Retrieves master mapping data from the API including membership status and other dropdown options.
+   * Shows a loading indicator during the request and updates the common service with the fetched data.
+   * Handles errors by displaying error messages and ensures the loader is turned off on completion.
    */
   private getMasterMappingsData(): void {
     this.loaderService.loadingOn();
@@ -147,7 +170,6 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
       next: (response: ResponseDto) => {
         if (response?.isSuccess && response?.responseData) {
           this.masterMappingData = response.responseData;
-          // Update the common service with the fetched data
           this.commonService.MappingMasterData = response.responseData;
         }
       },
@@ -163,7 +185,9 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Checks if the master mapping data contains valid data
+   * Validates whether the provided master mapping data contains valid and usable information.
+   * Checks for the presence of membership status mappings and other array-based mapping data.
+   * Returns true if valid data exists, false otherwise.
    */
   private checkValidMappingDataExists(data: MasterMappingDataDto): boolean {
     return (
@@ -179,6 +203,11 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Manages the subscription and handling of master mapping data from the common service.
+   * Sets up subscriptions to monitor mapping data changes and automatically fetches new data if invalid.
+   * Specifically handles membership status mapping subscriptions and triggers data refresh when needed.
+   */
   private handleMappingData(): void {
     this.masterMappingDataSubscription =
       this.commonService.MappingMasterData.subscribe(

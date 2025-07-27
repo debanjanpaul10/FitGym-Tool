@@ -1,1 +1,197 @@
-<p>final-validation-form works!</p>
+<div>
+  <div>
+    <p-message severity="warn">
+      <h3>Review Member Information</h3>
+      Please review all the information below. To make changes, use the
+      navigation buttons to go back to previous steps.
+    </p-message>
+  </div>
+
+  <form class="form">
+    <div class="form-row-horizontal">
+      <div>
+        <p-iftalabel>
+          <label for="memberName" class="field-label">Name</label>
+          <input
+            pInputText
+            id="memberName"
+            placeholder="Enter member name"
+            class="form-input"
+            [value]="currentMemberData.memberName"
+            disabled="true"
+          />
+        </p-iftalabel>
+      </div>
+
+      <!-- Member Email -->
+      <div class="form-field">
+        <p-iftalabel>
+          <label for="memberEmail" class="field-label">Email</label>
+          <input
+            pInputText
+            id="memberEmail"
+            placeholder="Enter email address"
+            class="form-input"
+            [value]="currentMemberData.memberEmail || 'N/A'"
+            disabled="true"
+          />
+        </p-iftalabel>
+      </div>
+    </div>
+
+    <div class="form-row-horizontal">
+      <!-- Phone Number -->
+      <div>
+        <p-iftalabel>
+          <label for="memberPhoneNumber" class="field-label"
+            >Phone Number</label
+          >
+          <input
+            pInputText
+            id="memberPhoneNumber"
+            placeholder="Enter phone number"
+            class="form-input"
+            [value]="currentMemberData.memberPhoneNumber"
+            disabled="true"
+          />
+        </p-iftalabel>
+      </div>
+
+      <!-- Date of Birth -->
+      <div>
+        <p-iftalabel>
+          <input
+            pInputText
+            id="memberDateOfBirth"
+            placeholder="Select date of birth"
+            class="form-input"
+            [value]="formatDate(currentMemberData.memberDateOfBirth)"
+            disabled="true"
+          />
+          <label for="memberDateOfBirth" class="field-label"
+            >Date of Birth</label
+          >
+        </p-iftalabel>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-row">
+      <p-iftalabel>
+        <label for="memberAddress" class="field-label">Address</label>
+        <textarea
+          pInputTextarea
+          id="memberAddress"
+          placeholder="Enter address"
+          class="form-input"
+          rows="2"
+          [value]="currentMemberData.memberAddress"
+          disabled="true"
+        ></textarea>
+      </p-iftalabel>
+    </div>
+
+    <div class="form-row-horizontal">
+      <!-- Gender -->
+      <div>
+        <p-iftalabel>
+          <input
+            pInputText
+            id="memberGender"
+            placeholder="Select gender"
+            class="form-input"
+            [value]="currentMemberData.memberGender"
+            disabled="true"
+          />
+          <label for="memberGender" class="field-label">Gender</label>
+        </p-iftalabel>
+      </div>
+
+      <!-- Join Date -->
+      <div>
+        <p-iftalabel>
+          <input
+            pInputText
+            id="memberJoinDate"
+            placeholder="Select join date"
+            class="form-input"
+            [value]="formatDate(currentMemberData.memberJoinDate)"
+            disabled="true"
+          />
+          <label for="memberJoinDate" class="field-label">Join Date</label>
+        </p-iftalabel>
+      </div>
+    </div>
+
+    <!-- Membership Status -->
+    <div class="form-row">
+      <p-iftalabel>
+        <div class="membership-dropdown-wrapper">
+          <input
+            pInputText
+            id="membershipStatus"
+            placeholder="Membership Status"
+            class="form-input"
+            [value]="currentMemberData.membershipStatus"
+            disabled="true"
+          />
+        </div>
+        <label for="membershipStatus" class="field-label"
+          >Membership Status</label
+        >
+      </p-iftalabel>
+    </div>
+
+    <div class="form-row horizontal">
+      <div>
+        <p-iftalabel>
+          <input
+            pInputText
+            id="subscriptionDuration"
+            class="form-input"
+            [value]="currentMemberData.feesDurationTypeName"
+            disabled="true"
+          />
+          <label for="subscriptionDuration" class="field-label">
+            Subscription Duration
+          </label>
+        </p-iftalabel>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <div class="navigation-buttons">
+        <p-button
+          label="← Edit Personal Details"
+          type="button"
+          variant="outlined"
+          severity="secondary"
+          (onClick)="goToStep(1)"
+        />
+        <p-button
+          label="← Edit Subscription"
+          type="button"
+          variant="outlined"
+          severity="secondary"
+          (onClick)="goToStep(2)"
+        />
+      </div>
+
+      <div class="action-buttons">
+        <p-button
+          label="Cancel"
+          severity="danger"
+          type="button"
+          variant="outlined"
+          (onClick)="onCancel()"
+        />
+        <p-button
+          label="Submit Member"
+          type="button"
+          severity="success"
+          (onClick)="submitFinalMemberData()"
+        />
+      </div>
+    </div>
+  </form>
+</div>

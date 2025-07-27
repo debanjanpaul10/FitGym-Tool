@@ -117,12 +117,6 @@ export class MemberManagementConstants {
       { label: 'Female', value: 'Female' },
       { label: 'Other', value: 'Other' },
     ],
-    membershipStatusOptions: [
-      { label: 'Active', value: 'Active' },
-      { label: 'Inactive', value: 'Inactive' },
-      { label: 'Suspended', value: 'Suspended' },
-      { label: 'Pending', value: 'Pending' },
-    ],
     NewMemberHeader: 'Add a new member',
     MapSubscriptionFees: 'Map the subscription duration',
     FinalValidation: 'Check the final details',

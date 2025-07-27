@@ -27,7 +27,7 @@
         <ng-template #content let-activeCallback="activeCallback">
           <app-subscription-details-selection
             [masterMappingData]="masterMappingData"
-            [currentMemberData]="newMemberData"
+            [currentMemberData]="newMemberData()"
             [(visible)]="visible"
             [(currentStep)]="currentStep"
             (newMemberData)="onNewMemberDataChange($event)"
@@ -39,6 +39,7 @@
         <ng-template #content let-activeCallback="activeCallback">
           <app-final-validation-form
             [masterMappingData]="masterMappingData"
+            [currentMemberData]="newMemberData()"
             [(visible)]="visible"
             [(currentStep)]="currentStep"
             (newMemberData)="onNewMemberDataChange($event)"

@@ -155,7 +155,7 @@
         type="button"
         variant="outlined"
         (onClick)="submitNewUserForm()"
-        [disabled]="memberForm.invalid"
+        [disabled]="!isNextButtonEnabled"
       />
     </div>
   </form>

@@ -34,7 +34,7 @@
         type="button"
         variant="outlined"
         (onClick)="submitMemberFeesPaymentDurationForm()"
-        [disabled]="feesPaymentDurationForm.invalid"
+        [disabled]="!isNextButtonEnabled()"
       />
     </div>
   </form>

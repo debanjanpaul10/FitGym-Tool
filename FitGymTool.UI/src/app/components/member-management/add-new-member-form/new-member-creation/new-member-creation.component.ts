@@ -1,4 +1,5 @@
 import { Component, inject, Input, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IftaLabel } from 'primeng/iftalabel';
 import { DatePicker } from 'primeng/datepicker';
 import { Select } from 'primeng/select';
@@ -16,9 +17,18 @@ import { MemberManagementConstants } from '@shared/application.constants';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
+/**
+ * @component
+ * Component responsible for handling the first step of the member registration process.
+ * Manages the collection of essential member information including personal details,
+ * contact information, and membership preferences. Implements comprehensive form validation
+ * with required field checks, email format validation, and phone number pattern matching.
+ * Serves as the entry point for the multi-step member registration workflow.
+ */
 @Component({
   selector: 'app-new-member-creation',
   imports: [
+    CommonModule,
     IftaLabel,
     DatePicker,
     Select,
@@ -46,14 +56,35 @@ export class NewMemberCreationComponent {
 
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
+  // Getter to check if next button should be enabled
+  protected get isNextButtonEnabled(): boolean {
+    return this.memberForm.valid;
+  }
+
+  // Helper method to get invalid control names for debugging
+  protected getInvalidControls(): string[] {
+    const invalidControls: string[] = [];
+    Object.keys(this.memberForm.controls).forEach((key) => {
+      const control = this.memberForm.get(key);
+      if (control && control.invalid) {
+        invalidControls.push(key);
+      }
+    });
+    return invalidControls;
+  }
+
   constructor() {
     this.memberForm = this.createForm();
   }
 
   /**
-   * Handles the add member form submission, sends data to the API, and manages loader and toast notifications.
+   * Processes the new member form submission and advances to the subscription details step.
+   * Validates the form data and constructs a complete AddMemberDto object with all collected information.
+   * Advances the workflow to step 2 and emits the member data to parent components for further processing.
+   * Only proceeds if all form validations pass successfully.
    */
   protected submitNewUserForm(): void {
+    // Check individual field validity
     if (this.memberForm.valid) {
       const memberData: AddMemberDto = {
         memberName: this.memberForm.value.memberName,
@@ -74,7 +105,9 @@ export class NewMemberCreationComponent {
   }
 
   /**
-   * Resets the add member form and closes the dialog.
+   * Handles the cancellation of the new member creation process.
+   * Resets all form fields to their initial state, restores the join date to current date,
+   * closes the dialog by setting visibility to false, and notifies parent components of the change.
    */
   protected onCancel(): void {
     this.memberForm.reset();
@@ -86,8 +119,10 @@ export class NewMemberCreationComponent {
   }
 
   /**
-   * Creates and returns the add member form group with validation rules.
-   * @returns {FormGroup} The initialized add member form group.
+   * Creates and configures the reactive form for new member registration with comprehensive validation rules.
+   * Initializes form controls for all member fields including name, email, phone, address, dates, gender, and membership status.
+   * Applies appropriate validators such as required fields, minimum length, email format, and phone number pattern matching.
+   * Sets default values including current date for join date and empty string for optional fields.
    */
   private createForm(): FormGroup {
     return this.formBuilder.group({

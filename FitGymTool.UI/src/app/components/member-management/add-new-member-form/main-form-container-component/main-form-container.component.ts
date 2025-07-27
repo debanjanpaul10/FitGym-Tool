@@ -4,13 +4,14 @@ import {
   signal,
   WritableSignal,
   Input,
+  computed,
 } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { StepperModule } from 'primeng/stepper';
 
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { MemberManagementConstants } from '@shared/application.constants';
-import { SubscriptionDetailsSelection } from '../subscription-details-selection/subscription-details-selection.component';
+import { SubscriptionDetailsSelectionComponent } from '../subscription-details-selection/subscription-details-selection.component';
 import { NewMemberCreationComponent } from '../new-member-creation/new-member-creation.component';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
@@ -24,7 +25,7 @@ import { FinalValidationFormComponent } from '../final-validation-form/final-val
   imports: [
     DialogModule,
     StepperModule,
-    SubscriptionDetailsSelection,
+    SubscriptionDetailsSelectionComponent,
     NewMemberCreationComponent,
     FinalValidationFormComponent,
   ],
@@ -38,17 +39,33 @@ export class MainFormContainerComponent {
     MemberManagementConstants.AddNewMemberConstants;
   protected visible: WritableSignal<boolean> = signal(false);
   protected currentStep: WritableSignal<number> = signal(1);
-  protected newMemberData: AddMemberDto = new AddMemberDto();
+  protected newMemberData: WritableSignal<AddMemberDto> = signal(
+    new AddMemberDto()
+  );
 
   private readonly dialogPopupService: DialogPopupService =
     inject(DialogPopupService);
+
+  // Computed property to check if first step data is valid
+  protected isFirstStepDataValid = computed(() => {
+    const data = this.newMemberData();
+    return !!(
+      data.memberName &&
+      data.memberPhoneNumber &&
+      data.memberAddress &&
+      data.memberDateOfBirth &&
+      data.memberGender &&
+      data.memberJoinDate &&
+      data.membershipStatus
+    );
+  });
 
   constructor() {
     this.visible = this.dialogPopupService.isAddMemberDialogOpen;
   }
 
   protected onNewMemberDataChange(addMemberData: AddMemberDto): void {
-    this.newMemberData = addMemberData;
+    this.newMemberData.set(addMemberData);
   }
 
   protected submitNewUserData(): void {}
