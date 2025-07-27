@@ -64,7 +64,7 @@ export class NewMemberCreationComponent {
         memberGender: this.memberForm.value.memberGender,
         memberJoinDate: this.memberForm.value.memberJoinDate,
         membershipStatus: this.memberForm.value.membershipStatus,
-        feesDurationTypeName: '',
+        feesDurationTypeName: this.memberForm.value.feesDurationTypeName,
       };
 
       this.currentStep = 2; // Move to step 2
@@ -102,6 +102,7 @@ export class NewMemberCreationComponent {
       memberGender: ['', [Validators.required]],
       memberJoinDate: [new Date(), [Validators.required]],
       membershipStatus: ['', [Validators.required]],
+      feesDurationTypeName: [''],
     });
   }
 }

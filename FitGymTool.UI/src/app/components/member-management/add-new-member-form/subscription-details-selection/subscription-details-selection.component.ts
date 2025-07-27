@@ -7,7 +7,12 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { IftaLabel } from 'primeng/iftalabel';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
@@ -15,10 +20,17 @@ import { Button } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { CurrentFeesStructureComponent } from '@components/fees-management/current-fees-structure/current-fees-structure.component';
 
 @Component({
   selector: 'app-subscription-details-selection',
-  imports: [IftaLabel, Select, Button, ReactiveFormsModule],
+  imports: [
+    IftaLabel,
+    Select,
+    Button,
+    ReactiveFormsModule,
+    CurrentFeesStructureComponent,
+  ],
   templateUrl: './subscription-details-selection.component.html',
   styleUrl: './subscription-details-selection.component.scss',
 })
@@ -61,6 +73,8 @@ export class SubscriptionDetailsSelection {
   }
 
   private createForm(): FormGroup {
-    return this._formBuilder.group({});
+    return this._formBuilder.group({
+      feesDurationTypeName: ['', [Validators.required]],
+    });
   }
 }

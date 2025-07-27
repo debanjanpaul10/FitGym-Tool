@@ -8,12 +8,12 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ButtonModule } from 'primeng/button';
 
 import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
 import { MembersApiService } from '@services/members-api.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
-import { ButtonModule } from 'primeng/button';
 import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { MemberManagementConstants } from '@shared/application.constants';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
@@ -55,7 +55,7 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
   protected masterMappingData: MasterMappingDataDto =
     new MasterMappingDataDto();
 
-  private mappingMasterDataSubscription: any;
+  private masterMappingDataSubscription: any;
 
   private readonly membersApiService: MembersApiService =
     inject(MembersApiService);
@@ -78,20 +78,12 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.mappingMasterDataSubscription = this.commonService.subscribeToMapping(
-      'membershipStatusMapping',
-      (options) => {
-        this.membershipStatusOptions = options as MembershipStatusMappingDto[];
-      },
-      () => {
-        this.getMasterMappingsData();
-      }
-    );
+    this.handleMappingData();
   }
 
   ngOnDestroy(): void {
-    if (this.mappingMasterDataSubscription) {
-      this.mappingMasterDataSubscription.unsubscribe();
+    if (this.masterMappingDataSubscription) {
+      this.masterMappingDataSubscription.unsubscribe();
     }
   }
 
@@ -109,6 +101,10 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
 
   protected onMemberUpdated(): void {
     this.getAllMembersData();
+  }
+
+  protected refreshMasterMappingData(): void {
+    this.getMasterMappingsData();
   }
 
   // #region PRIVATE Methods
@@ -151,6 +147,8 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
       next: (response: ResponseDto) => {
         if (response?.isSuccess && response?.responseData) {
           this.masterMappingData = response.responseData;
+          // Update the common service with the fetched data
+          this.commonService.MappingMasterData = response.responseData;
         }
       },
       error: (err: Error) => {
@@ -162,6 +160,46 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
         this.loaderService.loadingOff();
       },
     });
+  }
+
+  /**
+   * Checks if the master mapping data contains valid data
+   */
+  private checkValidMappingDataExists(data: MasterMappingDataDto): boolean {
+    return (
+      data &&
+      ((data.membershipStatusMapping &&
+        data.membershipStatusMapping.length > 0) ||
+        (data.membershipStatusMapping &&
+          data.membershipStatusMapping.length > 0) ||
+        Object.keys(data).some((key) => {
+          const value = (data as any)[key];
+          return Array.isArray(value) && value.length > 0;
+        }))
+    );
+  }
+
+  private handleMappingData(): void {
+    this.masterMappingDataSubscription =
+      this.commonService.MappingMasterData.subscribe(
+        (data: MasterMappingDataDto) => {
+          if (this.checkValidMappingDataExists(data)) {
+            this.masterMappingData = data;
+          } else {
+            this.getMasterMappingsData();
+          }
+        }
+      );
+
+    this.commonService.subscribeToMapping(
+      'membershipStatusMapping',
+      (options) => {
+        this.membershipStatusOptions = options as MembershipStatusMappingDto[];
+      },
+      () => {
+        this.getMasterMappingsData();
+      }
+    );
   }
 
   // #endregion
