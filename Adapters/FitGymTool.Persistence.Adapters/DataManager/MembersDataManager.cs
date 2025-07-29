@@ -185,8 +185,6 @@ public class MembersDataManager(IUnitOfWork unitOfWork, ILogger<MembersDataManag
 		finally
 		{
 			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusAsync), DateTime.UtcNow, updateMembershipStatusData.MemberEmail));
-		existingMember.MembershipStatusId = updateMembershipStatusData.MembershipStatusId;
-		existingMember.ModifiedBy = updateMembershipStatusData.ModifiedBy;
-		existingMember.DateModified = DateTime.UtcNow;
+		}
 	}
 }
