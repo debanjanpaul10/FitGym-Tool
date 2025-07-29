@@ -9,7 +9,7 @@
 	[CreatedBy] NVARCHAR(MAX) NOT NULL,
 	[DateModified] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	[ModifiedBy] NVARCHAR(MAX) NOT NULL,
-	CONSTRAINT [FK_MemberFeesPaymentDurationMapping_FeesDurationMapping] FOREIGN KEY ([FeesDurationId]) REFERENCES [dbo].[FeesPaymentStatusMapping]([Id]),
+	CONSTRAINT [FK_MemberFeesPaymentDurationMapping_FeesDurationMapping] FOREIGN KEY ([FeesDurationId]) REFERENCES [dbo].[FeesDurationMapping]([Id]),
 	CONSTRAINT [FK_MemberFeesPaymentDurationMapping_MemberDetails_MI] FOREIGN KEY ([MemberId]) REFERENCES [dbo].[MemberDetails]([MemberId])
 )
 GO;

@@ -11,10 +11,10 @@ import { StepperModule } from 'primeng/stepper';
 
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { MemberManagementConstants } from '@shared/application.constants';
-import { SubscriptionDetailsSelectionComponent } from '../subscription-details-selection/subscription-details-selection.component';
-import { NewMemberCreationComponent } from '../new-member-creation/new-member-creation.component';
+import { SubscriptionDetailsComponent } from '../subscription-details-component/subscription-details.component';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { PersonalDetailsComponent } from '../personal-details-component/personal-details.component';
 import { FinalValidationFormComponent } from '../final-validation-form/final-validation-form.component';
 
 /**
@@ -25,8 +25,8 @@ import { FinalValidationFormComponent } from '../final-validation-form/final-val
   imports: [
     DialogModule,
     StepperModule,
-    SubscriptionDetailsSelectionComponent,
-    NewMemberCreationComponent,
+    SubscriptionDetailsComponent,
+    PersonalDetailsComponent,
     FinalValidationFormComponent,
   ],
   templateUrl: './main-form-container.component.html',

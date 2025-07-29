@@ -19,6 +19,7 @@
     <Folder Include="Stored Procedures" />
     <Folder Include="Helpers" />
     <Folder Include="Functions" />
+    <Folder Include="User-Defined Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
@@ -39,6 +40,7 @@
     <Build Include="Tables\ErrorLog.sql" />
     <Build Include="Tables\MemberFeesPaymentDurationMapping.sql" />
     <Build Include="Stored Procedures\dbo.SP_AddNewMemberData.sql" />
+    <Build Include="User-Defined Types\dbo.AddNewMemberTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

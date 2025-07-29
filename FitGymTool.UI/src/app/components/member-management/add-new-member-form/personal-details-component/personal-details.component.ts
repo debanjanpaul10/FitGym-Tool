@@ -26,7 +26,7 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
  * Serves as the entry point for the multi-step member registration workflow.
  */
 @Component({
-  selector: 'app-new-member-creation',
+  selector: 'app-personal-details',
   imports: [
     CommonModule,
     IftaLabel,
@@ -37,10 +37,10 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
     InputText,
     Textarea,
   ],
-  templateUrl: './new-member-creation.component.html',
-  styleUrl: './new-member-creation.component.scss',
+  templateUrl: './personal-details.component.html',
+  styleUrl: './personal-details.component.scss',
 })
-export class NewMemberCreationComponent {
+export class PersonalDetailsComponent {
   @Input() masterMappingData: MasterMappingDataDto = new MasterMappingDataDto();
   @Input() visible: boolean = false;
   @Input() currentStep: number = 1;

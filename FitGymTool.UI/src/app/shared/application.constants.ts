@@ -117,9 +117,12 @@ export class MemberManagementConstants {
       { label: 'Female', value: 'Female' },
       { label: 'Other', value: 'Other' },
     ],
-    NewMemberHeader: 'Add a new member',
-    MapSubscriptionFees: 'Map the subscription duration',
-    FinalValidation: 'Check the final details',
+    PersonalDetailsHeader: 'Add personal details',
+    SubscriptionDetailsHeader: 'Add subscription details',
+    FinalPageHeader: 'Check the final details',
+    FinalPageSubHeader: 'Review Member Information',
+    ValidationPageMessage:
+      'Please review all the information below. To make changes, visit the respective pages to make the changes.',
   };
 
   public static UpdateMembershipStatusConstants = {

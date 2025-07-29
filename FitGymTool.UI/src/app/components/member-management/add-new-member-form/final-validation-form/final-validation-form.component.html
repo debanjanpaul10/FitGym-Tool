@@ -1,9 +1,8 @@
 <div>
   <div>
     <p-message severity="warn">
-      <h3>Review Member Information</h3>
-      Please review all the information below. To make changes, use the
-      navigation buttons to go back to previous steps.
+      <h3>{{ headerConstants.FinalPageSubHeader }}</h3>
+      {{ headerConstants.ValidationPageMessage }}
     </p-message>
   </div>
 
@@ -160,23 +159,6 @@
     </div>
 
     <div class="form-actions">
-      <div class="navigation-buttons">
-        <p-button
-          label="← Edit Personal Details"
-          type="button"
-          variant="outlined"
-          severity="secondary"
-          (onClick)="goToStep(1)"
-        />
-        <p-button
-          label="← Edit Subscription"
-          type="button"
-          variant="outlined"
-          severity="secondary"
-          (onClick)="goToStep(2)"
-        />
-      </div>
-
       <div class="action-buttons">
         <p-button
           label="Cancel"
@@ -189,6 +171,7 @@
           label="Submit Member"
           type="button"
           severity="success"
+          variant="outlined"
           (onClick)="submitFinalMemberData()"
         />
       </div>

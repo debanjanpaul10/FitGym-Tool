@@ -8,8 +8,10 @@ import { MessageModule } from 'primeng/message';
 
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
+import { MemberManagementConstants } from '@shared/application.constants';
 
 /**
+ * @component
  * Component responsible for the final validation and review step of the member registration process.
  * Displays a comprehensive, read-only summary of all member data collected in previous steps.
  * All form fields are disabled to prevent direct editing - users must navigate back to previous
@@ -49,7 +51,9 @@ export class FinalValidationFormComponent {
     new EventEmitter<AddMemberDto>();
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  protected headerConstants = MemberManagementConstants.AddNewMemberConstants;
   /**
+   *
    * Handles the submission of the final member data after validation.
    * Emits the complete member data to the parent component for processing and database storage.
    * This represents the final step in the member registration workflow.
@@ -68,15 +72,6 @@ export class FinalValidationFormComponent {
   protected onCancel(): void {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-  }
-
-  /**
-   * Navigates back to a specific step in the member registration process.
-   * Allows users to edit information from previous steps and return to validation.
-   * @param step The step number to navigate to (1 for personal details, 2 for subscription)
-   */
-  protected goToStep(step: number): void {
-    this.currentStepChange.emit(step);
   }
 
   /**

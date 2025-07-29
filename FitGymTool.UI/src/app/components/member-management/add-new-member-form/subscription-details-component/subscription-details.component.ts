@@ -32,7 +32,7 @@ import { CurrentFeesStructureComponent } from '@components/fees-management/curre
  * and provides form controls for selecting subscription duration options.
  */
 @Component({
-  selector: 'app-subscription-details-selection',
+  selector: 'app-subscription-details',
   imports: [
     IftaLabel,
     Select,
@@ -40,10 +40,10 @@ import { CurrentFeesStructureComponent } from '@components/fees-management/curre
     ReactiveFormsModule,
     CurrentFeesStructureComponent,
   ],
-  templateUrl: './subscription-details-selection.component.html',
-  styleUrl: './subscription-details-selection.component.scss',
+  templateUrl: './subscription-details.component.html',
+  styleUrl: './subscription-details.component.scss',
 })
-export class SubscriptionDetailsSelectionComponent {
+export class SubscriptionDetailsComponent {
   @Input() masterMappingData: MasterMappingDataDto = new MasterMappingDataDto();
   @Input() set currentMemberData(value: AddMemberDto) {
     this._currentMemberData.set(value);

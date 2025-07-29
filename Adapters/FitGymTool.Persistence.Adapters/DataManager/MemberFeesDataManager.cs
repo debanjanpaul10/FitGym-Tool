@@ -130,7 +130,7 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
 
-			return await _unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
+			return await _unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
