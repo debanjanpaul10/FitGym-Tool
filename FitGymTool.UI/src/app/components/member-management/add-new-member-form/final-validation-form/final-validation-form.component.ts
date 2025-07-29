@@ -50,6 +50,7 @@ export class FinalValidationFormComponent {
   @Output() newMemberData: EventEmitter<AddMemberDto> =
     new EventEmitter<AddMemberDto>();
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() submitData: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   protected headerConstants = MemberManagementConstants.AddNewMemberConstants;
   /**
@@ -60,8 +61,7 @@ export class FinalValidationFormComponent {
    */
   protected submitFinalMemberData(): void {
     this.newMemberData.emit(this.currentMemberData);
-    this.visible = false;
-    this.visibleChange.emit(this.visible);
+    this.submitData.emit(true);
   }
 
   /**
