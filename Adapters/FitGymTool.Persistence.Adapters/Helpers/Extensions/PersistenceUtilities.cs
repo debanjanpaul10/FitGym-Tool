@@ -52,8 +52,8 @@ internal static class PersistenceUtilities
     /// Prepares the new member sp parameters.
     /// </summary>
     /// <param name="memberDetails">The member details.</param>
-    /// <returns>The list of <see cref="SqlParameter"/></returns>
-    internal static IEnumerable<SqlParameter> PrepareNewMemberSPParameters(NewMemberDetails memberDetails)
+    /// <returns>The array of <see cref="SqlParameter"/></returns>
+    internal static SqlParameter[] PrepareNewMemberSPParameters(NewMemberDetails memberDetails)
     {
         // Create DataTable with the structure matching AddNewMemberTableType
         var dataTable = new DataTable();
@@ -85,6 +85,6 @@ internal static class PersistenceUtilities
             Value = dataTable
         };
 
-        return [tableParameter];
+        return new[] { tableParameter };
     }
 }
