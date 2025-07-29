@@ -11,8 +11,10 @@ using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
+using static FitGymTool.API.Helpers.SwaggerConstants.FitGymCommonController;
 
 namespace FitGymTool.API.Controllers;
 
@@ -36,6 +38,7 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetMappingsMasterDataAction.Summary, Description = GetMappingsMasterDataAction.Description, OperationId = GetMappingsMasterDataAction.OperationId)]
 	public async Task<ResponseDTO> GetMappingsMasterDataAsync()
 	{
 		try
@@ -75,6 +78,7 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = AddBugReportDataAction.Summary, Description = AddBugReportDataAction.Description, OperationId = AddBugReportDataAction.OperationId)]
 	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody]AddBugReportDTO addBugReportData)
 	{
 		try

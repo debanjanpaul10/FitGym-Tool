@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { AddBugReportDto } from '@models/DTO/add-bug-report-dto.model';
+import { AddBugReportDTO } from '@models/DTO/add-bug-report-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
 
@@ -22,7 +22,7 @@ export class CommonApiService {
   }
 
   public AddBugReportDataAsync(
-    bugReportData: AddBugReportDto
+    bugReportData: AddBugReportDTO
   ): Observable<ResponseDto> {
     const apiUrl: string = `${this.apiBaseUrl}${this.commonApiRoute.AddBugReport_ApiRoute}`;
     return this.httpClient.post<ResponseDto>(apiUrl, bugReportData);

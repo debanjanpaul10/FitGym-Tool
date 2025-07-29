@@ -11,10 +11,10 @@ DECLARE @User1GUID UNIQUEIDENTIFIER = 'C76E89BA-D4ED-4F7C-B48E-4618630F00CC',
         @User4GUID UNIQUEIDENTIFIER = '46291EBE-9BEF-4F9F-9448-38F8E76F153B';
 
 DECLARE @User1JoinDate DATE, @User2JoinDate DATE, @User3JoinDate DATE, @User4JoinDate DATE;
-SELECT @User1JoinDate = DateOfJoining FROM dbo.MemberDetails WHERE MemberId = 1;
-SELECT @User2JoinDate = DateOfJoining FROM dbo.MemberDetails WHERE MemberId = 2;
-SELECT @User3JoinDate = DateOfJoining FROM dbo.MemberDetails WHERE MemberId = 3;
-SELECT @User4JoinDate = DateOfJoining FROM dbo.MemberDetails WHERE MemberId = 4;
+SELECT @User1JoinDate = MemberJoinDate FROM dbo.MemberDetails WHERE MemberId = 1;
+SELECT @User2JoinDate = MemberJoinDate FROM dbo.MemberDetails WHERE MemberId = 2;
+SELECT @User3JoinDate = MemberJoinDate FROM dbo.MemberDetails WHERE MemberId = 3;
+SELECT @User4JoinDate = MemberJoinDate FROM dbo.MemberDetails WHERE MemberId = 4;
 
 DECLARE @CreatedBy NVARCHAR(MAX) = 'debanjanpaul10@gmail.com';
 

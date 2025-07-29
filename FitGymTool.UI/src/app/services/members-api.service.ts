@@ -8,6 +8,7 @@ import { ApiRoutes } from '@shared/routes.constants';
 import { AddMemberDto } from '@models/DTO/members/add-member-dto.model';
 import { UpdateMembershipStatusDto } from '@models/DTO/members/update-membership-status-dto.model';
 import { UpdateMemberDto } from '@models/DTO/members/update-member-dto.model';
+import { MemberFeesPaymentDurationDTO } from '@models/DTO/Mapping/member-fees-payment-duration-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,18 +17,18 @@ export class MembersApiService {
   private membersApiRoutes = ApiRoutes.MembersApi;
   private apiBaseUrl: string = `${environment.apiBaseUrl}/${this.membersApiRoutes.BaseRoute}`;
 
-  private readonly httpClient: HttpClient = inject(HttpClient);
+  private readonly _httpClient: HttpClient = inject(HttpClient);
 
   public GetAllMembersAsync(): Observable<ResponseDto> {
     const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.GetAllMembers_ApiRoute}`;
-    return this.httpClient.get<ResponseDto>(apiUrl);
+    return this._httpClient.get<ResponseDto>(apiUrl);
   }
 
   public GetMemberByEmailIdAsync(
     emailAddress: string
   ): Observable<ResponseDto> {
-    const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.GetMemberByEmailId_ApiRoute}`;
-    return this.httpClient.post<ResponseDto>(apiUrl, emailAddress);
+    const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.GetMemberByEmailId_ApiRoute}${emailAddress}`;
+    return this._httpClient.get<ResponseDto>(apiUrl);
   }
 
   public AddNewMemberAsync_FromAdmin(
@@ -36,20 +37,27 @@ export class MembersApiService {
     const apiUrl = `${this.apiBaseUrl}${
       this.membersApiRoutes.AddMember_ApiRoute
     }${true}`;
-    return this.httpClient.post<ResponseDto>(apiUrl, newMemberData);
+    return this._httpClient.post<ResponseDto>(apiUrl, newMemberData);
   }
 
   public UpdateMembershipStatusAsync(
     updateMembershipStatus: UpdateMembershipStatusDto
   ): Observable<ResponseDto> {
     const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.UpdateMembershipDetails_ApiRoute}`;
-    return this.httpClient.put<ResponseDto>(apiUrl, updateMembershipStatus);
+    return this._httpClient.put<ResponseDto>(apiUrl, updateMembershipStatus);
   }
 
   public UpdateMemberDetailsAsync(
     updateMemberDetailsDto: UpdateMemberDto
   ): Observable<ResponseDto> {
     const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.UpdateMemberDetails_ApiRoute}`;
-    return this.httpClient.put<ResponseDto>(apiUrl, updateMemberDetailsDto);
+    return this._httpClient.put<ResponseDto>(apiUrl, updateMemberDetailsDto);
+  }
+
+  public AddNewMemberFeesPaymentDurationAsync(
+    memberFeesDurationData: MemberFeesPaymentDurationDTO
+  ): Observable<ResponseDto> {
+    const apiUrl = `${this.apiBaseUrl}${this.membersApiRoutes.AddMemberFeesPaymentDuration_ApiRoute}`;
+    return this._httpClient.post<ResponseDto>(apiUrl, memberFeesDurationData);
   }
 }

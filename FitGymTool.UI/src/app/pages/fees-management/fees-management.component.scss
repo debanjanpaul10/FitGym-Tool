@@ -1,0 +1,58 @@
+.equal-height-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.equal-height-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.equal-height-col > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.equal-height-col > * > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Make sure the card body takes up all available space */
+:host ::ng-deep .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove the card-containers margins from child components and ensure equal height */
+:host ::ng-deep .card-containers {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure table container grows to fill available space */
+:host ::ng-deep .table-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure chart container grows to fill available space */
+:host ::ng-deep .chart-container {
+  flex: 1;
+}

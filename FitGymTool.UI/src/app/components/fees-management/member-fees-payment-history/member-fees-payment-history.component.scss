@@ -1,0 +1,23 @@
+.payment-history-dialog {
+  position: absolute !important;
+}
+
+::ng-deep .p-overlay-mask {
+  position: absolute !important;
+}
+
+.payment-history-table-wrapper {
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.payment-history-table {
+  width: 100% !important;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

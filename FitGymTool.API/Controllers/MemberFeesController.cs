@@ -7,11 +7,13 @@
 
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Helpers;
-using FitGymTool.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Swashbuckle.AspNetCore.Annotations;
 using static FitGymTool.API.Helpers.APIConstants;
+using static FitGymTool.API.Helpers.SwaggerConstants.MemberFeesController;
 
 namespace FitGymTool.API.Controllers;
 
@@ -29,18 +31,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
-	/// <returns>The response data dto.</returns>
+	/// <returns>The list of <see cref="CurrentMonthFeesAndRevenueStatusDTO"/></returns>
 	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentMonthFeesAndRevenueStatus_ApiRoute)]
-	[ProducesResponseType(typeof(CurrentMonthFeesAndRevenueStatusDomain), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentMonthFeesAndRevenueStatusAction.Summary, Description = GetCurrentMonthFeesAndRevenueStatusAction.Description, OperationId = GetCurrentMonthFeesAndRevenueStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		try
 		{
-			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
 			if (IsAuthorized())
 			{
 				var result = await memberFeesHandler.GetCurrentMonthFeesAndRevenueStatusAsync();
@@ -56,14 +58,130 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 		}
 		catch (Exception ex)
 		{
-			logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructureDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentFeesStructure_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<FeesStructureDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentFeesStructureAction.Summary, Description = GetCurrentFeesStructureAction.Description, OperationId = GetCurrentFeesStructureAction.OperationId)]
+	public async Task<ResponseDTO> GetCurrentFeesStructureAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetCurrentFeesStructureAsync();
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="CurrentMembersFeesStatusDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetCurrentMembersFeesStatus_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<CurrentMembersFeesStatusDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetCurrentMembersFeesStatusAction.Summary, Description = GetCurrentMembersFeesStatusAction.Description, OperationId = GetCurrentMembersFeesStatusAction.OperationId)]
+	public async Task<ResponseDTO> GetCurrentMembersFeesStatusAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetCurrentMembersFeesStatusAsync();
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="emailId">The email identifier.</param>
+	/// <returns>The list of <see cref="MemberPaymentHistoryDTO"/></returns>
+	[HttpGet(RouteConstants.MemberFeesApiRoutes.GetPaymentHistoryDataForMember_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<MemberPaymentHistoryDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetPaymentHistoryDataForMemberAction.Summary, Description = GetPaymentHistoryDataForMemberAction.Description, OperationId = GetPaymentHistoryDataForMemberAction.OperationId)]
+	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync([FromQuery] string emailId)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.GetPaymentHistoryDataForMemberAsync(emailId);
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
 		}
 	}
 }

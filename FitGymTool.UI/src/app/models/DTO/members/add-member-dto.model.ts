@@ -12,4 +12,5 @@ export class AddMemberDto {
   public memberGender: string = '';
   public memberJoinDate: Date = new Date();
   public membershipStatus: string = '';
+  public feesDurationTypeName: string = '';
 }

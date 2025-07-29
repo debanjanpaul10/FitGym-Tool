@@ -8,7 +8,7 @@
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.DataManager;
-using FitGymTool.Persistence.Adapters.Mapper;
+using FitGymTool.Persistence.Adapters.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +50,7 @@ public static class DependencyContainer
 		{
 			throw new ArgumentNullException(nameof(sqlConnectionString), ErrorMessages.DatabaseConnectionNotFound);
 		}
+
 		services.AddDbContext<SqlDbContext>(options =>
 		{
 			options.UseSqlServer(
@@ -75,11 +76,7 @@ public static class DependencyContainer
 		services.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddScoped<IMembersDataManager, MembersDataManager>()
 			.AddScoped<ICommonDataManager, CommonDataManager>()
-			.AddScoped<IMemberFeesDataManager, MemberFeesDataManager>()
-			.AddAutoMapper(mapperConfig =>
-			{
-				mapperConfig.AddProfile<DataMapperProfile>();
-			});
+			.AddScoped<IMemberFeesDataManager, MemberFeesDataManager>();
 
 		return services;
 	}

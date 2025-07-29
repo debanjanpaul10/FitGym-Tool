@@ -8,6 +8,7 @@
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Response;
+using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -36,9 +37,44 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// <returns>
 	/// The list of current month fees and revenue status.
 	/// </returns>
-	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>> GetCurrentMonthFeesAndRevenueStatusAsync()
+	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
 		var feesAndRevenueStatusData = await _memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
-		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDto>>(feesAndRevenueStatusData);
+		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>>(feesAndRevenueStatusData);
+	}
+
+	/// <summary>
+	/// Gets the current fees structure asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="FeesStructureDomain"/></returns>
+	public async Task<IEnumerable<FeesStructureDTO>> GetCurrentFeesStructureAsync()
+	{
+		var feesStructureDomainData = await _memberFeesService.GetCurrentFeesStructureAsync();
+		return _mapper.Map<IEnumerable<FeesStructureDTO>>(feesStructureDomainData);
+	}
+
+	/// <summary>
+	/// Gets the current members fees status asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="CurrentMembersFeesStatusDTO" />
+	/// </returns>
+	public async Task<IEnumerable<CurrentMembersFeesStatusDTO>> GetCurrentMembersFeesStatusAsync()
+	{
+		var feesStatusDomainData = await _memberFeesService.GetCurrentMembersFeesStatusAsync();
+		return _mapper.Map<IEnumerable<CurrentMembersFeesStatusDTO>>(feesStatusDomainData);
+	}
+
+	/// <summary>
+	/// Gets the payment history data for member asynchronous.
+	/// </summary>
+	/// <param name="userEmailId">The user email address.</param>
+	/// <returns>
+	/// The list of <see cref="MemberPaymentHistoryData" />
+	/// </returns>
+	public async Task<IEnumerable<MemberPaymentHistoryDTO>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
+	{
+		var memberPaymentHistoryData = await _memberFeesService.GetPaymentHistoryDataForMemberAsync(userEmailId);
+		return _mapper.Map<IEnumerable<MemberPaymentHistoryDTO>>(memberPaymentHistoryData);
 	}
 }

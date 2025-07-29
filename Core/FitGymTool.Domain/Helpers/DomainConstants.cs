@@ -70,5 +70,10 @@ public static class DomainConstants
 		/// </summary>
 		public const string MemberCouldNotBeAddedMessageConstant = "Member could not be added. Please check the details and try again.";
 
+		/// <summary>
+		/// The dates must be valid constant
+		/// </summary>
+		public const string DatesMustBeValidConstant = "Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.";
+
 	}
 }

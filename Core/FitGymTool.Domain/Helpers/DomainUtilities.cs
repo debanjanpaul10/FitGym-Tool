@@ -5,8 +5,7 @@
 // <summary>The Domain Utilities class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
 
 namespace FitGymTool.Domain.Helpers;
 
@@ -18,7 +17,7 @@ public static class DomainUtilities
 	/// <summary>
 	/// Ensures all DateTime fields are set to valid values.
 	/// </summary>
-	public static void EnsureValidDates(this AddMemberDomain memberDetails)
+	public static void EnsureValidDates(this MemberDetails memberDetails)
 	{
 		if (memberDetails.MemberDateOfBirth == DateTime.MinValue)
 		{
@@ -42,7 +41,7 @@ public static class DomainUtilities
 	/// Prepares the bug report data domain.
 	/// </summary>
 	/// <param name="bugReportDataDomain">The bug report data domain.</param>
-	public static void PrepareBugReportDataDomain(this BugReportDataDomain bugReportDataDomain)
+	public static void PrepareBugReportDataDomain(this BugReportData bugReportDataDomain)
 	{
 		bugReportDataDomain.IsActive = true;
 		bugReportDataDomain.DateCreated = DateTime.UtcNow;
@@ -55,7 +54,7 @@ public static class DomainUtilities
 	/// </summary>
 	/// <param name="memberDetails">The member details.</param>
 	/// <param name="effectiveEmail">The effective email.</param>
-	public static void PrepareNewMemberDetailsData(this AddMemberDomain memberDetails, string effectiveEmail)
+	public static void PrepareNewMemberDetailsData(this MemberDetails memberDetails, string effectiveEmail)
 	{
 		memberDetails.MemberEmail = effectiveEmail!;
 		memberDetails.MemberGuid = Guid.NewGuid();

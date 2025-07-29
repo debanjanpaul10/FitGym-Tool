@@ -52,4 +52,10 @@ public class AddMemberDTO : BaseDTO
 	/// Gets or sets the Membership Status.
 	/// </summary>
 	public string MembershipStatus { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the Fees Duration Type Name.
+	/// </summary>
+	public string FeesDurationTypeName { get; set; } = string.Empty;
+
 }

@@ -57,12 +57,12 @@ export class LeftNavigationComponent implements OnInit {
 
       {
         name: 'Fees Management',
-        icon: 'pi pi-wallet',
+        icon: 'pi pi-indian-rupee',
         onClick: () => this.navigateFeesDashboard(),
       },
       {
         name: 'Facility Management',
-        icon: 'pi pi-hammer',
+        icon: 'pi pi-cog',
         onClick: () => this.navigateFacilityDashboard(),
       },
       {

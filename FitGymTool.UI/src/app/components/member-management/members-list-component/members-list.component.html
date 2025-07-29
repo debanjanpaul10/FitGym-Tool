@@ -49,18 +49,24 @@
           </th>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
             <ng-container
-              *ngIf="col.field === 'memberDateOfBirth' || col.field === 'memberJoinDate'; else normalCell"
+              *ngIf="
+                col.field === 'memberDateOfBirth' ||
+                  col.field === 'memberJoinDate';
+                else normalCell
+              "
             >
-              {{ rowData[col.field] | date: 'd MMM yyyy' }}
+              {{ rowData[col.field] | date : "d MMM yyyy" }}
             </ng-container>
             <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
           </td>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="emptymessage">
         <tr>
           <td [attr.colspan]="columnHeaders.length" class="text-center py-4">

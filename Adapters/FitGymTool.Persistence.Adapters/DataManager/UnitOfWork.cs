@@ -7,10 +7,11 @@
 
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
-using FitGymTool.Domain.Models;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Repositories;
 using System.Diagnostics.CodeAnalysis;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
+using FitGymTool.Persistence.Adapters.DatabaseContext;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
 
@@ -26,6 +27,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// The SQL DB Context.
 	/// </summary>
 	private readonly SqlDbContext _dbContext = dbContext;
+
 	/// <summary>
 	/// The repositories dictionary to hold repositories for different entity types.
 	/// </summary>
@@ -109,17 +111,46 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	}
 
 	/// <summary>
-	/// Executes the SQL query asynchronous.
+	/// Executes the SQL query or command asynchronously. For entity types, returns mapped results. For scalar types (bool, int), returns result based on rows affected.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="sql">The SQL.</param>
+	/// <typeparam name="T">The result type.</typeparam>
+	/// <param name="sql">The SQL or stored procedure command.</param>
 	/// <param name="parameters">The parameters.</param>
-	/// <returns>The SQL query response.</returns>
-	public async Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new()
+	/// <returns>The SQL query response as a list of T.</returns>
+	public async Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters)
 	{
-		if (typeof(T) == typeof(CurrentMonthFeesAndRevenueStatusDomain))
+		if (typeof(T) == typeof(CurrentMonthFeesAndRevenueStatus))
 		{
-			return await _dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql).ToListAsync() as List<T> ?? [];
+			return await _dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+		}
+		if (typeof(T) == typeof(CurrentMembersFeesStatus))
+		{
+			return await _dbContext.CurrentMemberFeesStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+		}
+		if (typeof(T) == typeof(MemberPaymentHistoryData))
+		{
+			return await _dbContext.MemberPaymentHistoryData.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+		}
+
+		// For scalar types, treat as non-query and return rows affected or success as bool
+		if (typeof(T) == typeof(bool))
+		{
+			var rows = await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			return [(T)(object)(rows > 0)];
+		}
+		if (typeof(T) == typeof(int))
+		{
+			var rows = await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			return [(T)(object)rows];
+		}
+
+		// For SPs that do not return anything, use T=object or T=bool and return an empty list after execution.
+		// typeof(void) is not valid in generics, so we cannot check for it directly.
+		// Usage: await ExecuteSqlQueryAsync<object>(sql, params) or ExecuteSqlQueryAsync<bool>(sql, params)
+		if (typeof(T) == typeof(object))
+		{
+			await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			return [];
 		}
 
 		throw new NotSupportedException($"Raw SQL query for type {typeof(T).Name} is not supported.");

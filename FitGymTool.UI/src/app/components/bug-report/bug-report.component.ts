@@ -23,7 +23,7 @@ import { MessageModule } from 'primeng/message';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApiService } from '@services/common-api.service';
 import { LoaderService } from '@core/services/loader.service';
-import { AddBugReportDto } from '@models/DTO/add-bug-report-dto.model';
+import { AddBugReportDTO } from '@models/DTO/add-bug-report-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import {
@@ -115,7 +115,7 @@ export class BugReportComponent implements OnDestroy {
   protected submitBugReportForm(): void {
     this.loaderService.loadingOn();
     if (this.bugReportForm.valid) {
-      const bugReportData: AddBugReportDto = {
+      const bugReportData: AddBugReportDTO = {
         bugTitle: this.bugReportForm.value.bugTitle,
         bugDescription: this.bugReportForm.value.bugDescription,
         bugSeverity: this.bugReportForm.value.bugSeverity,
