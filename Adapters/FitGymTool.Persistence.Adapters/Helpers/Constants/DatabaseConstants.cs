@@ -117,7 +117,6 @@ public static class DatabaseConstants
 		internal const string AddNewMemberTableType = "dbo.AddNewMemberTableType";
 	}
 
-
 	/// <summary>
 	/// The error messages class.
 	/// </summary>
@@ -128,7 +127,6 @@ public static class DatabaseConstants
 		/// </summary>
 		public const string DatabaseConnectionNotFound = "Oops! It seems the database connection is missing from the configuration!";
 	}
-
 
 	/// <summary>
 	/// The Configuration Constants Class.

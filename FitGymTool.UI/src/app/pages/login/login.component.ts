@@ -19,7 +19,7 @@ import { RouteConstants } from '@shared/routes.constants';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  public HeaderConstants = LoginPageConstants.Headings;
+  protected HeaderConstants = LoginPageConstants.Headings;
 
   private readonly authService = inject(MsalService);
   private readonly msalGuarConfig =
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public loginRedirect(): void {
+  protected loginRedirect(): void {
     if (this.msalGuarConfig.authRequest) {
       this.authService.loginRedirect({
         ...this.msalGuarConfig.authRequest,
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public navigateHome(): void {
+  private navigateHome(): void {
     this.router.navigate([RouteConstants.Dashboard.Link]);
   }
 }

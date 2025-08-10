@@ -1,0 +1,6 @@
+{
+    "AzureAdApiClientId": "0c49dfb9-3afe-4f24-934f-340be62b8cbd",
+    "AzureAdApiTenantId": "9188040d-6c67-4c5b-b112-36a304b66dad",
+    "AzureAdApiIssuer": "https://login.microsoftonline.com/9188040d-6c67-4c5b-b112-36a304b66dad/v2.0",
+    "AzureSqlConnectionString": "<SQL_CONNECTION_STRING_SECRET>"
+}

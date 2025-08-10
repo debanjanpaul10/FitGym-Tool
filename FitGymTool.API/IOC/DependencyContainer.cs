@@ -1,5 +1,5 @@
 ﻿// *********************************************************************************
-//	<copyright file="DIContainer.cs" company="Personal">
+//	<copyright file="DependencyContainer.cs" company="Personal">
 //		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
 // <summary>The Dependency Injection Container Class.</summary>
@@ -20,7 +20,7 @@ namespace FitGymTool.API.IOC;
 /// <summary>
 /// The Dependency Injection Container Class.
 /// </summary>
-public static class DIContainer
+public static class DependencyContainer
 {
 	/// <summary>
 	/// Configures the API services for the application, including authentication and data management dependencies.
@@ -30,10 +30,7 @@ public static class DIContainer
 	{
 		builder.ConfigureAuthenticationServices();
 		builder.Services.AddMemoryCache();
-
-		builder.Services.AddAPIHandlers()
-			.AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment())
-			.AddDomainServices();
+		builder.Services.AddAPIHandlers().AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment()).AddDomainServices();
 	}
 
 	/// <summary>
@@ -63,7 +60,6 @@ public static class DIContainer
 		});
 	}
 
-	
 
 	#region PRIVATE Methods
 

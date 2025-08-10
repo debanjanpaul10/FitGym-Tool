@@ -145,3 +145,4 @@ export class FeesManagementConstants {
     SubHeader: `Payment status as of ${new Date().toLocaleDateString()}`,
   };
 }
+
