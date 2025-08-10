@@ -1,11 +1,12 @@
 <p-dialog
-  [header]="'Payment Details'"
+  header="Payment Details"
   [modal]="true"
   [(visible)]="showDialog"
   [style]="{ width: '80rem' }"
   [closable]="false"
   (onShow)="onDialogShow()"
   (onHide)="onDialogHide()"
+  aria-label="Payment history dialog for member"
 >
   <div class="payment-history-table-wrapper">
     <p-table
@@ -14,64 +15,60 @@
       [rows]="10"
       [paginator]="true"
       [columns]="columnHeaders"
-      ngClass="payment-history-table"
-      showGridlines
-      stripedRows
+      styleClass="payment-history-table"
+      [showGridlines]="true"
+      [stripedRows]="true"
       [scrollable]="true"
       scrollHeight="400px"
+      sortField="toDate"
+      [sortOrder]="-1"
     >
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns" class="text-center">
+          @for (col of columns; track col.field) {
+          <th class="text-center" [attr.aria-label]="col.header">
             {{ col.header }}
           </th>
+          }
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns" class="text-center">
-            <ng-container
-              *ngIf="
-                col.field === 'fromDate' || col.field === 'toDate';
-                else checkAmountField
-              "
+          @for (col of columns; track col.field) {
+          <td class="text-center">
+            @switch (col.field) { @case ('fromDate') {
+            {{ rowData[col.field] | date : "d MMM yyyy" }}
+            } @case ('toDate') {
+            {{ rowData[col.field] | date : "d MMM yyyy" }}
+            } @case ('amount') {
+            <span class="fw-bold text-success">
+              ₹{{ rowData[col.field] | number : "1.2-2" }}
+            </span>
+            } @case ('feesPaymentStatus') {
+            <span
+              [class]="getPaymentStatusClass(rowData[col.field])"
+              class="badge px-2 py-1"
+              [attr.aria-label]="'Payment status: ' + rowData[col.field]"
             >
-              {{ rowData[col.field] | date : "d MMM yyyy" }}
-            </ng-container>
-
-            <ng-template #checkAmountField>
-              <ng-container *ngIf="col.field === 'amount'; else normalCell">
-                <span class="fw-bold text-success">
-                  ₹{{ rowData[col.field] | number : "1.2-2" }}
-                </span>
-              </ng-container>
-
-              <ng-template #normalCell>
-                <ng-container *ngIf="col.field === 'feesPaymentStatus'">
-                  <span
-                    [class]="getPaymentStatusClass(rowData[col.field])"
-                    class="badge px-2 py-1"
-                  >
-                    {{ rowData[col.field] }}
-                  </span>
-                </ng-container>
-                <ng-container *ngIf="col.field !== 'feesPaymentStatus'">
-                  {{ rowData[col.field] }}
-                </ng-container>
-              </ng-template>
-            </ng-template>
+              {{ rowData[col.field] }}
+            </span>
+            } @default {
+            {{ rowData[col.field] }}
+            } }
           </td>
+          }
         </tr>
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
         <tr>
           <td [attr.colspan]="columnHeaders.length" class="text-center py-5">
-            <div class="empty-state">
+            <div class="empty-state" role="status" aria-live="polite">
               <i
                 class="pi pi-receipt"
                 style="font-size: 3rem; color: #6c757d"
+                aria-hidden="true"
               ></i>
               <p class="mt-3 mb-0 fs-5">No payment history found</p>
               <p class="text-muted">This member has no payment records yet.</p>
@@ -89,7 +86,7 @@
       type="button"
       variant="outlined"
       (onClick)="closeDialog()"
-    >
-    </p-button>
+      [attr.aria-label]="'Close payment history dialog'"
+    />
   </div>
 </p-dialog>

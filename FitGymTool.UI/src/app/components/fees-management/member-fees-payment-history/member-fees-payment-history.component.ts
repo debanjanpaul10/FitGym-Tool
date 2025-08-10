@@ -36,7 +36,7 @@ export class MemberFeesPaymentHistoryComponent implements OnChanges {
   protected showDialog: WritableSignal<boolean> = signal(false);
   protected columnHeaders: Column[] = [];
 
-  private savedScrollPosition: number = 0;
+  private _savedScrollPosition: number = 0;
   private readonly _memberFeesApiService: MemberFeesApiService =
     inject(MemberFeesApiService);
   private readonly _loaderService: LoaderService = inject(LoaderService);
@@ -66,23 +66,28 @@ export class MemberFeesPaymentHistoryComponent implements OnChanges {
   }
 
   protected onDialogShow(): void {
-    // Restore scroll position when dialog is shown
     requestAnimationFrame(() => {
       window.scrollTo({
-        top: this.savedScrollPosition,
+        top: this._savedScrollPosition,
         behavior: 'instant',
       });
     });
   }
 
   protected onDialogHide(): void {
-    // Restore scroll position when dialog is hidden
     requestAnimationFrame(() => {
       window.scrollTo({
-        top: this.savedScrollPosition,
+        top: this._savedScrollPosition,
         behavior: 'instant',
       });
     });
+  }
+
+  protected trackByPaymentId(
+    index: number,
+    item: MemberPaymentHistoryDTO
+  ): number {
+    return item.memberId || index;
   }
 
   protected getPaymentStatusClass(status: string): string {
@@ -100,9 +105,18 @@ export class MemberFeesPaymentHistoryComponent implements OnChanges {
     }
   }
 
+  private sortPaymentHistoryByToDate(
+    data: MemberPaymentHistoryDTO[]
+  ): MemberPaymentHistoryDTO[] {
+    return [...data].sort((a, b) => {
+      const dateA = new Date(a.toDate);
+      const dateB = new Date(b.toDate);
+      return dateB.getTime() - dateA.getTime(); // Descending order
+    });
+  }
+
   private getPaymentHistoryDataForMember(memberEmail: string): void {
-    // Save current scroll position before any operations
-    this.savedScrollPosition =
+    this._savedScrollPosition =
       window.scrollY || document.documentElement.scrollTop;
 
     this._loaderService.loadingOn();
@@ -112,7 +126,10 @@ export class MemberFeesPaymentHistoryComponent implements OnChanges {
       .subscribe({
         next: (response: ResponseDto) => {
           if (response?.isSuccess && response?.responseData) {
-            this.currentMemberPaymentHistory.set(response.responseData);
+            const sortedData = this.sortPaymentHistoryByToDate(
+              response.responseData
+            );
+            this.currentMemberPaymentHistory.set(sortedData);
             this.showDialog.set(true);
           } else {
             this._toasterService.showError(response?.responseData);
