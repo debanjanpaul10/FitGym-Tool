@@ -49,7 +49,7 @@ public class MembersDataManager(IUnitOfWork unitOfWork, ILogger<MembersDataManag
 			memberDetails.EnsureValidDates();
 			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, memberDetails.MemberEmail));
 
-			var parameters = PrepareNewMemberSPParameters(memberDetails);
+			var parameters = memberDetails.PrepareNewMemberSPParameters();
 			await _unitOfWork.ExecuteSqlQueryAsync<object>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.AddNewMemberData_SP, parameters);
 			return true;
 		}

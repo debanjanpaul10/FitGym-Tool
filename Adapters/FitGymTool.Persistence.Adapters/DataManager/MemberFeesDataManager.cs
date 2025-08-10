@@ -10,6 +10,7 @@ using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
+using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;
@@ -127,21 +128,45 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
-
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
 			return await _unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			_logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+		}
+	}
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <returns>
+	/// The boolean for success/failure.
+	/// </returns>
+	public async Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFees memberFeesData)
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
+			
+			var parameters = memberFeesData.PrepareUpdateMemberFeesSPParameters();
+			await _unitOfWork.ExecuteSqlQueryAsync<object>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.UpdateMemberFeesData_SP, parameters);
+			return true;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
 		}
 	}
 }

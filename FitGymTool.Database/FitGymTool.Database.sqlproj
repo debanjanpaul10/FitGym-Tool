@@ -41,6 +41,8 @@
     <Build Include="Tables\MemberFeesPaymentDurationMapping.sql" />
     <Build Include="Stored Procedures\dbo.SP_AddNewMemberData.sql" />
     <Build Include="User-Defined Types\dbo.AddNewMemberTableType.sql" />
+    <Build Include="Stored Procedures\dbo.SP_UpdateMemberFeesData.sql" />
+    <Build Include="User-Defined Types\dbo.UpdateMemberFeesTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
