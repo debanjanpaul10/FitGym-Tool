@@ -20,49 +20,44 @@
     >
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns">
+          @for (col of columns; track col.field) {
+          <th>
             {{ col.header }}
           </th>
+          }
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns">
-            <ng-container
-              *ngIf="
-                col.field === 'dueDate' || col.field === 'lastPaymentDate';
-                else checkButtonCell
-              "
+          @for (col of columns; track col.field) {
+          <td>
+            @if (col.field === 'dueDate' || col.field === 'lastPaymentDate') {
+            {{ rowData[col.field] | date : "d MMM yyyy" }}
+            } @else if (col.field === '') {
+            <p-button
+              icon="pi pi-receipt"
+              [style]="{ width: '100%', height: '5vh', padding: '10px' }"
+              (onClick)="handleMemberClick(rowData.memberEmail)"
+              >Details&nbsp;
+            </p-button>
+            } @else if (col.field === 'feesPaymentStatus') {
+            <span
+              [class]="getPaymentStatusClass(rowData[col.field])"
+              class="badge px-2 py-1"
             >
-              {{ rowData[col.field] | date : "d MMM yyyy" }}
-            </ng-container>
-
-            <ng-template #checkButtonCell>
-              <ng-container *ngIf="col.field === ''; else normalCell">
-                <p-button
-                  icon="pi pi-receipt"
-                  [style]="{ width: '100%', height: '5vh', padding: '10px' }"
-                  (onClick)="handleMemberClick(rowData.memberEmail)"
-                  >Details&nbsp;
-                </p-button>
-              </ng-container>
-            </ng-template>
-
-            <ng-template #normalCell>
-              <ng-container *ngIf="col.field === 'feesPaymentStatus'">
-                <span
-                  [class]="getPaymentStatusClass(rowData[col.field])"
-                  class="badge px-2 py-1"
-                >
-                  {{ rowData[col.field] }}
-                </span>
-              </ng-container>
-              <ng-container *ngIf="col.field !== 'feesPaymentStatus'">
-                {{ rowData[col.field] }}
-              </ng-container>
-            </ng-template>
+              {{ rowData[col.field] }}
+            </span>
+            } @else if (col.field === 'dueAmount') { @if (rowData.dueAmount ===
+            0 && rowData.feesPaymentStatus?.toLowerCase() === 'paid') {
+            <span>-</span>
+            } @else {
+            {{ rowData[col.field] }}
+            } } @else {
+            {{ rowData[col.field] }}
+            }
           </td>
+          }
         </tr>
       </ng-template>
 

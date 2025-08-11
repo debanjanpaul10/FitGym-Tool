@@ -127,13 +127,11 @@ export class CurrentMemberFeesStatusComponent
    * "Overdue", and "To Be Cancelled" with appropriate colors for each status.
    */
   private createChart(): void {
-    // Destroy existing chart if it exists
     if (this.feesStatusChart) {
       this.feesStatusChart.destroy();
       this.feesStatusChart = null;
     }
 
-    // Get labels from mapping data or use defaults if not available
     const labels =
       this.mappingMasterData?.feesPaymentStatusMapping?.length > 0
         ? this.mappingMasterData.feesPaymentStatusMapping.map(
@@ -141,7 +139,6 @@ export class CurrentMemberFeesStatusComponent
           )
         : ['Paid', 'Due', 'Overdue', 'To Be Cancelled'];
 
-    // Create custom labels for tooltips
     const customLabels = [...labels];
 
     if (
@@ -209,13 +206,11 @@ export class CurrentMemberFeesStatusComponent
   private updateChartDataFromMembers(
     feesStatus: CurrentMembersFeesStatusDTO[]
   ): void {
-    // Reset counters
     this.counts.paidCount = 0;
     this.counts.dueCount = 0;
     this.counts.overdueCount = 0;
     this.counts.toBeCancelledCount = 0;
 
-    // Get status names from mapping
     const statusNames =
       this.mappingMasterData?.feesPaymentStatusMapping?.map(
         (x) => x.statusName
@@ -243,7 +238,6 @@ export class CurrentMemberFeesStatusComponent
       }
     }
 
-    // Ensure chart is created/updated properly
     this.ensureChartIsUpdated();
   }
 
@@ -251,11 +245,9 @@ export class CurrentMemberFeesStatusComponent
    * Ensures the chart is properly created and updated with current data
    */
   private ensureChartIsUpdated(): void {
-    // Use setTimeout to ensure the view is ready
     setTimeout(() => {
       if (this.feesStatusChartCanvas?.nativeElement) {
         if (this.feesStatusChart && this.chartInitialized) {
-          // Update existing chart
           this.feesStatusChart.data.datasets[0].data = [
             this.counts.paidCount,
             this.counts.dueCount,
@@ -264,7 +256,6 @@ export class CurrentMemberFeesStatusComponent
           ];
           this.feesStatusChart.update();
         } else {
-          // Destroy existing chart and create new one
           if (this.feesStatusChart) {
             this.feesStatusChart.destroy();
             this.feesStatusChart = null;
@@ -273,7 +264,6 @@ export class CurrentMemberFeesStatusComponent
           this.chartInitialized = true;
         }
       } else {
-        // Canvas not ready, try again after a short delay
         setTimeout(() => this.ensureChartIsUpdated(), 50);
       }
     }, 150);

@@ -20,19 +20,16 @@
         <div class="chart-wrapper d-flex align-items-center">
           <canvas #feesStatusChart></canvas>
           <div class="chart-legend">
-            <div
-              class="legend-item"
-              *ngFor="
-                let status of mappingMasterData.feesPaymentStatusMapping;
-                let i = index
-              "
-            >
+            @for (status of mappingMasterData.feesPaymentStatusMapping; track
+            status.id; let i = $index) {
+            <div class="legend-item">
               <span
                 class="legend-color"
                 [style.background-color]="colors[i]"
               ></span>
               <span class="legend-label">{{ status.statusName }}</span>
             </div>
+            }
           </div>
         </div>
       </div>
