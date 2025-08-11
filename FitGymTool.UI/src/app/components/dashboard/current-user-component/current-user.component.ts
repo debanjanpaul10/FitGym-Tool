@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AccountInfo } from '@azure/msal-browser';
-import { Utilities } from '@core/helpers/utilities-helper';
 import { Ripple } from 'primeng/ripple';
+
+import { Utilities } from '@core/helpers/utilities-helper';
 
 @Component({
   selector: 'app-current-user-component',
@@ -18,6 +19,12 @@ import { Ripple } from 'primeng/ripple';
   templateUrl: './current-user.component.html',
   styleUrl: './current-user.component.scss',
 })
+/**
+ * @component CurrentUserComponent
+ * A dashboard component that displays the current authenticated user's information,
+ * personalized greeting, and real-time date/time. Integrates with Microsoft Authentication Library (MSAL)
+ * to retrieve and display user account details.
+ */
 export class CurrentUserComponent implements OnInit, OnDestroy {
   private readonly _msalService = inject(MsalService);
   private _timeInterval?: number;

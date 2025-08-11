@@ -17,6 +17,7 @@ import { ToasterService } from '@core/services/toaster.service';
 import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { CurrentUserComponent } from '@components/dashboard/current-user-component/current-user.component';
+import { AiStatusComponent } from '@components/dashboard/ai-status-component/ai-status.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +27,7 @@ import { CurrentUserComponent } from '@components/dashboard/current-user-compone
     CurrentRevenueComponent,
     ActiveMembersComponent,
     CurrentUserComponent,
+    AiStatusComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

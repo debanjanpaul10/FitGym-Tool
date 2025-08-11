@@ -1,0 +1,30 @@
+<div
+  class="card shadow-m border-0 bg-dark text-light"
+  pRipple
+  style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
+>
+  <div class="card-content">
+    <div class="status-info">
+      <div class="ai-agent-section">
+        <h6 class="agent-name">FitGym Tool AI Agent</h6>
+        <img src="../../../../assets/Images/ai.png" height="60" />
+      </div>
+    </div>
+    <div class="chart-section">
+      <div class="chart-container">
+        <svg class="line-chart" viewBox="0 0 120 40" preserveAspectRatio="none">
+          <path
+            class="chart-line"
+            [attr.d]="chartPath"
+            fill="none"
+            stroke="#10b981"
+            stroke-width="2"
+          />
+        </svg>
+      </div>
+      <div class="chart-status">
+        <span class="status-value">{{ statusText }}</span>
+      </div>
+    </div>
+  </div>
+</div>
