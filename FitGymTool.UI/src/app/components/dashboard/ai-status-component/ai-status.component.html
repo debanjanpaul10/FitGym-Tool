@@ -6,7 +6,7 @@
   <div class="card-content">
     <div class="status-info">
       <div class="ai-agent-section">
-        <h6 class="agent-name">FitGym Tool AI Agent</h6>
+        <h6 class="agent-name font-custom">FitGym Tool AI Agent</h6>
         <img src="../../../../assets/Images/ai.png" height="60" />
       </div>
     </div>
@@ -15,15 +15,21 @@
         <svg class="line-chart" viewBox="0 0 120 40" preserveAspectRatio="none">
           <path
             class="chart-line"
+            [class.online]="isOnline"
+            [class.offline]="!isOnline"
             [attr.d]="chartPath"
             fill="none"
-            stroke="#10b981"
             stroke-width="2"
           />
         </svg>
       </div>
       <div class="chart-status">
-        <span class="status-value">{{ statusText }}</span>
+        <span
+          class="status-value font-custom"
+          [class.online]="isOnline"
+          [class.offline]="!isOnline"
+          >{{ statusText }}</span
+        >
       </div>
     </div>
   </div>

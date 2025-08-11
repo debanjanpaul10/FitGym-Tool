@@ -6,6 +6,13 @@
   src: url("assets/Fonts/CascadiaMono-VariableFont_wght.ttf");
 }
 
+@font-face {
+  font-family: "Preospe";
+  src: url("assets/Fonts/Preospe.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --default-dark-background: #1d222b;
   --background-color: #181a20;
@@ -13,6 +20,11 @@
   --primary-color: #242731;
   --secondary-color: #323544;
   --accent-color: #4f8cff;
+
+  // Font families
+  --font-primary: "Cascadia Mono", monospace;
+  --font-rounded: "Nunito", sans-serif;
+  --font-custom: "Preospe", sans-serif;
 }
 
 html,
@@ -133,4 +145,17 @@ body {
     display: flex;
     flex-direction: column;
   }
+}
+
+// Font utility classes
+.font-primary {
+  font-family: var(--font-primary) !important;
+}
+
+.font-rounded {
+  font-family: var(--font-rounded) !important;
+}
+
+.font-custom {
+  font-family: var(--font-custom) !important;
 }
