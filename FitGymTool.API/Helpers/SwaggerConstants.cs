@@ -82,6 +82,16 @@ internal static class SwaggerConstants
 			internal const string Description = "Gets the payment status history for individual member by email id.";
 			internal const string OperationId = nameof(GetPaymentHistoryDataForMemberAction);
 		}
+
+		/// <summary>
+		/// The swagger documentation for UpdateMemberFeesDataAsync
+		/// </summary>
+		internal static class UpdateMemberFeesDataAction
+		{
+			internal const string Summary = "Updates the fees payment status for member asynchronous.";
+			internal const string Description = "Updates the fees payment status for member for time period and member alias asynchronous.";
+			internal const string OperationId = nameof(UpdateMemberFeesDataAction);
+		}
 	}
 
 	/// <summary>

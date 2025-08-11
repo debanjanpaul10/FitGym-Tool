@@ -7,8 +7,10 @@
 
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.Ports.In;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -76,5 +78,19 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	{
 		var memberPaymentHistoryData = await _memberFeesService.GetPaymentHistoryDataForMemberAsync(userEmailId);
 		return _mapper.Map<IEnumerable<MemberPaymentHistoryDTO>>(memberPaymentHistoryData);
+	}
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <param name="currentUserAlias">The current user alias.</param>
+	/// <returns>
+	/// The boolean for success/failure.
+	/// </returns>
+	public async Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFeesDTO memberFeesData, string currentUserAlias)
+	{
+		var memberFeesDataDomain = _mapper.Map<UpdateMemberFees>(memberFeesData);
+		return await _memberFeesService.UpdateMemberFeesDataAsync(memberFeesData: memberFeesDataDomain, currentUserAlias);
 	}
 }

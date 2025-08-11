@@ -58,5 +58,6 @@ public class DomainMapperProfile : Profile
             .ForMember(dest => dest.FeesDuration, option => option.MapFrom(source => source.FeesDurationMapping != null ? source.FeesDurationMapping.DurationTypeName : string.Empty));
         CreateMap<CurrentMembersFeesStatus, CurrentMembersFeesStatusDTO>();
         CreateMap<MemberPaymentHistoryData, MemberPaymentHistoryDTO>();
+        CreateMap<UpdateMemberFeesDTO, UpdateMemberFees>().ForMember(destination => destination.FromDate, options => options.Ignore());
     }
 }

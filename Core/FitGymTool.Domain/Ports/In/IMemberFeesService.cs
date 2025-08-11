@@ -40,4 +40,12 @@ public interface IMemberFeesService
 	/// <param name="userEmailId">The user email address.</param>
 	/// <returns>The list of <see cref="MemberPaymentHistoryData"/></returns>
 	Task<IEnumerable<MemberPaymentHistoryData>> GetPaymentHistoryDataForMemberAsync(string userEmailId);
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <param name="currentUserAlias">The current user alias.</param>
+	/// <returns>The boolean for success/failure.</returns>
+	Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFees memberFeesData, string currentUserAlias);
 }

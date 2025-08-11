@@ -7,7 +7,6 @@
 
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
-using FitGymTool.Domain.DomainEntities.Mapping;
 using FitGymTool.Domain.Ports.In;
 using FitGymTool.Domain.Ports.Out;
 using Microsoft.Extensions.Logging;
@@ -140,6 +139,33 @@ public class MemberFeesService(IMemberFeesDataManager memberFeesDataService, ILo
 		{
 			_logger.LogInformation(string.Format(
 				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+		}
+	}
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <param name="currentUserAlias">The current user alias.</param>
+	/// <returns>
+	/// The boolean for success/failure.
+	/// </returns>
+	public async Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFees memberFeesData, string currentUserAlias)
+	{
+		try
+		{
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
+			memberFeesData.ModifiedBy = currentUserAlias;
+			return await _memberFeesDataService.UpdateMemberFeesDataAsync(memberFeesData);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			_logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
 		}
 	}
 }

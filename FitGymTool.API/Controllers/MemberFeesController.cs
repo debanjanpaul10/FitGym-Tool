@@ -6,12 +6,13 @@
 // *********************************************************************************
 
 using FitGymTool.API.Adapters.Contracts;
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
 using static FitGymTool.API.Helpers.SwaggerConstants.MemberFeesController;
 
@@ -182,6 +183,46 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
+		}
+	}
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="updateMemberFeesData">The update member fees data.</param>
+	/// <returns>The boolean for success/failure.</returns>
+	[HttpPost(RouteConstants.MemberFeesApiRoutes.UpdateMemberFeesData_ApiRoute)]
+	[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = UpdateMemberFeesDataAction.Summary, Description = UpdateMemberFeesDataAction.Description, OperationId = UpdateMemberFeesDataAction.OperationId)]
+	public async Task<ResponseDTO> UpdateMemberFeesDataAsync([FromBody] UpdateMemberFeesDTO updateMemberFeesData)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, base.UserEmail));
+			if (IsAuthorized())
+			{
+				var result = await memberFeesHandler.UpdateMemberFeesDataAsync(updateMemberFeesData, currentUserAlias: base.UserEmail);
+				if (result)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, base.UserEmail));
 		}
 	}
 }
