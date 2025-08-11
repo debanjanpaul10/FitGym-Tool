@@ -6,11 +6,12 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { FilterService, SortEvent } from 'primeng/api';
+import { Ripple } from 'primeng/ripple';
 
 import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { Column } from '@models/interfaces/column.interface';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
-import { Utilities } from "@core/helpers/utilities-helper";
+import { Utilities } from '@core/helpers/utilities-helper';
 
 /**
  * Component responsible for displaying and filtering a list of gym members.
@@ -25,6 +26,7 @@ import { Utilities } from "@core/helpers/utilities-helper";
     SelectModule,
     ButtonModule,
     FormsModule,
+    Ripple,
   ],
   templateUrl: './members-list.component.html',
   styleUrl: './members-list.component.scss',

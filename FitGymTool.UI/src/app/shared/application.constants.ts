@@ -26,6 +26,7 @@ export class ToasterSuccessMessages {
       'Membership status has been updated successfully',
     UpdateMemberSuccess: 'Member details have been update successfully',
     MembershipDetailsSuccess: 'Membership details saved successfully',
+    FeesPaidSuccesfully: 'Fees paid for the member',
   };
 
   public static Common = {
@@ -145,4 +146,3 @@ export class FeesManagementConstants {
     SubHeader: `Payment status as of ${new Date().toLocaleDateString()}`,
   };
 }
-

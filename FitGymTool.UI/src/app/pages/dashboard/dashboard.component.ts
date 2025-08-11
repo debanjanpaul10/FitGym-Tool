@@ -16,6 +16,7 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { CurrentUserComponent } from '@components/dashboard/current-user-component/current-user.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,7 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
     ButtonModule,
     CurrentRevenueComponent,
     ActiveMembersComponent,
+    CurrentUserComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

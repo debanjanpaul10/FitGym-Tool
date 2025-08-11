@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
+import { UpdateMemberFeesDTO } from '@models/DTO/update-member-fees-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,12 @@ export class MemberFeesApiService {
   ): Observable<ResponseDto> {
     const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetPaymentHistoryDataForMember_ApiRoute}${userEmail}`;
     return this.httpClient.get<ResponseDto>(apiUrl);
+  }
+
+  public UpdateMemberFeesDataAsync(
+    updateFeesStatus: UpdateMemberFeesDTO
+  ): Observable<ResponseDto> {
+    const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.UpdateMemberFeesData_ApiRoute}`;
+    return this.httpClient.post<ResponseDto>(apiUrl, updateFeesStatus);
   }
 }

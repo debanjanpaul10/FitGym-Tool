@@ -145,6 +145,11 @@ public static class DatabaseConstants
 		/// The add new member table type
 		/// </summary>
 		internal const string AddNewMemberTableType = "dbo.AddNewMemberTableType";
+
+		/// <summary>
+		/// The update member fees table type
+		/// </summary>
+		internal const string UpdateMemberFeesTableType = "dbo.UpdateMemberFeesTableType";
 	}
 
 	/// <summary>

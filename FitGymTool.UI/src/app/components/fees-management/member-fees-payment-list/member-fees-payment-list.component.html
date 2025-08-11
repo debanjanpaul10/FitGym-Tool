@@ -1,4 +1,8 @@
-<div class="member-fees-payment-card card shadow-m border-0 bg-dark">
+<div
+  class="member-fees-payment-card card shadow-m border-0 bg-dark"
+  pRipple
+  style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
+>
   <div class="card-body d-flex flex-column">
     <h1 class="card-title">{{ memberFeesConstants.Header }}</h1>
     <h6 class="card-subtitle mb-4">{{ memberFeesConstants.SubHeader }}</h6>
@@ -81,4 +85,5 @@
 
 <app-member-fees-payment-history
   [memberEmail]="selectedMember"
+  (onPaymentUpdated)="onPaymentHistoryUpdated()"
 ></app-member-fees-payment-history>

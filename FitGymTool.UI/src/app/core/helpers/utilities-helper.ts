@@ -1,16 +1,15 @@
-import { MasterMappingDataDto } from "../../models/DTO/Mapping/master-mapping-dto.model";
+import { MasterMappingDataDto } from '../../models/DTO/Mapping/master-mapping-dto.model';
 
 /**
  * The utilities helper class.
  */
 export class Utilities {
-
   /**
- * Converts a Date object to a standardized yyyy-MM-dd string format.
- * Ensures consistent date formatting for comparison operations in filters.
- * @param date - The Date object to format
- * @returns A string representation of the date in yyyy-MM-dd format
- */
+   * Converts a Date object to a standardized yyyy-MM-dd string format.
+   * Ensures consistent date formatting for comparison operations in filters.
+   * @param date - The Date object to format
+   * @returns A string representation of the date in yyyy-MM-dd format
+   */
   public static formatDateToYMD(date: Date): string {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -83,7 +82,9 @@ export class Utilities {
    * Checks for the presence of membership status mappings and other array-based mapping data.
    * Returns true if valid data exists, false otherwise.
    */
-  public static checkValidMappingDataExists(data: MasterMappingDataDto): boolean {
+  public static checkValidMappingDataExists(
+    data: MasterMappingDataDto
+  ): boolean {
     return (
       data &&
       ((data.membershipStatusMapping &&
@@ -95,5 +96,13 @@ export class Utilities {
           return Array.isArray(value) && value.length > 0;
         }))
     );
+  }
+
+  public static getGreeting(): string {
+    const hour = new Date().getHours();
+
+    if (hour < 12) return 'Morning';
+    if (hour < 17) return 'Afternoon';
+    return 'Evening';
   }
 }

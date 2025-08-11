@@ -4,6 +4,8 @@
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
         (click)="handleAddNewMember()"
+        pRipple
+        style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
       >
         <img
           class="card-img-top"
@@ -24,6 +26,8 @@
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
         (click)="handleTerminateMember()"
+        pRipple
+        style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
       >
         <img
           class="card-img-top"
@@ -44,6 +48,8 @@
       <div
         ngClass="member-management-card card shadow-m border-0 bg-dark text-light"
         (click)="handleEditMember()"
+        pRipple
+        style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
       >
         <img
           class="card-img-top"
@@ -63,19 +69,18 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <div *ngIf="isUsersDataLoading()">
-        <p-skeleton
-          height="34.0625rem"
-          width="100%"
-          ngClass="usersdata-skeleton"
-        ></p-skeleton>
-      </div>
-      <div *ngIf="!isUsersDataLoading()">
-        <app-members-list-component
-          [membersData]="allUsersData()!"
-          [membershipStatusOptions]="membershipStatusOptions"
-        ></app-members-list-component>
-      </div>
+      @if (isUsersDataLoading()) {
+      <p-skeleton
+        height="34.0625rem"
+        width="100%"
+        ngClass="usersdata-skeleton"
+      ></p-skeleton>
+      } @else {
+      <app-members-list-component
+        [membersData]="allUsersData()!"
+        [membershipStatusOptions]="membershipStatusOptions"
+      ></app-members-list-component>
+      }
     </div>
   </div>
 

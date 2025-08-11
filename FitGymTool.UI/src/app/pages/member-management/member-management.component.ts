@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
 
 import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
 import { MembersApiService } from '@services/members-api.service';
@@ -43,6 +44,7 @@ import { Utilities } from '@core/helpers/utilities-helper';
     MainFormContainerComponent,
     UpdateMembershipStatusComponent,
     EditMemberComponent,
+    Ripple,
   ],
   templateUrl: './member-management.component.html',
   styleUrl: './member-management.component.scss',
@@ -184,7 +186,6 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
       },
     });
   }
-
 
   /**
    * Manages the subscription and handling of master mapping data from the common service.

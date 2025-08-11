@@ -21,6 +21,7 @@ export class ApiRoutes {
     GetCurrentMembersFeesStatus_ApiRoute: 'GetCurrentMembersFeesStatus',
     GetPaymentHistoryDataForMember_ApiRoute:
       'GetPaymentHistoryDataForMember?emailId=',
+    UpdateMemberFeesData_ApiRoute: 'UpdateMemberFeesData',
   };
 }
 

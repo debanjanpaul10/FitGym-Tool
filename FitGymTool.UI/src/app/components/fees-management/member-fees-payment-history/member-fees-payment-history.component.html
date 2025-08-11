@@ -15,7 +15,7 @@
       [rows]="10"
       [paginator]="true"
       [columns]="columnHeaders"
-      styleClass="payment-history-table"
+      class="payment-history-table"
       [showGridlines]="true"
       [stripedRows]="true"
       [scrollable]="true"
@@ -53,6 +53,17 @@
             >
               {{ rowData[col.field] }}
             </span>
+            } @case ('actions') {
+            <p-button
+              label="Mark as Paid"
+              severity="success"
+              pRipple
+              type="button"
+              variant="outlined"
+              [disabled]="rowData.feesPaymentStatus == 'Paid'"
+              (onClick)="updateMemberFeesData(rowData)"
+              [attr.aria-label]="'Update member fees'"
+            />
             } @default {
             {{ rowData[col.field] }}
             } }
@@ -84,6 +95,7 @@
       label="Close"
       severity="danger"
       type="button"
+      pRipple
       variant="outlined"
       (onClick)="closeDialog()"
       [attr.aria-label]="'Close payment history dialog'"

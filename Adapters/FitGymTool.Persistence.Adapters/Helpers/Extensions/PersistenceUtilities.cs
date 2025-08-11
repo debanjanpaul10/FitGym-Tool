@@ -55,7 +55,6 @@ internal static class PersistenceUtilities
 	/// <returns>The array of <see cref="SqlParameter"/></returns>
 	internal static SqlParameter[] PrepareNewMemberSPParameters(this NewMemberDetails memberDetails)
 	{
-		// Create DataTable with the structure matching AddNewMemberTableType
 		var dataTable = new DataTable();
 		dataTable.Columns.Add(StoredProcedures_Inputs.MemberEmail, typeof(string));
 		dataTable.Columns.Add(StoredProcedures_Inputs.MemberName, typeof(string));
@@ -68,15 +67,8 @@ internal static class PersistenceUtilities
 		dataTable.Columns.Add(StoredProcedures_Inputs.CreatedBy, typeof(string));
 
 		dataTable.Rows.Add(
-			memberDetails.MemberEmail,
-			memberDetails.MemberName,
-			memberDetails.MemberPhoneNumber,
-			memberDetails.MemberAddress,
-			memberDetails.MemberGender,
-			memberDetails.MemberJoinDate,
-			memberDetails.MemberDateOfBirth,
-			memberDetails.FeesDurationTypeName,
-			memberDetails.CreatedBy
+			memberDetails.MemberEmail, memberDetails.MemberName, memberDetails.MemberPhoneNumber, memberDetails.MemberAddress,
+			memberDetails.MemberGender, memberDetails.MemberJoinDate, memberDetails.MemberDateOfBirth, memberDetails.FeesDurationTypeName, memberDetails.CreatedBy
 		);
 
 		var tableParameter = new SqlParameter(StoredProcedures_Inputs.NewMemberDataInput, SqlDbType.Structured)
@@ -102,9 +94,10 @@ internal static class PersistenceUtilities
 		dataTable.Columns.Add(StoredProcedures_Inputs.ToDate, typeof(DateTime));
 		dataTable.Columns.Add(StoredProcedures_Inputs.ModifiedBy, typeof(string));
 
+		dataTable.Rows.Add(memberFeesData.MemberEmailAddress, memberFeesData.Amount, memberFeesData.FromDate, memberFeesData.ToDate, memberFeesData.ModifiedBy);
 		var tableParameter = new SqlParameter(StoredProcedures_Inputs.UpdateMemberFeesDataInput, SqlDbType.Structured)
 		{
-			TypeName = AddNewMemberTableType,
+			TypeName = UpdateMemberFeesTableType,
 			Value = dataTable
 		};
 

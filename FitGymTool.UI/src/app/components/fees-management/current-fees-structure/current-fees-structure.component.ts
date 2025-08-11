@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
+import { Ripple } from 'primeng/ripple';
 
 import { ToasterService } from '@core/services/toaster.service';
 import { FeesStructureDTO } from '@models/DTO/fees-structure-dto.model';
@@ -19,7 +20,7 @@ import { FeesManagementConstants } from '@shared/application.constants';
 
 @Component({
   selector: 'app-current-fees-structure',
-  imports: [TableModule, CommonModule, SkeletonModule],
+  imports: [TableModule, CommonModule, SkeletonModule, Ripple],
   templateUrl: './current-fees-structure.component.html',
   styleUrl: './current-fees-structure.component.scss',
 })

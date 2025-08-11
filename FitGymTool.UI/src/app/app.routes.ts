@@ -7,7 +7,6 @@ export const routes: Routes = [
     path: RouteConstants.Login.Link,
     loadComponent: () =>
       import('./pages/login/login.component').then((c) => c.LoginComponent),
-    canActivate: [MsalGuard],
   },
   {
     path: RouteConstants.Dashboard.Link,
