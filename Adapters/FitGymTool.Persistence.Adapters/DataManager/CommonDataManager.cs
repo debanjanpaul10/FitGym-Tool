@@ -8,7 +8,7 @@
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
-using FitGymTool.Domain.Ports.Out;
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
 using Microsoft.Extensions.Logging;

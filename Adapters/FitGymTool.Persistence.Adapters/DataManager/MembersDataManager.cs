@@ -7,8 +7,8 @@
 
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.Helpers;
-using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
 using FitGymTool.Persistence.Adapters.Helpers.Extensions;

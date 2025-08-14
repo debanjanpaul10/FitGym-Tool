@@ -10,7 +10,7 @@ using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Domain.DomainEntities;
-using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.DrivingPorts;
 
 namespace FitGymTool.API.Adapters.Handlers;
 

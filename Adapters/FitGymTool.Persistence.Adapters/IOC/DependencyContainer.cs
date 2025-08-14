@@ -5,7 +5,6 @@
 // <summary>The DI Container Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.DataManager;
 using FitGymTool.Persistence.Adapters.DatabaseContext;
@@ -14,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using static FitGymTool.Persistence.Adapters.Helpers.Constants.DatabaseConstants;
+using FitGymTool.Domain.DrivenPorts;
 
 namespace FitGymTool.Persistence.Adapters.IOC;
 

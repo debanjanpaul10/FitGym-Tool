@@ -1,29 +1,26 @@
-﻿// *********************************************************************************
+// *********************************************************************************
 //	<copyright file="IMembersDataService.cs" company="Personal">
 //		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
-// <summary>The Members Service Interface.</summary>
+// <summary>The Members Data Service Interface.</summary>
 // *********************************************************************************
-
 
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
-namespace FitGymTool.Domain.Ports.In;
+namespace FitGymTool.Domain.DrivenPorts;
 
 /// <summary>
-/// The Members Service Interface.
+/// The Members Data Service Interface.
 /// </summary>
-public interface IMembersService
+public interface IMembersDataManager
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
-	/// <param name="isFromAdmin">The boolean flag to indicate admin request.</param>
-	/// <param name="userEmail">The user email.</param>
 	/// <returns>The boolean result for success/failure.</returns>
-	Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails, string userEmail, bool isFromAdmin);
+	Task<bool> AddNewMemberAsync(NewMemberDetails memberDetails);
 
 	/// <summary>
 	/// Gets all members from the database asynchronously.
@@ -32,11 +29,11 @@ public interface IMembersService
 	Task<List<MemberDetails>> GetAllMembersAsync();
 
 	/// <summary>
-	/// Gets a single member's details by Member's Email ID. asynchronously.
+	/// Gets a single member's details by Member's Email ID asynchronously.
 	/// </summary>
 	/// <param name="memberEmail">The member's Email ID.</param>
 	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
-	Task<MemberDetails> GetMemberByEmailIdAsync(string memberEmail);
+	Task<MemberDetails?> GetMemberByEmailIdAsync(string memberEmail);
 
 	/// <summary>
 	/// Updates an existing member's details asynchronously.

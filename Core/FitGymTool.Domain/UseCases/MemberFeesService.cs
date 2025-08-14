@@ -7,8 +7,8 @@
 
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
-using FitGymTool.Domain.Ports.In;
-using FitGymTool.Domain.Ports.Out;
+using FitGymTool.Domain.DrivenPorts;
+using FitGymTool.Domain.DrivingPorts;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using static FitGymTool.Domain.Helpers.DomainConstants;

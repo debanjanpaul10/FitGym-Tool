@@ -9,7 +9,7 @@
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
-namespace FitGymTool.Domain.Ports.Out;
+namespace FitGymTool.Domain.DrivenPorts;
 
 /// <summary>
 /// The Member Fees Data Service Interface.
