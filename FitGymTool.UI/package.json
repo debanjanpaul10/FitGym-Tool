@@ -25,6 +25,7 @@
     "@angular/ssr": "^20.0.3",
     "@azure/msal-angular": "^4.0.14",
     "@azure/msal-browser": "^4.14.0",
+    "@microsoft/signalr": "^9.0.6",
     "@primeuix/themes": "^1.2.1",
     "bootstrap": "^5.3.7",
     "chart.js": "^4.5.0",

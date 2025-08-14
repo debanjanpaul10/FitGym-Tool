@@ -1,5 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  inject,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { AgentStatusService } from '@services/agent-status.service';
+import { Utilities } from '@core/helpers/utilities-helper';
 import { Ripple } from 'primeng/ripple';
+import * as signalR from '@microsoft/signalr';
+import { AgentStatus } from '@models/interfaces/agent-status.interface';
 
 @Component({
   selector: 'app-ai-status-component',
@@ -8,130 +18,108 @@ import { Ripple } from 'primeng/ripple';
   styleUrl: './ai-status.component.scss',
 })
 export class AiStatusComponent implements OnInit, OnDestroy {
-  protected statusText: string = '';
+  protected statusText: string = 'Offline';
   protected chartPath: string = '';
   protected isOnline: boolean = false;
-  private intervalId: any;
 
-  ngOnInit() {
-    this.generateChartPath();
-    this.startStatusUpdates();
+  private chartAnimationId: any | null = null;
+  private statusCheckId: any | null = null;
+  private readonly _agentStatusService = inject(AgentStatusService);
+  private readonly _cdr = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    this.initializeComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.cleanup();
+  }
+
+  private async initializeComponent(): Promise<void> {
+    this.updateDisplay();
+    this.startChartAnimation();
+    this.startPeriodicStatusCheck();
+
+    try {
+      await this._agentStatusService.startConnection();
+      await this.loadInitialStatus();
+      this.setupStatusListener();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async loadInitialStatus(): Promise<void> {
+    try {
+      const response: any = await this._agentStatusService.getCurrentStatus();
+      this.updateStatus(response.isAvailable);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private setupStatusListener(): void {
+    this._agentStatusService.addAgentStatusListener((status: AgentStatus) => {
+      this.updateStatus(status.isAvailable);
+    });
+  }
+
+  private startPeriodicStatusCheck(): void {
+    // Check status every 10 seconds as fallback
+    this.statusCheckId = setInterval(async () => {
+      try {
+        const response: any = await this._agentStatusService.getCurrentStatus();
+        this.updateStatus(response.isAvailable);
+      } catch (error) {
+        console.error(error);
+        // Check if SignalR is disconnected and try to reconnect
+        const connectionState = this._agentStatusService.getConnectionState();
+        if (connectionState === signalR.HubConnectionState.Disconnected) {
+          try {
+            await this._agentStatusService.startConnection();
+            this.setupStatusListener(); // Re-setup listener after reconnection
+          } catch (reconnectError) {
+            console.error(reconnectError);
+          }
+        }
+
+        // If we can't reach the service, assume offline
+        this.updateStatus(false);
+      }
+    }, 10000);
+  }
+
+  private updateStatus(isOnline: boolean): void {
+    const previousStatus = this.isOnline;
+    this.isOnline = isOnline;
+
+    if (previousStatus !== isOnline) {
+      this.updateDisplay();
+      this._cdr.detectChanges(); // Force change detection
+    }
+  }
+
+  private updateDisplay(): void {
     this.statusText = this.isOnline ? 'Active' : 'Offline';
+    this.chartPath = Utilities.generateStatusChartPath(this.isOnline);
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
-
-  private generateChartPath(): void {
-    let points;
-
-    if (this.isOnline) {
-      points = [
-        { x: 0, y: 30 },
-        { x: 15, y: 32 },
-        { x: 30, y: 35 },
-        { x: 45, y: 28 },
-        { x: 60, y: 15 },
-        { x: 75, y: 8 },
-        { x: 90, y: 18 },
-        { x: 105, y: 12 },
-        { x: 120, y: 10 },
-      ];
-    } else {
-      points = [
-        { x: 0, y: 10 },
-        { x: 15, y: 8 },
-        { x: 30, y: 5 },
-        { x: 45, y: 12 },
-        { x: 60, y: 25 },
-        { x: 75, y: 32 },
-        { x: 90, y: 22 },
-        { x: 105, y: 28 },
-        { x: 120, y: 30 },
-      ];
-    }
-
-    let path = `M ${points[0].x} ${points[0].y}`;
-
-    for (let i = 1; i < points.length; i++) {
-      const prevPoint = points[i - 1];
-      const currentPoint = points[i];
-      const controlPoint1 = {
-        x: prevPoint.x + (currentPoint.x - prevPoint.x) * 0.4,
-        y: prevPoint.y,
-      };
-      const controlPoint2 = {
-        x: currentPoint.x - (currentPoint.x - prevPoint.x) * 0.4,
-        y: currentPoint.y,
-      };
-
-      path += ` C ${controlPoint1.x} ${controlPoint1.y}, ${controlPoint2.x} ${controlPoint2.y}, ${currentPoint.x} ${currentPoint.y}`;
-    }
-
-    this.chartPath = path;
-  }
-
-  private startStatusUpdates(): void {
-    this.intervalId = setInterval(() => {
-      this.statusText = this.isOnline ? 'Active' : 'Offline';
-      this.generateChartWithVariation();
+  private startChartAnimation(): void {
+    this.chartAnimationId = setInterval(() => {
+      this.chartPath = Utilities.generateStatusChartPath(this.isOnline, true);
+      this._cdr.detectChanges(); // Ensure chart updates are detected
     }, 5000);
   }
 
-  private generateChartWithVariation(): void {
-    let basePoints;
-
-    if (this.isOnline) {
-      basePoints = [
-        { x: 0, y: 30 },
-        { x: 15, y: 32 },
-        { x: 30, y: 35 },
-        { x: 45, y: 28 },
-        { x: 60, y: 15 },
-        { x: 75, y: 8 },
-        { x: 90, y: 18 },
-        { x: 105, y: 12 },
-        { x: 120, y: 10 },
-      ];
-    } else {
-      basePoints = [
-        { x: 0, y: 10 },
-        { x: 15, y: 8 },
-        { x: 30, y: 5 },
-        { x: 45, y: 12 },
-        { x: 60, y: 25 },
-        { x: 75, y: 32 },
-        { x: 90, y: 22 },
-        { x: 105, y: 28 },
-        { x: 120, y: 30 },
-      ];
+  private cleanup(): void {
+    if (this.chartAnimationId) {
+      clearInterval(this.chartAnimationId);
+      this.chartAnimationId = null;
     }
 
-    const points = basePoints.map((point) => ({
-      x: point.x,
-      y: point.y + (Math.random() - 0.5) * 3,
-    }));
-
-    let path = `M ${points[0].x} ${points[0].y}`;
-
-    for (let i = 1; i < points.length; i++) {
-      const prevPoint = points[i - 1];
-      const currentPoint = points[i];
-      const controlPoint1 = {
-        x: prevPoint.x + (currentPoint.x - prevPoint.x) * 0.4,
-        y: prevPoint.y,
-      };
-      const controlPoint2 = {
-        x: currentPoint.x - (currentPoint.x - prevPoint.x) * 0.4,
-        y: currentPoint.y,
-      };
-
-      path += ` C ${controlPoint1.x} ${controlPoint1.y}, ${controlPoint2.x} ${controlPoint2.y}, ${currentPoint.x} ${currentPoint.y}`;
+    if (this.statusCheckId) {
+      clearInterval(this.statusCheckId);
+      this.statusCheckId = null;
     }
-
-    this.chartPath = path;
   }
 }

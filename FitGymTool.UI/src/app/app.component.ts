@@ -24,6 +24,7 @@ import { RouteConstants } from '@shared/routes.constants';
 import { ToasterComponent } from '@components/common/toaster-component/toaster.component';
 import { FooterComponent } from '@components/common/footer-component/footer.component';
 import { BugReportComponent } from '@components/bug-report/bug-report.component';
+import { AgentStatusService } from '@services/agent-status.service';
 
 @Component({
   selector: 'app-root',
@@ -45,11 +46,11 @@ export class AppComponent implements OnInit {
   public isLoginPage: WritableSignal<boolean> = signal(false);
   public isRouteLoading: WritableSignal<boolean> = signal(false);
 
-  private router: Router = inject(Router);
-  private loaderService: LoaderService = inject(LoaderService);
+  private _router: Router = inject(Router);
+  private _loaderService: LoaderService = inject(LoaderService);
 
   constructor() {
-    this.router.events
+    this._router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isLoginPage.set(
@@ -57,7 +58,7 @@ export class AppComponent implements OnInit {
         );
       });
 
-    this.router.events.subscribe((event) => {
+    this._router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.isRouteLoading.set(true);
         this.isLoginPage.set(event.url === RouteConstants.Login.RouteValue);
@@ -74,6 +75,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loaderService.loadingOn();
+    this._loaderService.loadingOn();
   }
 }

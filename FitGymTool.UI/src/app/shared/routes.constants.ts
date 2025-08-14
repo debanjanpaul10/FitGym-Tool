@@ -12,6 +12,8 @@ export class ApiRoutes {
     BaseRoute: 'api/Common/',
     GetMappingsMasterData_ApiRoute: 'GetMappingsMasterData',
     AddBugReport_ApiRoute: 'AddBugReport',
+    GetAgentStatus_ApiRoute:
+      'https://app-webapi-ai-agents-lab.azurewebsites.net/hubs/agent-status',
   };
   public static MemberFeesApi = {
     BaseRoute: 'api/MemberFees/',
