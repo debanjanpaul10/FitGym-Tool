@@ -25,21 +25,6 @@ namespace FitGymTool.API.Adapters.Handlers;
 public class MembersHandler(IMembersService membersService, IMapper mapper, ICommonHandler commonHandler) : IMembersHandler
 {
 	/// <summary>
-	/// The members service
-	/// </summary>
-	private readonly IMembersService _membersService = membersService;
-
-	/// <summary>
-	/// The mapper
-	/// </summary>
-	private readonly IMapper _mapper = mapper;
-
-	/// <summary>
-	/// The common handler
-	/// </summary>
-	private readonly ICommonHandler _commonHandler = commonHandler;
-
-	/// <summary>
 	/// Adds a new member to the database asynchronously.
 	/// </summary>
 	/// <param name="memberDetails">The member details data.</param>
@@ -51,20 +36,18 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <exception cref="System.NotImplementedException"></exception>
 	public async Task<bool> AddNewMemberAsync(AddMemberDTO memberDetails, string userEmail, bool isFromAdmin)
 	{
-		var domainRequest = _mapper.Map<NewMemberDetails>(memberDetails);
+		var domainRequest = mapper.Map<NewMemberDetails>(memberDetails);
 		if (!string.IsNullOrEmpty(memberDetails.MembershipStatus))
 		{
-			var mappingData = await _commonHandler.GetMappingsMasterDataAsync();
-			var membershipStatusMapping = mappingData.MembershipStatusMapping
-				.FirstOrDefault(predicate: x => x.StatusName.Equals(memberDetails.MembershipStatus, StringComparison.OrdinalIgnoreCase));
-
+			var mappingData = await commonHandler.GetMappingsMasterDataAsync();
+			var membershipStatusMapping = mappingData.MembershipStatusMapping.FirstOrDefault(predicate: x => x.StatusName.Equals(memberDetails.MembershipStatus, StringComparison.OrdinalIgnoreCase));
 			if (membershipStatusMapping != null)
 			{
 				domainRequest.MembershipStatusId = membershipStatusMapping.Id;
 			}
 		}
 
-		return await _membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
+		return await membersService.AddNewMemberAsync(domainRequest, userEmail, isFromAdmin);
 	}
 
 	/// <summary>
@@ -73,8 +56,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <returns>A list of MemberDetailsDTO.</returns>
 	public async Task<List<MemberDetailsDTO>> GetAllMembersAsync()
 	{
-		var domainMembers = await _membersService.GetAllMembersAsync();
-		return _mapper.Map<List<MemberDetailsDTO>>(domainMembers);
+		var domainMembers = await membersService.GetAllMembersAsync();
+		return mapper.Map<List<MemberDetailsDTO>>(domainMembers);
 	}
 
 	/// <summary>
@@ -84,8 +67,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <returns>The MemberDetailsDTO object if found; otherwise, null.</returns>
 	public async Task<MemberDetailsDTO> GetMemberByEmailIdAsync(string memberEmail)
 	{
-		var domainMember = await _membersService.GetMemberByEmailIdAsync(memberEmail);
-		return _mapper.Map<MemberDetailsDTO>(domainMember);
+		var domainMember = await membersService.GetMemberByEmailIdAsync(memberEmail);
+		return mapper.Map<MemberDetailsDTO>(domainMember);
 	}
 
 	/// <summary>
@@ -95,8 +78,8 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMemberDetailsAsync(UpdateMemberDTO memberDetails)
 	{
-		var domainRequest = _mapper.Map<MemberDetails>(memberDetails);
-		return await _membersService.UpdateMemberDetailsAsync(domainRequest);
+		var domainRequest = mapper.Map<MemberDetails>(memberDetails);
+		return await membersService.UpdateMemberDetailsAsync(domainRequest);
 	}
 
 	/// <summary>
@@ -106,7 +89,7 @@ public class MembersHandler(IMembersService membersService, IMapper mapper, ICom
 	/// <returns>The boolean result for success/failure.</returns>
 	public async Task<bool> UpdateMembershipStatusAsync(UpdateMembershipStatusDTO updateMembershipStatusDto)
 	{
-		var domainRequest = _mapper.Map<MemberDetails>(updateMembershipStatusDto);
-		return await _membersService.UpdateMembershipStatusAsync(domainRequest);
+		var domainRequest = mapper.Map<MemberDetails>(updateMembershipStatusDto);
+		return await membersService.UpdateMembershipStatusAsync(domainRequest);
 	}
 }

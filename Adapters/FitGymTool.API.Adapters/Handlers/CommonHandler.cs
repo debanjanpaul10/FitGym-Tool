@@ -23,16 +23,6 @@ namespace FitGymTool.API.Adapters.Handlers;
 public class CommonHandler(ICommonService commonService, IMapper mapper) : ICommonHandler
 {
 	/// <summary>
-	/// The common service
-	/// </summary>
-	private readonly ICommonService _commonService = commonService;
-
-	/// <summary>
-	/// The mapper
-	/// </summary>
-	private readonly IMapper _mapper = mapper;
-
-	/// <summary>
 	/// Adds the new bug report data asynchronous.
 	/// </summary>
 	/// <param name="bugReportDataDTO">The bug report data domain.</param>
@@ -41,8 +31,8 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO)
 	{
-		var bugReportData = _mapper.Map<BugReportData>(bugReportDataDTO); 
-		return await _commonService.AddNewBugReportDataAsync(bugReportData);
+		var bugReportData = mapper.Map<BugReportData>(bugReportDataDTO); 
+		return await commonService.AddNewBugReportDataAsync(bugReportData);
 	}
 
 	/// <summary>
@@ -53,7 +43,7 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<MappingMasterDataDto> GetMappingsMasterDataAsync()
 	{
-		var mappingsMasterData = await _commonService.GetMappingsMasterDataAsync();
-		return _mapper.Map<MappingMasterDataDto>(mappingsMasterData);
+		var mappingsMasterData = await commonService.GetMappingsMasterDataAsync();
+		return mapper.Map<MappingMasterDataDto>(mappingsMasterData);
 	}
 }

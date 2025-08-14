@@ -24,16 +24,6 @@ namespace FitGymTool.API.Adapters.Handlers;
 public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper mapper) : IMemberFeesHandler
 {
 	/// <summary>
-	/// The member fees service
-	/// </summary>
-	private readonly IMemberFeesService _memberFeesService = memberFeesService;
-
-	/// <summary>
-	/// The mapper
-	/// </summary>
-	private readonly IMapper _mapper = mapper;
-
-	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
 	/// <returns>
@@ -41,8 +31,8 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// </returns>
 	public async Task<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
-		var feesAndRevenueStatusData = await _memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
-		return _mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>>(feesAndRevenueStatusData);
+		var feesAndRevenueStatusData = await memberFeesService.GetCurrentMonthFeesAndRevenueStatusAsync();
+		return mapper.Map<IEnumerable<CurrentMonthFeesAndRevenueStatusDTO>>(feesAndRevenueStatusData);
 	}
 
 	/// <summary>
@@ -51,8 +41,8 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// <returns>The list of <see cref="FeesStructureDomain"/></returns>
 	public async Task<IEnumerable<FeesStructureDTO>> GetCurrentFeesStructureAsync()
 	{
-		var feesStructureDomainData = await _memberFeesService.GetCurrentFeesStructureAsync();
-		return _mapper.Map<IEnumerable<FeesStructureDTO>>(feesStructureDomainData);
+		var feesStructureDomainData = await memberFeesService.GetCurrentFeesStructureAsync();
+		return mapper.Map<IEnumerable<FeesStructureDTO>>(feesStructureDomainData);
 	}
 
 	/// <summary>
@@ -63,8 +53,8 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// </returns>
 	public async Task<IEnumerable<CurrentMembersFeesStatusDTO>> GetCurrentMembersFeesStatusAsync()
 	{
-		var feesStatusDomainData = await _memberFeesService.GetCurrentMembersFeesStatusAsync();
-		return _mapper.Map<IEnumerable<CurrentMembersFeesStatusDTO>>(feesStatusDomainData);
+		var feesStatusDomainData = await memberFeesService.GetCurrentMembersFeesStatusAsync();
+		return mapper.Map<IEnumerable<CurrentMembersFeesStatusDTO>>(feesStatusDomainData);
 	}
 
 	/// <summary>
@@ -76,8 +66,8 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// </returns>
 	public async Task<IEnumerable<MemberPaymentHistoryDTO>> GetPaymentHistoryDataForMemberAsync(string userEmailId)
 	{
-		var memberPaymentHistoryData = await _memberFeesService.GetPaymentHistoryDataForMemberAsync(userEmailId);
-		return _mapper.Map<IEnumerable<MemberPaymentHistoryDTO>>(memberPaymentHistoryData);
+		var memberPaymentHistoryData = await memberFeesService.GetPaymentHistoryDataForMemberAsync(userEmailId);
+		return mapper.Map<IEnumerable<MemberPaymentHistoryDTO>>(memberPaymentHistoryData);
 	}
 
 	/// <summary>
@@ -90,7 +80,7 @@ public class MemberFeesHandler(IMemberFeesService memberFeesService, IMapper map
 	/// </returns>
 	public async Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFeesDTO memberFeesData, string currentUserAlias)
 	{
-		var memberFeesDataDomain = _mapper.Map<UpdateMemberFees>(memberFeesData);
-		return await _memberFeesService.UpdateMemberFeesDataAsync(memberFeesData: memberFeesDataDomain, currentUserAlias);
+		var memberFeesDataDomain = mapper.Map<UpdateMemberFees>(memberFeesData);
+		return await memberFeesService.UpdateMemberFeesDataAsync(memberFeesData: memberFeesDataDomain, currentUserAlias);
 	}
 }

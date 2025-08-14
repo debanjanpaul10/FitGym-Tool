@@ -24,11 +24,6 @@ namespace FitGymTool.Persistence.Adapters.DataManager;
 public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 {
 	/// <summary>
-	/// The SQL DB Context.
-	/// </summary>
-	private readonly SqlDbContext _dbContext = dbContext;
-
-	/// <summary>
 	/// The repositories dictionary to hold repositories for different entity types.
 	/// </summary>
 	private readonly Dictionary<Type, object> _repositories = [];
@@ -50,7 +45,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 		var type = typeof(TEntity);
 		if (!_repositories.TryGetValue(type, out var repository))
 		{
-			repository = new GenericRepository<TEntity>(_dbContext);
+			repository = new GenericRepository<TEntity>(dbContext);
 			_repositories[type] = repository;
 		}
 
@@ -63,7 +58,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>A task to wait on.</returns>
 	public async Task BeginTransactionAsync()
 	{
-		_transaction = await _dbContext.Database.BeginTransactionAsync();
+		_transaction = await dbContext.Database.BeginTransactionAsync();
 	}
 
 	/// <summary>
@@ -72,7 +67,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>A task to wait on.</returns>
 	public async Task CommitAsync()
 	{
-		await _dbContext.SaveChangesAsync();
+		await dbContext.SaveChangesAsync();
 		if (_transaction is not null)
 		{
 			await _transaction.CommitAsync();
@@ -97,7 +92,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// <returns>The save changes count.</returns>
 	public async Task<int> SaveChangesAsync()
 	{
-		return await _dbContext.SaveChangesAsync();
+		return await dbContext.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -105,7 +100,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	/// </summary>
 	public void Dispose()
 	{
-		_dbContext.Dispose();
+		dbContext.Dispose();
 		_transaction?.Dispose();
 		GC.SuppressFinalize(this);
 	}
@@ -121,26 +116,26 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 	{
 		if (typeof(T) == typeof(CurrentMonthFeesAndRevenueStatus))
 		{
-			return await _dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+			return await dbContext.CurrentMonthFeesAndRevenueStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
 		}
 		if (typeof(T) == typeof(CurrentMembersFeesStatus))
 		{
-			return await _dbContext.CurrentMemberFeesStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+			return await dbContext.CurrentMemberFeesStatus.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
 		}
 		if (typeof(T) == typeof(MemberPaymentHistoryData))
 		{
-			return await _dbContext.MemberPaymentHistoryData.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
+			return await dbContext.MemberPaymentHistoryData.FromSqlRaw(sql, parameters).Cast<T>().ToListAsync();
 		}
 
 		// For scalar types, treat as non-query and return rows affected or success as bool
 		if (typeof(T) == typeof(bool))
 		{
-			var rows = await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			var rows = await dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
 			return [(T)(object)(rows > 0)];
 		}
 		if (typeof(T) == typeof(int))
 		{
-			var rows = await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			var rows = await dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
 			return [(T)(object)rows];
 		}
 
@@ -149,7 +144,7 @@ public class UnitOfWork(SqlDbContext dbContext) : IUnitOfWork
 		// Usage: await ExecuteSqlQueryAsync<object>(sql, params) or ExecuteSqlQueryAsync<bool>(sql, params)
 		if (typeof(T) == typeof(object))
 		{
-			await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+			await dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
 			return [];
 		}
 
