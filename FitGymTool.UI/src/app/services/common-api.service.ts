@@ -35,4 +35,9 @@ export class CommonApiService {
     const apiUrl = `${this._apiBaseUrl}${this._commonApiRoute.GetBugSeverityStatus_ApiRoute}`;
     return this._httpClient.post<ResponseDto>(apiUrl, bugSeverityInput);
   }
+
+  public GetActiveAIFeaturesAsync(): Observable<ResponseDto> {
+    const apiUrl = `${this._apiBaseUrl}${this._commonApiRoute.GetActiveAIFeatures_ApiRoute}`;
+    return this._httpClient.get<ResponseDto>(apiUrl);
+  }
 }
