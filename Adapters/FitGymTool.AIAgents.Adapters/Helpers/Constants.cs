@@ -50,17 +50,17 @@ internal static class Constants
 		/// <summary>
 		/// The ai agents ad client identifier
 		/// </summary>
-		internal const string AiAgentsAdClientId = "AiAgentsAdClientId";
+		internal const string AiAgentsAdClientId = "AiAgentsLab:ClientId";
 
 		/// <summary>
 		/// The ai agents ad client secret
 		/// </summary>
-		internal const string AiAgentsAdClientSecret = "AiAgentsAdClientSecret";
+		internal const string AiAgentsAdClientSecret = "AiAgentsLab:ClientSecret";
 
 		/// <summary>
 		/// The tenant id constant.
 		/// </summary>
-		internal const string TenantIdConstant = "TenantId";
+		internal const string TenantIdConstant = "AzureAdTenantId";
 
 		/// <summary>
 		/// The ibbs ai FICC token audience.
@@ -80,7 +80,7 @@ internal static class Constants
 		/// <summary>
 		/// The ai agents web issuer constant
 		/// </summary>
-		internal const string AiAgentsWebIssuerConstant = "AiAgentsWebIssuer";
+		internal const string AiAgentsWebIssuerConstant = "AiAgentsLab:WebIssuer";
 
 		/// <summary>
 		/// The is development mode constant
@@ -91,6 +91,16 @@ internal static class Constants
 		/// The application json constant
 		/// </summary>
 		internal const string ApplicationJsonConstant = "application/json";
+
+		/// <summary>
+		/// The ai agents HTTP client
+		/// </summary>
+		internal const string AiAgentsHttpClient = "aiagentsclient";
+
+		/// <summary>
+		/// The ai agents API base URL
+		/// </summary>
+		internal const string AiAgentsApiBaseUrl = "AiAgentsLab:ApiBaseUrl";
 	}
 
 	/// <summary>

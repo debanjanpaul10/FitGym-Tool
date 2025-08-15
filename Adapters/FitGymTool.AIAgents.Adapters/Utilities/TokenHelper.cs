@@ -40,7 +40,7 @@ internal class TokenHelper
 			var clientSecret = configuration[ConfigurationConstants.AiAgentsAdClientSecret];
 			var scopes = new[] { string.Format(CultureInfo.CurrentCulture, ConfigurationConstants.TokenScopeFormat, clientId) };
 
-			_ = bool.TryParse(Environment.GetEnvironmentVariable(ConfigurationConstants.IsDevelopmentModeConstant), out var isDevelopmentMode);
+			var isDevelopmentMode = bool.TryParse(configuration[ConfigurationConstants.IsDevelopmentModeConstant], out var parsedValue) && parsedValue;
 			if (isDevelopmentMode)
 			{
 				var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);

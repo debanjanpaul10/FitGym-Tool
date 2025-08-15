@@ -72,6 +72,11 @@ public static class RouteConstants
 		/// The add bug report API route
 		/// </summary>
 		public const string AddBugReport_ApiRoute = "AddBugReport";
+
+		/// <summary>
+		/// The get bug severity status API route
+		/// </summary>
+		internal const string GetBugSeverityStatus_ApiRoute = "GetBugSeverityStatus";
 	}
 
 	/// <summary>

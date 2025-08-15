@@ -8,8 +8,10 @@
 using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
+using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DrivingPorts;
 
 namespace FitGymTool.API.Adapters.Handlers;
@@ -31,8 +33,22 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	/// </returns>
 	public async Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO)
 	{
-		var bugReportData = mapper.Map<BugReportData>(bugReportDataDTO); 
+		var bugReportData = mapper.Map<BugReportData>(bugReportDataDTO);
 		return await commonService.AddNewBugReportDataAsync(bugReportData);
+	}
+
+	/// <summary>
+	/// Gets the bug severity from ai service asynchronous.
+	/// </summary>
+	/// <param name="bugSeverityInput">The bug severity input.</param>
+	/// <returns>
+	/// The bug severity response.
+	/// </returns>
+	public async Task<BugSeverityResponseDTO> GetBugSeverityFromAIServiceAsync(BugSeverityInputDTO bugSeverityInput)
+	{
+		var domainInputData = mapper.Map<BugSeverityInput>(bugSeverityInput);
+		var domainResponse = await commonService.GetBugSeverityFromAIServiceAsync(domainInputData).ConfigureAwait(false);
+		return mapper.Map<BugSeverityResponseDTO>(domainResponse);
 	}
 
 	/// <summary>

@@ -36,6 +36,16 @@ internal static class SwaggerConstants
 			internal const string Description = "Creates a new bug report documentation by user/member to be reviewed by devs and fixed.";
 			internal const string OperationId = nameof(AddBugReportDataAction);
 		}
+
+		/// <summary>
+		/// Swagger documentation for GetBugSeverityStatusAsync.
+		/// </summary>
+		internal static class GetBugSeverityStatusAction
+		{
+			internal const string Summary = "Gets the bug severity status.";
+			internal const string Description = "Gets the bug severity status for the user's mentioned bug using AI services.";
+			internal const string OperationId = nameof(GetBugSeverityStatusAction);
+		}
 	}
 
 	/// <summary>

@@ -53,7 +53,7 @@ public class HttpClientHelper(ILogger<HttpClientHelper> logger, IConfiguration c
 		{
 			logger.LogInformation(string.Format(LoggingConstants.LogHelperMethodStart, nameof(GetAIResponseAsync), DateTime.UtcNow, data?.GetType().Name ?? string.Empty));
 			
-			var client = httpClientFactory.CreateClient();
+			var client = httpClientFactory.CreateClient(ConfigurationConstants.AiAgentsHttpClient);
 			ArgumentException.ThrowIfNullOrWhiteSpace(apiUrl);
 			await PrepareHttpClientFactoryAsync(client, TokenHelper.GetAiAgentsLabTokenAsync(configuration, logger));
 

@@ -40,7 +40,6 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 			var membershipStatusMapping = await unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
 			var bugSeverityMapping = await unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(filter: x => x.IsActive);
 
-
 			return new MappingMasterData()
 			{
 				FeesDurationMapping = feesDurationMapping,
@@ -71,11 +70,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
 			
-			var bugSeverityEntity = await unitOfWork.Repository<BugSeverityMapping>().FirstOrDefaultAsync(sev => sev.SeverityName == DatabaseConstants.MediumConstant && sev.IsActive);
 			var bugStatusEntity = await unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive);
-
-			//TODO: overwriting as of now, later needs to be checked by AI or something.
-			bugReportData.BugSeverityId = bugSeverityEntity?.Id ?? 0;
 			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
 
 			await unitOfWork.Repository<BugReportData>().AddAsync(bugReportData);

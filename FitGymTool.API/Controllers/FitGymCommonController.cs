@@ -27,7 +27,7 @@ namespace FitGymTool.API.Controllers;
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.FitGymCommonApiRoutes.BaseRoute_RoutePrefix)]
-public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
+public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController> logger, IHttpContextAccessor httpContextAccessor) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.
@@ -79,7 +79,7 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[SwaggerOperation(Summary = AddBugReportDataAction.Summary, Description = AddBugReportDataAction.Description, OperationId = AddBugReportDataAction.OperationId)]
-	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody]AddBugReportDTO addBugReportData)
+	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody] AddBugReportDTO addBugReportData)
 	{
 		try
 		{
@@ -106,6 +106,46 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, base.UserFullName));
+		}
+	}
+
+	/// <summary>
+	/// Gets the bug severity status asynchronous.
+	/// </summary>
+	/// <param name="bugSeverityInput">The bug severity input.</param>
+	/// <returns>The bug severity response dto.</returns>
+	[HttpPost(RouteConstants.FitGymCommonApiRoutes.GetBugSeverityStatus_ApiRoute)]
+	[ProducesResponseType(typeof(BugSeverityResponseDTO), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetBugSeverityStatusAction.Summary, Description = GetBugSeverityStatusAction.Description, OperationId = GetBugSeverityStatusAction.OperationId)]
+	public async Task<ResponseDTO> GetBugSeverityStatusAsync([FromBody] BugSeverityInputDTO bugSeverityInput)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
+			if (IsAuthorized())
+			{
+				var result = await fitGymCommonHandler.GetBugSeverityFromAIServiceAsync(bugSeverityInput);
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, ex.Message));
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 }

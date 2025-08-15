@@ -6,25 +6,33 @@ import { environment } from '@environments/environment';
 import { AddBugReportDTO } from '@models/DTO/add-bug-report-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
+import { BugSeverityInputDTO } from '@models/DTO/bug-severity-input-dto.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonApiService {
-  private commonApiRoute = ApiRoutes.CommonApi;
-  private apiBaseUrl: string = `${environment.apiBaseUrl}/${this.commonApiRoute.BaseRoute}`;
+  private _commonApiRoute = ApiRoutes.CommonApi;
+  private _apiBaseUrl: string = `${environment.apiBaseUrl}/${this._commonApiRoute.BaseRoute}`;
 
-  private readonly httpClient: HttpClient = inject(HttpClient);
+  private readonly _httpClient: HttpClient = inject(HttpClient);
 
   public GetMappingsMasterDataAsync(): Observable<ResponseDto> {
-    const apiUrl: string = `${this.apiBaseUrl}${this.commonApiRoute.GetMappingsMasterData_ApiRoute}`;
-    return this.httpClient.get<ResponseDto>(apiUrl);
+    const apiUrl = `${this._apiBaseUrl}${this._commonApiRoute.GetMappingsMasterData_ApiRoute}`;
+    return this._httpClient.get<ResponseDto>(apiUrl);
   }
 
   public AddBugReportDataAsync(
     bugReportData: AddBugReportDTO
   ): Observable<ResponseDto> {
-    const apiUrl: string = `${this.apiBaseUrl}${this.commonApiRoute.AddBugReport_ApiRoute}`;
-    return this.httpClient.post<ResponseDto>(apiUrl, bugReportData);
+    const apiUrl = `${this._apiBaseUrl}${this._commonApiRoute.AddBugReport_ApiRoute}`;
+    return this._httpClient.post<ResponseDto>(apiUrl, bugReportData);
+  }
+
+  public GetBugSeverityStatusAsync(
+    bugSeverityInput: BugSeverityInputDTO
+  ): Observable<ResponseDto> {
+    const apiUrl = `${this._apiBaseUrl}${this._commonApiRoute.GetBugSeverityStatus_ApiRoute}`;
+    return this._httpClient.post<ResponseDto>(apiUrl, bugSeverityInput);
   }
 }

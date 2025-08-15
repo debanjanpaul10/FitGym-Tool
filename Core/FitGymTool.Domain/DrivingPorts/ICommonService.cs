@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.DrivingPorts;
@@ -29,4 +30,11 @@ public interface ICommonService
 	/// <param name="bugReportData">The bug report data domain.</param>
 	/// <returns>The boolean for success/failure</returns>
 	Task<bool> AddNewBugReportDataAsync(BugReportData bugReportData);
+
+	/// <summary>
+	/// Gets the bug severity from ai service asynchronous.
+	/// </summary>
+	/// <param name="bugSeverityInput">The bug severity input.</param>
+	/// <returns>The bug severity response.</returns>
+	Task<BugSeverityResponse> GetBugSeverityFromAIServiceAsync(BugSeverityInput bugSeverityInput);
 }

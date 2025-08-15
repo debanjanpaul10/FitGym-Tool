@@ -18,6 +18,7 @@ import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { CurrentUserComponent } from '@components/dashboard/current-user-component/current-user.component';
 import { AiStatusComponent } from '@components/dashboard/ai-status-component/ai-status.component';
+import { AiFeaturesComponent } from '@components/dashboard/ai-features-component/ai-features.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,6 +29,7 @@ import { AiStatusComponent } from '@components/dashboard/ai-status-component/ai-
     ActiveMembersComponent,
     CurrentUserComponent,
     AiStatusComponent,
+    AiFeaturesComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

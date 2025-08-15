@@ -11,8 +11,10 @@ using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
+using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.API.Adapters.Mapper;
@@ -48,8 +50,8 @@ public class DomainMapperProfile : Profile
                 .MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
         CreateMap<AddBugReportDTO, BugReportData>()
             .ForMember(destination => destination.Id, options => options.Ignore())
-            .ForMember(destination => destination.BugSeverityId, options => options.Ignore())
             .ForMember(destination => destination.BugStatusId, options => options.Ignore())
+            .ForMember(dest => dest.BugSeverityId, option => option.MapFrom(src => src.BugSeverity))
             .ForMember(destination => destination.Title, option => option.MapFrom(source => source.BugTitle))
             .ForMember(destination => destination.Description, option => option.MapFrom(source => source.BugDescription));
         CreateMap<UpdateMembershipStatusDTO, MemberDetails>()
@@ -59,5 +61,7 @@ public class DomainMapperProfile : Profile
         CreateMap<CurrentMembersFeesStatus, CurrentMembersFeesStatusDTO>();
         CreateMap<MemberPaymentHistoryData, MemberPaymentHistoryDTO>();
         CreateMap<UpdateMemberFeesDTO, UpdateMemberFees>().ForMember(destination => destination.ModifiedBy, options => options.Ignore());
+        CreateMap<BugSeverityInput, BugSeverityInputDTO>().ReverseMap();
+        CreateMap<BugSeverityResponse, BugSeverityResponseDTO>().ReverseMap();
     }
 }
