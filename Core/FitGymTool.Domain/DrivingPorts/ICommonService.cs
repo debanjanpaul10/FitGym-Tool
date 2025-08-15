@@ -37,4 +37,10 @@ public interface ICommonService
 	/// <param name="bugSeverityInput">The bug severity input.</param>
 	/// <returns>The bug severity response.</returns>
 	Task<BugSeverityResponse> GetBugSeverityFromAIServiceAsync(BugSeverityInput bugSeverityInput);
+
+	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="AIFeature"/></returns>
+	Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync();
 }

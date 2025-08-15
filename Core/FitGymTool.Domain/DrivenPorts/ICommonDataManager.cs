@@ -7,6 +7,7 @@
 
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.DrivenPorts;
@@ -28,4 +29,10 @@ public interface ICommonDataManager
 	/// <param name="bugReportData">The bug report data.</param>
 	/// <returns>The boolean for success/failure.</returns>
 	Task<bool> AddNewBugReportDataAsync(BugReportData bugReportData);
+
+	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="AIFeature"/></returns>
+	Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync();
 }

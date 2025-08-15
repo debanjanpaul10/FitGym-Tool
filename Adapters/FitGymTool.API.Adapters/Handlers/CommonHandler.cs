@@ -38,6 +38,18 @@ public class CommonHandler(ICommonService commonService, IMapper mapper) : IComm
 	}
 
 	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="AIFeaturesDTO" />
+	/// </returns>
+	public async Task<IEnumerable<AIFeaturesDTO>> GetActiveAIFeaturesAsync()
+	{
+		var domainAiFeaturesData = await commonService.GetActiveAIFeaturesAsync().ConfigureAwait(false);
+		return mapper.Map<IEnumerable<AIFeaturesDTO>>(domainAiFeaturesData);
+	}
+
+	/// <summary>
 	/// Gets the bug severity from ai service asynchronous.
 	/// </summary>
 	/// <param name="bugSeverityInput">The bug severity input.</param>

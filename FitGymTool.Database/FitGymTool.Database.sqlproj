@@ -43,6 +43,7 @@
     <Build Include="User-Defined Types\dbo.AddNewMemberTableType.sql" />
     <Build Include="Stored Procedures\dbo.SP_UpdateMemberFeesData.sql" />
     <Build Include="User-Defined Types\dbo.UpdateMemberFeesTableType.sql" />
+    <Build Include="Tables\dbo.AIFeatures.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

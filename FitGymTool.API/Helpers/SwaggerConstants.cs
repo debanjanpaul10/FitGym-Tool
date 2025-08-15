@@ -46,6 +46,17 @@ internal static class SwaggerConstants
 			internal const string Description = "Gets the bug severity status for the user's mentioned bug using AI services.";
 			internal const string OperationId = nameof(GetBugSeverityStatusAction);
 		}
+
+		/// <summary>
+		/// Swagger documentation for GetActiveAIFeaturesAsync.
+		/// </summary>
+		internal static class GetActiveAIFeaturesAction
+		{
+			internal const string Summary = "Gets the active AI features.";
+			internal const string Description = "Gets the list of active AI features for FitGym tool along with their service statuses.";
+			internal const string OperationId = nameof(GetActiveAIFeaturesAction);
+		}
+
 	}
 
 	/// <summary>

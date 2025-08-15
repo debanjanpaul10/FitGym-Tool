@@ -39,7 +39,7 @@ public class CommonService(ICommonDataManager commonManager, IAIServicesManager 
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
 
 			bugReportDataDomain.PrepareBugReportDataDomain();
-			return await commonManager.AddNewBugReportDataAsync(bugReportDataDomain);
+			return await commonManager.AddNewBugReportDataAsync(bugReportDataDomain).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
@@ -49,6 +49,30 @@ public class CommonService(ICommonDataManager commonManager, IAIServicesManager 
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
+		}
+	}
+
+	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="AIFeature" />
+	/// </returns>
+	public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, string.Empty));
+			return await commonManager.GetActiveAIFeaturesAsync().ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
 
@@ -88,7 +112,7 @@ public class CommonService(ICommonDataManager commonManager, IAIServicesManager 
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			return await commonManager.GetMappingsMasterDataAsync();
+			return await commonManager.GetMappingsMasterDataAsync().ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{

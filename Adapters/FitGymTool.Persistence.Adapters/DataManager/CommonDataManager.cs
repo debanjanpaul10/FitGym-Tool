@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
 using FitGymTool.Domain.DrivenPorts;
@@ -86,6 +87,30 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
+		}
+	}
+
+	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.AIFeature" />
+	/// </returns>
+	public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
+			return await unitOfWork.Repository<AIFeature>().GetAllAsync(x => x.IsActive).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
 }
