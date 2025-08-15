@@ -120,7 +120,6 @@ export class BugReportComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // Initial state: both buttons disabled
     this.canGetBugSeverity.set(false);
     this.isBugSeverityPopulated.set(false);
   }

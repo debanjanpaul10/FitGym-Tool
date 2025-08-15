@@ -7,14 +7,9 @@
 .card-content {
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
   padding: 20px;
-}
-
-.status-info {
-  flex: 1;
 }
 
 .ai-agent-section {
@@ -22,13 +17,90 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   height: 100%;
+}
+
+.ai-icon-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 
   img {
     border-radius: 8px;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.2s ease;
   }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.status-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #1f2937;
+  transition: all 0.3s ease;
+
+  &.online {
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  &.offline {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  }
+}
+
+.status-tooltip {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.9);
+  }
+
+  &.online {
+    border: 1px solid #10b981;
+  }
+
+  &.offline {
+    border: 1px solid #ef4444;
+  }
+}
+
+.ai-icon-container:hover .status-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .agent-name {
@@ -40,148 +112,34 @@
   text-align: center;
   text-shadow: 0 0 4px rgba(59, 130, 246, 0.8), 0 0 8px rgba(59, 130, 246, 0.6),
     0 0 12px rgba(59, 130, 246, 0.4), 0 0 16px rgba(59, 130, 246, 0.2);
-  animation: blue-glow 3s ease-in-out infinite alternate;
 }
 
-@keyframes blue-glow {
-  0% {
-    text-shadow: 0 0 4px rgba(59, 130, 246, 0.8),
-      0 0 8px rgba(59, 130, 246, 0.6), 0 0 12px rgba(59, 130, 246, 0.4),
-      0 0 16px rgba(59, 130, 246, 0.2);
-  }
+@keyframes pulse-badge {
+  0%,
   100% {
-    text-shadow: 0 0 6px rgba(59, 130, 246, 0.9),
-      0 0 12px rgba(59, 130, 246, 0.7), 0 0 18px rgba(59, 130, 246, 0.5),
-      0 0 24px rgba(59, 130, 246, 0.3);
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
   }
-}
-
-.status-value {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: color 0.3s ease;
-
-  &.online {
-    color: #10b981;
-  }
-
-  &.offline {
-    color: #ef4444;
-  }
-}
-
-.chart-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.chart-container {
-  width: 120px;
-  height: 40px;
-  overflow: visible; // Allow glow to extend beyond container
-}
-
-.chart-status {
-  text-align: center;
-}
-
-.line-chart {
-  width: 100%;
-  height: 100%;
-  overflow: visible; // Allow glow to extend beyond SVG bounds
-}
-
-.chart-line {
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: all 0.3s ease;
-
-  &.online {
-    stroke: #10b981;
-    filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.9))
-      drop-shadow(0 0 4px rgba(16, 185, 129, 0.7))
-      drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))
-      drop-shadow(0 0 16px rgba(16, 185, 129, 0.3))
-      drop-shadow(0 0 24px rgba(16, 185, 129, 0.15))
-      drop-shadow(0 0 32px rgba(16, 185, 129, 0.08));
-    animation: soft-glow-green 4s ease-in-out infinite alternate;
-  }
-
-  &.offline {
-    stroke: #ef4444;
-    filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.9))
-      drop-shadow(0 0 4px rgba(239, 68, 68, 0.7))
-      drop-shadow(0 0 8px rgba(239, 68, 68, 0.5))
-      drop-shadow(0 0 16px rgba(239, 68, 68, 0.3))
-      drop-shadow(0 0 24px rgba(239, 68, 68, 0.15))
-      drop-shadow(0 0 32px rgba(239, 68, 68, 0.08));
-    animation: soft-glow-red 4s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes soft-glow-green {
-  0% {
-    filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.9))
-      drop-shadow(0 0 4px rgba(16, 185, 129, 0.7))
-      drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))
-      drop-shadow(0 0 16px rgba(16, 185, 129, 0.3))
-      drop-shadow(0 0 24px rgba(16, 185, 129, 0.15))
-      drop-shadow(0 0 32px rgba(16, 185, 129, 0.08));
-  }
-  100% {
-    filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.95))
-      drop-shadow(0 0 6px rgba(16, 185, 129, 0.8))
-      drop-shadow(0 0 12px rgba(16, 185, 129, 0.6))
-      drop-shadow(0 0 20px rgba(16, 185, 129, 0.4))
-      drop-shadow(0 0 30px rgba(16, 185, 129, 0.2))
-      drop-shadow(0 0 40px rgba(16, 185, 129, 0.1));
-  }
-}
-
-@keyframes soft-glow-red {
-  0% {
-    filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.9))
-      drop-shadow(0 0 4px rgba(239, 68, 68, 0.7))
-      drop-shadow(0 0 8px rgba(239, 68, 68, 0.5))
-      drop-shadow(0 0 16px rgba(239, 68, 68, 0.3))
-      drop-shadow(0 0 24px rgba(239, 68, 68, 0.15))
-      drop-shadow(0 0 32px rgba(239, 68, 68, 0.08));
-  }
-  100% {
-    filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.95))
-      drop-shadow(0 0 6px rgba(239, 68, 68, 0.8))
-      drop-shadow(0 0 12px rgba(239, 68, 68, 0.6))
-      drop-shadow(0 0 20px rgba(239, 68, 68, 0.4))
-      drop-shadow(0 0 30px rgba(239, 68, 68, 0.2))
-      drop-shadow(0 0 40px rgba(239, 68, 68, 0.1));
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
   }
 }
 
 // Responsive design
 @media (max-width: 768px) {
-  .ai-status-card {
-    padding: 16px;
+  .status-badge {
+    width: 18px;
+    height: 18px;
+    top: -4px;
+    right: -4px;
   }
 
-  .card-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .chart-container {
-    width: 100%;
-    height: 30px;
-  }
-
-  .status-value {
-    font-size: 24px;
+  .status-tooltip {
+    font-size: 11px;
+    padding: 4px 8px;
+    bottom: -30px;
   }
 }
