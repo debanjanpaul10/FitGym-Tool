@@ -25,6 +25,7 @@ import { ToasterComponent } from '@components/common/toaster-component/toaster.c
 import { FooterComponent } from '@components/common/footer-component/footer.component';
 import { BugReportComponent } from '@components/bug-report/bug-report.component';
 import { AgentStatusService } from '@services/agent-status.service';
+import { DrawerService } from '@core/services/drawer.service';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
 
   private _router: Router = inject(Router);
   private _loaderService: LoaderService = inject(LoaderService);
+  protected _drawerService: DrawerService = inject(DrawerService);
 
   constructor() {
     this._router.events
@@ -76,5 +78,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this._loaderService.loadingOn();
+  }
+
+  protected shouldShowDrawer(): boolean {
+    return !this.isLoginPage() && !this.isRouteLoading();
   }
 }

@@ -88,23 +88,21 @@ export class LeftNavigationComponent implements OnInit {
   }
 
   /**
-   * Navigates to the home/dashboard page and closes the drawer.
+   * Navigates to the home/dashboard page.
    * Used when the user clicks on the home navigation option.
    */
   protected homePageRedirect(): void {
     this.routerService.navigate([RouteConstants.Dashboard.Link]);
-    this.drawerService.closeDrawer();
   }
 
   // #region PRIVATE METHODS
 
   /**
-   * Opens the bug report dialog and closes the navigation drawer.
+   * Opens the bug report dialog.
    * Triggered when the user selects the "Report a bug" menu option.
    */
   private handleBugReport(): void {
     this.dialogPopupService.openBugReportDialog();
-    this.drawerService.closeDrawer();
   }
 
   /**
@@ -117,30 +115,27 @@ export class LeftNavigationComponent implements OnInit {
   }
 
   /**
-   * Navigates to the member management dashboard and closes the drawer.
+   * Navigates to the member management dashboard.
    * Handles navigation when the "Member Management" menu item is selected.
    */
   private navigateUsersDashboard(): void {
     this.routerService.navigate([RouteConstants.MemberManagement.Link]);
-    this.drawerService.closeDrawer();
   }
 
   /**
-   * Navigates to the fees management dashboard and closes the drawer.
+   * Navigates to the fees management dashboard.
    * Handles navigation when the "Fees Management" menu item is selected.
    */
   private navigateFeesDashboard(): void {
     this.routerService.navigate([RouteConstants.FeesManagement.Link]);
-    this.drawerService.closeDrawer();
   }
 
   /**
-   * Navigates to the facility management dashboard and closes the drawer.
+   * Navigates to the facility management dashboard.
    * Handles navigation when the "Facility Management" menu item is selected.
    */
   private navigateFacilityDashboard(): void {
     this.routerService.navigate([RouteConstants.FacilityManagement.Link]);
-    this.drawerService.closeDrawer();
   }
 
   // #endregion

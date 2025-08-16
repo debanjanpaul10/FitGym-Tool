@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
   height: 55px;
   position: fixed;
   top: 0;
@@ -45,6 +45,7 @@
   background: #18181b;
   border-bottom: 2px solid #27272a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
 .header-left,
@@ -53,6 +54,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 15px;
+}
+
+// Hide the header collapse button when sidebar is open to avoid confusion
+:host.header-shifted .header-left {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease !important;
 }
 
 .header-center {
@@ -60,12 +69,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0; // Allows flex item to shrink below content size
+}
+
+// Ensure proper spacing when shifted
+:host.header-shifted .header-left,
+:host.header-shifted .header-right {
+  flex: 0 0 80px;
+}
+
+:host.header-shifted .header-center {
+  flex: 1 1 auto;
 }
 
 .header-logo {
   height: 50px;
   max-width: 200px;
   cursor: pointer;
+  object-fit: contain;
+  transition: max-width 0.3s ease;
+}
+
+// Adjust logo size when header is shifted to prevent overflow
+:host.header-shifted .header-logo {
+  max-width: 150px;
 }
 
 .header-bar-custom,
@@ -82,6 +109,7 @@
   z-index: 9;
   margin: 0;
   padding: 0;
+  transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
 // Global PrimeNG message overrides
@@ -89,6 +117,7 @@
   opacity: 1 !important;
   display: block !important;
   visibility: visible !important;
+  width: 100% !important;
 }
 
 :host ::ng-deep .p-message {
@@ -100,11 +129,16 @@
   justify-content: center !important;
   align-items: center !important;
   position: relative !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 :host ::ng-deep .p-message-text {
   text-align: center !important;
   flex: 1 !important;
+  padding-right: 40px !important;
+  box-sizing: border-box !important;
 }
 
 :host ::ng-deep .p-message-close-button {
@@ -126,4 +160,34 @@
 
 :host ::ng-deep .p-message-close .p-message-close-icon {
   color: #fff !important;
+}
+
+:host.header-shifted .header-bar-custom {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+// Responsive behavior for smaller screens
+@media (max-width: 1200px) {
+  :host.header-shifted .header-logo {
+    max-width: 120px;
+  }
+
+  :host.header-shifted .header-left,
+  :host.header-shifted .header-right {
+    flex: 0 0 60px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  :host.header-shifted .header-bar-custom,
+  :host.header-shifted .message-row {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .header-logo {
+    max-width: 150px;
+  }
 }

@@ -1,17 +1,28 @@
 <div [ngClass]="{ 'app-background': !isLoginPage() }">
   <app-loader-component [detectRouteTransitions]="true"></app-loader-component>
   <app-header-component
-    *ngIf="!isLoginPage() && !isRouteLoading()"
+    *ngIf="shouldShowDrawer()"
+    [ngClass]="{
+      'header-shifted': _drawerService.isDrawerOpen() && shouldShowDrawer()
+    }"
   ></app-header-component>
-  <div class="container-fluid">
-    <app-toaster-component
-      *ngIf="!isLoginPage() && !isRouteLoading()"
-    ></app-toaster-component>
+  <div
+    class="container-fluid"
+    [ngClass]="{
+      'content-shifted': _drawerService.isDrawerOpen() && shouldShowDrawer()
+    }"
+  >
+    <app-toaster-component *ngIf="shouldShowDrawer()"></app-toaster-component>
     <app-left-navigation-component
-      *ngIf="!isLoginPage() && !isRouteLoading()"
+      *ngIf="shouldShowDrawer()"
     ></app-left-navigation-component>
     <app-bug-report></app-bug-report>
     <router-outlet></router-outlet>
   </div>
-  <app-footer-component *ngIf="!isLoginPage()"></app-footer-component>
+  <app-footer-component
+    *ngIf="!isLoginPage()"
+    [ngClass]="{
+      'footer-shifted': _drawerService.isDrawerOpen() && !isLoginPage()
+    }"
+  ></app-footer-component>
 </div>

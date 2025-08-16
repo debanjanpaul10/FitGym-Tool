@@ -14,27 +14,28 @@
 }
 
 .chart-container canvas {
-  width: 60% !important;
+  width: 55% !important;
   height: 18rem !important;
-  max-width: 60%;
+  max-width: 55%;
   max-height: 18rem;
-  min-width: 18.75rem;
+  min-width: 16rem;
   display: block;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 
 .chart-wrapper {
   width: 100%;
   justify-content: flex-start;
   align-items: center;
-  gap: 1.875rem;
+  gap: 1rem;
   height: 100%;
 }
 
 .counts-display {
-  min-width: 9.375rem;
-  max-width: 12.5rem;
-  padding: 1.25rem;
+  min-width: 8rem;
+  max-width: none;
+  flex: 1;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 0.5rem;
   border: 0.0625rem solid rgba(255, 255, 255, 0.1);
@@ -70,13 +71,16 @@
 }
 
 .label-text {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #f1f1f1;
   font-family: "Cascadia Mono", monospace;
+  line-height: 1.2;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .count-value {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #ffffff;
   font-family: "Cascadia Mono", monospace;
@@ -85,4 +89,68 @@
 .members-skeleton {
   border-radius: 16px !important;
   border: 1px solid rgba(255, 255, 255, 0.41) !important;
+}
+
+// Responsive adjustments for when sidebar is open or space is constrained
+@media (max-width: 1400px) {
+  .chart-container canvas {
+    width: 50% !important;
+    max-width: 50%;
+    min-width: 14rem;
+  }
+
+  .chart-wrapper {
+    gap: 0.75rem;
+  }
+
+  .counts-display {
+    padding: 0.75rem;
+    min-width: 7rem;
+  }
+
+  .label-text {
+    font-size: 0.75rem;
+  }
+
+  .count-value {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .chart-container {
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
+  }
+
+  .chart-container canvas {
+    width: 80% !important;
+    max-width: 80%;
+    height: 14rem !important;
+    max-height: 14rem;
+  }
+
+  .chart-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .counts-display {
+    width: 100%;
+    max-width: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+
+  .count-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .active-members-card {
+    height: auto !important;
+    min-height: 28rem;
+  }
 }
