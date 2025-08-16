@@ -1,7 +1,31 @@
 <div
   class="card shadow-m border-0 bg-dark text-light"
   pRipple
-  style="--p-ripple-background: rgba(75, 175, 80, 0.3)"
+  style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
 >
-  <div class="card-content">AI Features in this application</div>
+  <div class="card-content">
+    <h5 class="mb-3">AI Features</h5>
+
+    @if (activeAiFeatures().length > 0) {
+    <div class="ai-features-list">
+      @for (feature of activeAiFeatures(); track feature.id) {
+      <div class="ai-feature-item">
+        <span class="feature-name">{{ feature.serviceName }}</span>
+        <span
+          class="feature-status"
+          [ngClass]="
+            feature.serviceStatus ? 'status-active' : 'status-disabled'
+          "
+        >
+          {{ feature.serviceStatus ? "Active" : "Disabled" }}
+        </span>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="no-features">
+      <p class="text-muted">No AI features available</p>
+    </div>
+    }
+  </div>
 </div>

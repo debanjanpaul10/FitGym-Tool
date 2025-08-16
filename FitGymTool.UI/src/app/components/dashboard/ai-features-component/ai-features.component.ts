@@ -5,6 +5,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { Ripple } from 'primeng/ripple';
 
 import { LoaderService } from '@core/services/loader.service';
@@ -15,7 +16,7 @@ import { CommonApiService } from '@services/common-api.service';
 
 @Component({
   selector: 'app-ai-features-component',
-  imports: [Ripple],
+  imports: [Ripple, NgClass],
   templateUrl: './ai-features.component.html',
   styleUrl: './ai-features.component.scss',
 })

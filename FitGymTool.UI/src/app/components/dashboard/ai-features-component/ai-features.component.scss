@@ -1,0 +1,168 @@
+.card {
+  height: 140px;
+
+  .card-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+
+    h5 {
+      color: #fff;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .ai-features-list {
+      .ai-feature-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        transition: all 0.2s ease;
+        position: relative;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .feature-name {
+          color: #e2e8f0;
+          font-weight: 500;
+          flex: 1;
+          font-size: 0.9rem;
+          transition: color 0.2s ease;
+        }
+
+        &:hover .feature-name {
+          color: #fff;
+        }
+
+        .feature-status {
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.25rem 0.75rem;
+          border-radius: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 0.025em;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              transparent,
+              rgba(255, 255, 255, 0.2),
+              transparent
+            );
+            transition: left 0.5s ease;
+          }
+
+          &:hover::before {
+            left: 100%;
+          }
+
+          &.status-active {
+            color: #fff;
+            background: linear-gradient(45deg, #10b981, #22c55e);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+            animation: pulse-active 2s ease-in-out infinite;
+
+            &:hover {
+              box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+              transform: scale(1.05);
+            }
+          }
+
+          &.status-disabled {
+            color: #fff;
+            background: linear-gradient(45deg, #dc2626, #ef4444);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+
+            &:hover {
+              box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+              transform: scale(1.05);
+            }
+          }
+        }
+      }
+    }
+
+    .no-features {
+      text-align: center;
+      padding: 2rem 0;
+      position: relative;
+
+      p {
+        margin: 0;
+        color: #64748b;
+        font-style: italic;
+        opacity: 0.8;
+      }
+
+      &::before {
+        content: "🤖";
+        display: block;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.3;
+        animation: float 3s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes pulse-active {
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.card-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.card-content::-webkit-scrollbar-track {
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 2px;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+}
+
+.card-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+}
