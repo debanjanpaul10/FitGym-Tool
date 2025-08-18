@@ -89,8 +89,6 @@ export class Utilities {
       data &&
       ((data.membershipStatusMapping &&
         data.membershipStatusMapping.length > 0) ||
-        (data.membershipStatusMapping &&
-          data.membershipStatusMapping.length > 0) ||
         Object.keys(data).some((key) => {
           const value = (data as any)[key];
           return Array.isArray(value) && value.length > 0;

@@ -161,6 +161,11 @@ public static class DatabaseConstants
 		/// The database connection not found
 		/// </summary>
 		public const string DatabaseConnectionNotFound = "Oops! It seems the database connection is missing from the configuration!";
+
+		/// <summary>
+		/// The email identifier cannot be null message
+		/// </summary>
+		internal const string EmailIDCannotBeNullMessage = "Email ID cannot be null or empty";
 	}
 
 	/// <summary>

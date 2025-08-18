@@ -34,7 +34,9 @@ export class MemberFeesApiService {
   public GetPaymentHistoryDataForMemberAsync(
     userEmail: string = ''
   ): Observable<ResponseDto> {
-    const apiUrl = `${this.apiBaseUrl}${this.memberFeesApiRoute.GetPaymentHistoryDataForMember_ApiRoute}${userEmail}`;
+    const apiUrl = `${this.apiBaseUrl}${
+      this.memberFeesApiRoute.GetPaymentHistoryDataForMember_ApiRoute
+    }${encodeURIComponent(userEmail)}`;
     return this.httpClient.get<ResponseDto>(apiUrl);
   }
 
