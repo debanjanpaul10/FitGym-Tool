@@ -46,6 +46,11 @@ public static class RouteConstants
 		/// The update membership status API route
 		/// </summary>
 		public const string UpdateMembershipStatus_ApiRoute = "UpdateMembershipStatus";
+
+		/// <summary>
+		/// The add member fees payment duration API route
+		/// </summary>
+		public const string AddMemberFeesPaymentDuration_ApiRoute = "AddMemberFeesPaymentDuration";
 	}
 
 	/// <summary>
@@ -83,5 +88,20 @@ public static class RouteConstants
 		/// The get current month fees and revenue status API route
 		/// </summary>
 		public const string GetCurrentMonthFeesAndRevenueStatus_ApiRoute = "GetCurrentMonthFeesAndRevenueStatus";
+
+		/// <summary>
+		/// The get current fees structure API route
+		/// </summary>
+		public const string GetCurrentFeesStructure_ApiRoute = "GetCurrentFeesStructure";
+
+		/// <summary>
+		/// The get current members fees status API route
+		/// </summary>
+		public const string GetCurrentMembersFeesStatus_ApiRoute = "GetCurrentMembersFeesStatus";
+
+		/// <summary>
+		/// The get payment history data for member API route
+		/// </summary>
+		public const string GetPaymentHistoryDataForMember_ApiRoute = "GetPaymentHistoryDataForMember";
 	}
 }

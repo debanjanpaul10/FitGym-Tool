@@ -5,8 +5,9 @@
 // <summary>The FitGym Common Data Service Interface.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Models;
-using FitGymTool.Domain.Models.MappingDomain;
+
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.DerivedEntities;
 
 namespace FitGymTool.Domain.Ports.Out;
 
@@ -19,12 +20,12 @@ public interface ICommonDataManager
 	/// Gets the mappings master data asynchronous.
 	/// </summary>
 	/// <returns>The mapping master data domain.</returns>
-	Task<MappingMasterDataDomain> GetMappingsMasterDataAsync();
+	Task<MappingMasterData> GetMappingsMasterDataAsync();
 
 	/// <summary>
 	/// Adds the new bug report data asynchronous.
 	/// </summary>
-	/// <param name="bugReportDataDomain">The bug report data.</param>
+	/// <param name="bugReportData">The bug report data.</param>
 	/// <returns>The boolean for success/failure.</returns>
-	Task<bool> AddNewBugReportDataAsync(BugReportDataDomain bugReportDataDomain);
+	Task<bool> AddNewBugReportDataAsync(BugReportData bugReportData);
 }

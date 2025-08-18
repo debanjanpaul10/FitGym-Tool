@@ -19,21 +19,28 @@
     <Folder Include="Stored Procedures" />
     <Folder Include="Helpers" />
     <Folder Include="Functions" />
+    <Folder Include="User-Defined Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\MemberDetails.sql" />
-    <Build Include="Tables\FeesStatus.sql" />
     <Build Include="Tables\MembershipStatusMapping.sql" />
     <Build Include="Tables\FeesPaymentHistory.sql" />
     <Build Include="Tables\FeesPaymentStatusMapping.sql" />
     <Build Include="Tables\FeesDurationMapping.sql" />
     <Build Include="Tables\FeesStructure.sql" />
-    <Build Include="Functions\FN_GetPaymentHistoryDataForMembers.sql" />
     <Build Include="Functions\FN_GetCurrentMembersFeesStatus.sql" />
     <Build Include="Functions\FN_GetCurrentFeesAndRevenueStatus.sql" />
     <Build Include="Tables\BugReportData.sql" />
     <Build Include="Tables\BugItemStatusMapping.sql" />
     <Build Include="Tables\BugSeverityMapping.sql" />
+    <Build Include="Stored Procedures\dbo.SP_GetPaymentHistoryForMember.sql" />
+    <Build Include="Stored Procedures\dbo.SP_InsertErrorLog.sql" />
+    <Build Include="Functions\FN_CalculateNextTimeframeFeesPayment.sql" />
+    <Build Include="Stored Procedures\dbo.SP_CalculateNextPaymentDataForMember.sql" />
+    <Build Include="Tables\ErrorLog.sql" />
+    <Build Include="Tables\MemberFeesPaymentDurationMapping.sql" />
+    <Build Include="Stored Procedures\dbo.SP_AddNewMemberData.sql" />
+    <Build Include="User-Defined Types\dbo.AddNewMemberTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />

@@ -20,6 +20,7 @@ import {
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
   MsalBroadcastService,
+  MsalGuard,
   MsalInterceptor,
   MsalService,
 } from '@azure/msal-angular';
@@ -52,6 +53,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: MSALGuardConfigFactory,
     },
     MsalService,
+    MsalGuard,
     MsalBroadcastService,
     {
       provide: APP_INITIALIZER,

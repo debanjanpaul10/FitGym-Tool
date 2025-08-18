@@ -6,12 +6,10 @@
 // *********************************************************************************
 
 using System.Linq.Expressions;
-using AutoMapper;
-using FitGymTool.Domain.Models.Members;
+using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.Mapping;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.DataManager;
-using FitGymTool.Persistence.Adapters.Entity;
-using FitGymTool.Persistence.Adapters.Entity.Mapping;
 using Microsoft.Extensions.Logging;
 using Moq;
 using static FitGymTool.Domain.Helpers.DomainConstants;
@@ -32,11 +30,6 @@ public class MembersDataManagerTests
 	/// The mock logger
 	/// </summary>
 	private readonly Mock<ILogger<MembersDataManager>> _mockLogger = new();
-
-	/// <summary>
-	/// The mock mapper
-	/// </summary>
-	private readonly Mock<IMapper> _mockMapper = new();
 
 	/// <summary>
 	/// The mock repository for MemberDetails
@@ -60,7 +53,7 @@ public class MembersDataManagerTests
 	{
 		_mockUnitOfWork.Setup(x => x.Repository<MemberDetails>()).Returns(_mockMemberRepository.Object);
 		_mockUnitOfWork.Setup(x => x.Repository<MembershipStatusMapping>()).Returns(_mockStatusRepository.Object);
-		_membersDataManager = new(_mockUnitOfWork.Object, _mockMapper.Object, _mockLogger.Object);
+		_membersDataManager = new(_mockUnitOfWork.Object, _mockLogger.Object);
 	}
 
 	#region AddNewMemberAsync Tests
@@ -81,8 +74,6 @@ public class MembersDataManagerTests
 
 		_mockStatusRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<MembershipStatusMapping, bool>>>()))
 			.ReturnsAsync(statusMapping);
-
-		_mockMapper.Setup(x => x.Map<MemberDetails>(memberDetails)).Returns(memberEntity);
 
 		_mockMemberRepository.Setup(x => x.AddAsync(It.IsAny<MemberDetails>())).ReturnsAsync(memberEntity);
 		_mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
@@ -135,8 +126,6 @@ public class MembersDataManagerTests
 		_mockStatusRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<MembershipStatusMapping, bool>>>()))
 			.ReturnsAsync(statusMapping);
 
-		_mockMapper.Setup(x => x.Map<MemberDetails>(memberDetails)).Returns(memberEntity);
-
 		_mockMemberRepository.Setup(x => x.AddAsync(It.IsAny<MemberDetails>()))
 			.ThrowsAsync(new Exception("Database error"));
 
@@ -163,8 +152,6 @@ public class MembersDataManagerTests
 
 		_mockStatusRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<MembershipStatusMapping, bool>>>()))
 			.ReturnsAsync((MembershipStatusMapping?)null);
-
-		_mockMapper.Setup(x => x.Map<MemberDetails>(memberDetails)).Returns(memberEntity);
 
 		_mockMemberRepository.Setup(x => x.AddAsync(It.IsAny<MemberDetails>())).ReturnsAsync(memberEntity);
 		_mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
@@ -198,8 +185,6 @@ public class MembersDataManagerTests
 			It.IsAny<bool>()))
 			.ReturnsAsync(memberEntities);
 
-		_mockMapper.Setup(x => x.Map<List<MemberDetailsDomain>>(memberEntities))
-			.Returns(memberDomains);
 
 		// Act
 		var result = await _membersDataManager.GetAllMembersAsync();
@@ -223,7 +208,7 @@ public class MembersDataManagerTests
 	{
 		// Arrange
 		var emptyList = new List<MemberDetails>();
-		var emptyDomainList = new List<MemberDetailsDomain>();
+		var emptyDomainList = new List<MemberDetails>();
 
 		_mockMemberRepository.Setup(x => x.GetAllAsync(
 			It.IsAny<Expression<Func<MemberDetails, bool>>>(),
@@ -232,9 +217,6 @@ public class MembersDataManagerTests
 			It.IsAny<int>(),
 			It.IsAny<bool>()))
 			.ReturnsAsync(emptyList);
-
-		_mockMapper.Setup(x => x.Map<List<MemberDetailsDomain>>(emptyList))
-			.Returns(emptyDomainList);
 
 		// Act
 		var result = await _membersDataManager.GetAllMembersAsync();
@@ -288,9 +270,6 @@ public class MembersDataManagerTests
 			It.IsAny<bool>()))
 			.ReturnsAsync(memberEntity);
 
-		_mockMapper.Setup(x => x.Map<MemberDetailsDomain>(memberEntity))
-			.Returns(memberDomain);
-
 		// Act
 		var result = await _membersDataManager.GetMemberByEmailIdAsync(email);
 
@@ -315,9 +294,6 @@ public class MembersDataManagerTests
 			It.IsAny<string>(),
 			It.IsAny<bool>()))
 			.ReturnsAsync((MemberDetails?)null!);
-
-		_mockMapper.Setup(x => x.Map<MemberDetailsDomain>(It.IsAny<MemberDetails>()))
-			.Returns((MemberDetailsDomain?)null!);
 
 		// Act
 		var result = await _membersDataManager.GetMemberByEmailIdAsync(email);
@@ -516,8 +492,6 @@ public class MembersDataManagerTests
 		_mockStatusRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<MembershipStatusMapping, bool>>>()))
 			.ReturnsAsync(statusMapping);
 
-		_mockMapper.Setup(x => x.Map<MemberDetails>(memberDetails)).Returns(memberEntity);
-
 		_mockMemberRepository.Setup(x => x.AddAsync(It.IsAny<MemberDetails>())).ReturnsAsync(memberEntity);
 		_mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
@@ -595,8 +569,6 @@ public class MembersDataManagerTests
 		_mockStatusRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<Expression<Func<MembershipStatusMapping, bool>>>()))
 			.ReturnsAsync(statusMapping);
 
-		_mockMapper.Setup(x => x.Map<MemberDetails>(memberDetails)).Returns(memberEntity);
-
 		_mockMemberRepository.Setup(x => x.AddAsync(It.IsAny<MemberDetails>())).ReturnsAsync(memberEntity);
 		_mockUnitOfWork.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
 
@@ -630,9 +602,6 @@ public class MembersDataManagerTests
 			It.IsAny<bool>()))
 			.ReturnsAsync(memberEntities);
 
-		_mockMapper.Setup(x => x.Map<List<MemberDetailsDomain>>(memberEntities))
-			.Returns(memberDomains);
-
 		// Act
 		await _membersDataManager.GetAllMembersAsync();
 
@@ -662,9 +631,6 @@ public class MembersDataManagerTests
 			It.IsAny<string>(),
 			It.IsAny<bool>()))
 			.ReturnsAsync(memberEntity);
-
-		_mockMapper.Setup(x => x.Map<MemberDetailsDomain>(memberEntity))
-			.Returns(memberDomain);
 
 		// Act
 		await _membersDataManager.GetMemberByEmailIdAsync(email);
@@ -748,8 +714,6 @@ public class MembersDataManagerTests
 			It.IsAny<bool>()))
 			.ReturnsAsync((MemberDetails?)null!);
 
-		_mockMapper.Setup(x => x.Map<MemberDetailsDomain>(It.IsAny<MemberDetails>()))
-			.Returns((MemberDetailsDomain?)null!);
 
 		// Act
 		var result = await _membersDataManager.GetMemberByEmailIdAsync(email);

@@ -6,6 +6,7 @@
 // *********************************************************************************
 
 using FitGymTool.Persistence.Adapters.Contracts;
+using FitGymTool.Persistence.Adapters.DatabaseContext;
 using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;

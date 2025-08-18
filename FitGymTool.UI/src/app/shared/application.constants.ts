@@ -8,13 +8,26 @@ export class ConfigurationConstants {
   };
 }
 
+export class CommonApplicationConstants {
+  public static BugReportConstants = {
+    Header: 'File a bug report',
+    InformationMessage:
+      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
+  };
+  public static HeaderConstants = {
+    AIFeaturesMessage: 'AI Features will be out soon!',
+  };
+}
+
 export class ToasterSuccessMessages {
   public static MemberManagement = {
     AddMemberSuccess: 'Member Added Successfully',
     MembershipStatusUpdatedSuccess:
       'Membership status has been updated successfully',
     UpdateMemberSuccess: 'Member details have been update successfully',
+    MembershipDetailsSuccess: 'Membership details saved successfully',
   };
+
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
   };
@@ -72,6 +85,11 @@ export class ChartConstants {
     Header: 'Active Members',
     SubHeader: 'Current status of the Gym Members',
   };
+
+  public static CurrentMemberFeesStatusChartConstants = {
+    Header: 'Current Member Fees Status',
+    SubHeader: 'Current status of the fees payment status for current members',
+  };
 }
 
 export class MemberManagementConstants {
@@ -92,19 +110,19 @@ export class MemberManagementConstants {
       Alt: 'Update membership status image',
     },
   };
+
   public static AddNewMemberConstants = {
     genderOptions: [
       { label: 'Male', value: 'Male' },
       { label: 'Female', value: 'Female' },
       { label: 'Other', value: 'Other' },
     ],
-    membershipStatusOptions: [
-      { label: 'Active', value: 'Active' },
-      { label: 'Inactive', value: 'Inactive' },
-      { label: 'Suspended', value: 'Suspended' },
-      { label: 'Pending', value: 'Pending' },
-    ],
-    Header: 'Add a new member',
+    PersonalDetailsHeader: 'Add personal details',
+    SubscriptionDetailsHeader: 'Add subscription details',
+    FinalPageHeader: 'Check the final details',
+    FinalPageSubHeader: 'Review Member Information',
+    ValidationPageMessage:
+      'Please review all the information below. To make changes, visit the respective pages to make the changes.',
   };
 
   public static UpdateMembershipStatusConstants = {
@@ -116,10 +134,14 @@ export class MemberManagementConstants {
   };
 }
 
-export class CommonApplicationConstants {
-  public static BugReportConstants = {
-    Header: 'File a bug report',
-    InformationMessage:
-      'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
+export class FeesManagementConstants {
+  public static CurrentFeesStructureConstants = {
+    Header: 'Current Fees Structure',
+    SubHeader: `The fees structure as of ${new Date().toLocaleDateString()}`,
+  };
+
+  public static MemberFeesPaymentListConstants = {
+    Header: 'Current Members Fees Payment Status',
+    SubHeader: `Payment status as of ${new Date().toLocaleDateString()}`,
   };
 }

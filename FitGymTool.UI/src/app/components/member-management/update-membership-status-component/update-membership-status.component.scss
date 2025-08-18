@@ -4,3 +4,20 @@
   margin-right: auto !important;
   max-width: 100% !important;
 }
+
+.update-success {
+  display: flex;
+  align-items: center;
+  color: green;
+  font-weight: 500;
+}
+
+.membership-dropdown-wrapper {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

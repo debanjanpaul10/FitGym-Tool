@@ -10,8 +10,10 @@ using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
+using static FitGymTool.API.Helpers.SwaggerConstants.MembersController;
 
 namespace FitGymTool.API.Controllers;
 
@@ -37,6 +39,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = AddNewMemberAction.Summary, Description = AddNewMemberAction.Description, OperationId = AddNewMemberAction.OperationId)]
 	public async Task<ResponseDTO> AddNewMemberAsync([FromBody] AddMemberDTO memberDetails, [FromRoute] bool isFromAdmin = false)
 	{
 		try
@@ -76,6 +79,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetAllMembersAction.Summary, Description = GetAllMembersAction.Description, OperationId = GetAllMembersAction.OperationId)]
 	public async Task<ResponseDTO> GetAllMembersAsync()
 	{
 		try
@@ -110,12 +114,13 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	/// </summary>
 	/// <param name="memberEmailId">The member's Email ID.</param>
 	/// <returns>The MemberDetails object if found; otherwise, null.</returns>
-	[HttpPost(RouteConstants.MembersApiRoutes.GetMemberByEmailId_ApiRoute)]
+	[HttpGet(RouteConstants.MembersApiRoutes.GetMemberByEmailId_ApiRoute)]
 	[ProducesResponseType(typeof(MemberDetailsDTO), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ResponseDTO> GetMemberByEmailIdAsync([FromBody] string memberEmailId)
+	[SwaggerOperation(Summary = GetMemberByEmailIdAction.Summary, Description = GetMemberByEmailIdAction.Description, OperationId = GetMemberByEmailIdAction.OperationId)]
+	public async Task<ResponseDTO> GetMemberByEmailIdAsync([FromQuery] string memberEmailId)
 	{
 		try
 		{
@@ -155,6 +160,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = UpdateMemberDetailsAction.Summary, Description = UpdateMemberDetailsAction.Description, OperationId = UpdateMemberDetailsAction.OperationId)]
 	public async Task<ResponseDTO> UpdateMemberDetailsAsync([FromBody] UpdateMemberDTO memberDetails)
 	{
 		try
@@ -195,6 +201,7 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = UpdateMembershipStatusAction.Summary, Description = UpdateMembershipStatusAction.Description, OperationId = UpdateMembershipStatusAction.OperationId)]
 	public async Task<ResponseDTO> UpdateMembershipStatusDataAsync([FromBody] UpdateMembershipStatusDTO membershipStatusDto)
 	{
 		try
