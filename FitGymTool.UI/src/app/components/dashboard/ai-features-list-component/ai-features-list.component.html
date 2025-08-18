@@ -2,13 +2,70 @@
   [header]="headersConstants.AIFeaturesHeader"
   [modal]="true"
   [visible]="visible()"
-  [style]="{ width: '40rem' }"
+  [style]="{ width: '60rem' }"
   [blockScroll]="true"
   [closable]="false"
 >
+  <div
+    class="ai-features-list-card card shadow-m border-0 bg-dark"
+    pRipple
+    style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
+  >
+    <div class="ai-features-data-table">
+      <p-table
+        [value]="aiServicesWithStatus"
+        [rows]="10"
+        [paginator]="true"
+        [columns]="columnHeaders"
+        ngClass="ai-features-table"
+        showGridlines
+        stripedRows
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            @for (col of columns; track col.field) {
+            <td>
+              @if (col.field === 'serviceStatus') {
+              <p-chip
+                [label]="rowData[col.field]"
+                [class]="getStatusChipClass(rowData[col.field])"
+              ></p-chip>
+              } @else {
+              {{ rowData[col.field] }}
+              }
+            </td>
+            }
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnHeaders.length" class="text-center py-4">
+              <div class="empty-state">
+                <i
+                  class="pi pi-search"
+                  style="font-size: 2rem; color: #6c757d"
+                ></i>
+                <p class="mt-2 mb-0">No AI features available</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
   <div class="form-actions">
     <p-button
-      label="Cancel"
+      label="Close"
       severity="danger"
       type="button"
       variant="outlined"

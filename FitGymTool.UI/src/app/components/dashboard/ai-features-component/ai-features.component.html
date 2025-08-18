@@ -11,16 +11,12 @@
       @for (feature of activeAiFeatures(); track feature.id) {
       <div class="ai-feature-item">
         <span class="feature-name">{{ feature.serviceName }}</span>
-        <span
+        <p-chip
+          [class]="getChipColour(feature.serviceStatusId)"
           class="feature-status"
-          [ngClass]="
-            isServiceActive(feature.serviceStatusId)
-              ? 'status-active'
-              : 'status-disabled'
-          "
         >
           {{ getServiceStatusName(feature.serviceStatusId) }}
-        </span>
+        </p-chip>
       </div>
       }
     </div>
@@ -43,6 +39,10 @@
   </div>
 </div>
 
+@if (activeAiFeatures().length > 0) {
 <app-ai-features-list-component
-  [aiFeaturesList]="activeAiFeatures()"
+  [aiFeaturesList]="activeAiFeatures"
+  [aiServiceStatusMapping]="aiServiceStatusMapping"
 ></app-ai-features-list-component>
+
+}

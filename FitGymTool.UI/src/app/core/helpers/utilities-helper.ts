@@ -105,4 +105,20 @@ export class Utilities {
     if (hour < 17) return 'Afternoon';
     return 'Evening';
   }
+
+  /**
+   * Gets the CSS class for the status chip based on the status value
+   */
+  public static getStatusChipClass(status: string): string {
+    switch (status?.toLowerCase()) {
+      case 'active':
+        return 'status-chip status-chip-active';
+      case 'disabled':
+        return 'status-chip status-chip-inactive';
+      case 'decommissioned':
+        return 'status-chip status-chip-pending';
+      default:
+        return 'status-chip status-chip-default';
+    }
+  }
 }

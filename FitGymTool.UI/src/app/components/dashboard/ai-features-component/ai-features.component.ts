@@ -6,7 +6,6 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { Ripple } from 'primeng/ripple';
 import { Button } from 'primeng/button';
 
@@ -19,10 +18,13 @@ import { AiFeaturesListComponent } from '../ai-features-list-component/ai-featur
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApplicationConstants } from '@shared/application.constants';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { AIServiceStatusMappingDTO } from '@models/DTO/Mapping/ai-service-status-mapping-dto.model';
+import { Chip } from 'primeng/chip';
+import { Utilities } from '@core/helpers/utilities-helper';
 
 @Component({
   selector: 'app-ai-features-component',
-  imports: [Ripple, NgClass, AiFeaturesListComponent, Button],
+  imports: [Ripple, AiFeaturesListComponent, Button, Chip],
   templateUrl: './ai-features.component.html',
   styleUrl: './ai-features.component.scss',
 })
@@ -31,7 +33,11 @@ export class AiFeaturesComponent implements OnInit {
     new MasterMappingDataDto();
 
   protected activeAiFeatures: WritableSignal<AIFeaturesDTO[]> = signal([]);
+  protected aiServiceStatusMapping: WritableSignal<
+    AIServiceStatusMappingDTO[]
+  > = signal([]);
   protected headersConstants = CommonApplicationConstants.HeaderConstants;
+  protected getStatusChipClass = Utilities.getStatusChipClass;
 
   private readonly _commonApiService: CommonApiService =
     inject(CommonApiService);
@@ -42,6 +48,9 @@ export class AiFeaturesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getActiveAiFeatures();
+    this.aiServiceStatusMapping.set(
+      this.mappingsMasterData.aiServiceStatusMappings
+    );
   }
 
   protected openAIFeaturesList(): void {
@@ -55,9 +64,9 @@ export class AiFeaturesComponent implements OnInit {
     return statusMapping?.statusName || 'Unknown';
   }
 
-  protected isServiceActive(statusId: number): boolean {
-    const statusName = this.getServiceStatusName(statusId);
-    return statusName.toLowerCase() === 'active';
+  protected getChipColour(statusId: number) {
+    const statusName = this.getServiceStatusName(statusId).toLocaleLowerCase();
+    return this.getStatusChipClass(statusName);
   }
 
   private getActiveAiFeatures(): void {
