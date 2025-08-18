@@ -1,0 +1,19 @@
+<p-dialog
+  [header]="headersConstants.AIFeaturesHeader"
+  [modal]="true"
+  [visible]="visible()"
+  [style]="{ width: '40rem' }"
+  [blockScroll]="true"
+  [closable]="false"
+>
+  <div class="form-actions">
+    <p-button
+      label="Cancel"
+      severity="danger"
+      type="button"
+      variant="outlined"
+      (onClick)="onCancel()"
+    >
+    </p-button>
+  </div>
+</p-dialog>

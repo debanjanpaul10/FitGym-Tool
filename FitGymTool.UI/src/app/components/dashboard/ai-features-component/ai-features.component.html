@@ -4,7 +4,7 @@
   style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
 >
   <div class="card-content">
-    <h5 class="mb-3">AI Features</h5>
+    <h5 class="mb-3">{{ headersConstants.AIFeaturesHeader }}</h5>
 
     @if (activeAiFeatures().length > 0) {
     <div class="ai-features-list">
@@ -14,18 +14,35 @@
         <span
           class="feature-status"
           [ngClass]="
-            feature.serviceStatus ? 'status-active' : 'status-disabled'
+            isServiceActive(feature.serviceStatusId)
+              ? 'status-active'
+              : 'status-disabled'
           "
         >
-          {{ feature.serviceStatus ? "Active" : "Disabled" }}
+          {{ getServiceStatusName(feature.serviceStatusId) }}
         </span>
       </div>
       }
     </div>
+
+    <p-button
+      (click)="openAIFeaturesList()"
+      pRipple
+      icon="pi pi-chevron-right"
+      variant="outlined"
+      rounded="true"
+      class="expand-arrow"
+      size="small"
+    >
+    </p-button>
     } @else {
     <div class="no-features">
-      <p class="text-muted">No AI features available</p>
+      <p>{{ headersConstants.NoAIFeaturesAvailable }}</p>
     </div>
     }
   </div>
 </div>
+
+<app-ai-features-list-component
+  [aiFeaturesList]="activeAiFeatures()"
+></app-ai-features-list-component>

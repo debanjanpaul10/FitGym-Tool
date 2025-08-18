@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
   protected currentUserProfile: AccountInfo | null = null;
   protected currentUserName: WritableSignal<string> = signal('');
   protected AiFeaturesMessage =
-    CommonApplicationConstants.HeaderConstants.AIFeaturesMessage;
+    CommonApplicationConstants.HeaderConstants.UpcomingAIFeaturesMessage;
 
   private readonly msalService: MsalService = inject(MsalService);
   private readonly drawerService: DrawerService = inject(DrawerService);

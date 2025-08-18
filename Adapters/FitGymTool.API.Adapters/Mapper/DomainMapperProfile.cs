@@ -63,5 +63,8 @@ public class DomainMapperProfile : Profile
 		CreateMap<BugSeverityMapping, BugSeverityMappingDto>()
 			.ForMember(destination => destination.Id, option => option.MapFrom(source => source.Id))
 			.ForMember(destination => destination.SeverityName, option => option.MapFrom(source => source.SeverityName));
+		CreateMap<AIServiceStatusMapping, AIServiceStatusMappingDTO>()
+			.ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id))
+			.ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.StatusName));
 	}
 }

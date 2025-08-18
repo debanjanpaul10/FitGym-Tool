@@ -36,10 +36,11 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
 
-			var feesDurationMapping = await unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(filter: x => x.IsActive);
-			var feesPaymentStatusMapping = await unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(filter: x => x.IsActive);
-			var membershipStatusMapping = await unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(filter: x => x.IsActive);
-			var bugSeverityMapping = await unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(filter: x => x.IsActive);
+			var feesDurationMapping = await unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(x => x.IsActive);
+			var feesPaymentStatusMapping = await unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(x => x.IsActive);
+			var membershipStatusMapping = await unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(x => x.IsActive);
+			var bugSeverityMapping = await unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(x => x.IsActive);
+			var aIServiceStatusMappings = await unitOfWork.Repository<AIServiceStatusMapping>().GetAllAsync(x => x.IsActive);
 
 			return new MappingMasterData()
 			{
@@ -47,6 +48,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 				FeesPaymentStatusMapping = feesPaymentStatusMapping,
 				MembershipStatusMapping = membershipStatusMapping,
 				BugSeverityMapping = bugSeverityMapping,
+				AIServiceStatusMappings = aIServiceStatusMappings
 			};
 		}
 		catch (Exception ex)
@@ -70,7 +72,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
-			
+
 			var bugStatusEntity = await unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive);
 			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
 

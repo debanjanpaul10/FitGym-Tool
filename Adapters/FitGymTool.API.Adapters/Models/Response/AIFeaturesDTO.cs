@@ -29,10 +29,18 @@ public class AIFeaturesDTO
 	public string ServiceName { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Gets or sets the service description.
+	/// </summary>
+	/// <value>
+	/// The service description.
+	/// </value>
+	public string ServiceDescription { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Gets or sets a value indicating whether [service status].
 	/// </summary>
 	/// <value>
 	///   <c>true</c> if [service status]; otherwise, <c>false</c>.
 	/// </value>
-	public bool ServiceStatus { get; set; }
+	public int ServiceStatusId { get; set; }
 }

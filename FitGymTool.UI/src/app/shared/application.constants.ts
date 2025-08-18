@@ -15,7 +15,9 @@ export class CommonApplicationConstants {
       'Due to the application being in its initial phases, all bugs serverity will be defaulted to Medium irrespective of your choice',
   };
   public static HeaderConstants = {
-    AIFeaturesMessage: 'AI Features will be out soon!',
+    UpcomingAIFeaturesMessage: 'AI Features will be out soon!',
+    AIFeaturesHeader: 'AI Features',
+    NoAIFeaturesAvailable: 'No AI Features available for now',
   };
 }
 

@@ -5,6 +5,8 @@
 // <summary>The AI Feature Domain class.</summary>
 // *********************************************************************************
 
+using FitGymTool.Domain.DomainEntities.Mapping;
+
 namespace FitGymTool.Domain.DomainEntities.AIEntities;
 
 /// <summary>
@@ -29,10 +31,30 @@ public class AIFeature : BaseEntity
 	public string ServiceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Gets or sets a value indicating whether [service status].
+	/// Gets or sets the service description.
 	/// </summary>
 	/// <value>
-	///   <c>true</c> if [service status]; otherwise, <c>false</c>.
+	/// The service description.
 	/// </value>
-	public bool ServiceStatus { get; set; }
+	public string ServiceDescription { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the service status identifier.
+	/// </summary>
+	/// <value>
+	/// The service status identifier.
+	/// </value>
+	public int ServiceStatusId { get; set; }
+
+	#region NAVIGATION FIELDS
+
+	/// <summary>
+	/// Gets or sets the ai service status mapping.
+	/// </summary>
+	/// <value>
+	/// The ai service status mapping.
+	/// </value>
+	public AIServiceStatusMapping? AIServiceStatusMapping { get; set; }
+
+	#endregion
 }

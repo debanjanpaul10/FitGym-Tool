@@ -43,4 +43,12 @@ public class MappingMasterDataDto
 	/// The bug severity mapping.
 	/// </value>
 	public IEnumerable<BugSeverityMappingDto> BugSeverityMapping { get; set; } = [];
+
+	/// <summary>
+	/// Gets or sets the ai service status mappings.
+	/// </summary>
+	/// <value>
+	/// The ai service status mappings.
+	/// </value>
+	public IEnumerable<AIServiceStatusMappingDTO> AIServiceStatusMappings { get; set; } = [];
 }

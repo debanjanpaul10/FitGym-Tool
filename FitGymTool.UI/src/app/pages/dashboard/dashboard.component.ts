@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
@@ -35,9 +29,8 @@ import { AiFeaturesComponent } from '@components/dashboard/ai-features-component
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  public mappingsMasterData: WritableSignal<MasterMappingDataDto> = signal(
-    new MasterMappingDataDto()
-  );
+  protected mappingsMasterData: MasterMappingDataDto =
+    new MasterMappingDataDto();
 
   private readonly commonApiService: CommonApiService =
     inject(CommonApiService);
@@ -46,12 +39,16 @@ export class DashboardComponent implements OnInit {
   private readonly commonService: CommonService = inject(CommonService);
 
   ngOnInit(): void {
+    this.getMappingsMasterData();
+  }
+
+  private getMappingsMasterData(): void {
     this.loaderService.loadingOn();
 
     this.commonApiService.GetMappingsMasterDataAsync().subscribe({
       next: (response: ResponseDto) => {
         if (response && response?.isSuccess) {
-          this.mappingsMasterData.set(response.responseData);
+          this.mappingsMasterData = response.responseData;
           this.commonService.MappingMasterData = response.responseData;
         } else {
           this.toasterService.showError(response?.responseData);
