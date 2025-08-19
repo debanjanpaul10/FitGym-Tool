@@ -244,7 +244,12 @@ export class CurrentMemberFeesStatusComponent
   /**
    * Ensures the chart is properly created and updated with current data
    */
-  private ensureChartIsUpdated(): void {
+  private ensureChartIsUpdated(retryCount: number = 0): void {
+    const MAX_RETRIES = 10;
+    if (retryCount >= MAX_RETRIES) {
+      return;
+    }
+
     setTimeout(() => {
       if (this.feesStatusChartCanvas?.nativeElement) {
         if (this.feesStatusChart && this.chartInitialized) {
@@ -264,7 +269,7 @@ export class CurrentMemberFeesStatusComponent
           this.chartInitialized = true;
         }
       } else {
-        setTimeout(() => this.ensureChartIsUpdated(), 50);
+        setTimeout(() => this.ensureChartIsUpdated(retryCount + 1));
       }
     }, 150);
   }
