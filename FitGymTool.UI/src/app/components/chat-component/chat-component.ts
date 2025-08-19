@@ -41,6 +41,16 @@ export class ChatComponent {
     this.isChatOpen.set(false);
   }
 
+  protected refreshChats(): void {
+    this.messages.set([
+      {
+        content: this.AIMessages.AiGreetingMessage,
+        isBot: true,
+      },
+    ]);
+    this.isProcessing.set(false);
+  }
+
   protected sendMessage(event: any): void {
     const input =
       event.target.tagName === 'INPUT'

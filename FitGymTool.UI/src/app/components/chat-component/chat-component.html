@@ -17,9 +17,19 @@
 <div class="custom-chat-dialog">
   <div class="chat-header">
     <span class="chat-title">{{ AIMessages.Header }}</span>
-    <button class="close-btn" (click)="closeChat()">
-      <i class="pi pi-times"></i>
-    </button>
+    <div class="header-buttons">
+      <button
+        class="refresh-btn"
+        (click)="refreshChats()"
+        [pTooltip]="'Refresh Chat'"
+        tooltipPosition="bottom"
+      >
+        <i class="pi pi-refresh"></i>
+      </button>
+      <button class="close-btn" (click)="closeChat()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
   </div>
 
   <div class="chat-container">

@@ -68,6 +68,13 @@
   font-size: 16px;
 }
 
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.refresh-btn,
 .close-btn {
   background: none;
   border: none;
@@ -83,6 +90,12 @@
 
   i {
     font-size: 14px;
+  }
+}
+
+.refresh-btn {
+  &:hover {
+    background: rgba(102, 126, 234, 0.2);
   }
 }
 
