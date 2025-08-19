@@ -27,6 +27,11 @@ export class ApiRoutes {
       'GetPaymentHistoryDataForMember?emailId=',
     UpdateMemberFeesData_ApiRoute: 'UpdateMemberFeesData',
   };
+
+  public static AIServicesApi = {
+    BaseRoute: 'api/aiservices/',
+    Respond_ApiRoute: 'respond',
+  };
 }
 
 export class RouteConstants {

@@ -1,0 +1,69 @@
+@if (!isChatOpen()) {
+<div class="chat-dock">
+  <button
+    class="chat-toggle-btn"
+    [pTooltip]="'Chat with AI Agent'"
+    tooltipPosition="left"
+    (click)="toggleChat()"
+  >
+    <img
+      src="../../../assets/Images/ai.png"
+      alt="AI Agent Chat"
+      class="chat-icon"
+    />
+  </button>
+</div>
+} @if (isChatOpen()) {
+<div class="custom-chat-dialog">
+  <div class="chat-header">
+    <span class="chat-title">{{ AIMessages.Header }}</span>
+    <button class="close-btn" (click)="closeChat()">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-messages">
+      @for (message of messages(); track $index) {
+      <div
+        class="message"
+        [class.bot-message]="message.isBot"
+        [class.user-message]="!message.isBot"
+      >
+        <div class="message-content">
+          @if (message.isTyping) {
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          } @else { {{ message.content }} }
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="chat-input">
+      <input
+        type="text"
+        [placeholder]="isProcessing() ? AIMessages.AIisThinking : AIMessages.TypeYourMessage"
+        class="message-input"
+        [disabled]="isProcessing()"
+        (keyup.enter)="sendMessage($event)"
+      />
+      <button
+        class="send-btn"
+        [disabled]="isProcessing()"
+        [class.processing]="isProcessing()"
+        (click)="sendMessage($event)"
+      >
+        @if (isProcessing()) {
+        <i class="pi pi-spin pi-spinner"></i>
+        } @else {
+        <i class="pi pi-send"></i>
+        }
+      </button>
+    </div>
+  </div>
+</div>
+}

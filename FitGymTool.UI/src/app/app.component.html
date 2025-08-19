@@ -1,28 +1,41 @@
 <div [ngClass]="{ 'app-background': !isLoginPage() }">
+  <!-- Global Loader -->
   <app-loader-component [detectRouteTransitions]="true"></app-loader-component>
+
+  <!-- Header -->
+  @if (shouldShowDrawer()) {
   <app-header-component
-    *ngIf="shouldShowDrawer()"
     [ngClass]="{
       'header-shifted': _drawerService.isDrawerOpen() && shouldShowDrawer()
     }"
-  ></app-header-component>
+  >
+  </app-header-component>
+  }
+
+  <!-- Main Content Area -->
   <div
     class="container-fluid"
     [ngClass]="{
       'content-shifted': _drawerService.isDrawerOpen() && shouldShowDrawer()
     }"
   >
-    <app-toaster-component *ngIf="shouldShowDrawer()"></app-toaster-component>
-    <app-left-navigation-component
-      *ngIf="shouldShowDrawer()"
-    ></app-left-navigation-component>
+    @if (shouldShowDrawer()) {
+    <app-toaster-component></app-toaster-component>
+    <app-left-navigation-component></app-left-navigation-component>
+    }
+
     <app-bug-report></app-bug-report>
     <router-outlet></router-outlet>
   </div>
+
+  <!-- Footer and Chat (Non-Login Pages Only) -->
+  @if (!isLoginPage()) {
+  <app-chat-component></app-chat-component>
   <app-footer-component
-    *ngIf="!isLoginPage()"
     [ngClass]="{
       'footer-shifted': _drawerService.isDrawerOpen() && !isLoginPage()
     }"
-  ></app-footer-component>
+  >
+  </app-footer-component>
+  }
 </div>

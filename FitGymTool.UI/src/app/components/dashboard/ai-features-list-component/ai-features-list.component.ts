@@ -13,7 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Button } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { Ripple } from 'primeng/ripple';
-import { Chip } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
 
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { AIFeaturesDTO } from '@models/DTO/ai-features-dto.model';
@@ -24,7 +24,7 @@ import { Utilities } from '@core/helpers/utilities-helper';
 
 @Component({
   selector: 'app-ai-features-list-component',
-  imports: [DialogModule, Button, TableModule, CommonModule, Ripple, Chip],
+  imports: [DialogModule, Button, TableModule, CommonModule, Ripple, TagModule],
   templateUrl: './ai-features-list.component.html',
   styleUrl: './ai-features-list.component.scss',
 })

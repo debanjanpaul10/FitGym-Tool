@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Ripple } from 'primeng/ripple';
 import { Button } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
 
 import { LoaderService } from '@core/services/loader.service';
 import { ToasterService } from '@core/services/toaster.service';
@@ -19,12 +20,11 @@ import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApplicationConstants } from '@shared/application.constants';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { AIServiceStatusMappingDTO } from '@models/DTO/Mapping/ai-service-status-mapping-dto.model';
-import { Chip } from 'primeng/chip';
 import { Utilities } from '@core/helpers/utilities-helper';
 
 @Component({
   selector: 'app-ai-features-component',
-  imports: [Ripple, AiFeaturesListComponent, Button, Chip],
+  imports: [Ripple, AiFeaturesListComponent, Button, TagModule],
   templateUrl: './ai-features.component.html',
   styleUrl: './ai-features.component.scss',
 })

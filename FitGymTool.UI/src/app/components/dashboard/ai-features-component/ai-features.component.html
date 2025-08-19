@@ -11,12 +11,12 @@
       @for (feature of activeAiFeatures(); track feature.id) {
       <div class="ai-feature-item">
         <span class="feature-name">{{ feature.serviceName }}</span>
-        <p-chip
+        <p-tag
+          [rounded]="true"
           [class]="getChipColour(feature.serviceStatusId)"
-          class="feature-status"
+          [value]="getServiceStatusName(feature.serviceStatusId)"
         >
-          {{ getServiceStatusName(feature.serviceStatusId) }}
-        </p-chip>
+        </p-tag>
       </div>
       }
     </div>

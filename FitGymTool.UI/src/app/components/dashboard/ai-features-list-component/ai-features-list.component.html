@@ -34,10 +34,11 @@
             @for (col of columns; track col.field) {
             <td>
               @if (col.field === 'serviceStatus') {
-              <p-chip
-                [label]="rowData[col.field]"
+              <p-tag
+                [value]="rowData[col.field]"
                 [class]="getStatusChipClass(rowData[col.field])"
-              ></p-chip>
+                [rounded]="true"
+              ></p-tag>
               } @else {
               {{ rowData[col.field] }}
               }

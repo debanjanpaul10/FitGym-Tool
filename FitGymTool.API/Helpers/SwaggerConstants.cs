@@ -5,6 +5,8 @@
 // <summary>The Swagger Constants Class.</summary>
 // *********************************************************************************
 
+using static FitGymTool.API.Helpers.SwaggerConstants.MembersController;
+
 namespace FitGymTool.API.Helpers;
 
 /// <summary>
@@ -56,7 +58,6 @@ internal static class SwaggerConstants
 			internal const string Description = "Gets the list of active AI features for FitGym tool along with their service statuses.";
 			internal const string OperationId = nameof(GetActiveAIFeaturesAction);
 		}
-
 	}
 
 	/// <summary>
@@ -182,4 +183,19 @@ internal static class SwaggerConstants
 
 	}
 
+	/// <summary>
+	/// The AI Services Controller.
+	/// </summary>
+	internal static class AIServicesController
+	{
+		/// <summary>
+		/// Swagger documentation for RespondAsync.
+		/// </summary>
+		internal static class RespondAction
+		{
+			internal const string Summary = "Responds to user query asynchronously.";
+			internal const string Description = "Calls the AI service to handle the user query.";
+			internal const string OperationId = nameof(RespondAction);
+		}
+	}
 }

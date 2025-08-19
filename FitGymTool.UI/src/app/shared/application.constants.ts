@@ -19,6 +19,15 @@ export class CommonApplicationConstants {
     AIFeaturesHeader: 'AI Features',
     NoAIFeaturesAvailable: 'No AI Features available for now',
   };
+  public static AIConstants = {
+    Header: 'FitGymTool AI Chat Assistant',
+    AiGreetingMessage:
+      "Hello! I'm your AI assistant. How can I help you today?",
+    AIFailedMessage: 'Failed to get AI response',
+    SendMessageFailed: 'Failed to send message',
+    AIisThinking: 'AI is thinking...',
+    TypeYourMessage: 'Type your message...',
+  };
 }
 
 export class ToasterSuccessMessages {

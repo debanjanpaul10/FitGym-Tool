@@ -119,4 +119,20 @@ public static class RouteConstants
 		/// </summary>
 		public const string UpdateMemberFeesData_ApiRoute = "UpdateMemberFeesData";
 	}
+
+	/// <summary>
+	/// The AI Services API Routes class.
+	/// </summary>
+	internal static class AIServicesApiRoutes
+	{
+		/// <summary>
+		/// The base route route prefix
+		/// </summary>
+		public const string BaseRoute_RoutePrefix = "api/aiservices";
+
+		/// <summary>
+		/// The respond API route
+		/// </summary>
+		internal const string Respond_ApiRoute = "respond";
+	}
 }
