@@ -117,7 +117,6 @@ internal static class Constants
 		/// The ai services cannot be availed exception constant.
 		/// </summary>
 		internal const string AiServicesCannotBeAvailedExceptionConstant = "Oops! It seems our AI Services are down as of this moment. Please try again after sometime.";
-
 	}
 
 	/// <summary>
@@ -128,6 +127,11 @@ internal static class Constants
 		/// <summary>
 		/// The get bug severity API route
 		/// </summary>
-		internal const string GetBugSeverity_ApiRoute = "FitGymToolAI/getbugseverity";
+		internal const string GetBugSeverity_ApiRoute = "figymtoolai/getbugseverity";
+
+		/// <summary>
+		/// The get chatbot response API route
+		/// </summary>
+		internal const string GetChatbotResponse_ApiRoute = "figymtoolai/getchatbotresponse";
 	}
 }

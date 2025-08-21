@@ -5,8 +5,6 @@
 // <summary>The Swagger Constants Class.</summary>
 // *********************************************************************************
 
-using static FitGymTool.API.Helpers.SwaggerConstants.MembersController;
-
 namespace FitGymTool.API.Helpers;
 
 /// <summary>
@@ -37,26 +35,6 @@ internal static class SwaggerConstants
 			internal const string Summary = "Adds the bug report data asynchronous.";
 			internal const string Description = "Creates a new bug report documentation by user/member to be reviewed by devs and fixed.";
 			internal const string OperationId = nameof(AddBugReportDataAction);
-		}
-
-		/// <summary>
-		/// Swagger documentation for GetBugSeverityStatusAsync.
-		/// </summary>
-		internal static class GetBugSeverityStatusAction
-		{
-			internal const string Summary = "Gets the bug severity status.";
-			internal const string Description = "Gets the bug severity status for the user's mentioned bug using AI services.";
-			internal const string OperationId = nameof(GetBugSeverityStatusAction);
-		}
-
-		/// <summary>
-		/// Swagger documentation for GetActiveAIFeaturesAsync.
-		/// </summary>
-		internal static class GetActiveAIFeaturesAction
-		{
-			internal const string Summary = "Gets the active AI features.";
-			internal const string Description = "Gets the list of active AI features for FitGym tool along with their service statuses.";
-			internal const string OperationId = nameof(GetActiveAIFeaturesAction);
 		}
 	}
 
@@ -196,6 +174,46 @@ internal static class SwaggerConstants
 			internal const string Summary = "Responds to user query asynchronously.";
 			internal const string Description = "Calls the AI service to handle the user query.";
 			internal const string OperationId = nameof(RespondAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetBugSeverityStatusAsync.
+		/// </summary>
+		internal static class GetBugSeverityStatusAction
+		{
+			internal const string Summary = "Gets the bug severity status.";
+			internal const string Description = "Gets the bug severity status for the user's mentioned bug using AI services.";
+			internal const string OperationId = nameof(GetBugSeverityStatusAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetActiveAIFeaturesAsync.
+		/// </summary>
+		internal static class GetActiveAIFeaturesAction
+		{
+			internal const string Summary = "Gets the active AI features.";
+			internal const string Description = "Gets the list of active AI features for FitGym tool along with their service statuses.";
+			internal const string OperationId = nameof(GetActiveAIFeaturesAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetDatabaseSchemaJsonAsync
+		/// </summary>
+		internal static class GetDatabaseSchemaJsonAction
+		{
+			internal const string Summary = "Gets the database schema json.";
+			internal const string Description = "Gets the detailed database schema json file.";
+			internal const string OperationId = nameof(GetDatabaseSchemaJsonAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetDatabaseKnowledgeBaseJsonAsync
+		/// </summary>
+		internal static class GetDatabaseKnowledgeBaseJsonAction
+		{
+			internal const string Summary = "Gets the database knowledge base json.";
+			internal const string Description = "Gets the detailed database knowledge base json file.";
+			internal const string OperationId = nameof(GetDatabaseSchemaJsonAction);
 		}
 	}
 }

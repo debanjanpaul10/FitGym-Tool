@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Persistence.Adap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.AIAgents.Adapters", "Adapters\FitGymTool.AIAgents.Adapters\FitGymTool.AIAgents.Adapters.csproj", "{6E450A9A-FA46-43CF-B40E-3C116091D449}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.MongoDB.Adapters", "Adapters\FitGymTool.MongoDB.Adapters\FitGymTool.MongoDB.Adapters.csproj", "{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{44F6B3C9-633A-456F-AA0F-DBA2C0812218} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
 		{3E1B04B3-032F-4E81-A2EA-073B394E7B90} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
 		{6E450A9A-FA46-43CF-B40E-3C116091D449} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F10EEE12-6C17-41C8-8EAB-C08DB01E502F}

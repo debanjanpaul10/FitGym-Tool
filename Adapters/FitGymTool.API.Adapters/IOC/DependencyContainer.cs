@@ -29,6 +29,7 @@ public static class DependencyContainer
 		return services.AddScoped<ICommonHandler, CommonHandler>()
 			.AddScoped<IMemberFeesHandler, MemberFeesHandler>()
 			.AddScoped<IMembersHandler, MembersHandler>()
+			.AddScoped<IAIServicesHandler, AIServicesHandler>()
 			.AddAutoMapper(mapperConfig =>
 			{
 				mapperConfig.AddProfile<DomainMapperProfile>();

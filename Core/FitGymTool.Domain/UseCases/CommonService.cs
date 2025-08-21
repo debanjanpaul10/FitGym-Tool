@@ -6,7 +6,6 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
-using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Domain.DrivingPorts;
@@ -23,7 +22,7 @@ namespace FitGymTool.Domain.UseCases;
 /// <param name="commonManager">The Fit Gym common manager Service.</param>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="ICommonService" />
-public class CommonService(ICommonDataManager commonManager, IAIServicesManager aiServicesManager, ILogger<CommonService> logger) : ICommonService
+public class CommonService(ICommonDataManager commonManager, ILogger<CommonService> logger) : ICommonService
 {
 	/// <summary>
 	/// Adds the new bug report data asynchronous.
@@ -49,55 +48,6 @@ public class CommonService(ICommonDataManager commonManager, IAIServicesManager 
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportDataDomain.CreatedBy));
-		}
-	}
-
-	/// <summary>
-	/// Gets the active ai features asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The list of <see cref="AIFeature" />
-	/// </returns>
-	public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
-	{
-		try
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, string.Empty));
-			return await commonManager.GetActiveAIFeaturesAsync().ConfigureAwait(false);
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
-		}
-	}
-
-	/// <summary>
-	/// Gets the bug severity from ai service asynchronous.
-	/// </summary>
-	/// <param name="bugSeverityInput">The bug severity input.</param>
-	/// <returns>
-	/// The bug severity response.
-	/// </returns>
-	public async Task<BugSeverityResponse> GetBugSeverityFromAIServiceAsync(BugSeverityInput bugSeverityInput)
-	{
-		try
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, bugSeverityInput.BugTitle));
-			return await aiServicesManager.GetBugSeverityFromAIServiceAsync(bugSeverityInput).ConfigureAwait(false);
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, bugSeverityInput.BugTitle));
 		}
 	}
 

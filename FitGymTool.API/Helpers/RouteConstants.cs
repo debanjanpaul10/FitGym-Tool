@@ -72,16 +72,6 @@ public static class RouteConstants
 		/// The add bug report API route
 		/// </summary>
 		public const string AddBugReport_ApiRoute = "AddBugReport";
-
-		/// <summary>
-		/// The get bug severity status API route
-		/// </summary>
-		internal const string GetBugSeverityStatus_ApiRoute = "GetBugSeverityStatus";
-
-		/// <summary>
-		/// The get active ai features API route
-		/// </summary>
-		internal const string GetActiveAIFeatures_ApiRoute = "GetActiveAIFeatures";
 	}
 
 	/// <summary>
@@ -134,5 +124,25 @@ public static class RouteConstants
 		/// The respond API route
 		/// </summary>
 		internal const string Respond_ApiRoute = "respond";
+
+		/// <summary>
+		/// The get bug severity status API route
+		/// </summary>
+		internal const string GetBugSeverityStatus_ApiRoute = "GetBugSeverityStatus";
+
+		/// <summary>
+		/// The get active ai features API route
+		/// </summary>
+		internal const string GetActiveAIFeatures_ApiRoute = "GetActiveAIFeatures";
+
+		/// <summary>
+		/// The get knowledge base SQL API route
+		/// </summary>
+		internal const string GetKnowledgeBaseSql_ApiRoute = "getsqlknowledgebasejson";
+
+		/// <summary>
+		/// The get database schema SQL API route
+		/// </summary>
+		internal const string GetDatabaseSchemaSql_ApiRoute = "getdatabaseschemajson";
 	}
 }

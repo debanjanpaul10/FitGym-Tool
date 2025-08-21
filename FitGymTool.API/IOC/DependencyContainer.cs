@@ -15,6 +15,7 @@ using FitGymTool.Domain.IOC;
 using FitGymTool.Persistence.Adapters.IOC;
 using FitGymTool.AIAgents.Adapters.IOC;
 using static FitGymTool.API.Helpers.APIConstants;
+using FitGymTool.MongoDB.Adapters.IOC;
 
 namespace FitGymTool.API.IOC;
 
@@ -33,7 +34,8 @@ public static class DependencyContainer
 		builder.Services.AddMemoryCache();
 		builder.Services.AddAPIHandlers()
 			.AddDataDependencies(builder.Configuration, builder.Environment.IsDevelopment())
-			.AddDomainServices().AddAiAgentsServices(builder.Configuration);
+			.AddDomainServices().AddAiAgentsServices(builder.Configuration)
+			.AddMongoDbAdapterDependencies(builder.Configuration);
 	}
 
 	/// <summary>

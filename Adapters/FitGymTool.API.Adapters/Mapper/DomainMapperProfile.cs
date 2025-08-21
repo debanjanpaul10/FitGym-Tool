@@ -10,10 +10,12 @@ using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
+using FitGymTool.API.Adapters.Models.Response.MetadataEntities;
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
+using FitGymTool.Domain.DomainEntities.MetadataEntities;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FitGymTool.API.Adapters.Mapper;
@@ -54,6 +56,18 @@ public class DomainMapperProfile : Profile
 			.ForMember(destination => destination.MembershipStatusId, option => option.Ignore()).ReverseMap()
 			.ForMember(destination => destination.MembershipStatus, option => option.MapFrom(source => source.MembershipStatusMapping != null ? source.MembershipStatusMapping.StatusName : string.Empty));
 		CreateMap<AIFeature, AIFeaturesDTO>();
+		CreateMap<ChatMessageRequestDTO, UserQueryRequest>().ForMember(dest => dest.UserQuery, opt => opt.MapFrom(src => src.ChatMessage));
+		CreateMap<TableSchemaDomain, TableSchemaDTO>();
+		CreateMap<ColumnSchemaDomain, ColumnSchemaDTO>();
+		CreateMap<DatabaseSchemaDomain, DatabaseSchemaDTO>();
+
+		CreateMap<DatabaseKnowledgeBaseDomain, DatabaseKnowledgeBaseDTO>();
+		CreateMap<CategoryDomain, CategoryDTO>();
+		CreateMap<ReferenceDataDomain, ReferenceDataDTO>();
+		CreateMap<QueryGuidelinesDomain, QueryGuidelinesDTO>();
+		CreateMap<TroubleshootingDomain, TroubleshootingDTO>();
+		CreateMap<PatternDomain, PatternDTO>();
+		CreateMap<CommonIssueDomain, CommonIssueDTO>();
 
 		// MAPPING
 		CreateMap<MappingMasterData, MappingMasterDataDto>();

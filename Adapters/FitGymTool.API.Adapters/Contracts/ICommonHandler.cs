@@ -6,7 +6,6 @@
 // *********************************************************************************
 
 using FitGymTool.API.Adapters.Models.Request;
-using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 
 namespace FitGymTool.API.Adapters.Contracts;
@@ -30,17 +29,4 @@ public interface ICommonHandler
 	/// <param name="bugReportDataDTO">The bug report data domain.</param>
 	/// <returns>The boolean for success/failure</returns>
 	Task<bool> AddNewBugReportDataAsync(AddBugReportDTO bugReportDataDTO);
-
-	/// <summary>
-	/// Gets the bug severity from ai service asynchronous.
-	/// </summary>
-	/// <param name="bugSeverityInput">The bug severity input.</param>
-	/// <returns>The bug severity response.</returns>
-	Task<BugSeverityResponseDTO> GetBugSeverityFromAIServiceAsync(BugSeverityInputDTO bugSeverityInput);
-
-	/// <summary>
-	/// Gets the active ai features asynchronous.
-	/// </summary>
-	/// <returns>The list of <see cref="AIFeaturesDTO"/></returns>
-	Task<IEnumerable<AIFeaturesDTO>> GetActiveAIFeaturesAsync();
 }

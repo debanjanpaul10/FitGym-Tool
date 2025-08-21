@@ -14,13 +14,13 @@ import { LoaderService } from '@core/services/loader.service';
 import { ToasterService } from '@core/services/toaster.service';
 import { AIFeaturesDTO } from '@models/DTO/ai-features-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
-import { CommonApiService } from '@services/common-api.service';
 import { AiFeaturesListComponent } from '../ai-features-list-component/ai-features-list.component';
 import { DialogPopupService } from '@core/services/dialog-popup.service';
 import { CommonApplicationConstants } from '@shared/application.constants';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 import { AIServiceStatusMappingDTO } from '@models/DTO/Mapping/ai-service-status-mapping-dto.model';
 import { Utilities } from '@core/helpers/utilities-helper';
+import { AiApiService } from '@services/ai-services-api.service';
 
 @Component({
   selector: 'app-ai-features-component',
@@ -39,12 +39,11 @@ export class AiFeaturesComponent implements OnInit {
   protected headersConstants = CommonApplicationConstants.HeaderConstants;
   protected getStatusChipClass = Utilities.getStatusChipClass;
 
-  private readonly _commonApiService: CommonApiService =
-    inject(CommonApiService);
   private readonly _toasterService: ToasterService = inject(ToasterService);
   private readonly _loaderService: LoaderService = inject(LoaderService);
   private readonly _dialogPopupService: DialogPopupService =
     inject(DialogPopupService);
+  private readonly _aiApiService: AiApiService = inject(AiApiService);
 
   ngOnInit(): void {
     this.getActiveAiFeatures();
@@ -72,7 +71,7 @@ export class AiFeaturesComponent implements OnInit {
   private getActiveAiFeatures(): void {
     this._loaderService.loadingOn();
 
-    this._commonApiService.GetActiveAIFeaturesAsync().subscribe({
+    this._aiApiService.GetActiveAIFeaturesAsync().subscribe({
       next: (response: ResponseDto) => {
         if (response?.isSuccess && response?.responseData) {
           this.activeAiFeatures.set(response?.responseData);

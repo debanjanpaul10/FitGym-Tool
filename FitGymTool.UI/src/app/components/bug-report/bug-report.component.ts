@@ -36,6 +36,7 @@ import { CommonService } from '@core/services/common.service';
 import { BugSeverityMappingDto } from '@models/DTO/Mapping/bug-severity-mapping-dto.model';
 import { BugSeverityInputDTO } from '@models/DTO/bug-severity-input-dto.model';
 import { BugSeverityResponseDTO } from '@models/DTO/bug-severity-response-dto.model';
+import { AiApiService } from '@services/ai-services-api.service';
 
 /**
  * Component for submitting bug reports. Handles form creation, validation, severity mapping, and submission logic.
@@ -82,6 +83,7 @@ export class BugReportComponent implements OnDestroy, OnInit {
   private readonly _toasterService: ToasterService = inject(ToasterService);
   private readonly _commonService: CommonService = inject(CommonService);
   private readonly _cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private readonly _aiApiService: AiApiService = inject(AiApiService);
 
   constructor() {
     this.visible = this._dialogPopupService.isBugReportDialogOpen;
@@ -188,25 +190,23 @@ export class BugReportComponent implements OnDestroy, OnInit {
       bugDescription: this.bugReportForm.value.bugDescription,
     };
 
-    this._commonApiService
-      .GetBugSeverityStatusAsync(bugSeverityInput)
-      .subscribe({
-        next: (response: ResponseDto) => {
-          if (response?.isSuccess && response?.responseData) {
-            this.populateBugSeverityDropdown(response.responseData);
-          } else {
-            this._toasterService.showError(response.responseData);
-          }
-        },
-        error: (err: Error) => {
-          this._loaderService.loadingOff();
-          console.error(err.message);
-          this._toasterService.showError(err.message);
-        },
-        complete: () => {
-          this._loaderService.loadingOff();
-        },
-      });
+    this._aiApiService.GetBugSeverityStatusAsync(bugSeverityInput).subscribe({
+      next: (response: ResponseDto) => {
+        if (response?.isSuccess && response?.responseData) {
+          this.populateBugSeverityDropdown(response.responseData);
+        } else {
+          this._toasterService.showError(response.responseData);
+        }
+      },
+      error: (err: Error) => {
+        this._loaderService.loadingOff();
+        console.error(err.message);
+        this._toasterService.showError(err.message);
+      },
+      complete: () => {
+        this._loaderService.loadingOff();
+      },
+    });
   }
 
   // #region PRIVATE METHODS

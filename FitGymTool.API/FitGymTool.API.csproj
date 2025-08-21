@@ -19,6 +19,7 @@
   <ItemGroup>
 	<ProjectReference Include="..\Adapters\FitGymTool.AIAgents.Adapters\FitGymTool.AIAgents.Adapters.csproj" />
 	<ProjectReference Include="..\Adapters\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj" />
+	<ProjectReference Include="..\Adapters\FitGymTool.MongoDB.Adapters\FitGymTool.MongoDB.Adapters.csproj" />
 	<ProjectReference Include="..\Adapters\FitGymTool.Persistence.Adapters\FitGymTool.Persistence.Adapters.csproj" />
 	<ProjectReference Include="..\Core\FitGymTool.Domain\FitGymTool.Domain.csproj" />
   </ItemGroup>

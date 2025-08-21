@@ -10,7 +10,6 @@ using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.API.Helpers;
-using FitGymTool.Domain.DomainEntities.AIEntities;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
@@ -107,85 +106,6 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, base.UserFullName));
-		}
-	}
-
-	/// <summary>
-	/// Gets the bug severity status asynchronous.
-	/// </summary>
-	/// <param name="bugSeverityInput">The bug severity input.</param>
-	/// <returns>The bug severity response dto.</returns>
-	[HttpPost(RouteConstants.FitGymCommonApiRoutes.GetBugSeverityStatus_ApiRoute)]
-	[ProducesResponseType(typeof(BugSeverityResponseDTO), StatusCodes.Status200OK)]
-	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	[SwaggerOperation(Summary = GetBugSeverityStatusAction.Summary, Description = GetBugSeverityStatusAction.Description, OperationId = GetBugSeverityStatusAction.OperationId)]
-	public async Task<ResponseDTO> GetBugSeverityStatusAsync([FromBody] BugSeverityInputDTO bugSeverityInput)
-	{
-		try
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
-			{
-				var result = await fitGymCommonHandler.GetBugSeverityFromAIServiceAsync(bugSeverityInput);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
-			}
-
-			return HandleUnAuthorizedRequestResponse();
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
-		}
-	}
-
-	/// <summary>
-	/// Gets the active ai features asynchronous.
-	/// </summary>
-	/// <returns>The list of <see cref="AIFeaturesDTO"/></returns>
-	[HttpGet(RouteConstants.FitGymCommonApiRoutes.GetActiveAIFeatures_ApiRoute)]
-	[ProducesResponseType(typeof(IEnumerable<AIFeaturesDTO>), StatusCodes.Status200OK)]
-	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	[SwaggerOperation(Summary = GetActiveAIFeaturesAction.Summary, Description = GetActiveAIFeaturesAction.Description, OperationId = GetActiveAIFeaturesAction.OperationId)]
-	public async Task<ResponseDTO> GetActiveAIFeaturesAsync()
-	{
-		try
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
-			{
-				var result = await fitGymCommonHandler.GetActiveAIFeaturesAsync().ConfigureAwait(false);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
-			}
-
-			return HandleUnAuthorizedRequestResponse();
-		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, base.UserFullName));
 		}
 	}
 }

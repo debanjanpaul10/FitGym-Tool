@@ -35,7 +35,7 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, bugSeverityInput.BugTitle));
-			var response = await httpClientHelper.GetAIResponseAsync(bugSeverityInput, AIAgentsRoutesConstants.GetBugSeverity_ApiRoute);
+			var response = await httpClientHelper.GetAIResponseAsync(bugSeverityInput, AIAgentsRoutesConstants.GetBugSeverity_ApiRoute).ConfigureAwait(false);
 			return JsonConvert.DeserializeObject<BugSeverityResponse>(await response.Content.ReadAsStringAsync()) ?? new BugSeverityResponse();
 		}
 		catch (Exception ex)
@@ -46,6 +46,33 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, bugSeverityInput.BugTitle));
+		}
+	}
+
+	/// <summary>
+	/// Gets the chatbot response asynchronous.
+	/// </summary>
+	/// <param name="userQueryRequest">The user query request.</param>
+	/// <returns>
+	/// The ai agent response.
+	/// </returns>
+	public async Task<string> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
+			var response = await httpClientHelper.GetAIResponseAsync(userQueryRequest, AIAgentsRoutesConstants.GetChatbotResponse_ApiRoute).ConfigureAwait(false);
+			var aiResponse = JsonConvert.DeserializeObject<AIAgentResponse>(await response.Content.ReadAsStringAsync()) ?? new AIAgentResponse();
+			return (string)aiResponse.ResponseData;
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodFailed, nameof(GetChatbotResponseAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
 		}
 	}
 }
