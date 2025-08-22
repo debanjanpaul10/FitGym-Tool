@@ -1,4 +1,4 @@
-import { MasterMappingDataDto } from '../../models/DTO/Mapping/master-mapping-dto.model';
+import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
 
 /**
  * The utilities helper class.
