@@ -92,9 +92,10 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 				throw new Exception(ExceptionConstants.SomethingWentWrongMessage);
 			}
 
-			if (aiResult.UserIntent.Trim().Contains("SQL", StringComparison.InvariantCultureIgnoreCase))
+			if (aiResult.UserIntent.Trim().Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase))
 			{
-				return await commonDataManager.ExecuteAISQLQueryAsync(aiResult.AIResponseData.Trim());
+				var cleanedSqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
+				return await commonDataManager.ExecuteAISQLQueryAsync(cleanedSqlQuery);
 			}
 
 			return aiResult.AIResponseData;

@@ -43,6 +43,11 @@ public static class DomainConstants
 		/// The constant for the Not Applicable string value.
 		/// </summary>
 		public const string NotApplicableStringConstant = "NA";
+
+		/// <summary>
+		/// The SQL constant
+		/// </summary>
+		public const string SQLConstant = "SQL";
 	}
 
 	/// <summary>
