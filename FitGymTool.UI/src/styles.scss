@@ -64,7 +64,14 @@ app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh !important;
-  background: var(--default-dark-background) !important;
+  background: linear-gradient(
+    135deg,
+    #0a0a1a 0%,
+    #1a0a2e 25%,
+    #2d0a3a 50%,
+    #4a0a4a 75%,
+    #3a0a1a 100%
+  ) !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
