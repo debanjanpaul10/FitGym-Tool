@@ -127,11 +127,11 @@ internal static class Constants
 		/// <summary>
 		/// The get bug severity API route
 		/// </summary>
-		internal const string GetBugSeverity_ApiRoute = "figymtoolai/getbugseverity";
+		internal const string GetBugSeverity_ApiRoute = "fitgymtoolai/getbugseverity";
 
 		/// <summary>
 		/// The get chatbot response API route
 		/// </summary>
-		internal const string GetChatbotResponse_ApiRoute = "figymtoolai/getchatbotresponse";
+		internal const string GetChatbotResponse_ApiRoute = "fitgymtoolai/getchatbotresponse";
 	}
 }

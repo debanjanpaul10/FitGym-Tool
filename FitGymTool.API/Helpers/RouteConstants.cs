@@ -144,5 +144,10 @@ public static class RouteConstants
 		/// The get database schema SQL API route
 		/// </summary>
 		internal const string GetDatabaseSchemaSql_ApiRoute = "getdatabaseschemajson";
+
+		/// <summary>
+		/// The execute SQL query API route
+		/// </summary>
+		internal const string ExecuteSqlQuery_ApiRoute = "executesqlquery";
 	}
 }

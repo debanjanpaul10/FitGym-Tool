@@ -9,8 +9,8 @@ using FitGymTool.AIAgents.Adapters.Utilities;
 using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DrivenPorts;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Globalization;
+using System.Text.Json;
 using static FitGymTool.AIAgents.Adapters.Helpers.Constants;
 
 namespace FitGymTool.AIAgents.Adapters.ServiceManager;
@@ -36,7 +36,7 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetBugSeverityFromAIServiceAsync), DateTime.UtcNow, bugSeverityInput.BugTitle));
 			var response = await httpClientHelper.GetAIResponseAsync(bugSeverityInput, AIAgentsRoutesConstants.GetBugSeverity_ApiRoute).ConfigureAwait(false);
-			return JsonConvert.DeserializeObject<BugSeverityResponse>(await response.Content.ReadAsStringAsync()) ?? new BugSeverityResponse();
+			return JsonSerializer.Deserialize<BugSeverityResponse>(await response.Content.ReadAsStringAsync()) ?? new BugSeverityResponse();
 		}
 		catch (Exception ex)
 		{
@@ -56,14 +56,19 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 	/// <returns>
 	/// The ai agent response.
 	/// </returns>
-	public async Task<string> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
+	public async Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
 	{
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
 			var response = await httpClientHelper.GetAIResponseAsync(userQueryRequest, AIAgentsRoutesConstants.GetChatbotResponse_ApiRoute).ConfigureAwait(false);
-			var aiResponse = JsonConvert.DeserializeObject<AIAgentResponse>(await response.Content.ReadAsStringAsync()) ?? new AIAgentResponse();
-			return (string)aiResponse.ResponseData;
+			var responseString = await response.Content.ReadAsStringAsync();
+			
+			var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			var aiResponse = JsonSerializer.Deserialize<AIAgentResponse>(responseString, jsonSerializerOptions) ?? new AIAgentResponse();
+			var responseDataJson = JsonSerializer.Serialize(aiResponse.ResponseData);
+			return JsonSerializer.Deserialize<AIChatbotResponse>(responseDataJson, jsonSerializerOptions) ?? new AIChatbotResponse();
+
 		}
 		catch (Exception ex)
 		{

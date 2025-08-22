@@ -214,4 +214,6 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetDatabaseKnowledgeBaseJsonAsync), DateTime.UtcNow, base.UserFullName ?? string.Empty));
 		}
 	}
+
+
 }

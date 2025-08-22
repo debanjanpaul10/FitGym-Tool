@@ -86,7 +86,18 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
-			return await aiServicesManager.GetChatbotResponseAsync(userQueryRequest).ConfigureAwait(false);
+			var aiResult = await aiServicesManager.GetChatbotResponseAsync(userQueryRequest).ConfigureAwait(false);
+			if (aiResult is null)
+			{
+				throw new Exception(ExceptionConstants.SomethingWentWrongMessage);
+			}
+
+			if (aiResult.UserIntent.Trim().Contains("SQL", StringComparison.InvariantCultureIgnoreCase))
+			{
+				return await commonDataManager.ExecuteAISQLQueryAsync(aiResult.AIResponseData.Trim());
+			}
+
+			return aiResult.AIResponseData;
 		}
 		catch (Exception ex)
 		{

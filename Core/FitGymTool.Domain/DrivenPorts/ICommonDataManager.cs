@@ -35,4 +35,11 @@ public interface ICommonDataManager
 	/// </summary>
 	/// <returns>The list of <see cref="AIFeature"/></returns>
 	Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync();
+
+	/// <summary>
+	/// Executes the aisql query asynchronous.
+	/// </summary>
+	/// <param name="aiSqlQuery">The ai SQL query.</param>
+	/// <returns>The json format of the sql response.</returns>
+	Task<string> ExecuteAISQLQueryAsync(string aiSqlQuery);
 }
