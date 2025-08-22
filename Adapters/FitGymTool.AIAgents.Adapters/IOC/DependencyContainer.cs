@@ -47,7 +47,6 @@ public static class DependencyContainer
 				throw new ArgumentNullException(apiBaseAddress);
 			}
 
-			apiBaseAddress = "https://localhost:8190/aiagentsapi/";
 			client.BaseAddress = new Uri(apiBaseAddress);
 			client.Timeout = TimeSpan.FromMinutes(3);
 		});
