@@ -6,7 +6,6 @@ import { environment } from '@environments/environment';
 import { AddBugReportDTO } from '@models/DTO/add-bug-report-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ApiRoutes } from '@shared/routes.constants';
-import { BugSeverityInputDTO } from '@models/DTO/bug-severity-input-dto.model';
 
 @Injectable({
   providedIn: 'root',

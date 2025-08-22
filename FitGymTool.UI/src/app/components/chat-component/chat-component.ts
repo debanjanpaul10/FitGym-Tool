@@ -20,6 +20,7 @@ import { CommonApplicationConstants } from '@shared/application.constants';
 export class ChatComponent {
   protected isChatOpen: WritableSignal<boolean> = signal(false);
   protected isProcessing: WritableSignal<boolean> = signal(false);
+  protected isExpanded: WritableSignal<boolean> = signal(false);
   protected AIMessages = CommonApplicationConstants.AIConstants;
   protected messages: WritableSignal<
     Array<{ content: string; isBot: boolean; isTyping?: boolean }>
@@ -39,6 +40,11 @@ export class ChatComponent {
 
   protected closeChat(): void {
     this.isChatOpen.set(false);
+    this.isExpanded.set(false);
+  }
+
+  protected toggleExpand(): void {
+    this.isExpanded.set(!this.isExpanded());
   }
 
   protected refreshChats(): void {
