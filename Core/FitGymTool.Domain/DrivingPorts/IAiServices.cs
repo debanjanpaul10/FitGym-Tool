@@ -33,7 +33,7 @@ public interface IAiServices
 	/// </summary>
 	/// <param name="userQueryRequest">The user query request.</param>
 	/// <returns>The ai agent response.</returns>
-	Task<string> GetChatbotResponseAsync(UserQueryRequest userQueryRequest);
+	Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest);
 
 	/// <summary>
 	/// Gets the database schema json asynchronous.

@@ -12,8 +12,7 @@ using Microsoft.OpenApi.Models;
 using static FitGymTool.API.Helpers.APIConstants;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: ConfigurationConstants.DevelopmentAppSettingsFile, optional: true)
-	.AddEnvironmentVariables();
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: ConfigurationConstants.DevelopmentAppSettingsFile, optional: true).AddEnvironmentVariables();
 
 var credentials = builder.Environment.IsDevelopment()
 	? new DefaultAzureCredential()
@@ -24,10 +23,7 @@ var credentials = builder.Environment.IsDevelopment()
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddCors(options =>
-{
-	options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddSwaggerGen(options =>
 {

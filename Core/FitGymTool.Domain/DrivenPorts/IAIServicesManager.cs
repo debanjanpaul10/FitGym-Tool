@@ -27,4 +27,11 @@ public interface IAIServicesManager
 	/// <param name="userQueryRequest">The user query request.</param>
 	/// <returns>The ai agent response.</returns>
 	Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest);
+
+	/// <summary>
+	/// Gets the SQL query markdown response asynchronous.
+	/// </summary>
+	/// <param name="sqlQueryResult">The SQL query result.</param>
+	/// <returns>The sql markdown response.</returns>
+	Task<string> GetSQLQueryMarkdownResponseAsync(SqlQueryResult sqlQueryResult);
 }

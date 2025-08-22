@@ -34,7 +34,7 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 	/// <param name="chatMessage">The chat message.</param>
 	/// <returns>The ai response.</returns>
 	[HttpPost(RouteConstants.AIServicesApiRoutes.Respond_ApiRoute)]
-	[ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(AIChatbotResponseDTO), StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -47,7 +47,7 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 			if (IsAuthorized())
 			{
 				var result = await aiServicesHandler.GetChatbotResponseAsync(chatMessage).ConfigureAwait(false);
-				if (!string.IsNullOrEmpty(result))
+				if (result is not null)
 				{
 					return HandleSuccessRequestResponse(result);
 				}

@@ -133,5 +133,10 @@ internal static class Constants
 		/// The get chatbot response API route
 		/// </summary>
 		internal const string GetChatbotResponse_ApiRoute = "fitgymtoolai/getchatbotresponse";
+
+		/// <summary>
+		/// The get SQL query markdown response API route
+		/// </summary>
+		internal const string GetSQLQueryMarkdownResponse_ApiRoute = "fitgymtoolai/getsqlquerymarkdownresponse";
 	}
 }

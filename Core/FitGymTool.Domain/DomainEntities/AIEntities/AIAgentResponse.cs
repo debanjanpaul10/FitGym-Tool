@@ -65,4 +65,12 @@ public class AIChatbotResponse
 	/// The user intent.
 	/// </value>
 	public string UserIntent { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the SQL query.
+	/// </summary>
+	/// <value>
+	/// The SQL query.
+	/// </value>
+	public string? SqlQuery { get; set; } = string.Empty;
 }

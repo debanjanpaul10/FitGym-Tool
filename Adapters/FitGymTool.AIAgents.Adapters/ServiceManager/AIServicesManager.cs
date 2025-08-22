@@ -80,4 +80,33 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
 		}
 	}
+
+	/// <summary>
+	/// Gets the SQL query markdown response asynchronous.
+	/// </summary>
+	/// <param name="sqlQueryResult">The SQL query result.</param>
+	/// <returns>The sql markdown result.</returns>
+	/// <exception cref="System.Exception"></exception>
+	public async Task<string> GetSQLQueryMarkdownResponseAsync(SqlQueryResult sqlQueryResult)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetSQLQueryMarkdownResponseAsync), DateTime.UtcNow, string.Empty));
+			var response = await httpClientHelper.GetAIResponseAsync(sqlQueryResult, AIAgentsRoutesConstants.GetSQLQueryMarkdownResponse_ApiRoute).ConfigureAwait(false);
+			var responseString = await response.Content.ReadAsStringAsync();
+
+			var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			var aiResponse = JsonSerializer.Deserialize<AIAgentResponse>(responseString, jsonSerializerOptions) ?? new AIAgentResponse();
+			return aiResponse.ResponseData.ToString() ?? throw new Exception(ExceptionConstants.SomethingWentWrongMessageConstant);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodFailed, nameof(GetSQLQueryMarkdownResponseAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetSQLQueryMarkdownResponseAsync), DateTime.UtcNow, string.Empty));
+		}
+	}
 }

@@ -50,7 +50,7 @@
   </div>
 
   <div class="chat-container">
-    <div class="chat-messages">
+    <div class="chat-messages" #messagesContainer (scroll)="onMessagesScroll()">
       @for (message of messages(); track $index) {
       <div
         class="message"
@@ -64,9 +64,60 @@
             <span></span>
             <span></span>
           </div>
-          } @else { {{ message.content }} }
+          } @else if (message.contentType === 'markdown-table' && message.userIntent === 'SQL') {
+          <div class="markdown-table-container">
+            @if (parseMarkdownTable(message.content); as tableData) {
+            <div class="table-wrapper">
+              <table class="markdown-table">
+                <thead>
+                  <tr>
+                    @for (header of tableData.headers; track header) {
+                    <th>{{ header }}</th>
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of tableData.rows; track $index) {
+                  <tr>
+                    @for (cell of row; track $index) {
+                    <td>{{ cell }}</td>
+                    }
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            } @else {
+            <div class="fallback-content">{{ message.content }}</div>
+            }
+          </div>
+          } @else {
+          <div class="text-content">{{ message.content }}</div>
+          }
+          
+          @if (!message.isBot && !message.isTyping) {
+          <button 
+            class="copy-message-btn" 
+            (click)="copyUserMessage(message.content)"
+            [pTooltip]="'Copy message'"
+            tooltipPosition="left"
+          >
+            <i class="pi pi-copy"></i>
+          </button>
+          }
         </div>
       </div>
+      }
+      
+      @if (showScrollToBottomButton) {
+      <button 
+        class="scroll-to-bottom-btn" 
+        (click)="scrollToBottomManually()"
+        [pTooltip]="'Scroll to bottom'"
+        tooltipPosition="left"
+      >
+        <i class="pi pi-chevron-down"></i>
+      </button>
       }
     </div>
 

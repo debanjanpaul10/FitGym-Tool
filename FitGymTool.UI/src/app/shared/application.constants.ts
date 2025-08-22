@@ -20,7 +20,7 @@ export class CommonApplicationConstants {
     NoAIFeaturesAvailable: 'No AI Features available for now',
   };
   public static AIConstants = {
-    Header: 'FitGymTool AI Chat Assistant',
+    Header: 'FitGymTool AI Assistant',
     AiGreetingMessage:
       "Hello! I'm your AI assistant. How can I help you today?",
     AIFailedMessage: 'Failed to get AI response',
@@ -42,6 +42,7 @@ export class ToasterSuccessMessages {
 
   public static Common = {
     BugReportSubmitSuccess: 'The Bug report has been successfully submitted',
+    MessageCopiedSuccess: 'Message copied to clipboard!',
   };
 }
 

@@ -34,7 +34,7 @@ public interface IAIServicesHandler
 	/// </summary>
 	/// <param name="chatMessageRequest">The user query request.</param>
 	/// <returns>The ai agent response.</returns>
-	Task<string> GetChatbotResponseAsync(ChatMessageRequestDTO chatMessageRequest);
+	Task<AIChatbotResponseDTO> GetChatbotResponseAsync(ChatMessageRequestDTO chatMessageRequest);
 
 	/// <summary>
 	/// Gets the database schema json asynchronous.

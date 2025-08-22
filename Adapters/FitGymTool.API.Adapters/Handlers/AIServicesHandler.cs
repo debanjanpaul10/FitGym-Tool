@@ -56,10 +56,11 @@ public class AIServicesHandler(IMapper mapper, IAiServices aiServices) : IAIServ
 	/// <returns>
 	/// The ai agent response.
 	/// </returns>
-	public async Task<string> GetChatbotResponseAsync(ChatMessageRequestDTO userQueryRequest)
+	public async Task<AIChatbotResponseDTO> GetChatbotResponseAsync(ChatMessageRequestDTO userQueryRequest)
 	{
 		var domainInput = mapper.Map<UserQueryRequest>(userQueryRequest);
-		return await aiServices.GetChatbotResponseAsync(domainInput).ConfigureAwait(false);
+		var domainResponse = await aiServices.GetChatbotResponseAsync(domainInput).ConfigureAwait(false);
+		return mapper.Map<AIChatbotResponseDTO>(domainResponse);
 	}
 
 	/// <summary>

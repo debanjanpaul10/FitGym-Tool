@@ -41,8 +41,8 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 400px;
-  height: 500px;
+  width: 50vw;
+  height: 90vh;
   background: #1e1e1e;
   border: 1px solid #333;
   border-radius: 8px;
@@ -51,6 +51,7 @@
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
+  overflow: hidden; /* Prevent content from overflowing */
 
   &.expanded {
     width: 70vw;
@@ -69,6 +70,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .chat-title {
@@ -117,14 +119,71 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 60px); 
+  min-height: 0;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 1rem;
   background: #1e1e1e;
+  min-height: 0; 
+  position: relative; 
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+    
+    &:hover {
+      background: #764ba2;
+    }
+  }
+  
+  scrollbar-width: thin;
+  scrollbar-color: #667eea #2d2d2d;
+}
+
+.scroll-to-bottom-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  i {
+    font-size: 14px;
+  }
 }
 
 .message {
@@ -152,8 +211,137 @@
       padding: 0.75rem 1rem;
       max-width: 80%;
       display: inline-block;
+      position: relative; /* For positioning the copy button */
+      
+      /* Copy button styles */
+      .copy-message-btn {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.9);
+        color: #667eea;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 5;
+
+        &:hover {
+          background: white;
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        i {
+          font-size: 10px;
+        }
+      }
+
+      /* Show copy button on hover */
+      &:hover .copy-message-btn {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   }
+}
+
+.markdown-table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper {
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #404040;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.markdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #1a1a1a;
+  color: #e0e0e0;
+
+  thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: white;
+      border-bottom: 2px solid #404040;
+      white-space: nowrap;
+      min-width: 100px;
+      
+      &:first-child {
+        border-left: none;
+      }
+      
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #333;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background: rgba(102, 126, 234, 0.1);
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    
+    td {
+      padding: 10px 16px;
+      border-right: 1px solid #333;
+      word-wrap: break-word;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      &:first-child {
+        border-left: none;
+      }
+      
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+
+.fallback-content {
+  color: #e0e0e0;
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+.text-content {
+  color: inherit;
 }
 
 .chat-input {
@@ -163,6 +351,7 @@
   border-top: 1px solid #404040;
   background: #2d2d2d;
   gap: 0.5rem;
+  flex-shrink: 0; 
 }
 
 .message-input {
@@ -244,7 +433,6 @@
   }
 }
 
-/* Typing Indicator */
 .typing-indicator {
   display: flex;
   align-items: center;
@@ -285,7 +473,6 @@
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .chat-dock {
     bottom: 15px;
@@ -307,5 +494,42 @@
     height: 400px;
     bottom: 15px;
     right: 15px;
+  }
+
+  .markdown-table {
+    font-size: 12px;
+    
+    thead th {
+      padding: 8px 12px;
+      min-width: 80px;
+    }
+    
+    tbody td {
+      padding: 8px 12px;
+      max-width: 150px;
+    }
+  }
+
+  .scroll-to-bottom-btn {
+    width: 36px;
+    height: 36px;
+    bottom: 15px;
+    right: 15px;
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  /* Mobile copy button adjustments */
+  .message.user-message .message-content .copy-message-btn {
+    width: 28px;
+    height: 28px;
+    top: -6px;
+    right: -6px;
+
+    i {
+      font-size: 12px;
+    }
   }
 }

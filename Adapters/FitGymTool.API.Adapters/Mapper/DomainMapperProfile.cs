@@ -69,6 +69,8 @@ public class DomainMapperProfile : Profile
 		CreateMap<PatternDomain, PatternDTO>();
 		CreateMap<CommonIssueDomain, CommonIssueDTO>();
 
+		CreateMap<AIChatbotResponse, AIChatbotResponseDTO>();
+
 		// MAPPING
 		CreateMap<MappingMasterData, MappingMasterDataDto>();
 		CreateMap<FeesPaymentStatusMapping, FeesPaymentStatusMappingDto>();

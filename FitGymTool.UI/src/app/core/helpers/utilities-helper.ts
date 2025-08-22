@@ -96,6 +96,10 @@ export class Utilities {
     );
   }
 
+  /**
+   * Gets the greeting based on time of the day.
+   * @returns {string} The greeting
+   */
   public static getGreeting(): string {
     const hour = new Date().getHours();
 
@@ -118,5 +122,38 @@ export class Utilities {
       default:
         return 'status-chip status-chip-default';
     }
+  }
+
+  /**
+   * Parses the markdown content table.
+   * @param markdownContent The markdown content.
+   * @returns The tupple containing the header and its rows.
+   */
+  public static parseMarkdownTable(
+    markdownContent: string
+  ): { headers: string[]; rows: string[][] } | null {
+    const lines = markdownContent.trim().split('\n');
+    const tableLines = lines.filter(
+      (line) => line.trim().startsWith('|') && line.trim().endsWith('|')
+    );
+
+    if (tableLines.length < 3) return null;
+
+    const headerLine = tableLines[0];
+    const headers = headerLine
+      .split('|')
+      .slice(1, -1)
+      .map((header) => header.trim());
+
+    const dataLines = tableLines.slice(2);
+
+    const rows = dataLines.map((line) =>
+      line
+        .split('|')
+        .slice(1, -1)
+        .map((cell) => cell.trim())
+    );
+
+    return { headers, rows };
   }
 }

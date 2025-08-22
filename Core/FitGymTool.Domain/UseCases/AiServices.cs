@@ -81,7 +81,7 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 	/// <returns>
 	/// The ai agent response.
 	/// </returns>
-	public async Task<string> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
+	public async Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
 	{
 		try
 		{
@@ -94,11 +94,10 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 
 			if (aiResult.UserIntent.Trim().Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase))
 			{
-				var cleanedSqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
-				return await commonDataManager.ExecuteAISQLQueryAsync(cleanedSqlQuery);
+				return await HandleSqlQueryResultsExecutionAsync(aiResult).ConfigureAwait(false);
 			}
 
-			return aiResult.AIResponseData;
+			return aiResult;
 		}
 		catch (Exception ex)
 		{
@@ -158,4 +157,25 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetDatabaseSchemaJsonAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
+
+	#region PRIVATE METHODS
+
+	/// <summary>
+	/// Handles the SQL query results execution asynchronous.
+	/// </summary>
+	/// <param name="aiResult">The ai result.</param>
+	/// <returns>The AI chatbot response.</returns>
+	private async Task<AIChatbotResponse> HandleSqlQueryResultsExecutionAsync(AIChatbotResponse aiResult)
+	{
+		var cleanedSqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
+		aiResult.SqlQuery = cleanedSqlQuery;
+
+		var jsonQuery = await commonDataManager.ExecuteAISQLQueryAsync(cleanedSqlQuery).ConfigureAwait(false);
+		var markdownResponse = await aiServicesManager.GetSQLQueryMarkdownResponseAsync(new SqlQueryResult() { JsonQuery = jsonQuery }).ConfigureAwait(false);
+
+		aiResult.AIResponseData = markdownResponse;
+		return aiResult;
+	}
+
+	#endregion
 }
