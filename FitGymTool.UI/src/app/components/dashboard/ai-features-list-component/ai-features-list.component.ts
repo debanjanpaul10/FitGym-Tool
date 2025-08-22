@@ -37,7 +37,7 @@ export class AiFeaturesListComponent implements OnInit {
   protected headersConstants = CommonApplicationConstants.HeaderConstants;
   protected columnHeaders: Column[] = [];
   protected aiServicesWithStatus: any[] = [];
-  protected getStatusChipClass = Utilities.getStatusChipClass;
+  protected getStatusChipClass = Utilities.GetStatusChipClass;
 
   private readonly _dialogPopupService: DialogPopupService =
     inject(DialogPopupService);

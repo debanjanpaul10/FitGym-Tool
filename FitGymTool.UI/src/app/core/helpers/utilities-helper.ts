@@ -10,7 +10,7 @@ export class Utilities {
    * @param date - The Date object to format
    * @returns A string representation of the date in yyyy-MM-dd format
    */
-  public static formatDateToYMD(date: Date): string {
+  public static FormatDateToYMD(date: Date): string {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
@@ -22,7 +22,7 @@ export class Utilities {
    * @param name - The name string to validate
    * @returns True if name is between 2-100 characters, false otherwise
    */
-  public static isValidName(name: string): boolean {
+  public static IsValidName(name: string): boolean {
     return name !== '' && name.trim().length >= 2 && name.trim().length <= 100;
   }
 
@@ -31,7 +31,7 @@ export class Utilities {
    * @param email - The email string to validate
    * @returns True if email matches valid email format, false otherwise
    */
-  public static isValidEmail(email: string): boolean {
+  public static IsValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return email !== '' && emailRegex.test(email.trim());
   }
@@ -41,7 +41,7 @@ export class Utilities {
    * @param phone - The phone number string to validate
    * @returns True if phone number contains exactly 10 digits, false otherwise
    */
-  public static isValidPhoneNumber(phone: string): boolean {
+  public static IsValidPhoneNumber(phone: string): boolean {
     const phoneRegex = /^\d{10}$/;
     return phone !== '' && phoneRegex.test(phone.replace(/\s/g, ''));
   }
@@ -51,7 +51,7 @@ export class Utilities {
    * @param address - The address string to validate
    * @returns True if address is between 5-500 characters, false otherwise
    */
-  public static isValidAddress(address: string): boolean {
+  public static IsValidAddress(address: string): boolean {
     return (
       address !== '' &&
       address.trim().length >= 5 &&
@@ -64,7 +64,7 @@ export class Utilities {
    * @param gender - The gender string to validate
    * @returns True if gender is one of the allowed values (Male, Female, Other), false otherwise
    */
-  public static isValidGender(gender: string): boolean {
+  public static IsValidGender(gender: string): boolean {
     return gender !== '' && ['Male', 'Female', 'Other'].includes(gender);
   }
 
@@ -73,7 +73,7 @@ export class Utilities {
    * @param date - The Date object to validate
    * @returns True if date is a valid Date object, false otherwise
    */
-  public static isValidDate(date: Date): boolean {
+  public static IsValidDate(date: Date): boolean {
     return date && date instanceof Date && !isNaN(date.getTime());
   }
 
@@ -82,7 +82,7 @@ export class Utilities {
    * Checks for the presence of membership status mappings and other array-based mapping data.
    * Returns true if valid data exists, false otherwise.
    */
-  public static checkValidMappingDataExists(
+  public static CheckValidMappingDataExists(
     data: MasterMappingDataDto
   ): boolean {
     return (
@@ -100,7 +100,7 @@ export class Utilities {
    * Gets the greeting based on time of the day.
    * @returns {string} The greeting
    */
-  public static getGreeting(): string {
+  public static GetGreeting(): string {
     const hour = new Date().getHours();
 
     if (hour < 12) return 'Morning';
@@ -111,7 +111,7 @@ export class Utilities {
   /**
    * Gets the CSS class for the status chip based on the status value
    */
-  public static getStatusChipClass(status: string): string {
+  public static GetStatusChipClass(status: string): string {
     switch (status?.toLowerCase()) {
       case 'active':
         return 'status-chip status-chip-active';
@@ -129,7 +129,7 @@ export class Utilities {
    * @param markdownContent The markdown content.
    * @returns The tupple containing the header and its rows.
    */
-  public static parseMarkdownTable(
+  public static ParseMarkdownTable(
     markdownContent: string
   ): { headers: string[]; rows: string[][] } | null {
     const lines = markdownContent.trim().split('\n');
@@ -155,5 +155,17 @@ export class Utilities {
     );
 
     return { headers, rows };
+  }
+
+  /**
+   * Prepares the chatbot greeting message.
+   * @param currentUserName The current user name
+   * @returns {string} The chatbot greeting message.
+   */
+  public static GetChatbotGreetingMessage(
+    currentUserName: string | undefined
+  ): string {
+    currentUserName = currentUserName ?? 'there';
+    return `Hello ${currentUserName}! I'm your AI assistant. How can I help you today?`;
   }
 }

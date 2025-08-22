@@ -67,8 +67,8 @@ export class MembersListComponent {
         if (!filter) return true;
         if (!value) return false;
         // Convert both to yyyy-MM-dd for comparison
-        const valueDate = Utilities.formatDateToYMD(new Date(value));
-        const filterDate = Utilities.formatDateToYMD(new Date(filter));
+        const valueDate = Utilities.FormatDateToYMD(new Date(value));
+        const filterDate = Utilities.FormatDateToYMD(new Date(filter));
         return valueDate === filterDate;
       }
     );

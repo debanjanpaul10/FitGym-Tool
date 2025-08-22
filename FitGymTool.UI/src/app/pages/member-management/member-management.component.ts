@@ -196,7 +196,7 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     this.masterMappingDataSubscription =
       this.commonService.MappingMasterData.subscribe(
         (data: MasterMappingDataDto) => {
-          if (Utilities.checkValidMappingDataExists(data)) {
+          if (Utilities.CheckValidMappingDataExists(data)) {
             this.masterMappingData = data;
           } else {
             this.getMasterMappingsData();

@@ -35,7 +35,7 @@ export class CurrentUserComponent implements OnInit, OnDestroy {
   protected readonly currentUserName = computed(
     () => this.currentUserProfile()?.name ?? ''
   );
-  protected readonly greetingText = computed(() => Utilities.getGreeting());
+  protected readonly greetingText = computed(() => Utilities.GetGreeting());
   protected readonly formattedDateTime = computed(() => {
     const date = this.currentDateTime();
     return (

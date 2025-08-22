@@ -16,7 +16,14 @@
 } @if (isChatOpen()) {
 <div class="custom-chat-dialog" [class.expanded]="isExpanded()">
   <div class="chat-header">
-    <span class="chat-title">{{ AIMessages.Header }}</span>
+    <span class="chat-title">
+      <img
+        src="../../../assets/Images/ai.png"
+        alt="AI Agent Chat"
+        class="chat-icon"
+      />
+      &nbsp; {{ AIMessages.Header }}
+    </span>
     <div class="header-buttons">
       <button
         class="expand-btn"
@@ -64,7 +71,8 @@
             <span></span>
             <span></span>
           </div>
-          } @else if (message.contentType === 'markdown-table' && message.userIntent === 'SQL') {
+          } @else if (message.contentType === 'markdown-table' &&
+          message.userIntent === 'SQL') {
           <div class="markdown-table-container">
             @if (parseMarkdownTable(message.content); as tableData) {
             <div class="table-wrapper">
@@ -93,11 +101,9 @@
           </div>
           } @else {
           <div class="text-content">{{ message.content }}</div>
-          }
-          
-          @if (!message.isBot && !message.isTyping) {
-          <button 
-            class="copy-message-btn" 
+          } @if (!message.isBot && !message.isTyping) {
+          <button
+            class="copy-message-btn"
             (click)="copyUserMessage(message.content)"
             [pTooltip]="'Copy message'"
             tooltipPosition="left"
@@ -107,11 +113,9 @@
           }
         </div>
       </div>
-      }
-      
-      @if (showScrollToBottomButton) {
-      <button 
-        class="scroll-to-bottom-btn" 
+      } @if (showScrollToBottomButton) {
+      <button
+        class="scroll-to-bottom-btn"
         (click)="scrollToBottomManually()"
         [pTooltip]="'Scroll to bottom'"
         tooltipPosition="left"

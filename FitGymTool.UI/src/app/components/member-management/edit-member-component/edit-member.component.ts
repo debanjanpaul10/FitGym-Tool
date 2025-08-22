@@ -234,34 +234,34 @@ export class EditMemberComponent implements OnDestroy {
   protected getFieldError(member: MemberDetailsDto, field: string): string {
     switch (field) {
       case 'memberName':
-        if (!Utilities.isValidName(member.memberName)) {
+        if (!Utilities.IsValidName(member.memberName)) {
           return 'Name must be between 2-100 characters';
         }
         break;
       case 'memberEmail':
-        if (!Utilities.isValidEmail(member.memberEmail)) {
+        if (!Utilities.IsValidEmail(member.memberEmail)) {
           return 'Please enter a valid email address';
         }
         break;
       case 'memberPhoneNumber':
-        if (!Utilities.isValidPhoneNumber(member.memberPhoneNumber)) {
+        if (!Utilities.IsValidPhoneNumber(member.memberPhoneNumber)) {
           return 'Phone number must be exactly 10 digits';
         }
         break;
       case 'memberAddress':
-        if (!Utilities.isValidAddress(member.memberAddress)) {
+        if (!Utilities.IsValidAddress(member.memberAddress)) {
           return 'Address must be between 5-500 characters';
         }
         break;
       case 'memberGender':
-        if (!Utilities.isValidGender(member.memberGender)) {
+        if (!Utilities.IsValidGender(member.memberGender)) {
           return 'Please select a valid gender';
         }
         break;
       case 'memberDateOfBirth':
       case 'memberJoinDate':
         if (
-          !Utilities.isValidDate(
+          !Utilities.IsValidDate(
             member[field as keyof MemberDetailsDto] as Date
           )
         ) {
@@ -302,15 +302,13 @@ export class EditMemberComponent implements OnDestroy {
    */
   private static isRowValid(member: MemberDetailsDto): boolean {
     return (
-      Utilities.isValidName(member.memberName) &&
-      Utilities.isValidEmail(member.memberEmail) &&
-      Utilities.isValidPhoneNumber(member.memberPhoneNumber) &&
-      Utilities.isValidAddress(member.memberAddress) &&
-      Utilities.isValidGender(member.memberGender) &&
-      Utilities.isValidDate(member.memberDateOfBirth) &&
-      Utilities.isValidDate(member.memberJoinDate)
+      Utilities.IsValidName(member.memberName) &&
+      Utilities.IsValidEmail(member.memberEmail) &&
+      Utilities.IsValidPhoneNumber(member.memberPhoneNumber) &&
+      Utilities.IsValidAddress(member.memberAddress) &&
+      Utilities.IsValidGender(member.memberGender) &&
+      Utilities.IsValidDate(member.memberDateOfBirth) &&
+      Utilities.IsValidDate(member.memberJoinDate)
     );
   }
-
-  
 }

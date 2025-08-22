@@ -37,7 +37,7 @@ export class AiFeaturesComponent implements OnInit {
     AIServiceStatusMappingDTO[]
   > = signal([]);
   protected headersConstants = CommonApplicationConstants.HeaderConstants;
-  protected getStatusChipClass = Utilities.getStatusChipClass;
+  protected getStatusChipClass = Utilities.GetStatusChipClass;
 
   private readonly _toasterService: ToasterService = inject(ToasterService);
   private readonly _loaderService: LoaderService = inject(LoaderService);

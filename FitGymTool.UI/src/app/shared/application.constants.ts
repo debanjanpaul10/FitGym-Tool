@@ -21,8 +21,6 @@ export class CommonApplicationConstants {
   };
   public static AIConstants = {
     Header: 'FitGymTool AI Assistant',
-    AiGreetingMessage:
-      "Hello! I'm your AI assistant. How can I help you today?",
     AIFailedMessage: 'Failed to get AI response',
     SendMessageFailed: 'Failed to send message',
     AIisThinking: 'AI is thinking...',

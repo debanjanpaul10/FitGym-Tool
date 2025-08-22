@@ -6,11 +6,14 @@ import {
   ViewChild,
   ElementRef,
   AfterViewChecked,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DockModule } from 'primeng/dock';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { MsalService } from '@azure/msal-angular';
+import { AccountInfo } from '@azure/msal-browser';
 
 import { ToasterService } from '@core/services/toaster.service';
 import { AiApiService } from '@services/ai-services-api.service';
@@ -31,41 +34,39 @@ import { Utilities } from '@core/helpers/utilities-helper';
   templateUrl: './chat-component.html',
   styleUrl: './chat-component.scss',
 })
-export class ChatComponent implements AfterViewChecked {
+export class ChatComponent implements AfterViewChecked, OnInit {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
   protected isChatOpen: WritableSignal<boolean> = signal(false);
   protected isProcessing: WritableSignal<boolean> = signal(false);
   protected isExpanded: WritableSignal<boolean> = signal(false);
   protected AIMessages = CommonApplicationConstants.AIConstants;
-  protected messages: WritableSignal<Array<ChatMessage>> = signal([
-    {
-      content: this.AIMessages.AiGreetingMessage,
-      isBot: true,
-      contentType: 'text',
-    },
-  ]);
-  protected parseMarkdownTable = Utilities.parseMarkdownTable;
+  protected parseMarkdownTable = Utilities.ParseMarkdownTable;
 
   private readonly _toasterService: ToasterService = inject(ToasterService);
   private readonly _aiApiService: AiApiService = inject(AiApiService);
+  private readonly _msalService: MsalService = inject(MsalService);
   private shouldScrollToBottom = true;
+  private readonly currentUserProfile: WritableSignal<AccountInfo | null> =
+    signal(null);
+
   protected showScrollToBottomButton = false;
+  protected messages: WritableSignal<Array<ChatMessage>> = signal([]);
+
+  ngOnInit(): void {
+    this.loadUserProfile();
+    this.initializeMessages();
+
+    setTimeout(() => {
+      if (!this.currentUserProfile()?.name) {
+        this.loadUserProfile();
+      }
+    }, 500);
+  }
 
   ngAfterViewChecked(): void {
     if (this.shouldScrollToBottom) {
       this.scrollToBottom();
-    }
-  }
-
-  private scrollToBottom(): void {
-    try {
-      if (this.messagesContainer) {
-        const element = this.messagesContainer.nativeElement;
-        element.scrollTop = element.scrollHeight;
-      }
-    } catch (err) {
-      console.error(err);
     }
   }
 
@@ -121,13 +122,8 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   protected refreshChats(): void {
-    this.messages.set([
-      {
-        content: this.AIMessages.AiGreetingMessage,
-        isBot: true,
-        contentType: 'text',
-      },
-    ]);
+    this.loadUserProfile();
+    this.initializeMessages();
     this.isProcessing.set(false);
     this.shouldScrollToBottom = true;
   }
@@ -159,6 +155,64 @@ export class ChatComponent implements AfterViewChecked {
       };
       this.sendAiMessageToApiAsync(request);
     }
+  }
+
+  // #region PRIVATE METHODS
+
+  private scrollToBottom(): void {
+    try {
+      if (this.messagesContainer) {
+        const element = this.messagesContainer.nativeElement;
+        element.scrollTop = element.scrollHeight;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  private loadUserProfile(): void {
+    const activeAccount = this._msalService.instance.getActiveAccount();
+    this.currentUserProfile.set(activeAccount);
+
+    if (!activeAccount) {
+      const accounts = this._msalService.instance.getAllAccounts();
+      if (accounts.length > 0) {
+        this.currentUserProfile.set(accounts[0]);
+      }
+    }
+
+    this.updateGreetingMessage();
+  }
+
+  private updateGreetingMessage(): void {
+    const messages = this.messages();
+    if (messages.length > 0 && messages[0].isBot) {
+      const updatedGreeting = Utilities.GetChatbotGreetingMessage(
+        this.currentUserProfile()?.name
+      );
+      if (messages[0].content !== updatedGreeting) {
+        this.messages.update((msgs) => {
+          const updatedMsgs = [...msgs];
+          updatedMsgs[0] = {
+            ...updatedMsgs[0],
+            content: updatedGreeting,
+          };
+          return updatedMsgs;
+        });
+      }
+    }
+  }
+
+  private initializeMessages(): void {
+    this.messages.set([
+      {
+        content: Utilities.GetChatbotGreetingMessage(
+          this.currentUserProfile()?.name
+        ),
+        isBot: true,
+        contentType: 'text',
+      },
+    ]);
   }
 
   private sendAiMessageToApiAsync(request: ChatMessageRequestDTO): void {
@@ -274,4 +328,6 @@ export class ChatComponent implements AfterViewChecked {
       }
     }, typeSpeed);
   }
+
+  // #endregion
 }
