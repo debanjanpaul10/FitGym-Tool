@@ -28,12 +28,6 @@
   margin-right: 0px !important;
 }
 
-.p-drawer-content {
-  position: relative;
-  height: 100%;
-  padding-bottom: 0 !important;
-}
-
 .drawer-header-image-wrapper {
   width: 100%;
   display: flex;
@@ -56,6 +50,35 @@
   position: relative;
 }
 
+:host ::ng-deep .p-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+:host ::ng-deep .p-drawer-mask {
+  display: none !important;
+}
+
+:host ::ng-deep .p-drawer.p-drawer-left {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+:host ::ng-deep .p-drawer.p-drawer-left.p-drawer-active {
+  transform: translateX(0);
+}
+
+:host ::ng-deep .p-drawer .p-drawer-content {
+  width: 300px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  height: 100%;
+  padding-bottom: 0 !important;
+}
+
 .drawer-close-floating-btn {
   position: absolute;
   top: 10px;
@@ -70,10 +93,6 @@
   transition: background 0.2s, box-shadow 0.2s;
 }
 
-.drawer-close-floating-btn:hover {
-  box-shadow: 0 4px 16px rgba(244, 67, 54, 0.2);
-}
-
 .drawer-close-floating-btn i {
   font-size: 1.2rem;
 }
@@ -81,5 +100,4 @@
 .drawer-close-floating-btn-outside {
   right: -30px;
   transform: translate(50%, 0);
-  box-shadow: 0 4px 16px rgba(244, 67, 54, 0.2);
 }

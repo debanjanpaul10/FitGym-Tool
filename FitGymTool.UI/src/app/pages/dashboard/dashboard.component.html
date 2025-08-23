@@ -1,5 +1,20 @@
 <div class="card-containers">
   <div class="row">
+    <div class="col-sm-6">
+      <app-current-user-component></app-current-user-component>
+    </div>
+    <div class="col-sm-2">
+      <app-ai-status-component></app-ai-status-component>
+    </div>
+    <div class="col-sm-4">
+      @if (mappingsMasterData.aiServiceStatusMappings.length > 0) {
+      <app-ai-features-component
+        [mappingsMasterData]="mappingsMasterData"
+      ></app-ai-features-component>
+      }
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-6 mt-3">
       <app-active-members-component></app-active-members-component>
     </div>

@@ -82,6 +82,16 @@ internal static class SwaggerConstants
 			internal const string Description = "Gets the payment status history for individual member by email id.";
 			internal const string OperationId = nameof(GetPaymentHistoryDataForMemberAction);
 		}
+
+		/// <summary>
+		/// The swagger documentation for UpdateMemberFeesDataAsync
+		/// </summary>
+		internal static class UpdateMemberFeesDataAction
+		{
+			internal const string Summary = "Updates the fees payment status for member asynchronous.";
+			internal const string Description = "Updates the fees payment status for member for time period and member alias asynchronous.";
+			internal const string OperationId = nameof(UpdateMemberFeesDataAction);
+		}
 	}
 
 	/// <summary>
@@ -151,4 +161,69 @@ internal static class SwaggerConstants
 
 	}
 
+	/// <summary>
+	/// The AI Services Controller.
+	/// </summary>
+	internal static class AIServicesController
+	{
+		/// <summary>
+		/// Swagger documentation for RespondAsync.
+		/// </summary>
+		internal static class RespondAction
+		{
+			internal const string Summary = "Responds to user query asynchronously.";
+			internal const string Description = "Calls the AI service to handle the user query.";
+			internal const string OperationId = nameof(RespondAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetBugSeverityStatusAsync.
+		/// </summary>
+		internal static class GetBugSeverityStatusAction
+		{
+			internal const string Summary = "Gets the bug severity status.";
+			internal const string Description = "Gets the bug severity status for the user's mentioned bug using AI services.";
+			internal const string OperationId = nameof(GetBugSeverityStatusAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetActiveAIFeaturesAsync.
+		/// </summary>
+		internal static class GetActiveAIFeaturesAction
+		{
+			internal const string Summary = "Gets the active AI features.";
+			internal const string Description = "Gets the list of active AI features for FitGym tool along with their service statuses.";
+			internal const string OperationId = nameof(GetActiveAIFeaturesAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetDatabaseSchemaJsonAsync
+		/// </summary>
+		internal static class GetDatabaseSchemaJsonAction
+		{
+			internal const string Summary = "Gets the database schema json.";
+			internal const string Description = "Gets the detailed database schema json file.";
+			internal const string OperationId = nameof(GetDatabaseSchemaJsonAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetDatabaseKnowledgeBaseJsonAsync
+		/// </summary>
+		internal static class GetDatabaseKnowledgeBaseJsonAction
+		{
+			internal const string Summary = "Gets the database knowledge base json.";
+			internal const string Description = "Gets the detailed database knowledge base json file.";
+			internal const string OperationId = nameof(GetDatabaseSchemaJsonAction);
+		}
+
+		/// <summary>
+		/// Swagger documentation for GetSamplePromptsForChatbotAsync
+		/// </summary>
+		internal static class GetSamplePromptsForChatbotAction
+		{
+			internal const string Summary = "Gets a list of sample prompts for ai chatbot.";
+			internal const string Description = "Gets the list of sample prompts for ai chatbot that can be executed by user.";
+			internal const string OperationId = nameof(GetSamplePromptsForChatbotAction);
+		}
+	}
 }

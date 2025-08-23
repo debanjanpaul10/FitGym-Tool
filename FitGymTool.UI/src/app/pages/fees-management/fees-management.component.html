@@ -11,7 +11,9 @@
   </div>
   <div class="row mb-3 mt-3">
     <div class="col-12">
-      <app-member-fees-payment-list></app-member-fees-payment-list>
+      <app-member-fees-payment-list
+        (onPaymentUpdated)="onPaymentUpdated()"
+      ></app-member-fees-payment-list>
     </div>
   </div>
 </div>

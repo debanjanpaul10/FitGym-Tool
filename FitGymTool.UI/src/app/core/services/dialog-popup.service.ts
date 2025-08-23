@@ -9,6 +9,7 @@ export class DialogPopupService {
   public isUpdateMembershipDialogOpen: WritableSignal<boolean> = signal(false);
   public isUpdateMemberDetailsDialogOpen: WritableSignal<boolean> =
     signal(false);
+  public isAiFeaturesDialogOpen: WritableSignal<boolean> = signal(false);
 
   public openAddMemberDialog(): void {
     this.isAddMemberDialogOpen.set(true);
@@ -40,5 +41,13 @@ export class DialogPopupService {
 
   public closeMemberUpdateDetailsDialog(): void {
     this.isUpdateMemberDetailsDialogOpen.set(false);
+  }
+
+  public openAiFeaturesDialog(): void {
+    this.isAiFeaturesDialogOpen.set(true);
+  }
+
+  public closeAiFeaturesDialog(): void {
+    this.isAiFeaturesDialogOpen.set(false);
   }
 }

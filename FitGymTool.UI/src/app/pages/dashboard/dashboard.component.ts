@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
@@ -16,6 +10,9 @@ import { ResponseDto } from '@models/DTO/response-dto.model';
 import { ToasterService } from '@core/services/toaster.service';
 import { CommonService } from '@core/services/common.service';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { CurrentUserComponent } from '@components/dashboard/current-user-component/current-user.component';
+import { AiStatusComponent } from '@components/dashboard/ai-status-component/ai-status.component';
+import { AiFeaturesComponent } from '@components/dashboard/ai-features-component/ai-features.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,14 +21,16 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
     ButtonModule,
     CurrentRevenueComponent,
     ActiveMembersComponent,
+    CurrentUserComponent,
+    AiStatusComponent,
+    AiFeaturesComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  public mappingsMasterData: WritableSignal<MasterMappingDataDto> = signal(
-    new MasterMappingDataDto()
-  );
+  protected mappingsMasterData: MasterMappingDataDto =
+    new MasterMappingDataDto();
 
   private readonly commonApiService: CommonApiService =
     inject(CommonApiService);
@@ -40,12 +39,16 @@ export class DashboardComponent implements OnInit {
   private readonly commonService: CommonService = inject(CommonService);
 
   ngOnInit(): void {
+    this.getMappingsMasterData();
+  }
+
+  private getMappingsMasterData(): void {
     this.loaderService.loadingOn();
 
     this.commonApiService.GetMappingsMasterDataAsync().subscribe({
       next: (response: ResponseDto) => {
         if (response && response?.isSuccess) {
-          this.mappingsMasterData.set(response.responseData);
+          this.mappingsMasterData = response.responseData;
           this.commonService.MappingMasterData = response.responseData;
         } else {
           this.toasterService.showError(response?.responseData);

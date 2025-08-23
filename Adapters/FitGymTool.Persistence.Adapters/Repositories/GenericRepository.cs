@@ -24,11 +24,6 @@ namespace FitGymTool.Persistence.Adapters.Repositories;
 public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEntity> where TEntity : class
 {
 	/// <summary>
-	/// The SQL DB context.
-	/// </summary>
-	protected readonly SqlDbContext _context = context;
-
-	/// <summary>
 	/// Adds a new entity to the repository.
 	/// </summary>
 	/// <param name="entity">The generic entity.</param>
@@ -37,7 +32,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<TEntity> AddAsync(TEntity entity)
 	{
-		await _context.Set<TEntity>().AddAsync(entity);
+		await context.Set<TEntity>().AddAsync(entity);
 		return entity;
 	}
 
@@ -50,7 +45,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
 	{
-		await _context.Set<TEntity>().AddRangeAsync(entities);
+		await context.Set<TEntity>().AddRangeAsync(entities);
 		return entities;
 	}
 
@@ -63,7 +58,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
 	{
-		return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+		return await context.Set<TEntity>().Where(predicate).ToListAsync();
 	}
 
 	/// <summary>
@@ -75,7 +70,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
 	{
-		return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+		return await context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 	}
 
 	/// <summary>
@@ -91,7 +86,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null, string? includeProperties = null, int pageSize = 0, int pageNumber = 1, bool isActiveOnly = true)
 	{
-		IQueryable<TEntity> query = _context.Set<TEntity>();
+		IQueryable<TEntity> query = context.Set<TEntity>();
 		query = query.WhereIsActive(isActiveOnly);
 
 		if (filter is not null)
@@ -131,7 +126,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	public async Task<(List<TEntity>, int, bool)> GetAllPagedAsync(Expression<Func<TEntity, bool>>? filter = null, Expression<Func<TEntity, object>>? orderByProperty = null, bool ascending = true, int pageSize = 1000, int pageNumber = 1, params Expression<Func<TEntity, object>>[] includeProperties)
 	{
 		bool hasNextPage = false;
-		IQueryable<TEntity> query = _context.Set<TEntity>();
+		IQueryable<TEntity> query = context.Set<TEntity>();
 		if (filter is not null)
 		{
 			query = query.Where(filter);
@@ -173,7 +168,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null, bool isActiveOnly = true)
 	{
-		IQueryable<TEntity> query = _context.Set<TEntity>();
+		IQueryable<TEntity> query = context.Set<TEntity>();
 		query = query.WhereIsActive(isActiveOnly);
 		if (!tracked)
 		{
@@ -199,7 +194,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// <param name="entity">The generic entity.</param>
 	public void Remove(TEntity entity)
 	{
-		_context.Set<TEntity>().Remove(entity);
+		context.Set<TEntity>().Remove(entity);
 	}
 
 	/// <summary>
@@ -208,7 +203,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// <param name="entities">The list of generic entity.</param>
 	public void RemoveRange(IEnumerable<TEntity> entities)
 	{
-		_context.Set<TEntity>().RemoveRange(entities);
+		context.Set<TEntity>().RemoveRange(entities);
 	}
 
 	/// <summary>
@@ -219,7 +214,7 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public async Task<int> SaveChangesAsync()
 	{
-		return await _context.SaveChangesAsync();
+		return await context.SaveChangesAsync();
 	}
 
 	/// <summary>
@@ -231,8 +226,8 @@ public class GenericRepository<TEntity>(SqlDbContext context) : IRepository<TEnt
 	/// </returns>
 	public TEntity Update(TEntity entity)
 	{
-		_context.Set<TEntity>().Attach(entity);
-		_context.Entry(entity).State = EntityState.Modified;
+		context.Set<TEntity>().Attach(entity);
+		context.Entry(entity).State = EntityState.Modified;
 		return entity;
 	}
 } 

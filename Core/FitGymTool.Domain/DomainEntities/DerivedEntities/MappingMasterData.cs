@@ -46,4 +46,12 @@ public class MappingMasterData
 	/// </value>
 	public IEnumerable<BugSeverityMapping> BugSeverityMapping { get; set; } = [];
 
+	/// <summary>
+	/// Gets or sets the ai service status mappings.
+	/// </summary>
+	/// <value>
+	/// The ai service status mappings.
+	/// </value>
+	public IEnumerable<AIServiceStatusMapping> AIServiceStatusMappings { get; set; } = [];
+
 }

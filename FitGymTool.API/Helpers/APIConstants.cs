@@ -70,11 +70,6 @@ public class APIConstants
 		public const string AzureAdApiClientIdConstant = "AzureAdApiClientId";
 
 		/// <summary>
-		/// The Azure AD API Tenant ID constant.
-		/// </summary>
-		public const string ApiTenantIdConstant = "AzureAdApiTenantId";
-
-		/// <summary>
 		/// The Azure AD API Issuer constant.
 		/// </summary>
 		public const string AzureAdApiIssuerConstant = "AzureAdApiIssuer";

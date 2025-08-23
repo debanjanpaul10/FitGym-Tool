@@ -27,7 +27,7 @@ namespace FitGymTool.API.Controllers;
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.FitGymCommonApiRoutes.BaseRoute_RoutePrefix)]
-public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController>  logger, IHttpContextAccessor httpContextAccessor): BaseController(httpContextAccessor)
+public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController> logger, IHttpContextAccessor httpContextAccessor) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.
@@ -79,7 +79,7 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[SwaggerOperation(Summary = AddBugReportDataAction.Summary, Description = AddBugReportDataAction.Description, OperationId = AddBugReportDataAction.OperationId)]
-	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody]AddBugReportDTO addBugReportData)
+	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody] AddBugReportDTO addBugReportData)
 	{
 		try
 		{

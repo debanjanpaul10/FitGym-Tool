@@ -5,7 +5,6 @@
 // <summary>The DI Container Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Ports.Out;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.DataManager;
 using FitGymTool.Persistence.Adapters.DatabaseContext;
@@ -14,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using static FitGymTool.Persistence.Adapters.Helpers.Constants.DatabaseConstants;
+using FitGymTool.Domain.DrivenPorts;
 
 namespace FitGymTool.Persistence.Adapters.IOC;
 
@@ -29,8 +29,7 @@ public static class DependencyContainer
 	/// <param name="services">The service collection.</param>
 	public static IServiceCollection AddDataDependencies(this IServiceCollection services, IConfiguration configuration, bool isDevelopmentMode)
 	{
-		services.ConfigureSqlDatabase(configuration, isDevelopmentMode).AddDataManagers();
-		return services;
+		return services.ConfigureSqlDatabase(configuration, isDevelopmentMode).AddDataManagers();
 	}
 
 	/// <summary>
@@ -51,7 +50,7 @@ public static class DependencyContainer
 			throw new ArgumentNullException(nameof(sqlConnectionString), ErrorMessages.DatabaseConnectionNotFound);
 		}
 
-		services.AddDbContext<SqlDbContext>(options =>
+		return services.AddDbContext<SqlDbContext>(options =>
 		{
 			options.UseSqlServer(
 				connectionString: sqlConnectionString,
@@ -62,8 +61,6 @@ public static class DependencyContainer
 				)
 			);
 		});
-
-		return services;
 	}
 
 	/// <summary>
@@ -73,11 +70,9 @@ public static class DependencyContainer
 	/// <returns>The service collection.</returns>
 	private static IServiceCollection AddDataManagers(this IServiceCollection services)
 	{
-		services.AddScoped<IUnitOfWork, UnitOfWork>()
+		return services.AddScoped<IUnitOfWork, UnitOfWork>()
 			.AddScoped<IMembersDataManager, MembersDataManager>()
 			.AddScoped<ICommonDataManager, CommonDataManager>()
 			.AddScoped<IMemberFeesDataManager, MemberFeesDataManager>();
-
-		return services;
 	}
 }

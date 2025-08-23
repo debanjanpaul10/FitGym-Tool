@@ -85,7 +85,6 @@ export class UpdateMembershipStatusComponent {
 
     effect(() => {
       if (this.visible()) {
-        // Clear the updated members set when dialog opens
         this.updatedMembersSet.clear();
         this.sortedMembersData = [...this.membersData]
           .map((member) => {
@@ -93,7 +92,6 @@ export class UpdateMembershipStatusComponent {
               (opt) => opt.statusName === member.membershipStatus
             );
             const statusId = statusObj ? statusObj.id : 0;
-            // Store original status for comparison
             this.originalStatusMap.set(member.memberId, statusId);
             return {
               ...member,
@@ -135,9 +133,7 @@ export class UpdateMembershipStatusComponent {
               ToasterSuccessMessages.MemberManagement
                 .MembershipStatusUpdatedSuccess
             );
-            // Mark this member as successfully updated
             this.updatedMembersSet.add(member.memberId);
-            // Update the original status to the new status to prevent further updates
             this.originalStatusMap.set(member.memberId, newStatusId);
             this.membershipStatusUpdate.emit();
           } else {
@@ -171,9 +167,6 @@ export class UpdateMembershipStatusComponent {
    * @returns true if the button should be enabled, false otherwise
    */
   protected isUpdateButtonEnabled(member: MemberDetailsWithStatusId): boolean {
-    // Button should be enabled only if:
-    // 1. The status has changed from the original
-    // 2. The member hasn't been successfully updated yet
     return (
       this.hasStatusChanged(member) &&
       !this.updatedMembersSet.has(member.memberId)
@@ -186,12 +179,10 @@ export class UpdateMembershipStatusComponent {
    * @param member - The member whose status selection has changed
    */
   protected onStatusSelectionChange(member: MemberDetailsWithStatusId): void {
-    // If this member was previously updated and is now being changed again
     if (
       this.updatedMembersSet.has(member.memberId) &&
       this.hasStatusChanged(member)
     ) {
-      // Remove from the updated set to re-enable the update button
       this.updatedMembersSet.delete(member.memberId);
     }
   }

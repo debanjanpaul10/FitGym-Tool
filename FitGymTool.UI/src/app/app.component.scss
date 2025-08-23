@@ -6,5 +6,60 @@ router-outlet + * {
 .container-fluid {
   padding-top: 55px;
   flex: 1 0 auto;
-  // Remove padding-bottom if present
+  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - 55px);
+}
+
+// Content shifting when drawer is open
+.content-shifted {
+  margin-left: 300px; // Match drawer width
+  width: calc(100% - 300px); // Ensure content doesn't overflow
+}
+
+// Header shifting when drawer is open
+.header-shifted {
+  margin-left: 300px; // Match drawer width
+  width: calc(100% - 300px); // Ensure header doesn't overflow
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+// Footer shifting when drawer is open
+.footer-shifted {
+  margin-left: 300px; // Match drawer width
+  width: calc(100% - 300px); // Ensure footer doesn't overflow
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+// Ensure smooth transitions
+.container-fluid,
+.header-shifted,
+.footer-shifted {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+// Prevent content overflow when drawer is open
+.content-shifted .row {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+.content-shifted .row > [class*="col-"] {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+// Responsive behavior for smaller screens
+@media (max-width: 768px) {
+  .content-shifted,
+  .header-shifted,
+  .footer-shifted {
+    margin-left: 0; // No shifting on mobile devices
+    width: 100%; // Full width on mobile
+  }
+
+  // Hide drawer on mobile or make it overlay
+  :host ::ng-deep .p-drawer {
+    z-index: 1000; // Higher z-index on mobile for overlay behavior
+  }
 }

@@ -10,6 +10,7 @@ using FitGymTool.Domain.DomainEntities.DerivedEntities;
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.Mapping;
 using System.Diagnostics.CodeAnalysis;
+using FitGymTool.Domain.DomainEntities.AIEntities;
 
 namespace FitGymTool.Persistence.Adapters.DatabaseContext;
 
@@ -104,6 +105,22 @@ public partial class SqlDbContext : DbContext
 	public DbSet<BugReportData> BugReportData { get; set; }
 
 	/// <summary>
+	/// Gets or sets the ai features.
+	/// </summary>
+	/// <value>
+	/// The ai features.
+	/// </value>
+	public DbSet<AIFeature> AIFeatures { get; set; }
+
+	/// <summary>
+	/// Gets or sets the ai chatbot prompts.
+	/// </summary>
+	/// <value>
+	/// The ai chatbot prompts.
+	/// </value>
+	public DbSet<SampleChatbotPromptsDomain> AIChatbotPrompts { get; set; }
+
+	/// <summary>
 	/// Override this method to configure the database (and other options) to be used for this context.
 	/// This method is called for each instance of the context that is created.
 	/// The base implementation does nothing.
@@ -148,19 +165,18 @@ public partial class SqlDbContext : DbContext
 	{
 		modelBuilder.Entity<MemberDetails>().HasKey(m => m.MemberId);
 		modelBuilder.Entity<MembershipStatusMapping>().HasKey(ms => ms.Id);
-		modelBuilder.Entity<MemberDetails>()
-			.HasOne(m => m.MembershipStatusMapping)
-			.WithMany()
-			.HasForeignKey(m => m.MembershipStatusId)
-			.HasPrincipalKey(ms => ms.Id);
-
 		modelBuilder.Entity<FeesStructure>().HasKey(fs => fs.Id);
 		modelBuilder.Entity<FeesDurationMapping>().HasKey(fdm => fdm.Id);
-		modelBuilder.Entity<FeesStructure>()
-			.HasOne(fs => fs.FeesDurationMapping)
-			.WithMany()
-			.HasForeignKey(fs => fs.FeesDurationId)
-			.HasPrincipalKey(fdm => fdm.Id);
+		modelBuilder.Entity<AIFeature>().HasKey(ai => ai.Id);
+		modelBuilder.Entity<AIServiceStatusMapping>().HasKey(asm => asm.Id);
+		modelBuilder.Entity<SampleChatbotPromptsDomain>().HasKey(scp => scp.Id);
+
+		modelBuilder.Entity<MemberDetails>().HasOne(m => m.MembershipStatusMapping)
+			.WithMany().HasForeignKey(m => m.MembershipStatusId).HasPrincipalKey(ms => ms.Id);
+		modelBuilder.Entity<FeesStructure>().HasOne(fs => fs.FeesDurationMapping)
+			.WithMany().HasForeignKey(fs => fs.FeesDurationId).HasPrincipalKey(fdm => fdm.Id);
+		modelBuilder.Entity<AIFeature>().HasOne(ai => ai.AIServiceStatusMapping)
+			.WithMany().HasForeignKey(ai => ai.ServiceStatusId).HasPrincipalKey(asm => asm.Id);
 
 		modelBuilder.Entity<CurrentMonthFeesAndRevenueStatus>().HasNoKey();
 		modelBuilder.Entity<CurrentMembersFeesStatus>().HasNoKey();

@@ -3,6 +3,8 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------
 --	|		Debanjan Paul	|		26-07-2025				|	Gets the payment history data for the member									|
 -------------------------------------------------------------------------------------------------------------------------------------------------
+--	|		Debanjan Paul	|		11-08-2025				|	Added sorting based on to date													|
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE PROCEDURE [dbo].[SP_GetPaymentHistoryForMember]
 (
@@ -20,7 +22,8 @@ BEGIN TRY
 			INNER JOIN dbo.MemberDetails MD (NOLOCK) ON MD.MemberId=FPH.MemberId AND FPH.MemberGuid=MD.MemberGuid AND MD.IsActive=1
 			INNER JOIN dbo.MembershipStatusMapping MSM (NOLOCK) ON MSM.Id=MD.MembershipStatusId AND MSM.IsActive=1
 			INNER JOIN dbo.FeesPaymentStatusMapping FPSM (NOLOCK) ON FPSM.Id=FPH.PaymentStatusId AND FPSM.IsActive=1
-		WHERE FPH.IsActive=1
+		WHERE FPH.IsActive=1 
+		ORDER BY FPH.ToDate DESC
 	END
 	ELSE
 	BEGIN
@@ -30,7 +33,8 @@ BEGIN TRY
 			INNER JOIN dbo.MemberDetails MD (NOLOCK) ON MD.MemberId=FPH.MemberId AND FPH.MemberGuid=MD.MemberGuid AND MD.IsActive=1
 			INNER JOIN dbo.MembershipStatusMapping MSM (NOLOCK) ON MSM.Id=MD.MembershipStatusId AND MSM.IsActive=1
 			INNER JOIN dbo.FeesPaymentStatusMapping FPSM (NOLOCK) ON FPSM.Id=FPH.PaymentStatusId AND FPSM.IsActive=1
-		WHERE FPH.IsActive=1 AND MD.MemberEmail=@MemberEmailId
+		WHERE FPH.IsActive=1 AND MD.MemberEmail=@MemberEmailId 
+		ORDER BY FPH.ToDate DESC
 	END
 
 END TRY

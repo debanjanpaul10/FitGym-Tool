@@ -5,7 +5,7 @@
 // <summary>The Dependency Injection Container Class.</summary>
 // *********************************************************************************
 
-using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.DrivingPorts;
 using FitGymTool.Domain.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +25,8 @@ public static class DependencyContainer
 	{
 		services.AddScoped<ICommonService, CommonService>()
 			.AddScoped<IMemberFeesService, MemberFeesService>()
-			.AddScoped<IMembersService, MembersService>();
+			.AddScoped<IMembersService, MembersService>()
+			.AddScoped<IAiServices, AiServices>();
 
 		return services;
 	}

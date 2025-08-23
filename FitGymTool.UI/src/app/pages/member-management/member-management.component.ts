@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
 
 import { MembersListComponent } from '@components/member-management/members-list-component/members-list.component';
 import { MembersApiService } from '@services/members-api.service';
@@ -25,6 +26,7 @@ import { LoaderService } from '@core/services/loader.service';
 import { CommonApiService } from '@services/common-api.service';
 import { EditMemberComponent } from '@components/member-management/edit-member-component/edit-member.component';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { Utilities } from '@core/helpers/utilities-helper';
 
 /**
  * @component
@@ -42,6 +44,7 @@ import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.mod
     MainFormContainerComponent,
     UpdateMembershipStatusComponent,
     EditMemberComponent,
+    Ripple,
   ],
   templateUrl: './member-management.component.html',
   styleUrl: './member-management.component.scss',
@@ -185,25 +188,6 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Validates whether the provided master mapping data contains valid and usable information.
-   * Checks for the presence of membership status mappings and other array-based mapping data.
-   * Returns true if valid data exists, false otherwise.
-   */
-  private checkValidMappingDataExists(data: MasterMappingDataDto): boolean {
-    return (
-      data &&
-      ((data.membershipStatusMapping &&
-        data.membershipStatusMapping.length > 0) ||
-        (data.membershipStatusMapping &&
-          data.membershipStatusMapping.length > 0) ||
-        Object.keys(data).some((key) => {
-          const value = (data as any)[key];
-          return Array.isArray(value) && value.length > 0;
-        }))
-    );
-  }
-
-  /**
    * Manages the subscription and handling of master mapping data from the common service.
    * Sets up subscriptions to monitor mapping data changes and automatically fetches new data if invalid.
    * Specifically handles membership status mapping subscriptions and triggers data refresh when needed.
@@ -212,7 +196,7 @@ export class MemberManagementComponent implements OnInit, OnDestroy {
     this.masterMappingDataSubscription =
       this.commonService.MappingMasterData.subscribe(
         (data: MasterMappingDataDto) => {
-          if (this.checkValidMappingDataExists(data)) {
+          if (Utilities.CheckValidMappingDataExists(data)) {
             this.masterMappingData = data;
           } else {
             this.getMasterMappingsData();

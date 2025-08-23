@@ -1,0 +1,174 @@
+@if (!isChatOpen()) {
+<div class="chat-dock">
+  <button
+    class="chat-toggle-btn"
+    [pTooltip]="'Chat with AI Agent'"
+    tooltipPosition="left"
+    (click)="toggleChat()"
+  >
+    <img
+      src="../../../assets/Images/ai.png"
+      alt="AI Agent Chat"
+      class="chat-icon"
+    />
+  </button>
+</div>
+} @if (isChatOpen()) {
+<div class="custom-chat-dialog" [class.expanded]="isExpanded()">
+  <div class="chat-header">
+    <span class="chat-title">
+      <img
+        src="../../../assets/Images/ai.png"
+        alt="AI Agent Chat"
+        class="chat-icon"
+      />
+      &nbsp; {{ AIMessages.Header }}
+    </span>
+    <div class="header-buttons">
+      <button
+        class="expand-btn"
+        (click)="toggleExpand()"
+        [pTooltip]="isExpanded() ? 'Collapse Chat' : 'Expand Chat'"
+        tooltipPosition="bottom"
+      >
+        <i
+          class="pi"
+          [class.pi-window-maximize]="!isExpanded()"
+          [class.pi-window-minimize]="isExpanded()"
+        ></i>
+      </button>
+      <button
+        class="refresh-btn"
+        (click)="refreshChats()"
+        [pTooltip]="'Refresh Chat'"
+        tooltipPosition="bottom"
+      >
+        <i class="pi pi-refresh"></i>
+      </button>
+      <button
+        class="close-btn"
+        (click)="closeChat()"
+        [pTooltip]="'Close Chat'"
+        tooltipPosition="bottom"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-messages" #messagesContainer (scroll)="onMessagesScroll()">
+      @for (message of messages(); track $index) {
+      <div
+        class="message"
+        [class.bot-message]="message.isBot"
+        [class.user-message]="!message.isBot"
+      >
+        <div class="message-content">
+          @if (message.isTyping) {
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          } @else if (message.contentType === 'markdown-table' &&
+          message.userIntent === 'SQL') {
+          <div class="markdown-table-container">
+            @if (parseMarkdownTable(message.content); as tableData) {
+            <div class="table-wrapper">
+              <table class="markdown-table">
+                <thead>
+                  <tr>
+                    @for (header of tableData.headers; track header) {
+                    <th>{{ header }}</th>
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of tableData.rows; track $index) {
+                  <tr>
+                    @for (cell of row; track $index) {
+                    <td>{{ cell }}</td>
+                    }
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            } @else {
+            <div class="fallback-content">{{ message.content }}</div>
+            }
+          </div>
+          } @else {
+          <div class="text-content">{{ message.content }}</div>
+          } @if (!message.isBot && !message.isTyping) {
+          <button
+            class="copy-message-btn"
+            (click)="copyUserMessage(message.content)"
+            [pTooltip]="'Copy message'"
+            tooltipPosition="left"
+          >
+            <i class="pi pi-copy"></i>
+          </button>
+          }
+        </div>
+      </div>
+      } @if (showScrollToBottomButton) {
+      <button
+        class="scroll-to-bottom-btn"
+        (click)="scrollToBottomManually()"
+        [pTooltip]="'Scroll to bottom'"
+        tooltipPosition="left"
+      >
+        <i class="pi pi-chevron-down"></i>
+      </button>
+      }
+    </div>
+
+    <!-- Sample Prompts Section -->
+    @if (sampleChatbotPrompts().length > 0 && messages().length <= 1 &&
+    !isProcessing()) {
+    <div class="sample-prompts-container">
+      <div class="sample-prompts-header">
+        <span>Try these sample prompts:</span>
+      </div>
+      <div class="sample-prompts-bubbles">
+        @for (prompt of sampleChatbotPrompts(); track prompt.promptName) {
+        <button
+          class="sample-prompt-bubble"
+          (click)="insertSamplePrompt(prompt.promptName)"
+          [pTooltip]="prompt.promptDescription"
+          tooltipPosition="top"
+        >
+          {{ prompt.promptName }}
+        </button>
+        }
+      </div>
+    </div>
+    }
+
+    <div class="chat-input">
+      <input
+        #messageInput
+        type="text"
+        [placeholder]="isProcessing() ? AIMessages.AIisThinking : AIMessages.TypeYourMessage"
+        class="message-input"
+        [disabled]="isProcessing()"
+        (keyup.enter)="sendMessage($event)"
+      />
+      <button
+        class="send-btn"
+        [disabled]="isProcessing()"
+        [class.processing]="isProcessing()"
+        (click)="sendMessage($event)"
+      >
+        @if (isProcessing()) {
+        <i class="pi pi-spin pi-spinner"></i>
+        } @else {
+        <i class="pi pi-send"></i>
+        }
+      </button>
+    </div>
+  </div>
+</div>
+}

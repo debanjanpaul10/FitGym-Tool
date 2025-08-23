@@ -3,6 +3,7 @@ import {
   inject,
   OnInit,
   signal,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 
@@ -28,6 +29,9 @@ import { CurrentMembersFeesStatusDTO } from '@models/DTO/current-members-fees-st
   styleUrl: './fees-management.component.scss',
 })
 export class FeesManagementComponent implements OnInit {
+  @ViewChild(CurrentMemberFeesStatusComponent)
+  currentMemberFeesStatusComponent!: CurrentMemberFeesStatusComponent;
+
   protected mappingMasterData: WritableSignal<MasterMappingDataDto> = signal(
     new MasterMappingDataDto()
   );
@@ -67,5 +71,12 @@ export class FeesManagementComponent implements OnInit {
     feesStatusData: CurrentMembersFeesStatusDTO[]
   ): void {
     this.feesStatusData.set(feesStatusData);
+  }
+
+  protected onPaymentUpdated(): void {
+    // Refresh the current member fees status component
+    if (this.currentMemberFeesStatusComponent) {
+      this.currentMemberFeesStatusComponent['getCurrentMembersFeesStatus']();
+    }
   }
 }

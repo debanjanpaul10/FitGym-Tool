@@ -103,5 +103,56 @@ public static class RouteConstants
 		/// The get payment history data for member API route
 		/// </summary>
 		public const string GetPaymentHistoryDataForMember_ApiRoute = "GetPaymentHistoryDataForMember";
+
+		/// <summary>
+		/// The update member fees data API route
+		/// </summary>
+		public const string UpdateMemberFeesData_ApiRoute = "UpdateMemberFeesData";
+	}
+
+	/// <summary>
+	/// The AI Services API Routes class.
+	/// </summary>
+	internal static class AIServicesApiRoutes
+	{
+		/// <summary>
+		/// The base route route prefix
+		/// </summary>
+		public const string BaseRoute_RoutePrefix = "api/aiservices";
+
+		/// <summary>
+		/// The respond API route
+		/// </summary>
+		internal const string Respond_ApiRoute = "respond";
+
+		/// <summary>
+		/// The get bug severity status API route
+		/// </summary>
+		internal const string GetBugSeverityStatus_ApiRoute = "getbugseveritystatus";
+
+		/// <summary>
+		/// The get active ai features API route
+		/// </summary>
+		internal const string GetActiveAIFeatures_ApiRoute = "getactiveaifeatures";
+
+		/// <summary>
+		/// The get knowledge base SQL API route
+		/// </summary>
+		internal const string GetKnowledgeBaseSql_ApiRoute = "getsqlknowledgebasejson";
+
+		/// <summary>
+		/// The get database schema SQL API route
+		/// </summary>
+		internal const string GetDatabaseSchemaSql_ApiRoute = "getdatabaseschemajson";
+
+		/// <summary>
+		/// The execute SQL query API route
+		/// </summary>
+		internal const string ExecuteSqlQuery_ApiRoute = "executesqlquery";
+
+		/// <summary>
+		/// The get sample prompts for chatbot API route
+		/// </summary>
+		internal const string GetSamplePromptsForChatbot_ApiRoute = "getsampleprompts";
 	}
 }

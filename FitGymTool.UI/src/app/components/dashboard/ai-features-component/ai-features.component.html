@@ -1,0 +1,48 @@
+<div
+  class="card shadow-m border-0 bg-dark text-light"
+  pRipple
+  style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
+>
+  <div class="card-content">
+    <h5 class="mb-3">{{ headersConstants.AIFeaturesHeader }}</h5>
+
+    @if (activeAiFeatures().length > 0) {
+    <div class="ai-features-list">
+      @for (feature of activeAiFeatures(); track feature.id) {
+      <div class="ai-feature-item">
+        <span class="feature-name">{{ feature.serviceName }}</span>
+        <p-tag
+          [rounded]="true"
+          [class]="getChipColour(feature.serviceStatusId)"
+          [value]="getServiceStatusName(feature.serviceStatusId)"
+        >
+        </p-tag>
+      </div>
+      }
+    </div>
+
+    <p-button
+      (click)="openAIFeaturesList()"
+      pRipple
+      icon="pi pi-chevron-right"
+      variant="outlined"
+      rounded="true"
+      class="expand-arrow"
+      size="small"
+    >
+    </p-button>
+    } @else {
+    <div class="no-features">
+      <p>{{ headersConstants.NoAIFeaturesAvailable }}</p>
+    </div>
+    }
+  </div>
+</div>
+
+@if (activeAiFeatures().length > 0) {
+<app-ai-features-list-component
+  [aiFeaturesList]="activeAiFeatures"
+  [aiServiceStatusMapping]="aiServiceStatusMapping"
+></app-ai-features-list-component>
+
+}

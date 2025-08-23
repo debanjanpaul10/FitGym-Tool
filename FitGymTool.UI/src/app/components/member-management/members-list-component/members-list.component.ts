@@ -6,10 +6,12 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { FilterService, SortEvent } from 'primeng/api';
+import { Ripple } from 'primeng/ripple';
 
 import { MemberDetailsDto } from '@models/DTO/members/memberdetails-dto.model';
 import { Column } from '@models/interfaces/column.interface';
 import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-status-mapping-dto.model';
+import { Utilities } from '@core/helpers/utilities-helper';
 
 /**
  * Component responsible for displaying and filtering a list of gym members.
@@ -24,6 +26,7 @@ import { MembershipStatusMappingDto } from '@models/DTO/Mapping/membership-statu
     SelectModule,
     ButtonModule,
     FormsModule,
+    Ripple,
   ],
   templateUrl: './members-list.component.html',
   styleUrl: './members-list.component.scss',
@@ -64,8 +67,8 @@ export class MembersListComponent {
         if (!filter) return true;
         if (!value) return false;
         // Convert both to yyyy-MM-dd for comparison
-        const valueDate = this.formatDateToYMD(new Date(value));
-        const filterDate = this.formatDateToYMD(new Date(filter));
+        const valueDate = Utilities.FormatDateToYMD(new Date(value));
+        const filterDate = Utilities.FormatDateToYMD(new Date(filter));
         return valueDate === filterDate;
       }
     );
@@ -127,19 +130,6 @@ export class MembersListComponent {
   }
 
   // #region PRIVATE METHODS
-
-  /**
-   * Converts a Date object to a standardized yyyy-MM-dd string format.
-   * Ensures consistent date formatting for comparison operations in filters.
-   * @param date - The Date object to format
-   * @returns A string representation of the date in yyyy-MM-dd format
-   */
-  private formatDateToYMD(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
 
   /**
    * Sorts the table data in place based on the provided sort event's field and order.

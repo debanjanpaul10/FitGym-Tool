@@ -52,4 +52,12 @@ public interface IUnitOfWork : IDisposable
 	/// <param name="parameters">The parameters.</param>
 	/// <returns>The SQL query response.</returns>
 	Task<List<T>> ExecuteSqlQueryAsync<T>(string sql, params object[] parameters);
+
+	/// <summary>
+	/// Executes the SQL query raw asynchronous.
+	/// </summary>
+	/// <typeparam name="TResponse">The type of the response.</typeparam>
+	/// <param name="sqlQuery">The SQL query.</param>
+	/// <returns>The SQL response.</returns>
+	Task<TResponse> ExecuteSqlQueryRawAsync<TResponse>(string sqlQuery);
 }

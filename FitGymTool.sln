@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -17,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FBF56CC3-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Persistence.Adapters", "Adapters\FitGymTool.Persistence.Adapters\FitGymTool.Persistence.Adapters.csproj", "{6A0A167A-1009-B26B-6F12-CA66676A74DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.API.Adapters", "Adapters\FitGymTool.API.Adapters\FitGymTool.API.Adapters.csproj", "{AAC9718F-2916-EACA-A6FF-1BA411F304F0}"
@@ -32,6 +29,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Domain.UnitTests", "UnitTesting\FitGymTool.Domain.UnitTests\FitGymTool.Domain.UnitTests.csproj", "{44F6B3C9-633A-456F-AA0F-DBA2C0812218}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.Persistence.Adapters.UnitTests", "UnitTesting\FitGymTool.Persistence.Adapters.UnitTests\FitGymTool.Persistence.Adapters.UnitTests.csproj", "{3E1B04B3-032F-4E81-A2EA-073B394E7B90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.AIAgents.Adapters", "Adapters\FitGymTool.AIAgents.Adapters\FitGymTool.AIAgents.Adapters.csproj", "{6E450A9A-FA46-43CF-B40E-3C116091D449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitGymTool.MongoDB.Adapters", "Adapters\FitGymTool.MongoDB.Adapters\FitGymTool.MongoDB.Adapters.csproj", "{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +73,14 @@ Global
 		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E1B04B3-032F-4E81-A2EA-073B394E7B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E450A9A-FA46-43CF-B40E-3C116091D449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +92,8 @@ Global
 		{4C5673B0-88E6-43B6-98E2-4EB254784891} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
 		{44F6B3C9-633A-456F-AA0F-DBA2C0812218} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
 		{3E1B04B3-032F-4E81-A2EA-073B394E7B90} = {BBA9EAE2-61C3-40AF-A0F0-E6ABF3EA9AAB}
+		{6E450A9A-FA46-43CF-B40E-3C116091D449} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
+		{4A68D8B4-3523-4DAC-AC41-C8ABF940199F} = {09DF2EE5-5FE7-3EC7-59CB-CAD7E0928979}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F10EEE12-6C17-41C8-8EAB-C08DB01E502F}

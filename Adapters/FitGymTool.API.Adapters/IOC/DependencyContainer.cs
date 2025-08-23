@@ -26,14 +26,13 @@ public static class DependencyContainer
 	/// <returns>The service collection.</returns>
 	public static IServiceCollection AddAPIHandlers(this IServiceCollection services)
 	{
-		services.AddScoped<ICommonHandler, CommonHandler>()
+		return services.AddScoped<ICommonHandler, CommonHandler>()
 			.AddScoped<IMemberFeesHandler, MemberFeesHandler>()
 			.AddScoped<IMembersHandler, MembersHandler>()
+			.AddScoped<IAIServicesHandler, AIServicesHandler>()
 			.AddAutoMapper(mapperConfig =>
 			{
 				mapperConfig.AddProfile<DomainMapperProfile>();
 			});
-
-		return services;
 	}
 }
