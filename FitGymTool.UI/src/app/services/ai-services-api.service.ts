@@ -35,4 +35,9 @@ export class AiApiService {
     const apiUrl = `${this._apiBaseUrl}${this._aiServiceApiRoute.GetActiveAIFeatures_ApiRoute}`;
     return this._httpClient.get<ResponseDto>(apiUrl);
   }
+
+  public GetSamplePromptsForChatbotAsync(): Observable<ResponseDto> {
+    const apiUrl = `${this._apiBaseUrl}${this._aiServiceApiRoute.GetSamplePromptsForChatbot_ApiRoute}`;
+    return this._httpClient.get<ResponseDto>(apiUrl);
+  }
 }

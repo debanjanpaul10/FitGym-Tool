@@ -49,4 +49,10 @@ public interface IAIServicesHandler
 	/// The database knowledge base DTO.
 	/// </returns>
 	Task<DatabaseKnowledgeBaseDTO> GetDatabaseKnowledgePiecesJsonAsync();
+
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="SampleChatbotPromptsDTO"/></returns>
+	Task<IEnumerable<SampleChatbotPromptsDTO>> GetSamplePromptsForChatbotAsync();
 }

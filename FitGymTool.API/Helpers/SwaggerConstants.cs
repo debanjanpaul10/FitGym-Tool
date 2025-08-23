@@ -215,5 +215,15 @@ internal static class SwaggerConstants
 			internal const string Description = "Gets the detailed database knowledge base json file.";
 			internal const string OperationId = nameof(GetDatabaseSchemaJsonAction);
 		}
+
+		/// <summary>
+		/// Swagger documentation for GetSamplePromptsForChatbotAsync
+		/// </summary>
+		internal static class GetSamplePromptsForChatbotAction
+		{
+			internal const string Summary = "Gets a list of sample prompts for ai chatbot.";
+			internal const string Description = "Gets the list of sample prompts for ai chatbot that can be executed by user.";
+			internal const string OperationId = nameof(GetSamplePromptsForChatbotAction);
+		}
 	}
 }

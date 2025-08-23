@@ -158,6 +158,31 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 		}
 	}
 
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="SampleChatbotPromptsDomain" />
+	/// </returns>
+	public async Task<IEnumerable<SampleChatbotPromptsDomain>> GetSamplePromptsForChatbotAsync()
+	{
+
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
+			return await commonDataManager.GetSamplePromptsForChatbotAsync().ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
+		}
+	}
+
 	#region PRIVATE METHODS
 
 	/// <summary>

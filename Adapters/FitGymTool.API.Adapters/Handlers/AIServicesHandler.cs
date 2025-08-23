@@ -86,4 +86,16 @@ public class AIServicesHandler(IMapper mapper, IAiServices aiServices) : IAIServ
 		var domainResponse = await aiServices.GetDatabaseSchemaJsonAsync().ConfigureAwait(false);
 		return mapper.Map<DatabaseSchemaDTO>(domainResponse);
 	}
+
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="SampleChatbotPromptsDTO" />
+	/// </returns>
+	public async Task<IEnumerable<SampleChatbotPromptsDTO>> GetSamplePromptsForChatbotAsync()
+	{
+		var domainResponse = await aiServices.GetSamplePromptsForChatbotAsync().ConfigureAwait(false);
+		return mapper.Map<IEnumerable<SampleChatbotPromptsDTO>>(domainResponse);
+	}
 }

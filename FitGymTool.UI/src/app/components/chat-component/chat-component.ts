@@ -26,6 +26,7 @@ import {
 import { AIChatbotResponseDTO } from '@models/DTO/ai-chatbot-response-dto.model';
 import { ChatMessage } from '@models/interfaces/chat-message.interface';
 import { Utilities } from '@core/helpers/utilities-helper';
+import { SampleChatbotPromptsDTO } from '@models/DTO/sample-chatbot-prompts-dto.model';
 
 @Component({
   selector: 'app-chat-component',
@@ -43,6 +44,8 @@ export class ChatComponent implements AfterViewChecked, OnInit {
   protected isExpanded: WritableSignal<boolean> = signal(false);
   protected AIMessages = CommonApplicationConstants.AIConstants;
   protected parseMarkdownTable = Utilities.ParseMarkdownTable;
+  protected sampleChatbotPrompts: WritableSignal<SampleChatbotPromptsDTO[]> =
+    signal([]);
 
   private readonly _toasterService: ToasterService = inject(ToasterService);
   private readonly _aiApiService: AiApiService = inject(AiApiService);
@@ -57,6 +60,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
   ngOnInit(): void {
     this.loadUserProfile();
     this.initializeMessages();
+    this.getSampleAiPrompts();
 
     setTimeout(() => {
       if (!this.currentUserProfile()?.name) {
@@ -135,7 +139,6 @@ export class ChatComponent implements AfterViewChecked, OnInit {
         ? event.target
         : event.target.previousElementSibling;
 
-    // Fallback to ViewChild reference if DOM traversal fails
     if (!input && this.messageInput) {
       input = this.messageInput.nativeElement;
     }
@@ -163,7 +166,28 @@ export class ChatComponent implements AfterViewChecked, OnInit {
     }
   }
 
+  protected insertSamplePrompt(promptText: string): void {
+    if (this.messageInput && !this.isProcessing()) {
+      this.messageInput.nativeElement.value = promptText;
+      this.messageInput.nativeElement.focus();
+    }
+  }
+
   // #region PRIVATE METHODS
+
+  private getSampleAiPrompts(): void {
+    this._aiApiService.GetSamplePromptsForChatbotAsync().subscribe({
+      next: (response: ResponseDto) => {
+        if (response?.isSuccess && response?.responseData) {
+          this.sampleChatbotPrompts.set(response?.responseData);
+        }
+      },
+      error: (error: Error) => {
+        console.error(error);
+        this._toasterService.showError(error.message);
+      },
+    });
+  }
 
   private scrollToBottom(): void {
     try {
@@ -232,7 +256,6 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       },
       error: (error: any) => {
         console.error(error);
-        this.removeTypingIndicator();
 
         let errorMessage = this.AIMessages.SendMessageFailed;
         if (error?.error?.errors?.chatMessage) {
@@ -241,22 +264,44 @@ export class ChatComponent implements AfterViewChecked, OnInit {
           errorMessage = error.message;
         }
 
+        this.showErrorAsAiResponse(errorMessage);
         this._toasterService.showError(errorMessage);
       },
     });
   }
 
   private handleErrorResponse(errorMessage: string): void {
-    this.removeTypingIndicator();
-    this.isProcessing.set(false);
+    this.showErrorAsAiResponse(errorMessage);
     this._toasterService.showError(errorMessage);
   }
 
-  private removeTypingIndicator(): void {
-    this.messages.update((msgs) => {
-      const filteredMsgs = msgs.filter((msg) => !msg.isTyping);
-      return filteredMsgs;
-    });
+  private showErrorAsAiResponse(errorMessage: string): void {
+    const messages = this.messages();
+    const lastMessageIndex = messages.length - 1;
+
+    if (messages[lastMessageIndex]?.isTyping) {
+      this.messages.update((msgs) => {
+        const updatedMsgs = [...msgs];
+        updatedMsgs[lastMessageIndex] = {
+          content: `Error: ${errorMessage}`,
+          isBot: true,
+          isTyping: false,
+          contentType: 'text',
+        };
+        return updatedMsgs;
+      });
+    } else {
+      this.messages.update((msgs) => [
+        ...msgs,
+        {
+          content: `Error: ${errorMessage}`,
+          isBot: true,
+          isTyping: false,
+          contentType: 'text',
+        },
+      ]);
+    }
+
     this.isProcessing.set(false);
     this.shouldScrollToBottom = true;
   }

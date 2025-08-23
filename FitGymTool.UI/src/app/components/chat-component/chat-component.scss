@@ -195,9 +195,11 @@
       color: #e0e0e0;
       border-radius: 18px 18px 18px 4px;
       padding: 0.75rem 1rem;
-      max-width: 80%;
+      max-width: 90%;
       display: inline-block;
       border: 1px solid #404040;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
   }
 
@@ -209,9 +211,11 @@
       color: white;
       border-radius: 18px 18px 4px 18px;
       padding: 0.75rem 1rem;
-      max-width: 80%;
+      max-width: 90%;
       display: inline-block;
       position: relative; /* For positioning the copy button */
+      word-wrap: break-word;
+      overflow-wrap: break-word;
 
       /* Copy button styles */
       .copy-message-btn {
@@ -364,6 +368,85 @@
 
 .text-content {
   color: inherit;
+}
+
+/* Sample Prompts Styles */
+.sample-prompts-container {
+  padding: 1rem;
+  border-top: 1px solid #404040;
+  background: #2d2d2d;
+  flex-shrink: 0;
+}
+
+.sample-prompts-header {
+  margin-bottom: 0.75rem;
+  color: #e0e0e0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sample-prompts-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-height: 120px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 2px;
+
+    &:hover {
+      background: #764ba2;
+    }
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #667eea #1e1e1e;
+}
+
+.sample-prompt-bubble {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 350px;
+  white-space: normal;
+  overflow: visible;
+  display: inline-block;
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.2) 0%,
+      rgba(118, 75, 162, 0.2) 100%
+    );
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
+  }
 }
 
 .chat-input {
@@ -553,5 +636,26 @@
     i {
       font-size: 12px;
     }
+  }
+
+  /* Mobile sample prompts adjustments */
+  .sample-prompts-container {
+    padding: 0.75rem;
+  }
+
+  .sample-prompts-header {
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+  }
+
+  .sample-prompts-bubbles {
+    max-height: 100px;
+    gap: 0.4rem;
+  }
+
+  .sample-prompt-bubble {
+    font-size: 12px;
+    padding: 0.4rem 0.6rem;
+    max-width: 250px;
   }
 }

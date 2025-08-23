@@ -125,6 +125,28 @@
       }
     </div>
 
+    <!-- Sample Prompts Section -->
+    @if (sampleChatbotPrompts().length > 0 && messages().length <= 1 &&
+    !isProcessing()) {
+    <div class="sample-prompts-container">
+      <div class="sample-prompts-header">
+        <span>Try these sample prompts:</span>
+      </div>
+      <div class="sample-prompts-bubbles">
+        @for (prompt of sampleChatbotPrompts(); track prompt.promptName) {
+        <button
+          class="sample-prompt-bubble"
+          (click)="insertSamplePrompt(prompt.promptName)"
+          [pTooltip]="prompt.promptDescription"
+          tooltipPosition="top"
+        >
+          {{ prompt.promptName }}
+        </button>
+        }
+      </div>
+    </div>
+    }
+
     <div class="chat-input">
       <input
         #messageInput

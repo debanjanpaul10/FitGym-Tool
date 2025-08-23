@@ -29,8 +29,9 @@ export class ApiRoutes {
   public static AIServicesApi = {
     BaseRoute: 'api/aiservices/',
     Respond_ApiRoute: 'respond',
-    GetBugSeverityStatus_ApiRoute: 'GetBugSeverityStatus',
-    GetActiveAIFeatures_ApiRoute: 'GetActiveAIFeatures',
+    GetBugSeverityStatus_ApiRoute: 'getbugseveritystatus',
+    GetActiveAIFeatures_ApiRoute: 'getactiveaifeatures',
+    GetSamplePromptsForChatbot_ApiRoute: 'getsampleprompts',
   };
 }
 

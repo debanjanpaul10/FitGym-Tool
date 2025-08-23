@@ -70,6 +70,7 @@ public class DomainMapperProfile : Profile
 		CreateMap<CommonIssueDomain, CommonIssueDTO>();
 
 		CreateMap<AIChatbotResponse, AIChatbotResponseDTO>();
+		CreateMap<SampleChatbotPromptsDomain, SampleChatbotPromptsDTO>();
 
 		// MAPPING
 		CreateMap<MappingMasterData, MappingMasterDataDto>();

@@ -128,12 +128,12 @@ public static class RouteConstants
 		/// <summary>
 		/// The get bug severity status API route
 		/// </summary>
-		internal const string GetBugSeverityStatus_ApiRoute = "GetBugSeverityStatus";
+		internal const string GetBugSeverityStatus_ApiRoute = "getbugseveritystatus";
 
 		/// <summary>
 		/// The get active ai features API route
 		/// </summary>
-		internal const string GetActiveAIFeatures_ApiRoute = "GetActiveAIFeatures";
+		internal const string GetActiveAIFeatures_ApiRoute = "getactiveaifeatures";
 
 		/// <summary>
 		/// The get knowledge base SQL API route
@@ -149,5 +149,10 @@ public static class RouteConstants
 		/// The execute SQL query API route
 		/// </summary>
 		internal const string ExecuteSqlQuery_ApiRoute = "executesqlquery";
+
+		/// <summary>
+		/// The get sample prompts for chatbot API route
+		/// </summary>
+		internal const string GetSamplePromptsForChatbot_ApiRoute = "getsampleprompts";
 	}
 }

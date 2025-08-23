@@ -27,119 +27,143 @@ namespace FitGymTool.Persistence.Adapters.DataManager;
 /// <seealso cref="ICommonDataManager" />
 public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager> logger) : ICommonDataManager
 {
-    /// <summary>
-    /// Gets the mappings master data asynchronous.
-    /// </summary>
-    /// <returns>A tupple containing the mapping master data.</returns>
-    public async Task<MappingMasterData> GetMappingsMasterDataAsync()
-    {
-        try
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
+	/// <summary>
+	/// Gets the mappings master data asynchronous.
+	/// </summary>
+	/// <returns>A tupple containing the mapping master data.</returns>
+	public async Task<MappingMasterData> GetMappingsMasterDataAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
 
-            var feesDurationMapping = await unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(x => x.IsActive);
-            var feesPaymentStatusMapping = await unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(x => x.IsActive);
-            var membershipStatusMapping = await unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(x => x.IsActive);
-            var bugSeverityMapping = await unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(x => x.IsActive);
-            var aIServiceStatusMappings = await unitOfWork.Repository<AIServiceStatusMapping>().GetAllAsync(x => x.IsActive);
+			var feesDurationMapping = await unitOfWork.Repository<FeesDurationMapping>().GetAllAsync(x => x.IsActive);
+			var feesPaymentStatusMapping = await unitOfWork.Repository<FeesPaymentStatusMapping>().GetAllAsync(x => x.IsActive);
+			var membershipStatusMapping = await unitOfWork.Repository<MembershipStatusMapping>().GetAllAsync(x => x.IsActive);
+			var bugSeverityMapping = await unitOfWork.Repository<BugSeverityMapping>().GetAllAsync(x => x.IsActive);
+			var aIServiceStatusMappings = await unitOfWork.Repository<AIServiceStatusMapping>().GetAllAsync(x => x.IsActive);
 
-            return new MappingMasterData()
-            {
-                FeesDurationMapping = feesDurationMapping,
-                FeesPaymentStatusMapping = feesPaymentStatusMapping,
-                MembershipStatusMapping = membershipStatusMapping,
-                BugSeverityMapping = bugSeverityMapping,
-                AIServiceStatusMappings = aIServiceStatusMappings
-            };
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
-            throw;
-        }
-        finally
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
-        }
-    }
+			return new MappingMasterData()
+			{
+				FeesDurationMapping = feesDurationMapping,
+				FeesPaymentStatusMapping = feesPaymentStatusMapping,
+				MembershipStatusMapping = membershipStatusMapping,
+				BugSeverityMapping = bugSeverityMapping,
+				AIServiceStatusMappings = aIServiceStatusMappings
+			};
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, DatabaseConstants.NotApplicableStringConstant));
+		}
+	}
 
-    /// <summary>
-    /// Adds the new bug report data asynchronous.
-    /// </summary>
-    /// <param name="bugReportData">The bug report data.</param>
-    /// <returns>The boolean for success/failure.</returns>
-    public async Task<bool> AddNewBugReportDataAsync(BugReportData bugReportData)
-    {
-        try
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
+	/// <summary>
+	/// Adds the new bug report data asynchronous.
+	/// </summary>
+	/// <param name="bugReportData">The bug report data.</param>
+	/// <returns>The boolean for success/failure.</returns>
+	public async Task<bool> AddNewBugReportDataAsync(BugReportData bugReportData)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
 
-            var bugStatusEntity = await unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive);
-            bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
+			var bugStatusEntity = await unitOfWork.Repository<BugItemStatusMapping>().FirstOrDefaultAsync(status => status.StatusName == DatabaseConstants.NotStartedConstant && status.IsActive);
+			bugReportData.BugStatusId = bugStatusEntity?.Id ?? 0;
 
-            await unitOfWork.Repository<BugReportData>().AddAsync(bugReportData);
-            await unitOfWork.SaveChangesAsync();
+			await unitOfWork.Repository<BugReportData>().AddAsync(bugReportData);
+			await unitOfWork.SaveChangesAsync();
 
-            return true;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, ex.Message));
-            throw;
-        }
-        finally
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
-        }
-    }
+			return true;
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewBugReportDataAsync), DateTime.UtcNow, bugReportData.CreatedBy));
+		}
+	}
 
-    /// <summary>
-    /// Gets the active ai features asynchronous.
-    /// </summary>
-    /// <returns>
-    /// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.AIFeature" />
-    /// </returns>
-    public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
-    {
-        try
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
-            return await unitOfWork.Repository<AIFeature>().GetAllAsync(x => x.IsActive).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
-            throw;
-        }
-        finally
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
-        }
-    }
+	/// <summary>
+	/// Gets the active ai features asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.AIFeature" />
+	/// </returns>
+	public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
+			return await unitOfWork.Repository<AIFeature>().GetAllAsync(x => x.IsActive).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, string.Empty));
+		}
+	}
 
-    /// <summary>
-    /// Executes the aisql query asynchronous.
-    /// </summary>
-    /// <param name="aiSqlQuery">The ai SQL query.</param>
-    /// <returns>
-    /// The json format of the sql response.
-    /// </returns>
-    public async Task<string> ExecuteAISQLQueryAsync(string aiSqlQuery)
-    {
-        try
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, aiSqlQuery));
-            var result = await unitOfWork.ExecuteSqlQueryRawAsync<List<Object>>(aiSqlQuery).ConfigureAwait(false);
-            return JsonSerializer.Serialize(result);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, ex.Message));
-            throw;
-        }
-        finally
-        {
-            logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, aiSqlQuery));
-        }
-    }
+	/// <summary>
+	/// Executes the aisql query asynchronous.
+	/// </summary>
+	/// <param name="aiSqlQuery">The ai SQL query.</param>
+	/// <returns>
+	/// The json format of the sql response.
+	/// </returns>
+	public async Task<string> ExecuteAISQLQueryAsync(string aiSqlQuery)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, aiSqlQuery));
+			var result = await unitOfWork.ExecuteSqlQueryRawAsync<List<Object>>(aiSqlQuery).ConfigureAwait(false);
+			return JsonSerializer.Serialize(result);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, aiSqlQuery));
+		}
+	}
+
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.SampleChatbotPromptsDomain" />
+	/// </returns>
+	public async Task<IEnumerable<SampleChatbotPromptsDomain>> GetSamplePromptsForChatbotAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
+			return await unitOfWork.Repository<SampleChatbotPromptsDomain>().GetAllAsync(x => x.IsActive).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
+		}
+	}
 }

@@ -42,4 +42,10 @@ public interface ICommonDataManager
 	/// <param name="aiSqlQuery">The ai SQL query.</param>
 	/// <returns>The json format of the sql response.</returns>
 	Task<string> ExecuteAISQLQueryAsync(string aiSqlQuery);
+
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="SampleChatbotPromptsDomain"/></returns>
+	Task<IEnumerable<SampleChatbotPromptsDomain>> GetSamplePromptsForChatbotAsync();
 }

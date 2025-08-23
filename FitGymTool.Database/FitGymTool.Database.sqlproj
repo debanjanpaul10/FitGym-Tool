@@ -45,6 +45,7 @@
     <Build Include="User-Defined Types\dbo.UpdateMemberFeesTableType.sql" />
     <Build Include="Tables\AIFeatures.sql" />
     <Build Include="Tables\AIServiceStatusMapping.sql" />
+    <Build Include="Tables\AIChatbotPrompts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.INSERT_MembershipStatusMapping.sql" />
@@ -54,6 +55,7 @@
     <None Include="PostDeploymentScripts\Script.INSERT_BugItemStatusMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_BugSeverityMapping.sql" />
     <None Include="PostDeploymentScripts\Script.INSERT_AIServiceStatusMapping.sql" />
+    <None Include="PostDeploymentScripts\Script.INSERT_AIChatbotPrompts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Helpers\CleanupAll.sql" />

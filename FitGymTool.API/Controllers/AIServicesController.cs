@@ -215,5 +215,43 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 		}
 	}
 
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="SampleChatbotPromptsDTO"/></returns>
+	[HttpGet(RouteConstants.AIServicesApiRoutes.GetSamplePromptsForChatbot_ApiRoute)]
+	[ProducesResponseType(typeof(IEnumerable<SampleChatbotPromptsDTO>), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[SwaggerOperation(Summary = GetSamplePromptsForChatbotAction.Summary, Description = GetSamplePromptsForChatbotAction.Description, OperationId = GetSamplePromptsForChatbotAction.OperationId)]
+	public async Task<ResponseDTO> GetSamplePromptsForChatbotAsync()
+	{
+		try
+		{
 
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, base.UserFullName));
+			if (IsAuthorized())
+			{
+				var result = await aiServicesHandler.GetSamplePromptsForChatbotAsync().ConfigureAwait(false);
+				if (result is not null)
+				{
+					return HandleSuccessRequestResponse(result);
+				}
+
+				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+			}
+
+			return HandleUnAuthorizedRequestResponse();
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, ex.Message));
+			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, base.UserFullName ?? string.Empty));
+		}
+	}
 }

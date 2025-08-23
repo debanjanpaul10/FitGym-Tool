@@ -48,4 +48,10 @@ public interface IAiServices
 	/// The database knowledge base domain.
 	/// </returns>
 	Task<DatabaseKnowledgeBaseDomain> GetDatabaseKnowledgePiecesJsonAsync();
+
+	/// <summary>
+	/// Gets the sample prompts for chatbot asynchronous.
+	/// </summary>
+	/// <returns>The list of <see cref="SampleChatbotPromptsDomain"/></returns>
+	Task<IEnumerable<SampleChatbotPromptsDomain>> GetSamplePromptsForChatbotAsync();
 }
