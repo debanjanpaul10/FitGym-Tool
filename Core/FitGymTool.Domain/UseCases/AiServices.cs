@@ -92,9 +92,15 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 				throw new Exception(ExceptionConstants.SomethingWentWrongMessage);
 			}
 
-			if (aiResult.UserIntent.Trim().Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase))
+			if (aiResult.UserIntent.Trim().Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase)
+				&& aiResult.AIResponseData.Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase))
 			{
-				return await HandleSqlQueryResultsExecutionAsync(aiResult).ConfigureAwait(false);
+				aiResult.SqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
+				var jsonQuery = await commonDataManager.ExecuteAISQLQueryAsync(aiResult.SqlQuery).ConfigureAwait(false);
+
+				var sqlQueryResult = new SqlQueryResult() { JsonQuery = jsonQuery };
+				aiResult.AIResponseData = await aiServicesManager.GetSQLQueryMarkdownResponseAsync(sqlQueryResult).ConfigureAwait(false);
+				return aiResult;
 			}
 
 			return aiResult;
@@ -182,25 +188,4 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
-
-	#region PRIVATE METHODS
-
-	/// <summary>
-	/// Handles the SQL query results execution asynchronous.
-	/// </summary>
-	/// <param name="aiResult">The ai result.</param>
-	/// <returns>The AI chatbot response.</returns>
-	private async Task<AIChatbotResponse> HandleSqlQueryResultsExecutionAsync(AIChatbotResponse aiResult)
-	{
-		var cleanedSqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
-		aiResult.SqlQuery = cleanedSqlQuery;
-
-		var jsonQuery = await commonDataManager.ExecuteAISQLQueryAsync(cleanedSqlQuery).ConfigureAwait(false);
-		var markdownResponse = await aiServicesManager.GetSQLQueryMarkdownResponseAsync(new SqlQueryResult() { JsonQuery = jsonQuery }).ConfigureAwait(false);
-
-		aiResult.AIResponseData = markdownResponse;
-		return aiResult;
-	}
-
-	#endregion
 }

@@ -101,6 +101,11 @@ internal static class Constants
 		/// The ai agents API base URL
 		/// </summary>
 		internal const string AiAgentsApiBaseUrl = "AiAgentsLab:ApiBaseUrl";
+
+		/// <summary>
+		/// The local ai agents base URL
+		/// </summary>
+		internal const string LocalAiAgentsBaseUrl = "LocalAiAgentsBaseUrl";
 	}
 
 	/// <summary>
