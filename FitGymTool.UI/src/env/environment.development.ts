@@ -3,18 +3,18 @@ export const environment = {
   apiBaseUrl: 'https://localhost:6969',
   msalConfig: {
     auth: {
-      clientId: 'a60b28a6-c429-47e7-bdb4-19502849f14e',
-      authority: 'https://login.microsoftonline.com/consumers/',
+      clientId: '9f4124f9-5ec7-4084-866b-d42f3e82b02f',
+      authority: 'https://login.microsoftonline.com/common/',
     },
     scopes: ['Users.Read', 'Users.Write'],
   },
   apiConfig: {
     scopes: [
-      'api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Read',
-      'api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Write',
+      'api://bdb9b6f0-8229-4911-8390-8efc1fee5373/Users.Read',
+      'api://bdb9b6f0-8229-4911-8390-8efc1fee5373/Users.Write',
     ],
     uri: 'https://graph.microsoft.com/v1.0/me',
-    apiScope: ['api://0c49dfb9-3afe-4f24-934f-340be62b8cbd/Users.Write'],
+    apiScope: ['api://bdb9b6f0-8229-4911-8390-8efc1fee5373/Users.Write'],
   },
   idleConfig: {
     idleTimeoutMinutes: 30,

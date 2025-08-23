@@ -5,6 +5,7 @@
 // <summary>The Member Fees Handler Adapter Interface.</summary>
 // *********************************************************************************
 
+using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 
@@ -39,4 +40,12 @@ public interface IMemberFeesHandler
 	/// <param name="userEmailId">The user email address.</param>
 	/// <returns>The list of <see cref="MemberPaymentHistoryData"/></returns>
 	Task<IEnumerable<MemberPaymentHistoryDTO>> GetPaymentHistoryDataForMemberAsync(string userEmailId);
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <param name="currentUserAlias">The current user alias.</param>
+	/// <returns>The boolean for success/failure.</returns>
+	Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFeesDTO memberFeesData, string currentUserAlias);
 }

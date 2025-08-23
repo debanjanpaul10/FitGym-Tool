@@ -47,6 +47,11 @@ public static class DatabaseConstants
 			/// The add new member data sp
 			/// </summary>
 			public const string AddNewMemberData_SP = "EXEC [dbo].[SP_AddNewMemberData] @NewMemberData";
+
+			/// <summary>
+			/// The update member fees data sp
+			/// </summary>
+			public const string UpdateMemberFeesData_SP = "EXEC [dbo].[SP_UpdateMemberFeesData] @UpdateMemberFeesData";
 		}
 
 		/// <summary>
@@ -103,6 +108,31 @@ public static class DatabaseConstants
 			/// The created by
 			/// </summary>
 			internal const string CreatedBy = "CreatedBy";
+
+			/// <summary>
+			/// The update member fees data input
+			/// </summary>
+			internal const string UpdateMemberFeesDataInput = "@UpdateMemberFeesData";
+
+			/// <summary>
+			/// The amount
+			/// </summary>
+			internal const string Amount = "Amount";
+
+			/// <summary>
+			/// From date
+			/// </summary>
+			internal const string FromDate = "FromDate";
+
+			/// <summary>
+			/// Converts to date.
+			/// </summary>
+			internal const string ToDate = "ToDate";
+
+			/// <summary>
+			/// The modified by
+			/// </summary>
+			internal const string ModifiedBy = "ModifiedBy";
 		}
 	}
 
@@ -115,8 +145,12 @@ public static class DatabaseConstants
 		/// The add new member table type
 		/// </summary>
 		internal const string AddNewMemberTableType = "dbo.AddNewMemberTableType";
-	}
 
+		/// <summary>
+		/// The update member fees table type
+		/// </summary>
+		internal const string UpdateMemberFeesTableType = "dbo.UpdateMemberFeesTableType";
+	}
 
 	/// <summary>
 	/// The error messages class.
@@ -127,8 +161,12 @@ public static class DatabaseConstants
 		/// The database connection not found
 		/// </summary>
 		public const string DatabaseConnectionNotFound = "Oops! It seems the database connection is missing from the configuration!";
-	}
 
+		/// <summary>
+		/// The email identifier cannot be null message
+		/// </summary>
+		internal const string EmailIDCannotBeNullMessage = "Email ID cannot be null or empty";
+	}
 
 	/// <summary>
 	/// The Configuration Constants Class.

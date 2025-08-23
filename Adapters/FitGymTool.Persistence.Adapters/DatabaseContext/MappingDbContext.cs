@@ -55,4 +55,12 @@ public partial class SqlDbContext
 	/// The bug severity mapping.
 	/// </value>
 	public DbSet<BugSeverityMapping> BugSeverityMapping { get; set; }
+
+	/// <summary>
+	/// Gets or sets the ai service status mapping.
+	/// </summary>
+	/// <value>
+	/// The ai service status mapping.
+	/// </value>
+	public DbSet<AIServiceStatusMapping> AIServiceStatusMapping { get; set; }
 }

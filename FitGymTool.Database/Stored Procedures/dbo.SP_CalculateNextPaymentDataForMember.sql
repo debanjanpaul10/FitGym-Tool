@@ -3,10 +3,13 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------
 --	|		Debanjan Paul	|		26-07-2025				|	Calculates the next payment data for member										|
 -------------------------------------------------------------------------------------------------------------------------------------------------
+--	|		Debanjan Paul	|		11-08-2025				|	Add a new parameter to check if it should update the previous entry				|
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE PROCEDURE [dbo].[SP_CalculateNextPaymentDataForMember]
 (
-	@MemberEmailId NVARCHAR(MAX) = ''
+	@MemberEmailId NVARCHAR(MAX) = '',
+	@ShouldUpdatePreviousEntry BIT = 0
 )
 AS
 BEGIN
@@ -42,19 +45,11 @@ BEGIN TRY
 		MFPD.FeesDurationId,
 		FS.FeesAmount
 	FROM dbo.MemberDetails MD WITH (NOLOCK)
-		INNER JOIN dbo.MemberFeesPaymentDurationMapping MFPD WITH (NOLOCK) 
-			ON MFPD.MemberId = MD.MemberId AND MFPD.IsActive = 1
-		INNER JOIN dbo.FeesStructure FS WITH (NOLOCK) 
-			ON FS.FeesDurationId = MFPD.FeesDurationId AND FS.IsActive = 1
+		INNER JOIN dbo.MemberFeesPaymentDurationMapping MFPD WITH (NOLOCK) ON MFPD.MemberId = MD.MemberId AND MFPD.IsActive = 1
+		INNER JOIN dbo.FeesStructure FS WITH (NOLOCK) ON FS.FeesDurationId = MFPD.FeesDurationId AND FS.IsActive = 1
 	WHERE MD.IsActive = 1
 		AND (@MemberEmailId IS NULL OR @MemberEmailId = '' OR MD.MemberEmail = @MemberEmailId)
-		AND NOT EXISTS (
-			SELECT 1 
-			FROM [dbo].[FeesPaymentHistory] FPH WITH (NOLOCK)
-			WHERE FPH.IsActive = 1 
-				AND FPH.MemberId = MD.MemberId 
-				AND @CurrentDate BETWEEN FPH.[FromDate] AND FPH.[ToDate]
-		);
+		AND NOT EXISTS (SELECT 1 FROM [dbo].[FeesPaymentHistory] FPH WITH (NOLOCK) WHERE FPH.IsActive = 1 AND FPH.MemberId = MD.MemberId AND @CurrentDate BETWEEN FPH.[FromDate] AND FPH.[ToDate]);
 
 	-- Create temp table to store new records that will be inserted
 	CREATE TABLE #NewRecords (
@@ -77,27 +72,19 @@ BEGIN TRY
 		MTP.FeesDurationId
 	FROM #MembersToProcess MTP
 		CROSS APPLY [dbo].[FN_CalculateNextTimeframeFeesPayment](MTP.MemberEmail) NPD
-	WHERE NOT EXISTS (
-		SELECT 1 
-		FROM [dbo].[FeesPaymentHistory] FPH WITH (NOLOCK)
-		WHERE FPH.IsActive = 1 
-			AND FPH.MemberId = MTP.MemberId 
-			AND FPH.[FromDate] = NPD.FromDate 
-			AND FPH.[ToDate] = NPD.ToDate
-	);
+	WHERE NOT EXISTS (SELECT 1 FROM [dbo].[FeesPaymentHistory] FPH WITH (NOLOCK) WHERE FPH.IsActive = 1 AND FPH.MemberId = MTP.MemberId AND FPH.[FromDate] = NPD.FromDate AND FPH.[ToDate] = NPD.ToDate);
 
-	-- Update previous records with statusId 2 to statusId 3 for members who will get new records
-	-- Only update if new records will have statusId 2 (Due status)
-	IF @DueStatusId = 2
+	IF @ShouldUpdatePreviousEntry = 1
 	BEGIN
+		-- Update previous records with statusId 2 to statusId 3 for members who will get new records
+		-- Only update if previous status is 2
 		UPDATE FPH
 		SET PaymentStatusId = 3,
 			DateModified = GETUTCDATE(),
 			ModifiedBy = @ProcedureName
-		FROM [dbo].[FeesPaymentHistory] FPH
-			INNER JOIN #NewRecords NR ON FPH.MemberId = NR.MemberId
-		WHERE FPH.IsActive = 1 
-			AND FPH.PaymentStatusId = 2;
+		FROM [dbo].[FeesPaymentHistory] FPH WITH (NOLOCK)
+			INNER JOIN #NewRecords NR WITH (NOLOCK) ON FPH.MemberId = NR.MemberId
+		WHERE FPH.IsActive = 1 AND FPH.PaymentStatusId = 2;
 	END
 
 	-- Process each member and insert payment records
@@ -119,8 +106,6 @@ BEGIN TRY
 
 	-- Clean up temp tables
 	DROP TABLE IF EXISTS #NewRecords;
-
-	-- Clean up temp table
 	DROP TABLE IF EXISTS #MembersToProcess;
 
 	

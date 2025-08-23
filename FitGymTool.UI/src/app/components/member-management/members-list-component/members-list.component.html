@@ -1,4 +1,8 @@
-<div class="members-list-card card shadow-m border-0 bg-dark">
+<div
+  class="members-list-card card shadow-m border-0 bg-dark"
+  pRipple
+  style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
+>
   <div class="members-data-table">
     <div
       class="filter-row"
@@ -52,18 +56,16 @@
 
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td *ngFor="let col of columns">
-            <ng-container
-              *ngIf="
-                col.field === 'memberDateOfBirth' ||
-                  col.field === 'memberJoinDate';
-                else normalCell
-              "
-            >
-              {{ rowData[col.field] | date : "d MMM yyyy" }}
-            </ng-container>
-            <ng-template #normalCell> {{ rowData[col.field] }} </ng-template>
+          @for (col of columns; track col.field) {
+          <td>
+            @if (col.field === 'memberDateOfBirth' || col.field ===
+            'memberJoinDate') {
+            {{ rowData[col.field] | date : "d MMM yyyy" }}
+            } @else {
+            {{ rowData[col.field] }}
+            }
           </td>
+          }
         </tr>
       </ng-template>
 

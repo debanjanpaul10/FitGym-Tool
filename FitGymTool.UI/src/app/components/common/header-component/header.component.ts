@@ -15,10 +15,7 @@ import { Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 
 import { DrawerService } from '@core/services/drawer.service';
-import {
-  CommonApplicationConstants,
-  DrawerConstants,
-} from '@shared/application.constants';
+import { DrawerConstants } from '@shared/application.constants';
 import { RouteConstants } from '@shared/routes.constants';
 
 /**
@@ -43,8 +40,6 @@ export class HeaderComponent implements OnInit {
   protected BrandText = DrawerConstants.Headings.BrandText;
   protected currentUserProfile: AccountInfo | null = null;
   protected currentUserName: WritableSignal<string> = signal('');
-  protected AiFeaturesMessage =
-    CommonApplicationConstants.HeaderConstants.AIFeaturesMessage;
 
   private readonly msalService: MsalService = inject(MsalService);
   private readonly drawerService: DrawerService = inject(DrawerService);

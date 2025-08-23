@@ -36,6 +36,7 @@ import {
 } from '@shared/application.constants';
 import { UpdateMemberDto } from '@models/DTO/members/update-member-dto.model';
 import { ResponseDto } from '@models/DTO/response-dto.model';
+import { Utilities } from '@core/helpers/utilities-helper';
 
 /**
  * Component for editing member details in a tabular format with validation and dirty checking.
@@ -233,34 +234,34 @@ export class EditMemberComponent implements OnDestroy {
   protected getFieldError(member: MemberDetailsDto, field: string): string {
     switch (field) {
       case 'memberName':
-        if (!EditMemberComponent.isValidName(member.memberName)) {
+        if (!Utilities.IsValidName(member.memberName)) {
           return 'Name must be between 2-100 characters';
         }
         break;
       case 'memberEmail':
-        if (!EditMemberComponent.isValidEmail(member.memberEmail)) {
+        if (!Utilities.IsValidEmail(member.memberEmail)) {
           return 'Please enter a valid email address';
         }
         break;
       case 'memberPhoneNumber':
-        if (!EditMemberComponent.isValidPhoneNumber(member.memberPhoneNumber)) {
+        if (!Utilities.IsValidPhoneNumber(member.memberPhoneNumber)) {
           return 'Phone number must be exactly 10 digits';
         }
         break;
       case 'memberAddress':
-        if (!EditMemberComponent.isValidAddress(member.memberAddress)) {
+        if (!Utilities.IsValidAddress(member.memberAddress)) {
           return 'Address must be between 5-500 characters';
         }
         break;
       case 'memberGender':
-        if (!EditMemberComponent.isValidGender(member.memberGender)) {
+        if (!Utilities.IsValidGender(member.memberGender)) {
           return 'Please select a valid gender';
         }
         break;
       case 'memberDateOfBirth':
       case 'memberJoinDate':
         if (
-          !EditMemberComponent.isValidDate(
+          !Utilities.IsValidDate(
             member[field as keyof MemberDetailsDto] as Date
           )
         ) {
@@ -301,73 +302,13 @@ export class EditMemberComponent implements OnDestroy {
    */
   private static isRowValid(member: MemberDetailsDto): boolean {
     return (
-      EditMemberComponent.isValidName(member.memberName) &&
-      EditMemberComponent.isValidEmail(member.memberEmail) &&
-      EditMemberComponent.isValidPhoneNumber(member.memberPhoneNumber) &&
-      EditMemberComponent.isValidAddress(member.memberAddress) &&
-      EditMemberComponent.isValidGender(member.memberGender) &&
-      EditMemberComponent.isValidDate(member.memberDateOfBirth) &&
-      EditMemberComponent.isValidDate(member.memberJoinDate)
+      Utilities.IsValidName(member.memberName) &&
+      Utilities.IsValidEmail(member.memberEmail) &&
+      Utilities.IsValidPhoneNumber(member.memberPhoneNumber) &&
+      Utilities.IsValidAddress(member.memberAddress) &&
+      Utilities.IsValidGender(member.memberGender) &&
+      Utilities.IsValidDate(member.memberDateOfBirth) &&
+      Utilities.IsValidDate(member.memberJoinDate)
     );
-  }
-
-  /**
-   * Validates a member's name field.
-   * @param name - The name string to validate
-   * @returns True if name is between 2-100 characters, false otherwise
-   */
-  private static isValidName(name: string): boolean {
-    return name !== '' && name.trim().length >= 2 && name.trim().length <= 100;
-  }
-
-  /**
-   * Validates a member's email address using regex pattern.
-   * @param email - The email string to validate
-   * @returns True if email matches valid email format, false otherwise
-   */
-  private static isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return email !== '' && emailRegex.test(email.trim());
-  }
-
-  /**
-   * Validates a member's phone number format.
-   * @param phone - The phone number string to validate
-   * @returns True if phone number contains exactly 10 digits, false otherwise
-   */
-  private static isValidPhoneNumber(phone: string): boolean {
-    const phoneRegex = /^\d{10}$/;
-    return phone !== '' && phoneRegex.test(phone.replace(/\s/g, ''));
-  }
-
-  /**
-   * Validates a member's address field.
-   * @param address - The address string to validate
-   * @returns True if address is between 5-500 characters, false otherwise
-   */
-  private static isValidAddress(address: string): boolean {
-    return (
-      address !== '' &&
-      address.trim().length >= 5 &&
-      address.trim().length <= 500
-    );
-  }
-
-  /**
-   * Validates a member's gender selection.
-   * @param gender - The gender string to validate
-   * @returns True if gender is one of the allowed values (Male, Female, Other), false otherwise
-   */
-  private static isValidGender(gender: string): boolean {
-    return gender !== '' && ['Male', 'Female', 'Other'].includes(gender);
-  }
-
-  /**
-   * Validates a date object to ensure it's a valid Date instance.
-   * @param date - The Date object to validate
-   * @returns True if date is a valid Date object, false otherwise
-   */
-  private static isValidDate(date: Date): boolean {
-    return date && date instanceof Date && !isNaN(date.getTime());
   }
 }

@@ -82,12 +82,24 @@
       >
       </p-button>
 
+      <!-- Get Bug Severity button - enabled when both title and description have text -->
+      <p-button
+        label="Get Bug Severity"
+        type="button"
+        variant="outlined"
+        severity="info"
+        [disabled]="!canGetBugSeverity()"
+        (onClick)="getBugSeverityStatus()"
+      >
+      </p-button>
+
+      <!-- Submit button - enabled only when bug severity is populated -->
       <p-button
         label="Submit bug report"
         type="submit"
         variant="outlined"
         severity="success"
-        [disabled]="bugReportForm.invalid"
+        [disabled]="!isBugSeverityPopulated()"
       >
       </p-button>
     </div>

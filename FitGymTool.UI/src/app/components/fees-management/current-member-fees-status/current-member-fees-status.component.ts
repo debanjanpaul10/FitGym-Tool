@@ -14,6 +14,7 @@ import {
 import { TableModule } from 'primeng/table';
 import { Skeleton } from 'primeng/skeleton';
 import { Chart, registerables } from 'chart.js';
+import { Ripple } from 'primeng/ripple';
 // Register Chart.js components
 Chart.register(...registerables);
 
@@ -27,7 +28,7 @@ import { FeesManagementService } from '@core/services/fees-management-service.se
 
 @Component({
   selector: 'app-current-member-fees-status',
-  imports: [CommonModule, TableModule, Skeleton],
+  imports: [CommonModule, TableModule, Skeleton, Ripple],
   templateUrl: './current-member-fees-status.component.html',
   styleUrl: './current-member-fees-status.component.scss',
 })
@@ -67,7 +68,11 @@ export class CurrentMemberFeesStatusComponent
   }
 
   ngAfterViewChecked(): void {
-    if (!this.chartInitialized && this.feesStatusChartCanvas?.nativeElement) {
+    if (
+      !this.chartInitialized &&
+      this.feesStatusChartCanvas?.nativeElement &&
+      this.memberFeesData().length > 0
+    ) {
       this.createChart();
       this.chartInitialized = true;
     }
@@ -82,7 +87,7 @@ export class CurrentMemberFeesStatusComponent
    * Fetches current members fees status data from the API.
    * Updates the component state and chart with the received data.
    */
-  private getCurrentMembersFeesStatus(): void {
+  public getCurrentMembersFeesStatus(): void {
     this.isMembersFeesDataLoading.set(true);
 
     this.memberFeesApiService.GetCurrentMembersFeesStatusAsync().subscribe({
@@ -91,7 +96,14 @@ export class CurrentMemberFeesStatusComponent
           this.memberFeesData.set(response?.responseData);
           this._feesManagementService.currentMemberFees =
             response?.responseData;
-          this.updateChartDataFromMembers(response.responseData);
+
+          // Force chart recreation by resetting the initialization flag
+          this.chartInitialized = false;
+
+          // Update chart data with a delay to ensure DOM is ready
+          setTimeout(() => {
+            this.updateChartDataFromMembers(response.responseData);
+          }, 100);
         } else {
           this.toasterService.showError(response?.responseData);
         }
@@ -115,13 +127,11 @@ export class CurrentMemberFeesStatusComponent
    * "Overdue", and "To Be Cancelled" with appropriate colors for each status.
    */
   private createChart(): void {
-    // Destroy existing chart if it exists
     if (this.feesStatusChart) {
       this.feesStatusChart.destroy();
       this.feesStatusChart = null;
     }
 
-    // Get labels from mapping data or use defaults if not available
     const labels =
       this.mappingMasterData?.feesPaymentStatusMapping?.length > 0
         ? this.mappingMasterData.feesPaymentStatusMapping.map(
@@ -129,7 +139,6 @@ export class CurrentMemberFeesStatusComponent
           )
         : ['Paid', 'Due', 'Overdue', 'To Be Cancelled'];
 
-    // Create custom labels for tooltips
     const customLabels = [...labels];
 
     if (
@@ -197,13 +206,11 @@ export class CurrentMemberFeesStatusComponent
   private updateChartDataFromMembers(
     feesStatus: CurrentMembersFeesStatusDTO[]
   ): void {
-    // Reset counters
     this.counts.paidCount = 0;
     this.counts.dueCount = 0;
     this.counts.overdueCount = 0;
     this.counts.toBeCancelledCount = 0;
 
-    // Get status names from mapping
     const statusNames =
       this.mappingMasterData?.feesPaymentStatusMapping?.map(
         (x) => x.statusName
@@ -231,15 +238,39 @@ export class CurrentMemberFeesStatusComponent
       }
     }
 
-    // If the chart is already initialized, update it
-    if (this.feesStatusChart) {
-      this.feesStatusChart.data.datasets[0].data = [
-        this.counts.paidCount,
-        this.counts.dueCount,
-        this.counts.overdueCount,
-        this.counts.toBeCancelledCount,
-      ];
-      this.feesStatusChart.update();
+    this.ensureChartIsUpdated();
+  }
+
+  /**
+   * Ensures the chart is properly created and updated with current data
+   */
+  private ensureChartIsUpdated(retryCount: number = 0): void {
+    const MAX_RETRIES = 10;
+    if (retryCount >= MAX_RETRIES) {
+      return;
     }
+
+    setTimeout(() => {
+      if (this.feesStatusChartCanvas?.nativeElement) {
+        if (this.feesStatusChart && this.chartInitialized) {
+          this.feesStatusChart.data.datasets[0].data = [
+            this.counts.paidCount,
+            this.counts.dueCount,
+            this.counts.overdueCount,
+            this.counts.toBeCancelledCount,
+          ];
+          this.feesStatusChart.update();
+        } else {
+          if (this.feesStatusChart) {
+            this.feesStatusChart.destroy();
+            this.feesStatusChart = null;
+          }
+          this.createChart();
+          this.chartInitialized = true;
+        }
+      } else {
+        setTimeout(() => this.ensureChartIsUpdated(retryCount + 1));
+      }
+    }, 150);
   }
 }

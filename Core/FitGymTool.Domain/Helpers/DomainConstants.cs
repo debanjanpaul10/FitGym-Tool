@@ -43,6 +43,11 @@ public static class DomainConstants
 		/// The constant for the Not Applicable string value.
 		/// </summary>
 		public const string NotApplicableStringConstant = "NA";
+
+		/// <summary>
+		/// The SQL constant
+		/// </summary>
+		public const string SQLConstant = "SQL";
 	}
 
 	/// <summary>
@@ -74,6 +79,17 @@ public static class DomainConstants
 		/// The dates must be valid constant
 		/// </summary>
 		public const string DatesMustBeValidConstant = "Invalid date values: MemberDateOfBirth and MemberJoinDate must be valid dates.";
-
 	}
+
+	/// <summary>
+	/// The Exception Constants class.
+	/// </summary>
+	internal static class ExceptionConstants
+	{
+		/// <summary>
+		/// Something went wrong message
+		/// </summary>
+		internal const string SomethingWentWrongMessage = "Something went wrong while processing the request. Please try again after sometime";
+	}
+
 }

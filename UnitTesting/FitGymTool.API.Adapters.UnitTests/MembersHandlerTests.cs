@@ -12,7 +12,7 @@ using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
-using FitGymTool.Domain.Ports.In;
+using FitGymTool.Domain.DrivingPorts;
 using Moq;
 
 namespace FitGymTool.API.Adapters.UnitTests;

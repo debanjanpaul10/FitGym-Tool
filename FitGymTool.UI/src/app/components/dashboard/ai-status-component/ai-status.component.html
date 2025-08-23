@@ -1,0 +1,19 @@
+<div
+  class="card shadow-m border-0 bg-dark text-light"
+  pRipple
+  style="--p-ripple-background: rgba(59, 130, 246, 0.3)"
+>
+  <div class="card-content">
+    <div class="ai-agent-section">
+      <h6 class="agent-name font-custom">FitGym Tool AI Agent</h6>
+      <div class="ai-icon-container" [title]="'AI Agent Status: ' + statusText">
+        <img src="../../../../assets/Images/ai.png" height="60" />
+        <div
+          class="status-badge"
+          [class.online]="isOnline"
+          [class.offline]="!isOnline"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,12 +7,13 @@
 
 using FitGymTool.Domain.DomainEntities;
 using FitGymTool.Domain.DomainEntities.DerivedEntities;
-using FitGymTool.Domain.Ports.Out;
+using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
+using FitGymTool.Persistence.Adapters.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
-using static FitGymTool.Domain.Helpers.DomainConstants;
+using static FitGymTool.Persistence.Adapters.Helpers.Constants.DatabaseConstants;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
 
@@ -25,16 +26,6 @@ namespace FitGymTool.Persistence.Adapters.DataManager;
 public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDataManager> logger) : IMemberFeesDataManager
 {
 	/// <summary>
-	/// The unit of work
-	/// </summary>
-	private readonly IUnitOfWork _unitOfWork = unitOfWork;
-
-	/// <summary>
-	/// The logger
-	/// </summary>
-	private readonly ILogger<MemberFeesDataManager> _logger = logger;
-
-	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
 	/// </summary>
 	/// <returns>The list of current month fees and revenue status.</returns>
@@ -42,21 +33,18 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			
-			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus).ConfigureAwait(false);
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, string.Empty));
+
+			return await unitOfWork.ExecuteSqlQueryAsync<CurrentMonthFeesAndRevenueStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentFeesAndRevenueStatus).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
 
@@ -70,21 +58,17 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			
-			return await _unitOfWork.Repository<FeesStructure>().GetAllAsync(filter: fs => fs.IsActive, includeProperties: nameof(FeesStructure.FeesDurationMapping));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, string.Empty));
+			return await unitOfWork.Repository<FeesStructure>().GetAllAsync(filter: fs => fs.IsActive, includeProperties: nameof(FeesStructure.FeesDurationMapping));
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
 
@@ -98,21 +82,17 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
-			
-			return await _unitOfWork.ExecuteSqlQueryAsync<CurrentMembersFeesStatus>(DatabaseConstants.SqlQueryExecutionConstants.Execute_FN_GetCurrentMembersFeesStatus).ConfigureAwait(false);
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, string.Empty));
+			return await unitOfWork.ExecuteSqlQueryAsync<CurrentMembersFeesStatus>(SqlQueryExecutionConstants.Execute_FN_GetCurrentMembersFeesStatus).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, HeaderConstants.NotApplicableStringConstant));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
 
@@ -127,21 +107,50 @@ public class MemberFeesDataManager(IUnitOfWork unitOfWork, ILogger<MemberFeesDat
 	{
 		try
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+			if (string.IsNullOrWhiteSpace(userEmailId))
+			{
+				throw new ArgumentException(DatabaseConstants.ErrorMessages.EmailIDCannotBeNullMessage, nameof(userEmailId));
+			}
 
-			return await _unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
+			return await unitOfWork.ExecuteSqlQueryAsync<MemberPaymentHistoryData>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.GetPaymentHistoryForMember_SP, userEmailId).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
 			throw;
 		}
 		finally
 		{
-			_logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, userEmailId));
+		}
+	}
+
+	/// <summary>
+	/// Updates the member fees data asynchronous.
+	/// </summary>
+	/// <param name="memberFeesData">The member fees data.</param>
+	/// <returns>
+	/// The boolean for success/failure.
+	/// </returns>
+	public async Task<bool> UpdateMemberFeesDataAsync(UpdateMemberFees memberFeesData)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
+
+			var parameters = memberFeesData.PrepareUpdateMemberFeesSPParameters();
+			await unitOfWork.ExecuteSqlQueryAsync<object>(DatabaseConstants.StoredProceduresConstants.StoredProcedure_Names.UpdateMemberFeesData_SP, parameters);
+			return true;
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, memberFeesData.MemberEmailAddress));
 		}
 	}
 }

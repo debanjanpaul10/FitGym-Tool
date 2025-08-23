@@ -3,7 +3,7 @@
     <div class="header-bar-custom">
       <div class="header-left">
         <p-button
-          icon="pi pi-arrow-right"
+          icon="pi pi-bars"
           (click)="openDrawer()"
           [rounded]="true"
         ></p-button>
@@ -20,17 +20,10 @@
         <p-avatar
           [label]="currentUserName().split(' ')[0].charAt(0)"
           shape="circle"
-          styleClass="avatar-violet"
+          class="avatar-violet"
           pTooltip="{{ currentUserName() }}"
         />
       </div>
     </div>
-  </div>
-</div>
-<div class="row message-row">
-  <div class="col-12">
-    <p-message severity="info" closable
-      ><i class="pi pi-microchip-ai"></i> &nbsp;{{ AiFeaturesMessage }}
-    </p-message>
   </div>
 </div>

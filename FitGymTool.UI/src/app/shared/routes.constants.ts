@@ -12,6 +12,8 @@ export class ApiRoutes {
     BaseRoute: 'api/Common/',
     GetMappingsMasterData_ApiRoute: 'GetMappingsMasterData',
     AddBugReport_ApiRoute: 'AddBugReport',
+    GetAgentStatus_ApiRoute:
+      'https://app-webapi-ai-agents-lab.azurewebsites.net/hubs/agent-status',
   };
   public static MemberFeesApi = {
     BaseRoute: 'api/MemberFees/',
@@ -21,6 +23,15 @@ export class ApiRoutes {
     GetCurrentMembersFeesStatus_ApiRoute: 'GetCurrentMembersFeesStatus',
     GetPaymentHistoryDataForMember_ApiRoute:
       'GetPaymentHistoryDataForMember?emailId=',
+    UpdateMemberFeesData_ApiRoute: 'UpdateMemberFeesData',
+  };
+
+  public static AIServicesApi = {
+    BaseRoute: 'api/aiservices/',
+    Respond_ApiRoute: 'respond',
+    GetBugSeverityStatus_ApiRoute: 'getbugseveritystatus',
+    GetActiveAIFeatures_ApiRoute: 'getactiveaifeatures',
+    GetSamplePromptsForChatbot_ApiRoute: 'getsampleprompts',
   };
 }
 

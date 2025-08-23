@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { CommonModule } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Ripple } from 'primeng/ripple';
 
 import { ChartConstants } from '@shared/application.constants';
 import { CommonService } from '@core/services/common.service';
@@ -20,7 +22,6 @@ import { MemberFeesApiService } from '@services/member-fees-api.service';
 import { ToasterService } from '@core/services/toaster.service';
 import { ResponseDto } from '@models/DTO/response-dto.model';
 import { CurrentMonthFeesAndRevenueStatusDTO } from '@models/DTO/current-month-fees-revenue-status.model';
-import { SkeletonModule } from 'primeng/skeleton';
 
 /**
  * CurrentRevenueComponent displays a horizontal bar chart representing the current revenue status.
@@ -29,7 +30,7 @@ import { SkeletonModule } from 'primeng/skeleton';
  */
 @Component({
   selector: 'app-current-revenue-component',
-  imports: [CommonModule, SkeletonModule],
+  imports: [CommonModule, SkeletonModule, Ripple],
   templateUrl: './current-revenue.component.html',
   styleUrl: './current-revenue.component.scss',
 })

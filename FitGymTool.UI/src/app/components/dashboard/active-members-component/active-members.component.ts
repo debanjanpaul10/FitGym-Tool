@@ -12,6 +12,7 @@ import {
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import { SkeletonModule } from 'primeng/skeleton';
+import { Ripple } from 'primeng/ripple';
 
 import { ChartConstants } from '@shared/application.constants';
 import { MembersApiService } from '@services/members-api.service';
@@ -35,7 +36,7 @@ import { CommonService } from '@core/services/common.service';
  */
 @Component({
   selector: 'app-active-members-component',
-  imports: [CommonModule, SkeletonModule],
+  imports: [CommonModule, SkeletonModule, Ripple],
   templateUrl: './active-members.component.html',
   styleUrl: './active-members.component.scss',
 })
