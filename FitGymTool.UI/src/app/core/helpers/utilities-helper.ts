@@ -151,10 +151,48 @@ export class Utilities {
       line
         .split('|')
         .slice(1, -1)
-        .map((cell) => cell.trim())
+        .map((cell) => Utilities.FormatTableCellValue(cell.trim()))
     );
 
     return { headers, rows };
+  }
+
+  /**
+   * Detects if a string is a date and formats it properly
+   * @param value The string value to check and format
+   * @returns Formatted date string or original value if not a date
+   */
+  public static FormatTableCellValue(value: string): string {
+    if (!value || value.trim() === '') return value;
+
+    // Check if the value looks like a date (various formats)
+    const datePatterns = [
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/, // ISO format with time
+      /^\d{4}-\d{2}-\d{2}$/, // YYYY-MM-DD
+      /^\d{2}\/\d{2}\/\d{4}$/, // MM/DD/YYYY
+      /^\d{2}-\d{2}-\d{4}$/, // MM-DD-YYYY
+    ];
+
+    const isDate = datePatterns.some((pattern) => pattern.test(value.trim()));
+
+    if (isDate) {
+      try {
+        const date = new Date(value);
+        if (this.IsValidDate(date)) {
+          // Format as readable date
+          return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          });
+        }
+      } catch (error) {
+        // If parsing fails, return original value
+        return value;
+      }
+    }
+
+    return value;
   }
 
   /**

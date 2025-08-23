@@ -36,6 +36,7 @@ import { Utilities } from '@core/helpers/utilities-helper';
 })
 export class ChatComponent implements AfterViewChecked, OnInit {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef;
 
   protected isChatOpen: WritableSignal<boolean> = signal(false);
   protected isProcessing: WritableSignal<boolean> = signal(false);
@@ -129,12 +130,17 @@ export class ChatComponent implements AfterViewChecked, OnInit {
   }
 
   protected sendMessage(event: any): void {
-    const input =
+    let input =
       event.target.tagName === 'INPUT'
         ? event.target
         : event.target.previousElementSibling;
-    const message = input.value.trim();
 
+    // Fallback to ViewChild reference if DOM traversal fails
+    if (!input && this.messageInput) {
+      input = this.messageInput.nativeElement;
+    }
+
+    const message = input.value.trim();
     if (message && !this.isProcessing()) {
       this.isProcessing.set(true);
       this.shouldScrollToBottom = true;
