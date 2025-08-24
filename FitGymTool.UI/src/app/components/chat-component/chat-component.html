@@ -28,14 +28,10 @@
       <button
         class="expand-btn"
         (click)="toggleExpand()"
-        [pTooltip]="isExpanded() ? 'Collapse Chat' : 'Expand Chat'"
+        [pTooltip]="isExpanded() ? 'Restore Chat window' : 'Expand Chat window'"
         tooltipPosition="bottom"
       >
-        <i
-          class="pi"
-          [class.pi-window-maximize]="!isExpanded()"
-          [class.pi-window-minimize]="isExpanded()"
-        ></i>
+        <i class="pi pi-expand"></i>
       </button>
       <button
         class="refresh-btn"

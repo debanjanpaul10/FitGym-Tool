@@ -91,11 +91,12 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 		try
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetFollowupQuestionsResponseAsync), DateTime.UtcNow, followupQuestionsRequestDomain.UserQuery));
-			var response = await httpClientHelper.GetAIResponseAsync(followupQuestionsRequestDomain, AIAgentsRoutesConstants.GetChatbotResponse_ApiRoute).ConfigureAwait(false);
+			var response = await httpClientHelper.GetAIResponseAsync(followupQuestionsRequestDomain, AIAgentsRoutesConstants.GetFollowupQuestionsResponse_ApiRoute).ConfigureAwait(false);
 			var responseString = await response.Content.ReadAsStringAsync();
 
 			var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-			return JsonSerializer.Deserialize<IEnumerable<string>>(responseString, jsonSerializerOptions) ?? throw new Exception(ExceptionConstants.SomethingWentWrongMessageConstant); ;
+			var aiResponse = JsonSerializer.Deserialize<AIAgentResponse>(responseString, jsonSerializerOptions) ?? new AIAgentResponse();
+			return JsonSerializer.Deserialize<IEnumerable<string>>(JsonSerializer.Serialize(aiResponse.ResponseData)) ?? [];
 		}
 		catch (Exception ex)
 		{
