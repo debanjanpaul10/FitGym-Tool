@@ -12,6 +12,8 @@ using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MetadataEntities;
 using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DrivingPorts;
+using Microsoft.Extensions.Configuration;
+using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.API.Adapters.Handlers;
 
@@ -20,8 +22,9 @@ namespace FitGymTool.API.Adapters.Handlers;
 /// </summary>
 /// <param name="aiServices">The AI services.</param>
 /// <param name="mapper">The auto mapper.</param>
+/// <param name="configuration">The configuration services.</param>
 /// <seealso cref="FitGymTool.API.Adapters.Contracts.IAIServicesHandler" />
-public class AIServicesHandler(IMapper mapper, IAiServices aiServices) : IAIServicesHandler
+public class AIServicesHandler(IMapper mapper, IAiServices aiServices, IConfiguration configuration) : IAIServicesHandler
 {
 	/// <summary>
 	/// Gets the active ai features asynchronous.
@@ -58,8 +61,10 @@ public class AIServicesHandler(IMapper mapper, IAiServices aiServices) : IAIServ
 	/// </returns>
 	public async Task<AIChatbotResponseDTO> GetChatbotResponseAsync(ChatMessageRequestDTO userQueryRequest)
 	{
+		var areFollowupQuestionsEnabled = bool.TryParse(configuration[ConfigurationConstants.AreFollowupQuestionsEnabled], out var parsedValue) && parsedValue;
+
 		var domainInput = mapper.Map<UserQueryRequest>(userQueryRequest);
-		var domainResponse = await aiServices.GetChatbotResponseAsync(domainInput).ConfigureAwait(false);
+		var domainResponse = await aiServices.GetChatbotResponseAsync(domainInput, areFollowupQuestionsEnabled).ConfigureAwait(false);
 		return mapper.Map<AIChatbotResponseDTO>(domainResponse);
 	}
 

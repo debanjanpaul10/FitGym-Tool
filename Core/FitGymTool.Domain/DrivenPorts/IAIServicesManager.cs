@@ -34,4 +34,11 @@ public interface IAIServicesManager
 	/// <param name="sqlQueryResult">The SQL query result.</param>
 	/// <returns>The sql markdown response.</returns>
 	Task<string> GetSQLQueryMarkdownResponseAsync(SqlQueryResult sqlQueryResult);
+
+	/// <summary>
+	/// Gets the list of followup questions.
+	/// </summary>
+	/// <param name="followupQuestionsRequestDomain">The followup questions request.</param>
+	/// <returns>The list of followup questions.</returns>
+	Task<IEnumerable<string>> GetFollowupQuestionsResponseAsync(FollowupQuestionsRequestDomain followupQuestionsRequestDomain);
 }

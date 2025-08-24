@@ -78,10 +78,11 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 	/// Gets the chatbot response asynchronous.
 	/// </summary>
 	/// <param name="userQueryRequest">The user query request.</param>
+	/// <param name="areFollowupQuestionsEnabled">The boolean for followup questions status</param>
 	/// <returns>
 	/// The ai agent response.
 	/// </returns>
-	public async Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest)
+	public async Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest, bool areFollowupQuestionsEnabled)
 	{
 		try
 		{
@@ -95,12 +96,12 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 			if (aiResult.UserIntent.Trim().Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase)
 				&& aiResult.AIResponseData.Contains(HeaderConstants.SQLConstant, StringComparison.InvariantCultureIgnoreCase))
 			{
-				aiResult.SqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
-				var jsonQuery = await commonDataManager.ExecuteAISQLQueryAsync(aiResult.SqlQuery).ConfigureAwait(false);
+				await HandleSQLResponseAsync(aiResult).ConfigureAwait(false);
+			}
 
-				var sqlQueryResult = new SqlQueryResult() { JsonQuery = jsonQuery };
-				aiResult.AIResponseData = await aiServicesManager.GetSQLQueryMarkdownResponseAsync(sqlQueryResult).ConfigureAwait(false);
-				return aiResult;
+			if (areFollowupQuestionsEnabled)
+			{
+				await HandleFollowupQuestionsDataAsync(aiResult).ConfigureAwait(false);
 			}
 
 			return aiResult;
@@ -188,4 +189,39 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, string.Empty));
 		}
 	}
+
+	#region PRIVATE METHODS
+
+	/// <summary>
+	/// Handles the followup questions data async.
+	/// </summary>
+	/// <param name="aiResult">The ai result.</param>
+	/// <returns>A task to wait on.</returns>
+	private async Task HandleFollowupQuestionsDataAsync(AIChatbotResponse aiResult)
+	{
+		var followupQuestionsDataDomain = new FollowupQuestionsRequestDomain
+		{
+			AiResponseData = aiResult.AIResponseData,
+			UserIntent = aiResult.UserIntent,
+			UserQuery = aiResult.UserQuery
+		};
+
+		aiResult.FollowupQuestions = await aiServicesManager.GetFollowupQuestionsResponseAsync(followupQuestionsDataDomain).ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// Handles the SQL response data.
+	/// </summary>
+	/// <param name="aiResult">The ai result.</param>
+	/// <returns>A task to wait on.</returns>
+	private async Task HandleSQLResponseAsync(AIChatbotResponse aiResult)
+	{
+		aiResult.SqlQuery = aiResult.AIResponseData.Replace("```sql", string.Empty).Replace("```", string.Empty).Replace("\n", string.Empty).Trim();
+		var jsonQuery = await commonDataManager.ExecuteAISQLQueryAsync(aiResult.SqlQuery).ConfigureAwait(false);
+
+		var sqlQueryResult = new SqlQueryResult() { JsonQuery = jsonQuery };
+		aiResult.AIResponseData = await aiServicesManager.GetSQLQueryMarkdownResponseAsync(sqlQueryResult).ConfigureAwait(false);
+	}
+
+	#endregion
 }

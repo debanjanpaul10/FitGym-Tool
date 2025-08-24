@@ -13,6 +13,17 @@ namespace FitGymTool.Domain.Helpers;
 public static class DomainConstants
 {
 	/// <summary>
+	/// The configuration constants class.
+	/// </summary>
+	public static class ConfigurationConstants
+	{
+		/// <summary>
+		/// The are followup questions enabled constant.
+		/// </summary>
+		public const string AreFollowupQuestionsEnabled = "AreFollowupQuestionsEnabled";
+	}
+
+	/// <summary>
 	/// The Logging Constants Class.
 	/// </summary>
 	public static class LoggingConstants

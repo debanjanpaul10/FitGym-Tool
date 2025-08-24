@@ -106,6 +106,8 @@ internal static class Constants
 		/// The local ai agents base URL
 		/// </summary>
 		internal const string LocalAiAgentsBaseUrl = "LocalAiAgentsBaseUrl";
+
+
 	}
 
 	/// <summary>
@@ -143,5 +145,10 @@ internal static class Constants
 		/// The get SQL query markdown response API route
 		/// </summary>
 		internal const string GetSQLQueryMarkdownResponse_ApiRoute = "fitgymtoolai/getsqlquerymarkdownresponse";
+
+		/// <summary>
+		/// The get followup questions response API route.
+		/// </summary>
+		internal const string GetFollowupQuestionsResponse_ApiRoute = "fitgymtoolai/getfollowupquestionsresponse";
 	}
 }

@@ -63,7 +63,7 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
 			var response = await httpClientHelper.GetAIResponseAsync(userQueryRequest, AIAgentsRoutesConstants.GetChatbotResponse_ApiRoute).ConfigureAwait(false);
 			var responseString = await response.Content.ReadAsStringAsync();
-			
+
 			var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 			var aiResponse = JsonSerializer.Deserialize<AIAgentResponse>(responseString, jsonSerializerOptions) ?? new AIAgentResponse();
 			var responseDataJson = JsonSerializer.Serialize(aiResponse.ResponseData);
@@ -78,6 +78,33 @@ public class AIServicesManager(IHttpClientHelper httpClientHelper, ILogger<AISer
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetChatbotResponseAsync), DateTime.UtcNow, userQueryRequest.UserQuery));
+		}
+	}
+
+	/// <summary>
+	/// Gets the list of followup questions.
+	/// </summary>
+	/// <param name="followupQuestionsRequestDomain">The followup questions request.</param>
+	/// <returns>The list of followup questions.</returns>
+	public async Task<IEnumerable<string>> GetFollowupQuestionsResponseAsync(FollowupQuestionsRequestDomain followupQuestionsRequestDomain)
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodStart, nameof(GetFollowupQuestionsResponseAsync), DateTime.UtcNow, followupQuestionsRequestDomain.UserQuery));
+			var response = await httpClientHelper.GetAIResponseAsync(followupQuestionsRequestDomain, AIAgentsRoutesConstants.GetChatbotResponse_ApiRoute).ConfigureAwait(false);
+			var responseString = await response.Content.ReadAsStringAsync();
+
+			var jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			return JsonSerializer.Deserialize<IEnumerable<string>>(responseString, jsonSerializerOptions) ?? throw new Exception(ExceptionConstants.SomethingWentWrongMessageConstant); ;
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodFailed, nameof(GetFollowupQuestionsResponseAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.LogHelperMethodEnded, nameof(GetFollowupQuestionsResponseAsync), DateTime.UtcNow, followupQuestionsRequestDomain.UserQuery));
 		}
 	}
 
