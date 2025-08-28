@@ -1,12 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface SuggestionItem {
-  id?: string;
-  text: string;
-  icon?: string;
-  category?: string;
-}
+import { SuggestionItem } from '@models/interfaces/suggestion-item.interface';
 
 @Component({
   selector: 'app-chat-component-suggestions',
@@ -33,15 +28,15 @@ export class ChatComponentSuggestions {
     return this.suggestions.length > this.maxVisible;
   }
 
-  onSuggestionClick(suggestion: SuggestionItem): void {
+  protected onSuggestionClick(suggestion: SuggestionItem): void {
     this.suggestionSelected.emit(suggestion);
   }
 
-  onShowMore(): void {
+  protected onShowMore(): void {
     this.showMoreClicked.emit();
   }
 
-  trackBySuggestion(
+  protected trackBySuggestion(
     index: number | string | undefined,
     suggestion: SuggestionItem
   ): string {

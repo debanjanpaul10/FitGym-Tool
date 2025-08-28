@@ -14,10 +14,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { MsalService } from '@azure/msal-angular';
 import { AccountInfo } from '@azure/msal-browser';
-import {
-  ChatComponentSuggestions,
-  SuggestionItem,
-} from '../chat-component-suggestions/chat-component-suggestions';
+import { ChatComponentSuggestions } from '../chat-component-suggestions/chat-component-suggestions';
 
 import { ToasterService } from '@core/services/toaster.service';
 import { AiApiService } from '@services/ai-services-api.service';
@@ -31,6 +28,7 @@ import { AIChatbotResponseDTO } from '@models/DTO/ai-chatbot-response-dto.model'
 import { ChatMessage } from '@models/interfaces/chat-message.interface';
 import { Utilities } from '@core/helpers/utilities-helper';
 import { SampleChatbotPromptsDTO } from '@models/DTO/sample-chatbot-prompts-dto.model';
+import { SuggestionItem } from '@models/interfaces/suggestion-item.interface';
 
 /**
  * @component
