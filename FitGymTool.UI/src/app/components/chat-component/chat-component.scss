@@ -508,141 +508,12 @@
 /* Followup Questions Styles */
 .followup-questions-container {
   margin-top: 0.75rem;
-  padding: 0.75rem;
-  background: rgba(102, 126, 234, 0.05);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 12px;
-}
-
-.followup-questions-header {
-  margin-bottom: 0.5rem;
-  color: #b0b0b0;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.followup-questions-bubbles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.followup-question-bubble {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.15) 0%,
-    rgba(118, 75, 162, 0.15) 100%
-  );
-  border: 1px solid rgba(102, 126, 234, 0.4);
-  color: #e0e0e0;
-  padding: 0.4rem 0.7rem;
-  border-radius: 16px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  max-width: 300px;
-  white-space: normal;
-  overflow: visible;
-  display: inline-block;
-  line-height: 1.3;
-
-  &:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.25) 0%,
-      rgba(118, 75, 162, 0.25) 100%
-    );
-    border-color: rgba(102, 126, 234, 0.6);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-    color: #ffffff;
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.4);
-  }
 }
 
 /* Sample Prompts Styles */
 .sample-prompts-container {
   padding: 1rem;
-  border-top: 1px solid #404040;
-  background: #2d2d2d;
   flex-shrink: 0;
-}
-
-.sample-prompts-header {
-  margin-bottom: 0.75rem;
-  color: #e0e0e0;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.sample-prompts-bubbles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  max-height: 120px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #1e1e1e;
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #667eea;
-    border-radius: 2px;
-
-    &:hover {
-      background: #764ba2;
-    }
-  }
-
-  scrollbar-width: thin;
-  scrollbar-color: #667eea #1e1e1e;
-}
-
-.sample-prompt-bubble {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.1) 0%,
-    rgba(118, 75, 162, 0.1) 100%
-  );
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  color: #e0e0e0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 20px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  max-width: 350px;
-  white-space: normal;
-  overflow: visible;
-  display: inline-block;
-
-  &:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.2) 0%,
-      rgba(118, 75, 162, 0.2) 100%
-    );
-    border-color: rgba(102, 126, 234, 0.5);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
-  }
 }
 
 .chat-input {
@@ -839,41 +710,97 @@
     padding: 0.75rem;
   }
 
-  .sample-prompts-header {
-    font-size: 13px;
-    margin-bottom: 0.5rem;
-  }
-
-  .sample-prompts-bubbles {
-    max-height: 100px;
-    gap: 0.4rem;
-  }
-
-  .sample-prompt-bubble {
-    font-size: 12px;
-    padding: 0.4rem 0.6rem;
-    max-width: 250px;
-  }
-
   /* Mobile followup questions adjustments */
   .followup-questions-container {
     margin-top: 0.5rem;
-    padding: 0.5rem;
   }
+}
 
-  .followup-questions-header {
-    font-size: 11px;
-    margin-bottom: 0.4rem;
+/* Dark theme overrides for chat suggestions component */
+.sample-prompts-container,
+.followup-questions-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__title {
+        color: #e0e0e0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &__item {
+        background: linear-gradient(
+          135deg,
+          rgba(102, 126, 234, 0.1) 0%,
+          rgba(118, 75, 162, 0.1) 100%
+        );
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        color: #e0e0e0;
+
+        &:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(102, 126, 234, 0.2) 0%,
+            rgba(118, 75, 162, 0.2) 100%
+          );
+          border-color: rgba(102, 126, 234, 0.5);
+          color: #ffffff;
+        }
+      }
+
+      &__icon {
+        color: rgba(102, 126, 234, 0.8);
+      }
+
+      &__category {
+        background: rgba(102, 126, 234, 0.2);
+        color: #b0b0b0;
+      }
+
+      &__show-more {
+        border-color: rgba(102, 126, 234, 0.3);
+        color: #b0b0b0;
+
+        &:hover {
+          border-color: rgba(102, 126, 234, 0.6);
+          color: rgba(102, 126, 234, 0.9);
+          background: rgba(102, 126, 234, 0.05);
+        }
+      }
+    }
   }
+}
 
-  .followup-questions-bubbles {
-    gap: 0.3rem;
+/* Specific styles for followup questions */
+.followup-questions-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #b0b0b0;
+      }
+
+      &__item {
+        font-size: 12px;
+        padding: 0.4rem 0.7rem;
+        border-radius: 16px;
+        max-width: 300px;
+      }
+    }
   }
+}
 
-  .followup-question-bubble {
-    font-size: 11px;
-    padding: 0.3rem 0.5rem;
-    max-width: 200px;
-    border-radius: 14px;
+/* Specific styles for sample prompts */
+.sample-prompts-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__item {
+        font-size: 13px;
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        max-width: 350px;
+      }
+    }
   }
 }

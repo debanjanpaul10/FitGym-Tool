@@ -14,6 +14,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { MsalService } from '@azure/msal-angular';
 import { AccountInfo } from '@azure/msal-browser';
+import {
+  ChatComponentSuggestions,
+  SuggestionItem,
+} from '../chat-component-suggestions/chat-component-suggestions';
 
 import { ToasterService } from '@core/services/toaster.service';
 import { AiApiService } from '@services/ai-services-api.service';
@@ -50,7 +54,13 @@ import { SampleChatbotPromptsDTO } from '@models/DTO/sample-chatbot-prompts-dto.
 @Component({
   selector: 'app-chat-component',
   standalone: true,
-  imports: [CommonModule, DockModule, TooltipModule, ButtonModule],
+  imports: [
+    CommonModule,
+    DockModule,
+    TooltipModule,
+    ButtonModule,
+    ChatComponentSuggestions,
+  ],
   templateUrl: './chat-component.html',
   styleUrl: './chat-component.scss',
 })
@@ -235,6 +245,43 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       this.messageInput.nativeElement.value = questionText;
       this.messageInput.nativeElement.focus();
     }
+  }
+
+  /**
+   * Converts sample prompts to SuggestionItem format for the suggestions component.
+   */
+  protected get samplePromptSuggestions(): SuggestionItem[] {
+    return this.sampleChatbotPrompts().map((prompt) => ({
+      id: prompt.promptName,
+      text: prompt.promptName,
+      category: prompt.area,
+      icon: 'pi pi-lightbulb',
+    }));
+  }
+
+  /**
+   * Converts followup questions to SuggestionItem format for the suggestions component.
+   */
+  protected convertFollowupQuestions(questions: string[]): SuggestionItem[] {
+    return questions.map((question, index) => ({
+      id: `followup-${index}`,
+      text: question,
+      icon: 'pi pi-question-circle',
+    }));
+  }
+
+  /**
+   * Handles sample prompt selection from the suggestions component.
+   */
+  protected onSamplePromptSelected(suggestion: SuggestionItem): void {
+    this.insertSamplePrompt(suggestion.text);
+  }
+
+  /**
+   * Handles followup question selection from the suggestions component.
+   */
+  protected onFollowupQuestionSelected(suggestion: SuggestionItem): void {
+    this.insertFollowupQuestion(suggestion.text);
   }
 
   // #region PRIVATE METHODS

@@ -118,21 +118,15 @@
         @if (message.isBot && message.followupQuestions &&
         message.followupQuestions.length > 0 && !isProcessing()) {
         <div class="followup-questions-container">
-          <div class="followup-questions-header">
-            <span>Related questions:</span>
-          </div>
-          <div class="followup-questions-bubbles">
-            @for (question of message.followupQuestions; track question) {
-            <button
-              class="followup-question-bubble"
-              (click)="insertFollowupQuestion(question)"
-              [pTooltip]="'Click to ask this question'"
-              tooltipPosition="top"
-            >
-              {{ question }}
-            </button>
-            }
-          </div>
+          <app-chat-component-suggestions
+            [suggestions]="convertFollowupQuestions(message.followupQuestions)"
+            type="followup-questions"
+            layout="grid"
+            [maxVisible]="4"
+            [showIcons]="true"
+            (suggestionSelected)="onFollowupQuestionSelected($event)"
+          >
+          </app-chat-component-suggestions>
         </div>
         }
       </div>
@@ -152,21 +146,15 @@
     @if (sampleChatbotPrompts().length > 0 && messages().length <= 1 &&
     !isProcessing()) {
     <div class="sample-prompts-container">
-      <div class="sample-prompts-header">
-        <span>Try these sample prompts:</span>
-      </div>
-      <div class="sample-prompts-bubbles">
-        @for (prompt of sampleChatbotPrompts(); track prompt.promptName) {
-        <button
-          class="sample-prompt-bubble"
-          (click)="insertSamplePrompt(prompt.promptName)"
-          [pTooltip]="prompt.promptDescription"
-          tooltipPosition="top"
-        >
-          {{ prompt.promptName }}
-        </button>
-        }
-      </div>
+      <app-chat-component-suggestions
+        [suggestions]="samplePromptSuggestions"
+        type="sample-prompts"
+        layout="grid"
+        [maxVisible]="6"
+        [showIcons]="true"
+        (suggestionSelected)="onSamplePromptSelected($event)"
+      >
+      </app-chat-component-suggestions>
     </div>
     }
 

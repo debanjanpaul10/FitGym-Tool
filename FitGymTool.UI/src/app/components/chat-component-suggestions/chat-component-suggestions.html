@@ -1,0 +1,47 @@
+<div class="chat-suggestions" [class]="'chat-suggestions--' + type">
+  @if (title) {
+  <div class="chat-suggestions__header">
+    <h3 class="chat-suggestions__title">{{ title }}</h3>
+  </div>
+  }
+
+  <div
+    class="chat-suggestions__content"
+    [class]="'chat-suggestions__content--' + layout"
+  >
+    @for (suggestion of visibleSuggestions; track
+    trackBySuggestion(suggestion.id, suggestion)) {
+    <button
+      class="chat-suggestions__item"
+      [class.chat-suggestions__item--with-icon]="showIcons && suggestion.icon"
+      (click)="onSuggestionClick(suggestion)"
+      type="button"
+    >
+      @if (showIcons && suggestion.icon) {
+      <span class="chat-suggestions__icon">
+        <i [class]="suggestion.icon"></i>
+      </span>
+      }
+
+      <span class="chat-suggestions__text">{{ suggestion.text }}</span>
+
+      @if (suggestion.category) {
+      <span class="chat-suggestions__category">
+        {{ suggestion.category }}
+      </span>
+      }
+    </button>
+    } @if (hasMoreSuggestions) {
+    <button
+      class="chat-suggestions__show-more"
+      (click)="onShowMore()"
+      type="button"
+    >
+      <span class="chat-suggestions__show-more-text"
+        >Show more suggestions</span
+      >
+      <i class="chat-suggestions__show-more-icon">▼</i>
+    </button>
+    }
+  </div>
+</div>
