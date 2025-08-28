@@ -97,7 +97,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 	/// Gets the active ai features asynchronous.
 	/// </summary>
 	/// <returns>
-	/// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.AIFeature" />
+	/// The list of <see cref="T:FitGymTool.Domain.DomainEntities.AIEntities.AIFeatureDomain" />
 	/// </returns>
 	public async Task<IEnumerable<AIFeature>> GetActiveAIFeaturesAsync()
 	{

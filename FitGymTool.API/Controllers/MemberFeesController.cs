@@ -1,18 +1,10 @@
-﻿// *********************************************************************************
-//	<copyright file="MemberFeesController.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Member Fees Controller Class.</summary>
-// *********************************************************************************
-
-using FitGymTool.API.Adapters.Contracts;
+﻿using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.DerivedEntities;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
 using static FitGymTool.API.Helpers.SwaggerConstants.MemberFeesController;
 
@@ -22,12 +14,11 @@ namespace FitGymTool.API.Controllers;
 /// The Member Fees Controller Class.
 /// </summary>
 /// <param name="httpContextAccessor">The http context accessor.</param>
-/// <param name="logger">The logger.</param>
 /// <param name="memberFeesHandler">The member fees service.</param>
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.MemberFeesApiRoutes.BaseRoute_RoutePrefix)]
-public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMemberFeesHandler memberFeesHandler, ILogger<MemberFeesController> logger) : BaseController(httpContextAccessor)
+public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMemberFeesHandler memberFeesHandler) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the current month fees and revenue status asynchronous.
@@ -41,31 +32,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[SwaggerOperation(Summary = GetCurrentMonthFeesAndRevenueStatusAction.Summary, Description = GetCurrentMonthFeesAndRevenueStatusAction.Description, OperationId = GetCurrentMonthFeesAndRevenueStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentMonthFeesAndRevenueStatusAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
-			if (IsAuthorized())
+			var result = await memberFeesHandler.GetCurrentMonthFeesAndRevenueStatusAsync();
+			if (result is not null)
 			{
-				var result = await memberFeesHandler.GetCurrentMonthFeesAndRevenueStatusAsync();
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMonthFeesAndRevenueStatusAsync), DateTime.UtcNow, base.UserEmail));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -80,31 +58,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[SwaggerOperation(Summary = GetCurrentFeesStructureAction.Summary, Description = GetCurrentFeesStructureAction.Description, OperationId = GetCurrentFeesStructureAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentFeesStructureAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
-			if (IsAuthorized())
+			var result = await memberFeesHandler.GetCurrentFeesStructureAsync();
+			if (result is not null)
 			{
-				var result = await memberFeesHandler.GetCurrentFeesStructureAsync();
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentFeesStructureAsync), DateTime.UtcNow, base.UserEmail));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -119,31 +84,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[SwaggerOperation(Summary = GetCurrentMembersFeesStatusAction.Summary, Description = GetCurrentMembersFeesStatusAction.Description, OperationId = GetCurrentMembersFeesStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetCurrentMembersFeesStatusAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
-			if (IsAuthorized())
+			var result = await memberFeesHandler.GetCurrentMembersFeesStatusAsync();
+			if (result is not null)
 			{
-				var result = await memberFeesHandler.GetCurrentMembersFeesStatusAsync();
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetCurrentMembersFeesStatusAsync), DateTime.UtcNow, base.UserEmail));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -159,31 +111,18 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[SwaggerOperation(Summary = GetPaymentHistoryDataForMemberAction.Summary, Description = GetPaymentHistoryDataForMemberAction.Description, OperationId = GetPaymentHistoryDataForMemberAction.OperationId)]
 	public async Task<ResponseDTO> GetPaymentHistoryDataForMemberAsync([FromQuery] string emailId)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
-			if (IsAuthorized())
+			var result = await memberFeesHandler.GetPaymentHistoryDataForMemberAsync(emailId);
+			if (result is not null)
 			{
-				var result = await memberFeesHandler.GetPaymentHistoryDataForMemberAsync(emailId);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetPaymentHistoryDataForMemberAsync), DateTime.UtcNow, base.UserEmail));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -199,30 +138,17 @@ public class MemberFeesController(IHttpContextAccessor httpContextAccessor, IMem
 	[SwaggerOperation(Summary = UpdateMemberFeesDataAction.Summary, Description = UpdateMemberFeesDataAction.Description, OperationId = UpdateMemberFeesDataAction.OperationId)]
 	public async Task<ResponseDTO> UpdateMemberFeesDataAsync([FromBody] UpdateMemberFeesDTO updateMemberFeesData)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, base.UserEmail));
-			if (IsAuthorized())
+			var result = await memberFeesHandler.UpdateMemberFeesDataAsync(updateMemberFeesData, currentUserAlias: base.UserEmail);
+			if (result)
 			{
-				var result = await memberFeesHandler.UpdateMemberFeesDataAsync(updateMemberFeesData, currentUserAlias: base.UserEmail);
-				if (result)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, ex.Message));
-			throw;
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberFeesDataAsync), DateTime.UtcNow, base.UserEmail));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 }

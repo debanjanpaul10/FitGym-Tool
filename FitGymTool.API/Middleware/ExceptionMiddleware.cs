@@ -1,22 +1,21 @@
-﻿// *********************************************************************************
-//	<copyright file="GlobalExceptionHandler.cs" company="Personal">
+// *********************************************************************************
+//	<copyright file="ExceptionMiddleware.cs" company="Personal">
 //		Copyright (c) 2025 <Debanjan's Lab>
 //	</copyright>
-// <summary>The Global Exception Handler.</summary>
+// <summary>The Exception Middleware class.</summary>
 // *********************************************************************************
 
 using FitGymTool.Domain.Helpers;
-using Microsoft.AspNetCore.Diagnostics;
 using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.Middleware;
 
 /// <summary>
-/// The Global Exception Handler class implements the IExceptionHandler interface to handle exceptions globally in the ASP.NET Core pipeline.
+/// The Exception Middleware class.
 /// </summary>
-/// <param name="logger">The logger.</param>
-/// <seealso cref="IExceptionHandler"/>
-public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, RequestDelegate next)
+/// <param name="logger">The logger service.</param>
+/// <param name="next">The request delegate.</param>
+public class ExceptionMiddleware(ILogger<ExceptionMiddleware> logger, RequestDelegate next)
 {
 	/// <summary>
 	/// Invokes the specified HTTP context.
@@ -55,5 +54,21 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, Requ
 
 		var errorResponse = new FitGymToolExceptions(message, statusCode, error);
 		await httpContext.Response.WriteAsJsonAsync(errorResponse);
+	}
+}
+
+/// <summary>
+/// The exception middleware extensions class.
+/// </summary>
+public static class ExceptionMiddlewareExtensions
+{
+	/// <summary>
+	/// Uses the exception middleware.
+	/// </summary>
+	/// <param name="builder">The builder.</param>
+	/// <returns>The application builder.</returns>
+	public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)
+	{
+		return builder.UseMiddleware<ExceptionMiddleware>();
 	}
 }

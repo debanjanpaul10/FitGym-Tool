@@ -1,0 +1,725 @@
+{
+    "application_overview": {
+        "name": "FitGym Tool",
+        "description": "A comprehensive gym management system for gym administrators to manage members, track payments, and monitor gym operations",
+        "purpose": "Streamline gym operations including member registration, fee management, payment tracking, and business analytics",
+        "user_types": [
+            "Gym Administrators",
+            "Gym Staff",
+            "Authorized Personnel"
+        ],
+        "access_method": "Web-based application accessible through any modern web browser",
+        "authentication": "Microsoft Azure Active Directory login required"
+    },
+    "main_navigation": {
+        "description": "The application has a main navigation menu accessible after login",
+        "menu_items": [
+            {
+                "name": "Dashboard",
+                "route": "/dashboard",
+                "description": "Main overview page with key metrics and analytics",
+                "icon": "Dashboard icon",
+                "access": "All authenticated users"
+            },
+            {
+                "name": "Members",
+                "route": "/members",
+                "description": "Complete member management functionality",
+                "icon": "Members icon",
+                "access": "All authenticated users"
+            },
+            {
+                "name": "Fees",
+                "route": "/fees",
+                "description": "Fee structure and payment management",
+                "icon": "Fees icon",
+                "access": "All authenticated users"
+            },
+            {
+                "name": "Facility",
+                "route": "/facility",
+                "description": "Gym facility management (future feature)",
+                "icon": "Facility icon",
+                "access": "All authenticated users"
+            }
+        ]
+    },
+    "login_process": {
+        "description": "How users access the FitGym Tool application",
+        "steps": [
+            {
+                "step": 1,
+                "action": "Navigate to the FitGym Tool website",
+                "description": "Open your web browser and go to the application URL"
+            },
+            {
+                "step": 2,
+                "action": "Click 'Login to FitGym Tool' button",
+                "description": "You'll be redirected to Microsoft Azure login page"
+            },
+            {
+                "step": 3,
+                "action": "Enter your Microsoft credentials",
+                "description": "Use your organization's Microsoft account credentials"
+            },
+            {
+                "step": 4,
+                "action": "Complete authentication",
+                "description": "You'll be redirected back to the FitGym Tool dashboard"
+            }
+        ],
+        "requirements": [
+            "Valid Microsoft Azure Active Directory account",
+            "Proper permissions assigned by administrator",
+            "Modern web browser (Chrome, Firefox, Safari, Edge)"
+        ]
+    },
+    "dashboard_functionality": {
+        "description": "Main overview page showing key gym metrics and quick access to features",
+        "components": [
+            {
+                "name": "Current Revenue Widget",
+                "description": "Shows revenue metrics for the current month",
+                "displays": [
+                    "Total fees collected this month",
+                    "Outstanding payments",
+                    "Cancelled subscriptions",
+                    "Revenue comparison charts"
+                ],
+                "user_actions": [
+                    "View detailed revenue breakdown",
+                    "Monitor payment trends"
+                ]
+            },
+            {
+                "name": "Active Members Widget",
+                "description": "Displays current membership status overview",
+                "displays": [
+                    "Total active members",
+                    "Members on termination notice",
+                    "Expired memberships",
+                    "Membership status distribution chart"
+                ],
+                "user_actions": [
+                    "View member status breakdown",
+                    "Monitor membership trends"
+                ]
+            },
+            {
+                "name": "Current User Widget",
+                "description": "Shows information about the logged-in user",
+                "displays": [
+                    "User's full name",
+                    "User's email address",
+                    "Login status"
+                ]
+            },
+            {
+                "name": "AI Features Widget",
+                "description": "Shows available AI-powered features",
+                "displays": [
+                    "List of active AI features",
+                    "AI service status",
+                    "Quick access to AI tools"
+                ],
+                "user_actions": ["Access AI chatbot", "View AI feature status"]
+            }
+        ]
+    },
+    "member_management": {
+        "description": "Complete member lifecycle management functionality",
+        "main_features": [
+            {
+                "name": "Add New Member",
+                "description": "Register new gym members with complete information",
+                "how_to_access": "Navigate to Members page → Click 'Add a new member' button",
+                "steps": [
+                    {
+                        "step": 1,
+                        "title": "Personal Details",
+                        "fields": [
+                            "Full Name (required)",
+                            "Email Address (required, must be unique)",
+                            "Phone Number (required)",
+                            "Home Address (required)",
+                            "Date of Birth (required)",
+                            "Gender (Male/Female/Other)"
+                        ]
+                    },
+                    {
+                        "step": 2,
+                        "title": "Subscription Details",
+                        "fields": [
+                            "Membership Start Date",
+                            "Membership Status (Active/Inactive/Suspended)",
+                            "Initial fee payment information"
+                        ]
+                    },
+                    {
+                        "step": 3,
+                        "title": "Review and Confirm",
+                        "description": "Review all entered information before final submission"
+                    }
+                ],
+                "validation_rules": [
+                    "Email must be unique in the system",
+                    "All required fields must be filled",
+                    "Phone number must be valid format",
+                    "Date of birth must be realistic"
+                ],
+                "success_message": "Member Added Successfully"
+            },
+            {
+                "name": "View All Members",
+                "description": "Browse and search through all registered gym members",
+                "how_to_access": "Navigate to Members page → View the members list table",
+                "features": [
+                    "Paginated list of all members",
+                    "Search members by name or email",
+                    "Sort by different columns",
+                    "Filter by membership status",
+                    "View member details in expandable rows"
+                ],
+                "displayed_information": [
+                    "Member Name",
+                    "Email Address",
+                    "Phone Number",
+                    "Membership Status",
+                    "Join Date",
+                    "Current Payment Status"
+                ]
+            },
+            {
+                "name": "Search Member by Email",
+                "description": "Quickly find a specific member using their email address",
+                "how_to_access": "Use the search functionality in the members list",
+                "steps": [
+                    "Enter the member's email address in the search box",
+                    "System will filter and display matching results",
+                    "Click on the member to view full details"
+                ]
+            },
+            {
+                "name": "Update Member Details",
+                "description": "Modify existing member information",
+                "how_to_access": "Navigate to Members page → Click 'Update an existing member details' button",
+                "steps": [
+                    "Search for the member by email",
+                    "Select the member to update",
+                    "Modify the required fields",
+                    "Save changes"
+                ],
+                "editable_fields": [
+                    "Name",
+                    "Phone Number",
+                    "Address",
+                    "Date of Birth",
+                    "Gender"
+                ],
+                "non_editable_fields": [
+                    "Email Address (system identifier)",
+                    "Member ID",
+                    "Join Date"
+                ],
+                "success_message": "Member details have been updated successfully"
+            },
+            {
+                "name": "Update Membership Status",
+                "description": "Change a member's membership status (Active/Inactive/Suspended)",
+                "how_to_access": "Navigate to Members page → Click 'Update Membership status of member' button",
+                "steps": [
+                    "Search for the member by email",
+                    "Select the member",
+                    "Choose new membership status from dropdown",
+                    "Confirm the status change"
+                ],
+                "status_options": [
+                    "Active - Member can use gym facilities",
+                    "Inactive - Member account is temporarily disabled",
+                    "Suspended - Member account is suspended due to policy violations"
+                ],
+                "success_message": "Membership status has been updated successfully"
+            }
+        ]
+    },
+    "fees_management": {
+        "description": "Comprehensive fee structure management and payment tracking",
+        "main_features": [
+            {
+                "name": "View Current Fee Structure",
+                "description": "Display the current pricing plans for different membership durations",
+                "how_to_access": "Navigate to Fees page → View 'Current Fees Structure' section",
+                "displays": [
+                    "Monthly membership fee amount",
+                    "Quarterly membership fee amount",
+                    "Annual membership fee amount",
+                    "Effective date of current fee structure",
+                    "Fee comparison charts"
+                ],
+                "user_actions": [
+                    "View current pricing",
+                    "Compare different duration options",
+                    "Reference for member inquiries"
+                ]
+            },
+            {
+                "name": "Current Month Revenue Status",
+                "description": "Monitor revenue and payment collection for the current month",
+                "how_to_access": "Navigate to Dashboard or Fees page → View revenue widgets",
+                "displays": [
+                    "Total fees collected this month",
+                    "Total outstanding payments",
+                    "Number of paid members",
+                    "Number of pending payments",
+                    "Revenue vs target comparison"
+                ],
+                "benefits": [
+                    "Track monthly financial performance",
+                    "Identify payment collection issues",
+                    "Monitor business growth"
+                ]
+            },
+            {
+                "name": "Member Payment Status Overview",
+                "description": "View payment status for all current members",
+                "how_to_access": "Navigate to Fees page → View 'Current Members Fees Payment Status' section",
+                "displays": [
+                    "List of all active members",
+                    "Payment status for each member (Paid/Pending/Overdue)",
+                    "Due dates for pending payments",
+                    "Payment amounts",
+                    "Last payment date"
+                ],
+                "status_indicators": [
+                    "Paid - Green indicator, payment completed",
+                    "Pending - Yellow indicator, payment due soon",
+                    "Overdue - Red indicator, payment past due date"
+                ]
+            },
+            {
+                "name": "Member Payment History",
+                "description": "View complete payment history for any member",
+                "how_to_access": "Navigate to Fees page → Search for member → View payment history",
+                "steps": [
+                    "Enter member's email address",
+                    "Select the member from search results",
+                    "View complete payment timeline"
+                ],
+                "displays": [
+                    "All historical payments",
+                    "Payment dates and amounts",
+                    "Payment methods used",
+                    "Membership duration for each payment",
+                    "Payment status history"
+                ]
+            },
+            {
+                "name": "Update Member Fees",
+                "description": "Record new fee payments for members",
+                "how_to_access": "Navigate to Fees page → Select member → Click 'Update Fees' button",
+                "steps": [
+                    "Search and select the member",
+                    "Enter payment amount",
+                    "Select membership duration (Monthly/Quarterly/Annual)",
+                    "Set payment start and end dates",
+                    "Confirm payment details",
+                    "Submit payment record"
+                ],
+                "required_information": [
+                    "Payment amount",
+                    "Membership duration",
+                    "Payment period (from date to date)",
+                    "Payment status"
+                ],
+                "success_message": "Fees paid successfully"
+            }
+        ]
+    },
+    "ai_features": {
+        "description": "AI-powered tools to enhance gym management experience",
+        "main_features": [
+            {
+                "name": "AI Chatbot Assistant",
+                "description": "Interactive AI assistant to help with gym management queries",
+                "how_to_access": "Click the chat icon (usually in bottom-right corner of any page)",
+                "capabilities": [
+                    "Answer questions about gym operations",
+                    "Provide member information",
+                    "Help with fee calculations",
+                    "Explain application features",
+                    "Generate reports and insights",
+                    "SQL query assistance for data analysis"
+                ],
+                "features": [
+                    "Real-time conversation with typewriter effect",
+                    "Sample prompt suggestions for quick start",
+                    "Followup question suggestions",
+                    "Copy message functionality",
+                    "Expandable chat window",
+                    "Message history within session",
+                    "Support for text and table responses"
+                ],
+                "sample_queries": [
+                    "How many active members do we have?",
+                    "What's our revenue for this month?",
+                    "Show me members with pending payments",
+                    "How do I add a new member?",
+                    "What are the current fee structures?"
+                ],
+                "user_interactions": [
+                    "Type questions in natural language",
+                    "Click on sample prompts to get started",
+                    "Use followup questions for deeper insights",
+                    "Copy AI responses for documentation",
+                    "Expand chat for better viewing"
+                ]
+            },
+            {
+                "name": "Bug Severity Analysis",
+                "description": "AI-powered bug report system with automatic severity detection",
+                "how_to_access": "Access through bug report dialog (usually via help menu or error reporting)",
+                "features": [
+                    "Automatic bug severity detection based on description",
+                    "Smart categorization of issues",
+                    "Context-aware bug reporting",
+                    "Integration with current page information"
+                ],
+                "how_it_works": [
+                    "User describes the bug in title and description",
+                    "AI analyzes the content to determine severity",
+                    "System suggests appropriate severity level",
+                    "User can accept or modify the suggestion",
+                    "Bug report is submitted with proper categorization"
+                ]
+            },
+            {
+                "name": "AI Feature Status",
+                "description": "Monitor availability and status of AI services",
+                "how_to_access": "View on Dashboard → AI Features widget",
+                "displays": [
+                    "List of available AI features",
+                    "Service status (Active/Inactive)",
+                    "Feature descriptions",
+                    "Quick access links to AI tools"
+                ]
+            }
+        ]
+    },
+    "bug_reporting": {
+        "description": "System for reporting issues and bugs in the application",
+        "how_to_access": "Click on bug report icon or access through help menu",
+        "process": [
+            {
+                "step": 1,
+                "title": "Open Bug Report Dialog",
+                "description": "Click the bug report button to open the reporting form"
+            },
+            {
+                "step": 2,
+                "title": "Fill Bug Details",
+                "fields": [
+                    "Bug Title (3-80 characters, required)",
+                    "Bug Description (20-500 characters, required)",
+                    "Page URL (automatically captured)",
+                    "Bug Severity (AI-assisted selection)"
+                ]
+            },
+            {
+                "step": 3,
+                "title": "Get AI Severity Suggestion",
+                "description": "After filling title and description, click 'Get Bug Severity' for AI analysis"
+            },
+            {
+                "step": 4,
+                "title": "Review and Submit",
+                "description": "Review all information and submit the bug report"
+            }
+        ],
+        "severity_levels": [
+            "Low - Minor issues that don't affect core functionality",
+            "Medium - Moderate issues that may impact user experience",
+            "High - Major issues that significantly affect functionality",
+            "Critical - Severe issues that prevent system use"
+        ],
+        "success_message": "The Bug report has been successfully submitted"
+    },
+    "user_interface_elements": {
+        "description": "Common UI elements and how to interact with them",
+        "elements": [
+            {
+                "name": "Navigation Header",
+                "description": "Top navigation bar with user info and logout",
+                "features": [
+                    "Application logo and title",
+                    "User profile information",
+                    "Logout button",
+                    "Navigation breadcrumbs"
+                ]
+            },
+            {
+                "name": "Side Navigation Menu",
+                "description": "Left sidebar with main navigation options",
+                "features": [
+                    "Dashboard link",
+                    "Members management link",
+                    "Fees management link",
+                    "Facility management link",
+                    "Collapsible menu design"
+                ]
+            },
+            {
+                "name": "Loading Indicators",
+                "description": "Visual feedback during data loading",
+                "types": [
+                    "Page-level loading spinner",
+                    "Component-level skeleton screens",
+                    "Button loading states",
+                    "Progress indicators for multi-step processes"
+                ]
+            },
+            {
+                "name": "Toast Notifications",
+                "description": "Success and error messages",
+                "types": [
+                    "Success messages (green) - for successful operations",
+                    "Error messages (red) - for failed operations or validation errors",
+                    "Info messages (blue) - for informational content",
+                    "Warning messages (yellow) - for cautionary information"
+                ]
+            },
+            {
+                "name": "Dialog Boxes",
+                "description": "Modal windows for forms and confirmations",
+                "features": [
+                    "Add member dialog",
+                    "Update member dialog",
+                    "Payment update dialog",
+                    "Bug report dialog",
+                    "Confirmation dialogs"
+                ]
+            },
+            {
+                "name": "Data Tables",
+                "description": "Tabular data display with interactive features",
+                "features": [
+                    "Sortable columns",
+                    "Pagination controls",
+                    "Search and filter options",
+                    "Row selection",
+                    "Expandable row details",
+                    "Export functionality"
+                ]
+            }
+        ]
+    },
+    "common_user_tasks": {
+        "description": "Step-by-step guides for frequently performed tasks",
+        "tasks": [
+            {
+                "task": "Register a New Gym Member",
+                "frequency": "Daily",
+                "steps": [
+                    "Login to FitGym Tool",
+                    "Navigate to Members page",
+                    "Click 'Add a new member' button",
+                    "Fill personal details form (name, email, phone, address, DOB, gender)",
+                    "Click Next to proceed to subscription details",
+                    "Set membership start date and status",
+                    "Review all information on final page",
+                    "Click Submit to create member account",
+                    "Confirm success message appears"
+                ],
+                "tips": [
+                    "Ensure email address is unique",
+                    "Double-check phone number format",
+                    "Verify all required fields are completed"
+                ]
+            },
+            {
+                "task": "Record a Fee Payment",
+                "frequency": "Daily",
+                "steps": [
+                    "Navigate to Fees page",
+                    "Locate the member in the payment status list",
+                    "Click on the member's payment update button",
+                    "Enter payment amount",
+                    "Select membership duration (Monthly/Quarterly/Annual)",
+                    "Set payment period dates",
+                    "Confirm payment details",
+                    "Submit payment record",
+                    "Verify payment status updates in the list"
+                ],
+                "tips": [
+                    "Verify payment amount matches fee structure",
+                    "Ensure payment dates are correct",
+                    "Check that member status updates to 'Paid'"
+                ]
+            },
+            {
+                "task": "Check Monthly Revenue",
+                "frequency": "Weekly/Monthly",
+                "steps": [
+                    "Login to FitGym Tool",
+                    "View Dashboard revenue widget",
+                    "Review current month collections",
+                    "Check outstanding payments list",
+                    "Navigate to Fees page for detailed breakdown",
+                    "Export reports if needed"
+                ],
+                "insights": [
+                    "Monitor payment collection trends",
+                    "Identify members with overdue payments",
+                    "Track revenue against targets"
+                ]
+            },
+            {
+                "task": "Update Member Information",
+                "frequency": "As needed",
+                "steps": [
+                    "Navigate to Members page",
+                    "Click 'Update an existing member details'",
+                    "Search for member by email",
+                    "Select member from results",
+                    "Update required fields",
+                    "Save changes",
+                    "Confirm update success message"
+                ],
+                "limitations": [
+                    "Cannot change email address (system identifier)",
+                    "Cannot modify join date",
+                    "Member ID is system-generated and unchangeable"
+                ]
+            },
+            {
+                "task": "Use AI Chatbot for Queries",
+                "frequency": "As needed",
+                "steps": [
+                    "Click chat icon on any page",
+                    "Type your question in natural language",
+                    "Or click on sample prompts to get started",
+                    "Review AI response",
+                    "Use followup questions for more details",
+                    "Copy responses if needed for documentation"
+                ],
+                "example_queries": [
+                    "How many members joined this month?",
+                    "Show me all overdue payments",
+                    "What's the total revenue for this quarter?",
+                    "How do I change a member's status?"
+                ]
+            }
+        ]
+    },
+    "troubleshooting": {
+        "description": "Common issues and their solutions",
+        "issues": [
+            {
+                "problem": "Cannot login to the application",
+                "possible_causes": [
+                    "Invalid Microsoft credentials",
+                    "Account not authorized for FitGym Tool",
+                    "Browser compatibility issues",
+                    "Network connectivity problems"
+                ],
+                "solutions": [
+                    "Verify Microsoft account credentials",
+                    "Contact administrator for access permissions",
+                    "Try different browser or clear browser cache",
+                    "Check internet connection"
+                ]
+            },
+            {
+                "problem": "Member email already exists error",
+                "cause": "Attempting to register member with duplicate email",
+                "solution": "Use a different email address or update existing member record"
+            },
+            {
+                "problem": "Payment update fails",
+                "possible_causes": [
+                    "Invalid payment amount",
+                    "Incorrect date format",
+                    "Network timeout",
+                    "Member not found"
+                ],
+                "solutions": [
+                    "Verify payment amount is positive number",
+                    "Check date format and validity",
+                    "Retry the operation",
+                    "Confirm member exists in system"
+                ]
+            },
+            {
+                "problem": "AI chatbot not responding",
+                "possible_causes": [
+                    "AI service temporarily unavailable",
+                    "Network connectivity issues",
+                    "Invalid query format"
+                ],
+                "solutions": [
+                    "Wait and retry after a few minutes",
+                    "Check internet connection",
+                    "Try rephrasing your question",
+                    "Use sample prompts to test functionality"
+                ]
+            },
+            {
+                "problem": "Data not loading or showing as empty",
+                "possible_causes": [
+                    "No data available for the selected criteria",
+                    "Database connectivity issues",
+                    "Permission restrictions"
+                ],
+                "solutions": [
+                    "Verify data exists for the time period",
+                    "Refresh the page",
+                    "Contact administrator if problem persists"
+                ]
+            }
+        ]
+    },
+    "best_practices": {
+        "description": "Recommended practices for optimal use of FitGym Tool",
+        "practices": [
+            {
+                "category": "Data Entry",
+                "recommendations": [
+                    "Always double-check member email addresses for accuracy",
+                    "Use consistent naming conventions for member names",
+                    "Verify phone numbers include proper country/area codes",
+                    "Keep member addresses complete and up-to-date",
+                    "Set realistic membership start dates"
+                ]
+            },
+            {
+                "category": "Payment Management",
+                "recommendations": [
+                    "Record payments promptly after collection",
+                    "Verify payment amounts match current fee structure",
+                    "Set accurate payment period dates",
+                    "Regularly review overdue payments list",
+                    "Follow up with members on pending payments"
+                ]
+            },
+            {
+                "category": "System Usage",
+                "recommendations": [
+                    "Log out properly when finished using the system",
+                    "Use the AI chatbot for quick information lookup",
+                    "Report bugs immediately when encountered",
+                    "Keep browser updated for best performance",
+                    "Use search functionality to quickly find members"
+                ]
+            },
+            {
+                "category": "Data Security",
+                "recommendations": [
+                    "Never share login credentials with others",
+                    "Log out when leaving workstation unattended",
+                    "Verify member identity before updating information",
+                    "Handle member data according to privacy policies",
+                    "Report any suspicious activity immediately"
+                ]
+            }
+        ]
+    }
+}

@@ -1,17 +1,9 @@
-﻿// *********************************************************************************
-//	<copyright file="AIServicesController.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The AI Services Controller Class.</summary>
-// *********************************************************************************
-
-using FitGymTool.API.Adapters.Contracts;
+﻿using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
 using static FitGymTool.API.Helpers.SwaggerConstants.AIServicesController;
 
@@ -21,12 +13,11 @@ namespace FitGymTool.API.Controllers;
 /// The AI Services Controller Class.
 /// </summary>
 /// <param name="httpContextAccessor">The http context accessor.</param>
-/// <param name="logger">The logger service.</param>
 /// <param name="aiServicesHandler">The AI services handler.</param>
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.AIServicesApiRoutes.BaseRoute_RoutePrefix)]
-public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILogger<AIServicesController> logger, IAIServicesHandler aiServicesHandler) : BaseController(httpContextAccessor)
+public class AIServicesController(IHttpContextAccessor httpContextAccessor, IAIServicesHandler aiServicesHandler) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Responds the user query asynchronous.
@@ -41,31 +32,18 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 	[SwaggerOperation(Summary = RespondAction.Summary, Description = RespondAction.Description, OperationId = RespondAction.OperationId)]
 	public async Task<ResponseDTO> RespondAsync([FromBody] ChatMessageRequestDTO chatMessage)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(RespondAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await aiServicesHandler.GetChatbotResponseAsync(chatMessage).ConfigureAwait(false);
+			if (result is not null)
 			{
-				var result = await aiServicesHandler.GetChatbotResponseAsync(chatMessage).ConfigureAwait(false);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(RespondAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(RespondAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -81,31 +59,18 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 	[SwaggerOperation(Summary = GetBugSeverityStatusAction.Summary, Description = GetBugSeverityStatusAction.Description, OperationId = GetBugSeverityStatusAction.OperationId)]
 	public async Task<ResponseDTO> GetBugSeverityStatusAsync([FromBody] BugSeverityInputDTO bugSeverityInput)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await aiServicesHandler.GetBugSeverityFromAIServiceAsync(bugSeverityInput);
+			if (result is not null)
 			{
-				var result = await aiServicesHandler.GetBugSeverityFromAIServiceAsync(bugSeverityInput);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetBugSeverityStatusAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -120,31 +85,18 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 	[SwaggerOperation(Summary = GetActiveAIFeaturesAction.Summary, Description = GetActiveAIFeaturesAction.Description, OperationId = GetActiveAIFeaturesAction.OperationId)]
 	public async Task<ResponseDTO> GetActiveAIFeaturesAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await aiServicesHandler.GetActiveAIFeaturesAsync().ConfigureAwait(false);
+			if (result is not null)
 			{
-				var result = await aiServicesHandler.GetActiveAIFeaturesAsync().ConfigureAwait(false);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetActiveAIFeaturesAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -159,31 +111,17 @@ public class AIServicesController(IHttpContextAccessor httpContextAccessor, ILog
 	[SwaggerOperation(Summary = GetSamplePromptsForChatbotAction.Summary, Description = GetSamplePromptsForChatbotAction.Description, OperationId = GetSamplePromptsForChatbotAction.OperationId)]
 	public async Task<ResponseDTO> GetSamplePromptsForChatbotAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await aiServicesHandler.GetSamplePromptsForChatbotAsync().ConfigureAwait(false);
+			if (result is not null)
 			{
-				var result = await aiServicesHandler.GetSamplePromptsForChatbotAsync().ConfigureAwait(false);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetSamplePromptsForChatbotAsync), DateTime.UtcNow, base.UserFullName ?? string.Empty));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 }

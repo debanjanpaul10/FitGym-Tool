@@ -187,7 +187,7 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 	/// <returns>The AI response data.</returns>
 	private async Task<string> InvokeRAGFunctionAsync(string userInput)
 	{
-		var knowledgeBase = await mongoDbDatabaseManager.GetDatabaseKnowledgePiecesJsonAsync().ConfigureAwait(false);
+		var knowledgeBase = await mongoDbDatabaseManager.GetRAGKnowledgePiecesJsonAsync().ConfigureAwait(false);
 		var skillsInput = new SkillsInputDomain()
 		{
 			KnowledgeBase = JsonConvert.SerializeObject(knowledgeBase),
@@ -205,14 +205,27 @@ public class AiServices(ILogger<AiServices> logger, IAIServicesManager aiService
 	/// <returns>A task to wait on.</returns>
 	private async Task HandleFollowupQuestionsDataAsync(AIChatbotResponse aiResult)
 	{
-		var followupQuestionsDataDomain = new FollowupQuestionsRequestDomain
+		try
 		{
-			AiResponseData = aiResult.UserIntent == IntentConstants.RAGIntent ? aiResult.AIResponseData.Replace("`", "'") : aiResult.AIResponseData,
-			UserIntent = aiResult.UserIntent,
-			UserQuery = aiResult.UserQuery
-		};
+			logger.LogInformation(string.Format(CultureInfo.InvariantCulture, LoggingConstants.MethodStartedMessageConstant, nameof(HandleFollowupQuestionsDataAsync), DateTime.UtcNow, aiResult.AIResponseData));
+			var followupQuestionsDataDomain = new FollowupQuestionsRequestDomain
+			{
+				AiResponseData = aiResult.UserIntent == IntentConstants.RAGIntent ? aiResult.AIResponseData.Replace("`", "'") : aiResult.AIResponseData,
+				UserIntent = aiResult.UserIntent,
+				UserQuery = aiResult.UserQuery
+			};
 
-		aiResult.FollowupQuestions = await aiServicesManager.GetFollowupQuestionsResponseAsync(followupQuestionsDataDomain).ConfigureAwait(false);
+			aiResult.FollowupQuestions = await aiServicesManager.GetFollowupQuestionsResponseAsync(followupQuestionsDataDomain).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.InvariantCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(HandleFollowupQuestionsDataAsync), DateTime.UtcNow, ex.Message));
+			aiResult.FollowupQuestions = [];
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.InvariantCulture, LoggingConstants.MethodEndedMessageConstant, nameof(HandleFollowupQuestionsDataAsync), DateTime.UtcNow, aiResult.AIResponseData));
+		}
 	}
 
 	#endregion
