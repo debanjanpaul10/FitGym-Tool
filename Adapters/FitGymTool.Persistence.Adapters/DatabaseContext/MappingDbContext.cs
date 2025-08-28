@@ -22,7 +22,7 @@ public partial class SqlDbContext
 	/// <value>
 	/// The membership status mapping.
 	/// </value>
-	public DbSet<MembershipStatusMapping> MembershipStatusMapping { get; set; }
+	public virtual DbSet<MembershipStatusMapping> MembershipStatusMapping { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees payment status mapping.
@@ -30,7 +30,7 @@ public partial class SqlDbContext
 	/// <value>
 	/// The fees payment status mapping.
 	/// </value>
-	public DbSet<FeesPaymentStatusMapping> FeesPaymentStatusMapping { get; set; }
+	public virtual DbSet<FeesPaymentStatusMapping> FeesPaymentStatusMapping { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees duration mapping.
@@ -38,7 +38,7 @@ public partial class SqlDbContext
 	/// <value>
 	/// The fees duration mapping.
 	/// </value>
-	public DbSet<FeesDurationMapping> FeesDurationMapping { get; set; }
+	public virtual DbSet<FeesDurationMapping> FeesDurationMapping { get; set; }
 
 	/// <summary>
 	/// Gets or sets the bug item status mapping.
@@ -46,7 +46,7 @@ public partial class SqlDbContext
 	/// <value>
 	/// The bug item status mapping.
 	/// </value>
-	public DbSet<BugItemStatusMapping> BugItemStatusMapping { get; set; }
+	public virtual DbSet<BugItemStatusMapping> BugItemStatusMapping { get; set; }
 
 	/// <summary>
 	/// Gets or sets the bug severity mapping.
@@ -54,7 +54,7 @@ public partial class SqlDbContext
 	/// <value>
 	/// The bug severity mapping.
 	/// </value>
-	public DbSet<BugSeverityMapping> BugSeverityMapping { get; set; }
+	public virtual DbSet<BugSeverityMapping> BugSeverityMapping { get; set; }
 
 	/// <summary>
 	/// Gets or sets the ai service status mapping.
@@ -62,5 +62,5 @@ public partial class SqlDbContext
 	/// <value>
 	/// The ai service status mapping.
 	/// </value>
-	public DbSet<AIServiceStatusMapping> AIServiceStatusMapping { get; set; }
+	public virtual DbSet<AIServiceStatusMapping> AIServiceStatusMapping { get; set; }
 }
