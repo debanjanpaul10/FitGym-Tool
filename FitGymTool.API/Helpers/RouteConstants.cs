@@ -136,21 +136,6 @@ public static class RouteConstants
 		internal const string GetActiveAIFeatures_ApiRoute = "getactiveaifeatures";
 
 		/// <summary>
-		/// The get knowledge base SQL API route
-		/// </summary>
-		internal const string GetKnowledgeBaseSql_ApiRoute = "getsqlknowledgebasejson";
-
-		/// <summary>
-		/// The get database schema SQL API route
-		/// </summary>
-		internal const string GetDatabaseSchemaSql_ApiRoute = "getdatabaseschemajson";
-
-		/// <summary>
-		/// The execute SQL query API route
-		/// </summary>
-		internal const string ExecuteSqlQuery_ApiRoute = "executesqlquery";
-
-		/// <summary>
 		/// The get sample prompts for chatbot API route
 		/// </summary>
 		internal const string GetSamplePromptsForChatbot_ApiRoute = "getsampleprompts";

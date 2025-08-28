@@ -7,7 +7,7 @@
 
 using FitGymTool.Domain.Helpers;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using static FitGymTool.API.Helpers.APIConstants;
 
 namespace FitGymTool.API.Middleware;
 
@@ -16,45 +16,44 @@ namespace FitGymTool.API.Middleware;
 /// </summary>
 /// <param name="logger">The logger.</param>
 /// <seealso cref="IExceptionHandler"/>
-public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, RequestDelegate next)
 {
-	// <summary>
-	/// The logger
+	/// <summary>
+	/// Invokes the specified HTTP context.
 	/// </summary>
-	private readonly ILogger<GlobalExceptionHandler> _logger = logger;
+	/// <param name="httpContext">The HTTP context.</param>
+	public async Task Invoke(HttpContext httpContext)
+	{
+		try
+		{
+			await next(httpContext);
+		}
+		catch (UnauthorizedAccessException ex)
+		{
+			await HandleExceptionAsync(httpContext, ex, StatusCodes.Status401Unauthorized, ex.ToString(), ex.Message);
+		}
+		catch (Exception ex)
+		{
+			await HandleExceptionAsync(httpContext, ex, StatusCodes.Status500InternalServerError, ex.ToString(), ex.Message);
+		}
+	}
 
 	/// <summary>
-	/// Tries to handle the specified exception asynchronously within the ASP.NET Core pipeline.
-	/// Implementations of this method can provide custom exception-handling logic for different scenarios.
+	/// Handles the exception asynchronous.
 	/// </summary>
-	/// <param name="httpContext">The <see cref="T:Microsoft.AspNetCore.Http.HttpContext" /> for the request.</param>
-	/// <param name="exception">The unhandled exception.</param>
-	/// <param name="cancellationToken">The cancellation token.</param>
-	/// <returns>
-	/// A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" />
-	/// property contains the result of the handling operation.
-	/// <see langword="true" /> if the exception was handled successfully; otherwise <see langword="false" />.
-	/// </returns>
-	public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+	/// <param name="httpContext">The HTTP context.</param>
+	/// <param name="ex">The ex.</param>
+	/// <param name="statusCode">The status code.</param>
+	/// <param name="error">The error.</param>
+	/// <param name="message">The message.</param>
+	public async Task HandleExceptionAsync(HttpContext httpContext, Exception ex, int statusCode, string error, string message)
 	{
-		var problemDetails = new ProblemDetails
-		{
-			Instance = httpContext.Request.Path
-		};
-		if (exception is FitGymToolExceptions ex)
-		{
-			httpContext.Response.StatusCode = ex.StatusCode;
-			problemDetails.Title = ex.Message;
-		}
-		else
-		{
-			problemDetails.Title = exception.Message;
-		}
+		logger.LogError(ex, string.Format(LoggingConstants.MethodFailedWithMessageConstant, httpContext.Request.Method, DateTime.UtcNow, ex.Message));
 
-		_logger.LogError(problemDetails.Title);
-		problemDetails.Status = httpContext.Response.StatusCode;
-		await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken).ConfigureAwait(false);
+		httpContext.Response.ContentType = ConfigurationConstants.ApplicationJsonConstant;
+		httpContext.Response.StatusCode = statusCode;
 
-		return true;
+		var errorResponse = new FitGymToolExceptions(message, statusCode, error);
+		await httpContext.Response.WriteAsJsonAsync(errorResponse);
 	}
 }

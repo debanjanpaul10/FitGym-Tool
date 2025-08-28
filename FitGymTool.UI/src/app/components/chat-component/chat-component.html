@@ -95,6 +95,11 @@
             <div class="fallback-content">{{ message.content }}</div>
             }
           </div>
+          } @else if (message.contentType === 'markdown') {
+          <div
+            class="markdown-content"
+            [innerHTML]="parseMarkdownToHtml(message.content)"
+          ></div>
           } @else {
           <div class="text-content">{{ message.content }}</div>
           } @if (!message.isBot && !message.isTyping) {
@@ -108,6 +113,28 @@
           </button>
           }
         </div>
+
+        <!-- Followup Questions -->
+        @if (message.isBot && message.followupQuestions &&
+        message.followupQuestions.length > 0 && !isProcessing()) {
+        <div class="followup-questions-container">
+          <div class="followup-questions-header">
+            <span>Related questions:</span>
+          </div>
+          <div class="followup-questions-bubbles">
+            @for (question of message.followupQuestions; track question) {
+            <button
+              class="followup-question-bubble"
+              (click)="insertFollowupQuestion(question)"
+              [pTooltip]="'Click to ask this question'"
+              tooltipPosition="top"
+            >
+              {{ question }}
+            </button>
+            }
+          </div>
+        </div>
+        }
       </div>
       } @if (showScrollToBottomButton) {
       <button

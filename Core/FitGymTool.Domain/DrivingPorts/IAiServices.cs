@@ -37,20 +37,6 @@ public interface IAiServices
 	Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest, bool areFollowupQuestionsEnabled);
 
 	/// <summary>
-	/// Gets the database schema json asynchronous.
-	/// </summary>
-	/// <returns>The database schema domain.</returns>
-	Task<DatabaseSchemaDomain> GetDatabaseSchemaJsonAsync();
-
-	/// <summary>
-	/// Gets the database knowledge pieces json asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The database knowledge base domain.
-	/// </returns>
-	Task<DatabaseKnowledgeBaseDomain> GetDatabaseKnowledgePiecesJsonAsync();
-
-	/// <summary>
 	/// Gets the sample prompts for chatbot asynchronous.
 	/// </summary>
 	/// <returns>The list of <see cref="SampleChatbotPromptsDomain"/></returns>

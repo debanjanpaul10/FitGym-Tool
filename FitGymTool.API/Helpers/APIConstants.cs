@@ -136,6 +136,11 @@ public class APIConstants
 		/// The FitGym API app config key constant.
 		/// </summary>
 		public const string FitGymAPIAppConfigKeyConstant = "FitGym.API";
+
+		/// <summary>
+		/// The application json constant
+		/// </summary>
+		public const string ApplicationJsonConstant = "application/json";
 	}
 
 	/// <summary>

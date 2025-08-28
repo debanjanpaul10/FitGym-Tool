@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 using static FitGymTool.AIAgents.Adapters.Helpers.Constants;
 
 namespace FitGymTool.AIAgents.Adapters.Utilities;
@@ -52,12 +52,12 @@ public class HttpClientHelper(ILogger<HttpClientHelper> logger, IConfiguration c
 		try
 		{
 			logger.LogInformation(string.Format(LoggingConstants.LogHelperMethodStart, nameof(GetAIResponseAsync), DateTime.UtcNow, data?.GetType().Name ?? string.Empty));
-			
+
 			var client = httpClientFactory.CreateClient(ConfigurationConstants.AiAgentsHttpClient);
 			ArgumentException.ThrowIfNullOrWhiteSpace(apiUrl);
 			await PrepareHttpClientFactoryAsync(client, TokenHelper.GetAiAgentsLabTokenAsync(configuration, logger));
 
-			var inputJson = JsonSerializer.Serialize(data);
+			var inputJson = JsonConvert.SerializeObject(data);
 			var contentData = new StringContent(content: inputJson, encoding: Encoding.UTF8, ConfigurationConstants.ApplicationJsonConstant);
 
 			var response = await client.PostAsync(apiUrl, contentData).ConfigureAwait(false);

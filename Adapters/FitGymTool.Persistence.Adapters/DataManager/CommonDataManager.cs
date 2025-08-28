@@ -13,8 +13,8 @@ using FitGymTool.Domain.DrivenPorts;
 using FitGymTool.Persistence.Adapters.Contracts;
 using FitGymTool.Persistence.Adapters.Helpers.Constants;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Globalization;
-using System.Text.Json;
 using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.Persistence.Adapters.DataManager;
@@ -130,7 +130,7 @@ public class CommonDataManager(IUnitOfWork unitOfWork, ILogger<CommonDataManager
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(ExecuteAISQLQueryAsync), DateTime.UtcNow, aiSqlQuery));
 			var result = await unitOfWork.ExecuteSqlQueryRawAsync<List<Object>>(aiSqlQuery).ConfigureAwait(false);
-			return JsonSerializer.Serialize(result);
+			return JsonConvert.SerializeObject(result);
 		}
 		catch (Exception ex)
 		{

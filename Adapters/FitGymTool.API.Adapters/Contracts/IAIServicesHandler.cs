@@ -7,7 +7,6 @@
 
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.API.Adapters.Models.Response.MetadataEntities;
 
 namespace FitGymTool.API.Adapters.Contracts;
 
@@ -35,20 +34,6 @@ public interface IAIServicesHandler
 	/// <param name="chatMessageRequest">The user query request.</param>
 	/// <returns>The ai agent response.</returns>
 	Task<AIChatbotResponseDTO> GetChatbotResponseAsync(ChatMessageRequestDTO chatMessageRequest);
-
-	/// <summary>
-	/// Gets the database schema json asynchronous.
-	/// </summary>
-	/// <returns>The database schema domain.</returns>
-	Task<DatabaseSchemaDTO> GetDatabaseSchemaJsonAsync();
-
-	/// <summary>
-	/// Gets the database knowledge pieces json asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The database knowledge base DTO.
-	/// </returns>
-	Task<DatabaseKnowledgeBaseDTO> GetDatabaseKnowledgePiecesJsonAsync();
 
 	/// <summary>
 	/// Gets the sample prompts for chatbot asynchronous.

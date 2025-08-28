@@ -44,6 +44,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
   protected isExpanded: WritableSignal<boolean> = signal(false);
   protected AIMessages = CommonApplicationConstants.AIConstants;
   protected parseMarkdownTable = Utilities.ParseMarkdownTable;
+  protected parseMarkdownToHtml = Utilities.ParseMarkdownToHtml;
   protected sampleChatbotPrompts: WritableSignal<SampleChatbotPromptsDTO[]> =
     signal([]);
 
@@ -173,6 +174,13 @@ export class ChatComponent implements AfterViewChecked, OnInit {
     }
   }
 
+  protected insertFollowupQuestion(questionText: string): void {
+    if (this.messageInput && !this.isProcessing()) {
+      this.messageInput.nativeElement.value = questionText;
+      this.messageInput.nativeElement.focus();
+    }
+  }
+
   // #region PRIVATE METHODS
 
   private getSampleAiPrompts(): void {
@@ -264,18 +272,18 @@ export class ChatComponent implements AfterViewChecked, OnInit {
           errorMessage = error.message;
         }
 
-        this.showErrorAsAiResponse(errorMessage);
+        this.showErrorAsAiResponse();
         this._toasterService.showError(errorMessage);
       },
     });
   }
 
   private handleErrorResponse(errorMessage: string): void {
-    this.showErrorAsAiResponse(errorMessage);
+    this.showErrorAsAiResponse();
     this._toasterService.showError(errorMessage);
   }
 
-  private showErrorAsAiResponse(errorMessage: string): void {
+  private showErrorAsAiResponse(): void {
     const messages = this.messages();
     const lastMessageIndex = messages.length - 1;
 
@@ -283,7 +291,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       this.messages.update((msgs) => {
         const updatedMsgs = [...msgs];
         updatedMsgs[lastMessageIndex] = {
-          content: `Error: ${errorMessage}`,
+          content: `Error: ${CommonApplicationConstants.AIConstants.AIFailedMessage}`,
           isBot: true,
           isTyping: false,
           contentType: 'text',
@@ -294,7 +302,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       this.messages.update((msgs) => [
         ...msgs,
         {
-          content: `Error: ${errorMessage}`,
+          content: `Error: ${CommonApplicationConstants.AIConstants.AIFailedMessage}`,
           isBot: true,
           isTyping: false,
           contentType: 'text',
@@ -326,6 +334,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
         isTyping: false,
         contentType: 'markdown-table',
         userIntent: aiChatbotResponse.userIntent,
+        followupQuestions: aiChatbotResponse.followupQuestions || [],
       };
       return updatedMsgs;
     });
@@ -345,14 +354,15 @@ export class ChatComponent implements AfterViewChecked, OnInit {
         content: '',
         isBot: true,
         isTyping: false,
-        contentType: 'text',
+        contentType: 'markdown',
         userIntent: aiChatbotResponse.userIntent,
+        followupQuestions: aiChatbotResponse.followupQuestions || [],
       };
       return updatedMsgs;
     });
 
     let currentIndex = 0;
-    const typeSpeed = 50;
+    const typeSpeed = 5;
 
     const typeInterval = setInterval(() => {
       if (currentIndex < fullText.length) {
@@ -364,8 +374,9 @@ export class ChatComponent implements AfterViewChecked, OnInit {
             content: currentText,
             isBot: true,
             isTyping: false,
-            contentType: 'text',
+            contentType: 'markdown',
             userIntent: aiChatbotResponse.userIntent,
+            followupQuestions: aiChatbotResponse.followupQuestions || [],
           };
           return updatedMsgs;
         });

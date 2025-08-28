@@ -9,7 +9,6 @@ using AutoMapper;
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
-using FitGymTool.API.Adapters.Models.Response.MetadataEntities;
 using FitGymTool.Domain.DomainEntities.AIEntities;
 using FitGymTool.Domain.DrivingPorts;
 using Microsoft.Extensions.Configuration;
@@ -66,30 +65,6 @@ public class AIServicesHandler(IMapper mapper, IAiServices aiServices, IConfigur
 		var domainInput = mapper.Map<UserQueryRequest>(userQueryRequest);
 		var domainResponse = await aiServices.GetChatbotResponseAsync(domainInput, areFollowupQuestionsEnabled).ConfigureAwait(false);
 		return mapper.Map<AIChatbotResponseDTO>(domainResponse);
-	}
-
-	/// <summary>
-	/// Gets the database knowledge pieces json asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The database knowledge base DTO.
-	/// </returns>
-	public async Task<DatabaseKnowledgeBaseDTO> GetDatabaseKnowledgePiecesJsonAsync()
-	{
-		var domainResponse = await aiServices.GetDatabaseKnowledgePiecesJsonAsync().ConfigureAwait(false);
-		return mapper.Map<DatabaseKnowledgeBaseDTO>(domainResponse);
-	}
-
-	/// <summary>
-	/// Gets the database schema json asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The database schema domain.
-	/// </returns>
-	public async Task<DatabaseSchemaDTO> GetDatabaseSchemaJsonAsync()
-	{
-		var domainResponse = await aiServices.GetDatabaseSchemaJsonAsync().ConfigureAwait(false);
-		return mapper.Map<DatabaseSchemaDTO>(domainResponse);
 	}
 
 	/// <summary>

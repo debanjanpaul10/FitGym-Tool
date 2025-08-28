@@ -21,6 +21,11 @@ public static class DomainConstants
 		/// The are followup questions enabled constant.
 		/// </summary>
 		public const string AreFollowupQuestionsEnabled = "AreFollowupQuestionsEnabled";
+
+		/// <summary>
+		/// The source name
+		/// </summary>
+		public const string SourceName = "FitGymTool";
 	}
 
 	/// <summary>
@@ -101,6 +106,37 @@ public static class DomainConstants
 		/// Something went wrong message
 		/// </summary>
 		internal const string SomethingWentWrongMessage = "Something went wrong while processing the request. Please try again after sometime";
+
+		/// <summary>
+		/// The ai services cannot be availed exception constant.
+		/// </summary>
+		internal const string AiServicesCannotBeAvailedExceptionConstant = "Oops! It seems our AI Services are down as of this moment. Please try again after sometime.";
+	}
+
+	/// <summary>
+	/// The intent constants class.
+	/// </summary>
+	internal static class IntentConstants
+	{
+		/// <summary>
+		/// The greeting intent
+		/// </summary>
+		internal const string GreetingIntent = "GREETING";
+
+		/// <summary>
+		/// The SQL intent
+		/// </summary>
+		internal const string SQLIntent = "SQL";
+
+		/// <summary>
+		/// The rag intent
+		/// </summary>
+		internal const string RAGIntent = "RAG";
+
+		/// <summary>
+		/// The unclear intent
+		/// </summary>
+		internal const string UnclearIntent = "UNCLEAR";
 	}
 
 }

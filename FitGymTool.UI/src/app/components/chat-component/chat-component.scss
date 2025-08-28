@@ -370,6 +370,202 @@
   color: inherit;
 }
 
+.markdown-content {
+  color: inherit;
+  line-height: 1.6;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff;
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    border-bottom: 1px solid #667eea;
+    padding-bottom: 0.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #e0e0e0;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    color: #b0b0b0;
+    font-style: italic;
+  }
+
+  code {
+    background: #1a1a1a;
+    color: #f8f8f2;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    border: 1px solid #404040;
+  }
+
+  pre {
+    background: #1a1a1a;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #f8f8f2;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #2d2d2d;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 3px;
+
+      &:hover {
+        background: #764ba2;
+      }
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    color: #e0e0e0;
+
+    li {
+      margin: 0.25rem 0;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #764ba2;
+      border-bottom-color: #764ba2;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #667eea;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #b0b0b0;
+    font-style: italic;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+/* Followup Questions Styles */
+.followup-questions-container {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(102, 126, 234, 0.05);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+}
+
+.followup-questions-header {
+  margin-bottom: 0.5rem;
+  color: #b0b0b0;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.followup-questions-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.followup-question-bubble {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.15) 100%
+  );
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  color: #e0e0e0;
+  padding: 0.4rem 0.7rem;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 300px;
+  white-space: normal;
+  overflow: visible;
+  display: inline-block;
+  line-height: 1.3;
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.25) 0%,
+      rgba(118, 75, 162, 0.25) 100%
+    );
+    border-color: rgba(102, 126, 234, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    color: #ffffff;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.4);
+  }
+}
+
 /* Sample Prompts Styles */
 .sample-prompts-container {
   padding: 1rem;
@@ -657,5 +853,27 @@
     font-size: 12px;
     padding: 0.4rem 0.6rem;
     max-width: 250px;
+  }
+
+  /* Mobile followup questions adjustments */
+  .followup-questions-container {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .followup-questions-header {
+    font-size: 11px;
+    margin-bottom: 0.4rem;
+  }
+
+  .followup-questions-bubbles {
+    gap: 0.3rem;
+  }
+
+  .followup-question-bubble {
+    font-size: 11px;
+    padding: 0.3rem 0.5rem;
+    max-width: 200px;
+    border-radius: 14px;
   }
 }

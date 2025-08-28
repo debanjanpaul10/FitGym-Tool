@@ -46,7 +46,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.ConfigureAzureAppConfiguration(credentials);
 builder.ConfigureApiServices();
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddHttpContextAccessor();
 
@@ -63,6 +62,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler();
+app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseCors();
 
