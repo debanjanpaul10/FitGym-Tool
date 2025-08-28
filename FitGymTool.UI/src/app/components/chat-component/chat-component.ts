@@ -282,6 +282,29 @@ export class ChatComponent implements AfterViewChecked, OnInit {
     this.insertFollowupQuestion(suggestion.text);
   }
 
+  /**
+   * Determines if the message at the given index is the latest bot message.
+   * @param index - The index of the message to check
+   * @returns true if this is the latest bot message, false otherwise
+   */
+  protected isLatestBotMessage(index: number): boolean {
+    const messages = this.messages();
+    const currentMessage = messages[index];
+
+    if (!currentMessage?.isBot) {
+      return false;
+    }
+
+    // Find the last bot message index
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].isBot && !messages[i].isTyping) {
+        return i === index;
+      }
+    }
+
+    return false;
+  }
+
   // #region PRIVATE METHODS
 
   /**

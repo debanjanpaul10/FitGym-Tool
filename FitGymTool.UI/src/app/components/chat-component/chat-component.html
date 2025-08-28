@@ -114,9 +114,10 @@
           }
         </div>
 
-        <!-- Followup Questions -->
+        <!-- Followup Questions - Only show for the latest bot message -->
         @if (message.isBot && message.followupQuestions &&
-        message.followupQuestions.length > 0 && !isProcessing()) {
+        message.followupQuestions.length > 0 && !isProcessing() &&
+        isLatestBotMessage($index)) {
         <div class="followup-questions-container">
           <app-chat-component-suggestions
             [suggestions]="convertFollowupQuestions(message.followupQuestions)"
