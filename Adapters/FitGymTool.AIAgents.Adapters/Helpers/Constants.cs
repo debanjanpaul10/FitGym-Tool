@@ -106,6 +106,8 @@ internal static class Constants
 		/// The local ai agents base URL
 		/// </summary>
 		internal const string LocalAiAgentsBaseUrl = "LocalAiAgentsBaseUrl";
+
+
 	}
 
 	/// <summary>
@@ -132,16 +134,36 @@ internal static class Constants
 		/// <summary>
 		/// The get bug severity API route
 		/// </summary>
-		internal const string GetBugSeverity_ApiRoute = "fitgymtoolai/getbugseverity";
+		internal const string GetBugSeverity_ApiRoute = "plugins/getbugseverity";
 
 		/// <summary>
-		/// The get chatbot response API route
+		/// The detect user intent API route
 		/// </summary>
-		internal const string GetChatbotResponse_ApiRoute = "fitgymtoolai/getchatbotresponse";
+		internal const string DetectUserIntent_ApiRoute = "skills/intentdetectionskill";
+
+		/// <summary>
+		/// The get user greeting response API route
+		/// </summary>
+		internal const string GetUserGreetingResponse_ApiRoute = "skills/usergreetingskill";
+
+		/// <summary>
+		/// The get rag text response API route
+		/// </summary>
+		internal const string GetRAGTextResponse_ApiRoute = "skills/ragtextresponseskill";
+
+		/// <summary>
+		/// The get nl to SQL response API route
+		/// </summary>
+		internal const string GetNlToSqlResponse_ApiRoute = "skills/nltosqlskill";
 
 		/// <summary>
 		/// The get SQL query markdown response API route
 		/// </summary>
-		internal const string GetSQLQueryMarkdownResponse_ApiRoute = "fitgymtoolai/getsqlquerymarkdownresponse";
+		internal const string GetSQLQueryMarkdownResponse_ApiRoute = "skills/getsqlquerymarkdownresponse";
+
+		/// <summary>
+		/// The get followup questions response API route.
+		/// </summary>
+		internal const string GetFollowupQuestionsResponse_ApiRoute = "skills/getfollowupquestionsresponse";
 	}
 }

@@ -1,11 +1,4 @@
-﻿// *********************************************************************************
-//	<copyright file="BaseController.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Base Controller Class.</summary>
-// *********************************************************************************
-
-using FitGymTool.API.Adapters.Models.Response;
+﻿using FitGymTool.API.Adapters.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using FitGymTool.API.Helpers;
@@ -17,7 +10,6 @@ namespace FitGymTool.API.Controllers;
 /// The Base Controller Class.
 /// </summary>
 /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
-/// <param name="configuration">The Configuration.</param>
 [Authorize]
 public abstract class BaseController : ControllerBase
 {

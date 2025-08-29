@@ -1,17 +1,9 @@
-﻿// *********************************************************************************
-//	<copyright file="MembersController.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Members Controller Class.</summary>
-// *********************************************************************************
-
 using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
 using static FitGymTool.API.Helpers.SwaggerConstants.MembersController;
 
@@ -22,11 +14,10 @@ namespace FitGymTool.API.Controllers;
 /// </summary>
 /// <param name="membersHandler">The members service.</param>
 /// <param name="httpContextAccessor">The http context accessor.</param>
-/// <param name="logger">The logger service.</param>
 /// <seealso cref="BaseController"/>
 [ApiController]
 [Route(RouteConstants.MembersApiRoutes.BaseRoute_RoutePrefix)]
-public class MembersController(IMembersHandler membersHandler, IHttpContextAccessor httpContextAccessor, ILogger<MembersController> logger) : BaseController(httpContextAccessor)
+public class MembersController(IMembersHandler membersHandler, IHttpContextAccessor httpContextAccessor) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Adds a new member to the database asynchronously.
@@ -42,32 +33,19 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[SwaggerOperation(Summary = AddNewMemberAction.Summary, Description = AddNewMemberAction.Description, OperationId = AddNewMemberAction.OperationId)]
 	public async Task<ResponseDTO> AddNewMemberAsync([FromBody] AddMemberDTO memberDetails, [FromRoute] bool isFromAdmin = false)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			base.PrepareDefaultDtoData(memberDetails);
+			var result = await membersHandler.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
+			if (result)
 			{
-				base.PrepareDefaultDtoData(memberDetails);
-				var result = await membersHandler.AddNewMemberAsync(memberDetails, base.UserEmail, isFromAdmin);
-				if (result)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberCouldNotBeAddedMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddNewMemberAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -82,31 +60,18 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[SwaggerOperation(Summary = GetAllMembersAction.Summary, Description = GetAllMembersAction.Description, OperationId = GetAllMembersAction.OperationId)]
 	public async Task<ResponseDTO> GetAllMembersAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await membersHandler.GetAllMembersAsync();
+			if (result is not null)
 			{
-				var result = await membersHandler.GetAllMembersAsync();
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetAllMembersAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -122,32 +87,18 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[SwaggerOperation(Summary = GetMemberByEmailIdAction.Summary, Description = GetMemberByEmailIdAction.Description, OperationId = GetMemberByEmailIdAction.OperationId)]
 	public async Task<ResponseDTO> GetMemberByEmailIdAsync([FromQuery] string memberEmailId)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(
-				CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await membersHandler.GetMemberByEmailIdAsync(memberEmailId);
+			if (result is not null)
 			{
-				var result = await membersHandler.GetMemberByEmailIdAsync(memberEmailId);
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ValidationErrorMessages.MemberNotFoundMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMemberByEmailIdAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -163,32 +114,19 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[SwaggerOperation(Summary = UpdateMemberDetailsAction.Summary, Description = UpdateMemberDetailsAction.Description, OperationId = UpdateMemberDetailsAction.OperationId)]
 	public async Task<ResponseDTO> UpdateMemberDetailsAsync([FromBody] UpdateMemberDTO memberDetails)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			base.PrepareDefaultDtoData(memberDetails);
+			var result = await membersHandler.UpdateMemberDetailsAsync(memberDetails);
+			if (result)
 			{
-				base.PrepareDefaultDtoData(memberDetails);
-				var result = await membersHandler.UpdateMemberDetailsAsync(memberDetails);
-				if (result)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMemberDetailsAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -204,31 +142,18 @@ public class MembersController(IMembersHandler membersHandler, IHttpContextAcces
 	[SwaggerOperation(Summary = UpdateMembershipStatusAction.Summary, Description = UpdateMembershipStatusAction.Description, OperationId = UpdateMembershipStatusAction.OperationId)]
 	public async Task<ResponseDTO> UpdateMembershipStatusDataAsync([FromBody] UpdateMembershipStatusDTO membershipStatusDto)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			base.PrepareDefaultDtoData(membershipStatusDto);
+			var result = await membersHandler.UpdateMembershipStatusAsync(membershipStatusDto);
+			if (result)
 			{
-				base.PrepareDefaultDtoData(membershipStatusDto);
-				var result = await membersHandler.UpdateMembershipStatusAsync(membershipStatusDto);
-				if (result)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(UpdateMembershipStatusDataAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 }

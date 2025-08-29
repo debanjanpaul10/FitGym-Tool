@@ -32,22 +32,9 @@ public interface IAiServices
 	/// Gets the chatbot response asynchronous.
 	/// </summary>
 	/// <param name="userQueryRequest">The user query request.</param>
+	/// <param name="areFollowupQuestionsEnabled">The boolean flag for followup questions.</param>
 	/// <returns>The ai agent response.</returns>
-	Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest);
-
-	/// <summary>
-	/// Gets the database schema json asynchronous.
-	/// </summary>
-	/// <returns>The database schema domain.</returns>
-	Task<DatabaseSchemaDomain> GetDatabaseSchemaJsonAsync();
-
-	/// <summary>
-	/// Gets the database knowledge pieces json asynchronous.
-	/// </summary>
-	/// <returns>
-	/// The database knowledge base domain.
-	/// </returns>
-	Task<DatabaseKnowledgeBaseDomain> GetDatabaseKnowledgePiecesJsonAsync();
+	Task<AIChatbotResponse> GetChatbotResponseAsync(UserQueryRequest userQueryRequest, bool areFollowupQuestionsEnabled);
 
 	/// <summary>
 	/// Gets the sample prompts for chatbot asynchronous.

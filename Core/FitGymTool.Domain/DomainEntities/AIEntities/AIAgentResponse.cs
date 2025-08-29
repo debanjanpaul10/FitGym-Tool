@@ -73,4 +73,12 @@ public class AIChatbotResponse
 	/// The SQL query.
 	/// </value>
 	public string? SqlQuery { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Gets or sets the Followup questions list.
+	/// </summary>
+	/// <value>
+	/// The list of follow up questions.
+	/// </value>
+	public IEnumerable<string>? FollowupQuestions { get; set; } = [];
 }

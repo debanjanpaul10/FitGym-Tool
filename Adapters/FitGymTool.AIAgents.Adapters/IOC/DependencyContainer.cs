@@ -41,8 +41,7 @@ public static class DependencyContainer
 	{
 		services.AddHttpClient(ConfigurationConstants.AiAgentsHttpClient, client =>
 		{
-			var apiBaseAddress = bool.TryParse(configuration[ConfigurationConstants.IsDevelopmentModeConstant], out var isDevelopmentMode) && isDevelopmentMode ?
-				configuration[ConfigurationConstants.LocalAiAgentsBaseUrl] : configuration[ConfigurationConstants.AiAgentsApiBaseUrl];
+			var apiBaseAddress = configuration[ConfigurationConstants.AiAgentsApiBaseUrl];
 			if (string.IsNullOrEmpty(apiBaseAddress))
 			{
 				throw new ArgumentNullException(apiBaseAddress);

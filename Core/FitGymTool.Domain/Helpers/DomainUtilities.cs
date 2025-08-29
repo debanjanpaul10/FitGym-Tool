@@ -6,6 +6,9 @@
 // *********************************************************************************
 
 using FitGymTool.Domain.DomainEntities;
+using FitGymTool.Domain.DomainEntities.AIEntities;
+using System.Text.Json;
+using static FitGymTool.Domain.Helpers.DomainConstants;
 
 namespace FitGymTool.Domain.Helpers;
 
@@ -64,5 +67,22 @@ public static class DomainUtilities
 
 		// Ensure all DateTime fields are set to valid values in the domain model
 		memberDetails.EnsureValidDates();
+	}
+
+	/// <summary>
+	/// Prepares the agent chatbot reponse.
+	/// </summary>
+	/// <param name="aiAgentResponse">The ai agent response.</param>
+	/// <param name="userIntent">The user intent.</param>
+	/// <param name="input">The input.</param>
+	/// <param name="aiResponse">The ai response.</param>
+	/// <returns>The populated agent response domain.</returns>
+	public static AIChatbotResponse PrepareAgentChatbotReponse(this AIChatbotResponse aiAgentResponse, string userIntent, string input, string aiResponse)
+	{
+		aiAgentResponse.UserIntent = userIntent.Trim();
+		aiAgentResponse.UserQuery = input.Trim();
+		aiAgentResponse.AIResponseData = aiResponse.Trim();
+
+		return aiAgentResponse;
 	}
 }

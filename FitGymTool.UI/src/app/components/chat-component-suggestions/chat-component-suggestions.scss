@@ -1,0 +1,199 @@
+.chat-suggestions {
+  width: 100%;
+
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary, #e0e0e0);
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    &--grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.75rem;
+    }
+
+    &--list {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface-secondary, rgba(102, 126, 234, 0.1));
+    border: 1px solid var(--border-light, rgba(102, 126, 234, 0.3));
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    min-height: 3rem;
+    color: var(--text-primary, #e0e0e0);
+
+    &:hover {
+      background: var(--surface-hover, rgba(102, 126, 234, 0.2));
+      border-color: var(--border-hover, rgba(102, 126, 234, 0.5));
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      color: #ffffff;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(102, 126, 234, 0.4);
+    }
+
+    &:focus {
+      outline: 2px solid var(--primary-color, rgba(102, 126, 234, 0.8));
+      outline-offset: 2px;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary, rgba(102, 126, 234, 0.8));
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  &__text {
+    flex: 1;
+    color: var(--text-primary, #e0e0e0);
+    font-weight: 500;
+  }
+
+  &__category {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-tertiary, #b0b0b0);
+    background: var(--surface-tertiary, rgba(102, 126, 234, 0.2));
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  &__show-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 2px dashed var(--border-light, rgba(102, 126, 234, 0.3));
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary, #b0b0b0);
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-height: 3rem;
+
+    &:hover {
+      border-color: var(--primary-color, rgba(102, 126, 234, 0.6));
+      color: var(--primary-color, rgba(102, 126, 234, 0.9));
+      background: var(--primary-light, rgba(102, 126, 234, 0.05));
+    }
+
+    &:focus {
+      outline: 2px solid var(--primary-color, rgba(102, 126, 234, 0.8));
+      outline-offset: 2px;
+    }
+  }
+
+  &__show-more-icon {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+
+  // Type-specific styles
+  &--sample-prompts {
+    .chat-suggestions__item {
+      background: linear-gradient(
+        135deg,
+        rgba(102, 126, 234, 0.1) 0%,
+        rgba(118, 75, 162, 0.1) 100%
+      );
+
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(102, 126, 234, 0.2) 0%,
+          rgba(118, 75, 162, 0.2) 100%
+        );
+      }
+    }
+
+    .chat-suggestions__icon {
+      color: rgba(102, 126, 234, 0.8);
+    }
+  }
+
+  &--followup-questions {
+    .chat-suggestions__item {
+      border-left: 3px solid rgba(102, 126, 234, 0.6);
+
+      &:hover {
+        border-left-color: rgba(102, 126, 234, 0.8);
+      }
+    }
+
+    .chat-suggestions__icon {
+      color: rgba(102, 126, 234, 0.8);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .chat-suggestions {
+    &__content--grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__item {
+      padding: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    &__title {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-suggestions {
+    &__item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      text-align: left;
+    }
+
+    &__category {
+      align-self: flex-end;
+    }
+  }
+}

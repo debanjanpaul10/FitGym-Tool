@@ -15,11 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(path: ConfigurationConstants.DevelopmentAppSettingsFile, optional: true).AddEnvironmentVariables();
 
 var credentials = builder.Environment.IsDevelopment()
-	? new DefaultAzureCredential()
-	: new DefaultAzureCredential(new DefaultAzureCredentialOptions
-	{
-		ManagedIdentityClientId = builder.Configuration[ConfigurationConstants.ManagedIdentityClientIdConstant]
-	});
+    ? new DefaultAzureCredential()
+    : new DefaultAzureCredential(new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityClientId = builder.Configuration[ConfigurationConstants.ManagedIdentityClientIdConstant]
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -27,42 +27,41 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.Al
 
 builder.Services.AddSwaggerGen(options =>
 {
-	options.SwaggerDoc(SwaggerConstants.ApiVersion, new OpenApiInfo
-	{
-		Title = SwaggerConstants.ApplicationAPIName,
-		Version = SwaggerConstants.ApiVersion,
-		Description = SwaggerConstants.SwaggerDescription,
-		Contact = new OpenApiContact
-		{
-			Name = SwaggerConstants.AuthorDetails.Name,
-			Email = SwaggerConstants.AuthorDetails.Email
-		}
+    options.SwaggerDoc(SwaggerConstants.ApiVersion, new OpenApiInfo
+    {
+        Title = SwaggerConstants.ApplicationAPIName,
+        Version = SwaggerConstants.ApiVersion,
+        Description = SwaggerConstants.SwaggerDescription,
+        Contact = new OpenApiContact
+        {
+            Name = SwaggerConstants.AuthorDetails.Name,
+            Email = SwaggerConstants.AuthorDetails.Email
+        }
 
-	});
-	options.EnableAnnotations();
+    });
+    options.EnableAnnotations();
 });
 
 
 builder.ConfigureAzureAppConfiguration(credentials);
 builder.ConfigureApiServices();
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-	app.MapOpenApi();
-	app.UseSwagger();
-	app.UseSwaggerUI(c =>
-	{
-		c.SwaggerEndpoint(SwaggerConstants.SwaggerEndpointUrl, $"{SwaggerConstants.ApplicationAPIName}.{SwaggerConstants.ApiVersion}");
-		c.RoutePrefix = SwaggerConstants.SwaggerUiPrefix;
-	});
+    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint(SwaggerConstants.SwaggerEndpointUrl, $"{SwaggerConstants.ApplicationAPIName}.{SwaggerConstants.ApiVersion}");
+        c.RoutePrefix = SwaggerConstants.SwaggerUiPrefix;
+    });
 }
 
-app.UseExceptionHandler();
+app.UseExceptionMiddleware();
 app.UseHttpsRedirection();
 app.UseCors();
 
