@@ -370,83 +370,150 @@
   color: inherit;
 }
 
-/* Sample Prompts Styles */
-.sample-prompts-container {
-  padding: 1rem;
-  border-top: 1px solid #404040;
-  background: #2d2d2d;
-  flex-shrink: 0;
-}
+.markdown-content {
+  color: inherit;
+  line-height: 1.6;
 
-.sample-prompts-header {
-  margin-bottom: 0.75rem;
-  color: #e0e0e0;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.sample-prompts-bubbles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  max-height: 120px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 4px;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff;
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 600;
   }
 
-  &::-webkit-scrollbar-track {
-    background: #1e1e1e;
-    border-radius: 2px;
+  h1 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: #667eea;
-    border-radius: 2px;
+  h2 {
+    font-size: 1.3rem;
+    border-bottom: 1px solid #667eea;
+    padding-bottom: 0.3rem;
+  }
 
-    &:hover {
-      background: #764ba2;
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #e0e0e0;
+  }
+
+  strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  em {
+    color: #b0b0b0;
+    font-style: italic;
+  }
+
+  code {
+    background: #1a1a1a;
+    color: #f8f8f2;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    border: 1px solid #404040;
+  }
+
+  pre {
+    background: #1a1a1a;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #f8f8f2;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #2d2d2d;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 3px;
+
+      &:hover {
+        background: #764ba2;
+      }
     }
   }
 
-  scrollbar-width: thin;
-  scrollbar-color: #667eea #1e1e1e;
+  ul,
+  ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    color: #e0e0e0;
+
+    li {
+      margin: 0.25rem 0;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #764ba2;
+      border-bottom-color: #764ba2;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #667eea;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #b0b0b0;
+    font-style: italic;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+  }
 }
 
-.sample-prompt-bubble {
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.1) 0%,
-    rgba(118, 75, 162, 0.1) 100%
-  );
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  color: #e0e0e0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 20px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  max-width: 350px;
-  white-space: normal;
-  overflow: visible;
-  display: inline-block;
+/* Followup Questions Styles */
+.followup-questions-container {
+  margin-top: 0.75rem;
+}
 
-  &:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.2) 0%,
-      rgba(118, 75, 162, 0.2) 100%
-    );
-    border-color: rgba(102, 126, 234, 0.5);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
-  }
+/* Sample Prompts Styles */
+.sample-prompts-container {
+  padding: 1rem;
+  flex-shrink: 0;
 }
 
 .chat-input {
@@ -643,19 +710,97 @@
     padding: 0.75rem;
   }
 
-  .sample-prompts-header {
-    font-size: 13px;
-    margin-bottom: 0.5rem;
+  /* Mobile followup questions adjustments */
+  .followup-questions-container {
+    margin-top: 0.5rem;
   }
+}
 
-  .sample-prompts-bubbles {
-    max-height: 100px;
-    gap: 0.4rem;
+/* Dark theme overrides for chat suggestions component */
+.sample-prompts-container,
+.followup-questions-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__title {
+        color: #e0e0e0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &__item {
+        background: linear-gradient(
+          135deg,
+          rgba(102, 126, 234, 0.1) 0%,
+          rgba(118, 75, 162, 0.1) 100%
+        );
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        color: #e0e0e0;
+
+        &:hover {
+          background: linear-gradient(
+            135deg,
+            rgba(102, 126, 234, 0.2) 0%,
+            rgba(118, 75, 162, 0.2) 100%
+          );
+          border-color: rgba(102, 126, 234, 0.5);
+          color: #ffffff;
+        }
+      }
+
+      &__icon {
+        color: rgba(102, 126, 234, 0.8);
+      }
+
+      &__category {
+        background: rgba(102, 126, 234, 0.2);
+        color: #b0b0b0;
+      }
+
+      &__show-more {
+        border-color: rgba(102, 126, 234, 0.3);
+        color: #b0b0b0;
+
+        &:hover {
+          border-color: rgba(102, 126, 234, 0.6);
+          color: rgba(102, 126, 234, 0.9);
+          background: rgba(102, 126, 234, 0.05);
+        }
+      }
+    }
   }
+}
 
-  .sample-prompt-bubble {
-    font-size: 12px;
-    padding: 0.4rem 0.6rem;
-    max-width: 250px;
+/* Specific styles for followup questions */
+.followup-questions-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #b0b0b0;
+      }
+
+      &__item {
+        font-size: 12px;
+        padding: 0.4rem 0.7rem;
+        border-radius: 16px;
+        max-width: 300px;
+      }
+    }
+  }
+}
+
+/* Specific styles for sample prompts */
+.sample-prompts-container {
+  app-chat-component-suggestions {
+    .chat-suggestions {
+      &__item {
+        font-size: 13px;
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        max-width: 350px;
+      }
+    }
   }
 }

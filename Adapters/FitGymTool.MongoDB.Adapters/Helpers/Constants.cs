@@ -63,7 +63,12 @@ internal static class Constants
 		/// <summary>
 		/// The fit gym tool knowledge base collection
 		/// </summary>
-		internal const string FitGymToolKnowledgeBaseCollection = "FitGymToolKnowledgeBase";
+		internal const string FitGymToolDatabaseKnowledgeBase = "FitGymToolDatabaseKnowledgeBase";
+
+		/// <summary>
+		/// The fit gym tool rag knowledgebase
+		/// </summary>
+		internal const string FitGymToolRAGKnowledgebase = "FitGymToolRAGKnowledgebase";
 	}
 
 	/// <summary>

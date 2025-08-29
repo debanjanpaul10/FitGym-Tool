@@ -1,18 +1,10 @@
-﻿// *********************************************************************************
-//	<copyright file="FitGymCommonController.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Fit Gym Common Controller Class.</summary>
-// *********************************************************************************
-
-using FitGymTool.API.Adapters.Contracts;
+﻿using FitGymTool.API.Adapters.Contracts;
 using FitGymTool.API.Adapters.Models.Request;
 using FitGymTool.API.Adapters.Models.Response;
 using FitGymTool.API.Adapters.Models.Response.MappingData;
 using FitGymTool.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Globalization;
 using static FitGymTool.API.Helpers.APIConstants;
 using static FitGymTool.API.Helpers.SwaggerConstants.FitGymCommonController;
 
@@ -23,11 +15,10 @@ namespace FitGymTool.API.Controllers;
 /// </summary>
 /// <param name="fitGymCommonHandler">The fit gym common service.</param>
 /// <param name="httpContextAccessor">The http context accessor.</param>
-/// <param name="logger">The logger.</param>
 /// <seealso cref="FitGymTool.API.Controllers.BaseController" />
 [ApiController]
 [Route(RouteConstants.FitGymCommonApiRoutes.BaseRoute_RoutePrefix)]
-public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<FitGymCommonController> logger, IHttpContextAccessor httpContextAccessor) : BaseController(httpContextAccessor)
+public class FitGymCommonController(ICommonHandler fitGymCommonHandler, IHttpContextAccessor httpContextAccessor) : BaseController(httpContextAccessor)
 {
 	/// <summary>
 	/// Gets the mappings master data asynchronous.
@@ -41,31 +32,18 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[SwaggerOperation(Summary = GetMappingsMasterDataAction.Summary, Description = GetMappingsMasterDataAction.Description, OperationId = GetMappingsMasterDataAction.OperationId)]
 	public async Task<ResponseDTO> GetMappingsMasterDataAsync()
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			var result = await fitGymCommonHandler.GetMappingsMasterDataAsync();
+			if (result is not null)
 			{
-				var result = await fitGymCommonHandler.GetMappingsMasterDataAsync();
-				if (result is not null)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetMappingsMasterDataAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 
 	/// <summary>
@@ -81,31 +59,18 @@ public class FitGymCommonController(ICommonHandler fitGymCommonHandler, ILogger<
 	[SwaggerOperation(Summary = AddBugReportDataAction.Summary, Description = AddBugReportDataAction.Description, OperationId = AddBugReportDataAction.OperationId)]
 	public async Task<ResponseDTO> AddBugReportDataAsync([FromBody] AddBugReportDTO addBugReportData)
 	{
-		try
+		if (IsAuthorized())
 		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, base.UserFullName));
-			if (IsAuthorized())
+			addBugReportData.CreatedBy = base.UserEmail;
+			var result = await fitGymCommonHandler.AddNewBugReportDataAsync(addBugReportData);
+			if (result)
 			{
-				addBugReportData.CreatedBy = base.UserEmail;
-				var result = await fitGymCommonHandler.AddNewBugReportDataAsync(addBugReportData);
-				if (result)
-				{
-					return HandleSuccessRequestResponse(result);
-				}
-
-				return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
+				return HandleSuccessRequestResponse(result);
 			}
 
-			return HandleUnAuthorizedRequestResponse();
+			return HandleBadRequestResponse(StatusCodes.Status400BadRequest, ExceptionConstants.SomethingWentWrongMessageConstant);
 		}
-		catch (Exception ex)
-		{
-			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, ex.Message));
-			return HandleBadRequestResponse(StatusCodes.Status500InternalServerError, ex.Message);
-		}
-		finally
-		{
-			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(AddBugReportDataAsync), DateTime.UtcNow, base.UserFullName));
-		}
+
+		return HandleUnAuthorizedRequestResponse();
 	}
 }

@@ -1,4 +1,7 @@
+import { WritableSignal } from '@angular/core';
+import { AIChatbotResponseDTO } from '@models/DTO/ai-chatbot-response-dto.model';
 import { MasterMappingDataDto } from '@models/DTO/Mapping/master-mapping-dto.model';
+import { ChatMessage } from '@models/interfaces/chat-message.interface';
 
 /**
  * The utilities helper class.
@@ -205,5 +208,59 @@ export class Utilities {
   ): string {
     currentUserName = currentUserName ?? 'there';
     return `Hello ${currentUserName}! I'm your AI assistant. How can I help you today?`;
+  }
+
+  /**
+   * Converts markdown text to HTML for display
+   * @param markdown The markdown text to convert
+   * @returns HTML string
+   */
+  public static ParseMarkdownToHtml(markdown: string): string {
+    if (!markdown) return '';
+
+    let html = markdown;
+
+    // Handle code blocks (```code```)
+    html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+    // Handle inline code (`code`)
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Handle bold (**text** or __text__)
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+    // Handle italic (*text* or _text_)
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+    // Handle headers
+    html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+
+    // Handle links [text](url)
+    html = html.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank">$1</a>'
+    );
+
+    // Handle line breaks
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = html.replace(/\n/g, '<br>');
+
+    // Wrap in paragraph tags if not already wrapped
+    if (!html.startsWith('<')) {
+      html = '<p>' + html + '</p>';
+    }
+
+    // Handle unordered lists
+    html = html.replace(/^\* (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+    // Handle ordered lists
+    html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+    return html;
   }
 }

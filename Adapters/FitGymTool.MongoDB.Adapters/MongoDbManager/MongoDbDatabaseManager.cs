@@ -1,10 +1,3 @@
-// *********************************************************************************
-//	<copyright file="MongoDbDatabaseManager.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Mongo DB Database Manager.</summary>
-// *********************************************************************************
-
 using FitGymTool.Domain.DomainEntities.MetadataEntities;
 using FitGymTool.Domain.DrivenPorts;
 using Microsoft.Extensions.Logging;
@@ -40,7 +33,7 @@ public class MongoDbDatabaseManager(IMongoClient mongoClient, ILogger<MongoDbDat
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetDatabaseKnowledgePiecesJsonAsync), DateTime.UtcNow));
 
-			var knowledgePieces = _aiAgentsKnowledgeMongoDatabase.GetCollection<DatabaseKnowledgeBaseDomain>(MongoDBConstants.FitGymToolKnowledgeBaseCollection);
+			var knowledgePieces = _aiAgentsKnowledgeMongoDatabase.GetCollection<DatabaseKnowledgeBaseDomain>(MongoDBConstants.FitGymToolDatabaseKnowledgeBase);
 			if (knowledgePieces is not null)
 			{
 				return await knowledgePieces.Find(_ => true).FirstAsync().ConfigureAwait(false);
@@ -92,6 +85,38 @@ public class MongoDbDatabaseManager(IMongoClient mongoClient, ILogger<MongoDbDat
 		finally
 		{
 			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetDatabaseSchemaJsonAsync), DateTime.UtcNow));
+		}
+	}
+
+	/// <summary>
+	/// Gets the rag knowledge pieces json asynchronous.
+	/// </summary>
+	/// <returns>
+	/// The RAG knowledge base domain.
+	/// </returns>
+	/// <exception cref="System.Exception"></exception>
+	public async Task<RAGKnowledgeBaseDomain> GetRAGKnowledgePiecesJsonAsync()
+	{
+		try
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodStartedMessageConstant, nameof(GetRAGKnowledgePiecesJsonAsync), DateTime.UtcNow));
+
+			var knowledgePieces = _aiAgentsKnowledgeMongoDatabase.GetCollection<RAGKnowledgeBaseDomain>(MongoDBConstants.FitGymToolRAGKnowledgebase);
+			if (knowledgePieces is not null)
+			{
+				return await knowledgePieces.Find(_ => true).FirstAsync().ConfigureAwait(false);
+			}
+
+			throw new Exception(ExceptionConstants.SomethingWentWrongMessageConstant);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodFailedWithMessageConstant, nameof(GetRAGKnowledgePiecesJsonAsync), DateTime.UtcNow, ex.Message));
+			throw;
+		}
+		finally
+		{
+			logger.LogInformation(string.Format(CultureInfo.CurrentCulture, LoggingConstants.MethodEndedMessageConstant, nameof(GetRAGKnowledgePiecesJsonAsync), DateTime.UtcNow));
 		}
 	}
 }

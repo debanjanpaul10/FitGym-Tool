@@ -1,11 +1,4 @@
-﻿// *********************************************************************************
-//	<copyright file="IMongoDbDatabaseManager.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Mongo DB Database Manager interface.</summary>
-// *********************************************************************************
-
-using FitGymTool.Domain.DomainEntities.MetadataEntities;
+﻿using FitGymTool.Domain.DomainEntities.MetadataEntities;
 
 namespace FitGymTool.Domain.DrivenPorts;
 
@@ -25,4 +18,10 @@ public interface IMongoDbDatabaseManager
 	/// </summary>
 	/// <returns>The database knowledge base domain.</returns>
 	Task<DatabaseKnowledgeBaseDomain> GetDatabaseKnowledgePiecesJsonAsync();
+
+	/// <summary>
+	/// Gets the rag knowledge pieces json asynchronous.
+	/// </summary>
+	/// <returns>The RAG knowledge base domain.</returns>
+	Task<RAGKnowledgeBaseDomain> GetRAGKnowledgePiecesJsonAsync();
 }

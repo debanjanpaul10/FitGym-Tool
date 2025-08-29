@@ -3,4 +3,5 @@ export class AIChatbotResponseDTO {
   userQuery: string = '';
   userIntent: string = '';
   sqlQuery: string = '';
+  followupQuestions: [] = [];
 }

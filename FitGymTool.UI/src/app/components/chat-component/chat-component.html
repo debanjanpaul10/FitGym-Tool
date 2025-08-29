@@ -28,14 +28,10 @@
       <button
         class="expand-btn"
         (click)="toggleExpand()"
-        [pTooltip]="isExpanded() ? 'Collapse Chat' : 'Expand Chat'"
+        [pTooltip]="isExpanded() ? 'Restore Chat window' : 'Expand Chat window'"
         tooltipPosition="bottom"
       >
-        <i
-          class="pi"
-          [class.pi-window-maximize]="!isExpanded()"
-          [class.pi-window-minimize]="isExpanded()"
-        ></i>
+        <i class="pi pi-expand"></i>
       </button>
       <button
         class="refresh-btn"
@@ -99,6 +95,11 @@
             <div class="fallback-content">{{ message.content }}</div>
             }
           </div>
+          } @else if (message.contentType === 'markdown') {
+          <div
+            class="markdown-content"
+            [innerHTML]="parseMarkdownToHtml(message.content)"
+          ></div>
           } @else {
           <div class="text-content">{{ message.content }}</div>
           } @if (!message.isBot && !message.isTyping) {
@@ -112,6 +113,23 @@
           </button>
           }
         </div>
+
+        <!-- Followup Questions - Only show for the latest bot message -->
+        @if (message.isBot && message.followupQuestions &&
+        message.followupQuestions.length > 0 && !isProcessing() &&
+        isLatestBotMessage($index)) {
+        <div class="followup-questions-container">
+          <app-chat-component-suggestions
+            [suggestions]="convertFollowupQuestions(message.followupQuestions)"
+            type="followup-questions"
+            layout="grid"
+            [maxVisible]="4"
+            [showIcons]="true"
+            (suggestionSelected)="onFollowupQuestionSelected($event)"
+          >
+          </app-chat-component-suggestions>
+        </div>
+        }
       </div>
       } @if (showScrollToBottomButton) {
       <button
@@ -129,21 +147,15 @@
     @if (sampleChatbotPrompts().length > 0 && messages().length <= 1 &&
     !isProcessing()) {
     <div class="sample-prompts-container">
-      <div class="sample-prompts-header">
-        <span>Try these sample prompts:</span>
-      </div>
-      <div class="sample-prompts-bubbles">
-        @for (prompt of sampleChatbotPrompts(); track prompt.promptName) {
-        <button
-          class="sample-prompt-bubble"
-          (click)="insertSamplePrompt(prompt.promptName)"
-          [pTooltip]="prompt.promptDescription"
-          tooltipPosition="top"
-        >
-          {{ prompt.promptName }}
-        </button>
-        }
-      </div>
+      <app-chat-component-suggestions
+        [suggestions]="samplePromptSuggestions"
+        type="sample-prompts"
+        layout="grid"
+        [maxVisible]="6"
+        [showIcons]="true"
+        (suggestionSelected)="onSamplePromptSelected($event)"
+      >
+      </app-chat-component-suggestions>
     </div>
     }
 

@@ -46,7 +46,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The member details.
 	/// </value>
-	public DbSet<MemberDetails> MemberDetails { get; set; }
+	public virtual DbSet<MemberDetails> MemberDetails { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees status.
@@ -54,7 +54,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The fees status.
 	/// </value>
-	public DbSet<FeesStatus> FeesStatus { get; set; }
+	public virtual DbSet<FeesStatus> FeesStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees payment history.
@@ -62,7 +62,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The fees payment history.
 	/// </value>
-	public DbSet<FeesPaymentHistory> FeesPaymentHistory { get; set; }
+	public virtual DbSet<FeesPaymentHistory> FeesPaymentHistory { get; set; }
 
 	/// <summary>
 	/// Gets or sets the fees structure.
@@ -70,7 +70,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The fees structure.
 	/// </value>
-	public DbSet<FeesStructure> FeesStructure { get; set; }
+	public virtual DbSet<FeesStructure> FeesStructure { get; set; }
 
 	/// <summary>
 	/// Gets or sets the current month fees and revenue status.
@@ -78,7 +78,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The current month fees and revenue status.
 	/// </value>
-	public DbSet<CurrentMonthFeesAndRevenueStatus> CurrentMonthFeesAndRevenueStatus { get; set; }
+	public virtual DbSet<CurrentMonthFeesAndRevenueStatus> CurrentMonthFeesAndRevenueStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the current member fees status.
@@ -86,7 +86,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The current member fees status.
 	/// </value>
-	public DbSet<CurrentMembersFeesStatus> CurrentMemberFeesStatus { get; set; }
+	public virtual DbSet<CurrentMembersFeesStatus> CurrentMemberFeesStatus { get; set; }
 
 	/// <summary>
 	/// Gets or sets the member payment history data.
@@ -94,7 +94,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The member payment history data.
 	/// </value>
-	public DbSet<MemberPaymentHistoryData> MemberPaymentHistoryData { get; set; }
+	public virtual DbSet<MemberPaymentHistoryData> MemberPaymentHistoryData { get; set; }
 
 	/// <summary>
 	/// Gets or sets the bug report data.
@@ -102,7 +102,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The bug report data.
 	/// </value>
-	public DbSet<BugReportData> BugReportData { get; set; }
+	public virtual DbSet<BugReportData> BugReportData { get; set; }
 
 	/// <summary>
 	/// Gets or sets the ai features.
@@ -110,7 +110,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The ai features.
 	/// </value>
-	public DbSet<AIFeature> AIFeatures { get; set; }
+	public virtual DbSet<AIFeature> AIFeatures { get; set; }
 
 	/// <summary>
 	/// Gets or sets the ai chatbot prompts.
@@ -118,7 +118,7 @@ public partial class SqlDbContext : DbContext
 	/// <value>
 	/// The ai chatbot prompts.
 	/// </value>
-	public DbSet<SampleChatbotPromptsDomain> AIChatbotPrompts { get; set; }
+	public virtual DbSet<SampleChatbotPromptsDomain> AIChatbotPrompts { get; set; }
 
 	/// <summary>
 	/// Override this method to configure the database (and other options) to be used for this context.

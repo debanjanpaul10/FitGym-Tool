@@ -1,11 +1,4 @@
-﻿// *********************************************************************************
-//	<copyright file="DatabaseKnowledgeBaseDomain.cs" company="Personal">
-//		Copyright (c) 2025 <Debanjan's Lab>
-//	</copyright>
-// <summary>The Database Schema Domain class.</summary>
-// *********************************************************************************
-
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace FitGymTool.Domain.DomainEntities.MetadataEntities;

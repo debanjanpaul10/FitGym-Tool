@@ -1,5 +1,5 @@
 ﻿// *********************************************************************************
-//	<copyright file="AIFeature.cs" company="Personal">
+//	<copyright file="AIFeatureDomain.cs" company="Personal">
 //		Copyright (c) 2025 Personal
 //	</copyright>
 // <summary>The AI Feature Domain class.</summary>
